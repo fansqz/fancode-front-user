@@ -14,19 +14,27 @@ export const constantRoute = [
     path: '/',
     component: () => import('@/layout/index.vue'),
     name: 'root',
-    redirect: '/problem',
+    redirect: '/problem/bank',
     children: [
       {
-        path: '/problem',
-        name: 'problem',
-        component: () => import('@/views/problem/index.vue'),
+        // 题库
+        path: '/problem/bank',
+        name: 'bank',
+        component: () => import('@/views/bank/index.vue'),
       },
       {
+        // 竞赛
         path: '/contest',
         name: 'contest',
         component: () => import('@/views/contest/index.vue'),
       },
     ],
+  },
+  {
+    // 题目
+    path: '/problem/:problemNumber',
+    name: 'problem',
+    component: () => import('@/views/problem/index.vue'),
   },
 ];
 
