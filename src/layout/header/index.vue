@@ -3,8 +3,8 @@
     <div class="header_left">
       <Logo class="logo"></Logo>
       <div
-        :class="{ nav_item: true, active_item: isActiveNavItem('problem') }"
-        @click="changeRoute('problem')"
+        :class="{ nav_item: true, active_item: isActiveNavItem('bank') }"
+        @click="changeRoute('bank')"
       >
         题库
       </div>
