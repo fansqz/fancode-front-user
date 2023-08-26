@@ -1,12 +1,12 @@
 <template>
-  <div class="layout_container">
+  <div class="layout-container">
     <!--顶部tabbar-->
-    <div class="layout_header">
+    <div class="layout-header">
       <Header></Header>
     </div>
 
     <!--展示栏-->
-    <div class="layout_main">
+    <div class="layout-main">
       <router-view />
     </div>
   </div>
@@ -17,18 +17,14 @@
 </script>
 
 <scoped scoped lang="scss">
-.layout_container {
+.layout-container {
   position: relative;
   width: 100vw;
   height: 100vh;
-  .layout_header {
-    box-sizing: border-box;
-    position: flex;
+  .layout-main {
+    position: relative;
+    top: $base-header-height;
     width: 100%;
-    height: $base-header-height;
-    background-color: $base-header-background;
-    top: 0;
-    border-bottom: 1px solid $border-color;
   }
 }
 </scoped>

@@ -43,9 +43,12 @@
 
 <style scoped lang="scss">
   .header {
-    position: relative;
+    position: fixed;
+    top: 0px;
     width: 100%;
     height: $base-header-height;
+    background-color: $base-header-background;
+    border-bottom: 1px solid $border-color;
     .header_left {
       position: absolute;
       height: 100%;
