@@ -20,6 +20,29 @@ import './premisstion';
 // 全局样式
 import '@/styles/index.scss';
 
+// markdown
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import VueMarkdownEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import VMdPreview from '@kangc/v-md-editor/lib/preview';
+import '@kangc/v-md-editor/lib/style/preview.css';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+// Prism 代码高亮
+import Prism from 'prismjs';
+import 'prismjs/components/prism-json';
+VueMarkdownEditor.use(vuepressTheme, {
+  Prism,
+});
+VMdPreview.use(vuepressTheme, {
+  Prism,
+});
+
 const app = createApp(App);
 
 app.use(ElementPlus, {
@@ -29,4 +52,6 @@ app.use(ElementPlus, {
 app.use(gloalComponent);
 app.use(router);
 app.use(pinia);
+app.use(VueMarkdownEditor);
+app.use(VMdPreview);
 app.mount('#app');
