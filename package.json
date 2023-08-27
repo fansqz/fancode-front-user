@@ -37,6 +37,7 @@
     "stylelint-order": "^6.0.3",
     "stylelint-scss": "^5.0.1",
     "vue": "^3.3.4",
+    "vue-codemirror": "^6.1.1",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {

@@ -38,7 +38,7 @@
 <style scoped lang="scss">
   .header {
     position: relative;
-    top: 0px;
+    box-sizing: border-box;
     width: 100%;
     height: $base-header-height;
     background-color: $base-header-background;
