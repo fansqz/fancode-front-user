@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive, ref, watchEffect } from 'vue';
+  import { reactive, ref } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
   import ProblemDescription from './problem-description/index.vue';
@@ -57,10 +57,9 @@
   // 正确输出
   let expectedOutput = ref('');
 
-  watchEffect(async () => {
-    if (props.problemNumber == undefined) return;
+  const load = async () => {
     let number = props.problemNumber;
-    let result = await reqProblem(number);
+    let result = await reqProblem(props.problemNumber);
     // 读取题目
     if (result.code == 200) {
       problem = result.data;
@@ -71,7 +70,8 @@
     if (result.code == 200) {
       userCode.value = result.data;
     }
-  });
+  };
+  load();
 
   const execute = async () => {
     let result = await reqExecute(problem.id, userCode.value, inputCase.value);

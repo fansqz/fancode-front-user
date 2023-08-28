@@ -9,11 +9,10 @@
   import { useRoute } from 'vue-router';
   import Header from './header/index.vue';
   import Main from './main/index.vue';
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
   import { reqProblem } from '@/api/problem';
 
   let $route = useRoute();
-
   let problemNumber = ref();
   let problemName = ref();
 
@@ -26,7 +25,7 @@
     }
   };
 
-  onMounted(async () => {
+  const load = async () => {
     problemNumber.value = getProblemNumber();
     let problem;
     let result = await reqProblem(problemNumber.value);
@@ -34,7 +33,9 @@
       problem = result.data;
     }
     problemName.value = problem.name;
-  });
+  };
+
+  load();
 </script>
 
 <style scoped lang="scss">
