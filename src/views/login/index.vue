@@ -39,7 +39,7 @@
           登录
         </el-button>
       </el-form-item>
-      <el-from-item>
+      <el-from-item class="small-text">
         <div
           class="login-type"
           @mouseover="loginTypeTextStyle = 'color:blue'"
@@ -49,6 +49,14 @@
         >
           <div v-if="loginForm.loginType == 'email'"> 账号密码登录 </div>
           <div v-if="loginForm.loginType == 'password'"> 邮箱验证登录 </div>
+        </div>
+        <div
+          class="go-register"
+          @mouseover="goRegisterTextStyle = 'color:blue'"
+          @mouseleave="goRegisterTextStyle = 'color:black'"
+          @click="changeRoute('register')"
+          :style="goRegisterTextStyle"
+          >点击注册
         </div>
       </el-from-item>
     </el-form>
@@ -78,11 +86,12 @@
   });
   // 登录类型，默认邮箱登录
   let loginTypeTextStyle = ref();
+  let goRegisterTextStyle = ref();
 
   let rules = {
     account: [
       { required: true, message: '用户id或邮箱不能为空', trigger: 'change' },
-      { required: true, min: 5, max: 10, message: '用户id或邮箱过短' },
+      { required: true, min: 5, max: 20, message: '用户id或邮箱过长或过短' },
     ],
     password: [
       { required: true, message: '密码不能为空', trigger: 'change' },
@@ -155,6 +164,13 @@
       });
     }
   };
+
+  const changeRoute = (routeName: string, params = {}) => {
+    if ($route.name === routeName) {
+      return;
+    }
+    $router.push({ name: routeName, params });
+  };
 </script>
 
 <style scoped lang="scss">
@@ -163,20 +179,20 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(#ffffff, #f9fdf7);
+    background: linear-gradient(#f9f9fa, #f9fdf7);
     display: flex;
     justify-content: center;
     align-items: flex-start;
     .login-form {
       width: 250px;
-      height: 300px;
+      height: 280px;
       margin-top: calc(50vh - 240px); /* 调整偏移量 */
       background-color: #ffffff;
-      border: 1px solid #000000;
+      border: 1px solid #666666;
       box-shadow: 12px 12px 2px 1px rgba(37, 218, 121, 0.2);
       padding: 20px 35px;
       .title {
-        height: 25%;
+        height: 60px;
         padding: 0% 15%;
         h1 {
           color: #6bac61;
@@ -188,14 +204,22 @@
           white-space: pre-line;
         }
       }
-      .login-type {
-        font-size: small;
-        cursor: pointer;
+      .small-text {
+        .login-type {
+          float: left;
+          font-size: small;
+          cursor: pointer;
+        }
+        .go-register {
+          float: right;
+          font-size: small;
+          cursor: pointer;
+        }
       }
+
       .login-button {
         width: 100%;
       }
     }
   }
 </style>
-./particles.js./particles.js

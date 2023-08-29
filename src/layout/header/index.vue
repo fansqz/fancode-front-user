@@ -49,7 +49,7 @@
     height: $base-header-height;
     background-color: $base-header-background;
     box-sizing: border-box;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid #666666;
     .header_left {
       position: absolute;
       height: 100%;
@@ -72,7 +72,7 @@
       .active_item {
         box-sizing: border-box;
         font-weight: 600;
-        border-bottom: 3px solid $border-color;
+        border-bottom: 2px solid #666666;
       }
     }
     .header_right {
