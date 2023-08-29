@@ -1,11 +1,6 @@
 // 常量路由
 export const constantRoute = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index.vue'),
-    name: 'login',
-  },
-  {
     path: '/404',
     component: () => import('@/views/404/index.vue'),
     name: '404',
@@ -27,6 +22,12 @@ export const constantRoute = [
         path: '/contest',
         name: 'contest',
         component: () => import('@/views/contest/index.vue'),
+      },
+      // 登录
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/login/index.vue'),
       },
     ],
   },

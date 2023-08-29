@@ -1,24 +1,36 @@
 <template>
-  <div class="login_container">
-    <el-form class="login_form" :rules="rules" :model="loginForm" ref="loginElFrom">
+  <div class="login-container">
+    <el-form class="login-form" :rules="rules" :model="loginForm" ref="loginElFrom">
       <div class="title">
-        <h1>FanCode</h1>
+        <h1>Fancode</h1>
       </div>
-      <el-form-item prop="loginName">
-        <el-input :prefix-icon="User" v-model="loginForm.loginName"> </el-input>
+      <!--密码登录-->
+      <el-form-item prop="account" v-if="loginForm.loginType == 'password'">
+        <el-input :prefix-icon="User" placeholder="邮箱/用户id" v-model="loginForm.account" />
       </el-form-item>
-      <el-form-item prop="password">
+      <el-form-item prop="password" v-if="loginForm.loginType == 'password'">
         <el-input
           :prefix-icon="Lock"
+          placeholder="密码"
           type="password"
           show-password="true"
           v-model="loginForm.password"
-        >
+        />
+      </el-form-item>
+      <!--邮箱登录-->
+      <el-form-item prop="email" v-if="loginForm.loginType == 'email'">
+        <el-input :prefix-icon="Message" placeholder="邮箱" v-model="loginForm.email" />
+      </el-form-item>
+      <el-form-item prop="code" v-if="loginForm.loginType == 'email'">
+        <el-input placeholder="验证码" v-model="loginForm.code">
+          <template #suffix>
+            <el-button link type="primary" @click="sendEmailCode"> 发送验证码 </el-button>
+          </template>
         </el-input>
       </el-form-item>
       <el-form-item>
         <el-button
-          class="login_button"
+          class="login-button"
           type="primary"
           @click="login"
           :loading="loading"
@@ -27,46 +39,105 @@
           登录
         </el-button>
       </el-form-item>
+      <el-from-item>
+        <div
+          class="login-type"
+          @mouseover="loginTypeTextStyle = 'color:blue'"
+          @mouseleave="loginTypeTextStyle = 'color:black'"
+          @click="switchLoginType"
+          :style="loginTypeTextStyle"
+        >
+          <div v-if="loginForm.loginType == 'email'"> 账号密码登录 </div>
+          <div v-if="loginForm.loginType == 'password'"> 邮箱验证登录 </div>
+        </div>
+      </el-from-item>
     </el-form>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { User, Lock } from '@element-plus/icons-vue';
+  import { User, Lock, Message } from '@element-plus/icons-vue';
   import { reactive, ref } from 'vue';
   import useUserStore from '@/store/modules/user';
   import { useRouter, useRoute } from 'vue-router';
-  import { ElNotification } from 'element-plus';
+  import { ElNotification, ElMessage } from 'element-plus';
   import { getDayPeriod } from '@/utils/time';
+  import { reqSendCode } from '@/api/auth';
 
   let useStore = useUserStore();
   let $router = useRouter();
   let $route = useRoute();
+  // 登录按钮是否加载
   let loading = ref(false);
   let loginForm = reactive({
-    loginName: 'uuid',
-    password: 'password',
+    loginType: 'email',
+    account: '',
+    password: '',
+    email: '',
+    code: '',
   });
+  // 登录类型，默认邮箱登录
+  let loginTypeTextStyle = ref();
 
   let rules = {
-    loginName: [
-      { required: true, message: '用户uuid不能为空', trigger: 'change' },
-      { required: true, min: 5, max: 10, message: '用户uuid长度需6-10位' },
+    account: [
+      { required: true, message: '用户id或邮箱不能为空', trigger: 'change' },
+      { required: true, min: 5, max: 10, message: '用户id或邮箱过短' },
     ],
     password: [
       { required: true, message: '密码不能为空', trigger: 'change' },
       { required: true, min: 6, max: 20, message: '密码长度需6-20位' },
     ],
+    email: [{ required: true, message: '邮箱不能为空', trigger: 'change' }],
+    code: [
+      { required: true, message: '验证码不能为空', trigger: 'change' },
+      { required: true, min: 6, max: 6, message: '验证码需要6位' },
+    ],
   };
   let loginElFrom = ref();
 
-  // 登录
+  const switchLoginType = () => {
+    if (loginForm.loginType == 'password') {
+      loginForm.loginType = 'email';
+    } else {
+      loginForm.loginType = 'password';
+    }
+  };
+
+  const sendEmailCode = async () => {
+    let result = await reqSendCode({
+      email: loginForm.email,
+      type: 'login',
+    });
+    if (result.code == 200) {
+      ElMessage({
+        showClose: true,
+        message: result.message,
+        type: 'success',
+      });
+    }
+  };
+
   const login = async () => {
     // 判断表单校验是否通过
     await loginElFrom.value.validate();
+    let data: any;
+    if (loginForm.loginType == 'password') {
+      data = {
+        type: loginForm.loginType,
+        account: loginForm.account,
+        password: loginForm.password,
+      };
+    } else if (loginForm.loginType == 'email') {
+      data = {
+        type: loginForm.loginType,
+        email: loginForm.email,
+        code: loginForm.code,
+      };
+    }
     loading.value = true;
     try {
-      await useStore.userLogin(loginForm);
+      await useStore.userLogin(data);
       // 判断是否有redirect参数
       let redirect: any = $route.query.redirect;
       $router.push({ path: redirect || '/' });
@@ -87,21 +158,22 @@
 </script>
 
 <style scoped lang="scss">
-  .login_container {
-    width: 100vw;
-    height: 100vh;
-    background: url('@/assets/images/background.jpg') no-repeat;
-    background-size: cover;
-    .login_form {
-      position: relative;
-      width: 20%;
-      height: 30%;
-      left: 40%;
-      top: 35%;
-      background-color: $background-color;
-      border-radius: 15px;
-      opacity: 0.9;
-      border: 1px solid $border-color;
+  .login-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#ffffff, #f9fdf7);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    .login-form {
+      width: 250px;
+      height: 300px;
+      margin-top: calc(50vh - 240px); /* 调整偏移量 */
+      background-color: #ffffff;
+      border: 1px solid #000000;
+      box-shadow: 12px 12px 2px 1px rgba(37, 218, 121, 0.2);
       padding: 20px 35px;
       .title {
         height: 25%;
@@ -116,9 +188,14 @@
           white-space: pre-line;
         }
       }
-      .login_button {
+      .login-type {
+        font-size: small;
+        cursor: pointer;
+      }
+      .login-button {
         width: 100%;
       }
     }
   }
 </style>
+./particles.js./particles.js

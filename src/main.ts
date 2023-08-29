@@ -36,6 +36,8 @@ import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
 // Prism 代码高亮
 import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
+import Particles from 'particles.vue3';
+
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,
 });
@@ -54,4 +56,5 @@ app.use(router);
 app.use(pinia);
 app.use(VueMarkdownEditor);
 app.use(VMdPreview);
+app.use(Particles);
 app.mount('#app');

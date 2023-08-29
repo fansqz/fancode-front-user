@@ -18,13 +18,14 @@
 
 <scoped scoped lang="scss">
 .layout-container {
-  position: relative;
   width: 100vw;
   height: 100vh;
   .layout-main {
     position: relative;
     top: $base-header-height;
     width: 100%;
+    height: calc(100vh - $base-header-height);
+    box-sizing: border-box;
   }
 }
 </scoped>
