@@ -6,8 +6,6 @@ enum API {
   ACCOUNT_URL = '/account',
   PASSWORD_RESET_URL = '/account/password/reseet',
   PASSWORD_URL = '/account/password',
-  ACTIVE_YEAR_URL = '/account/active/year',
-  ACTIVE_MAP_URL = '/account/active/map',
   AVATAR_URL = '/avatar',
 }
 
@@ -41,13 +39,4 @@ export const reqChangePassword = (data: any): Promise<any> => {
       'Content-Type': 'multipart/form-data',
     },
   });
-};
-
-// 获取用户有提交的年份
-export const reqActivityYear = (): Promise<any> => {
-  return request.get(API.ACTIVE_YEAR_URL);
-};
-
-export const reqActivityMap = (year: string): Promise<any> => {
-  return request.get(API.ACTIVE_MAP_URL + `/${year}`);
 };

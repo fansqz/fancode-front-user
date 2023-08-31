@@ -43,7 +43,7 @@
 
 <style scoped lang="scss">
   .header {
-    position: fixed;
+    position: absolute;
     top: 0px;
     width: 100%;
     height: $base-header-height;

@@ -1,6 +1,6 @@
 <template>
   <div class="profile-container">
-    <div class="user-message">
+    <el-card class="user-message">
       <div class="message1">
         <div class="avatar">
           <img :src="accountInfo.avatar" />
@@ -9,7 +9,7 @@
           <div class="base-info-item1">
             {{ accountInfo.username }}
           </div>
-          <div class="base-info-item"> 性别：{{ accountInfo.sex == 1 ? '男' : '女' }} </div>
+          <div class="base-info-item"> 性别：{{ accountInfo.sex == '1' ? '男' : '女' }} </div>
           <div class="base-info-item"> 诞生于：{{ accountInfo.birthDay }} </div>
           <div class="base-info-item"> 码龄：{{ accountInfo.codingAge }} </div>
         </div>
@@ -18,9 +18,10 @@
       <div class="introduction">
         {{ accountInfo.introduction }}
       </div>
-    </div>
+    </el-card>
     <div class="active">
-      <heatMap class="heat-map"></heatMap>
+      <HeatMap class="heat-map"></HeatMap>
+      <SubmiteActive></SubmiteActive>
     </div>
   </div>
 </template>
@@ -29,7 +30,8 @@
   import { reactive, onMounted } from 'vue';
   import { ElMessage } from 'element-plus';
   import { reqAccountInfo } from '@/api/account';
-  import heatMap from './heatmap.vue';
+  import HeatMap from './heat-map.vue';
+  import SubmiteActive from './submit-active.vue';
   let accountInfo = reactive({
     avatar: '',
     sex: '',
@@ -73,11 +75,10 @@
     display: flex;
     padding: 50px 150px;
     .user-message {
-      height: 100%;
+      height: 575px;
       width: 240px;
       box-sizing: border-box;
-      border: 1px solid #666666;
-      box-shadow: 12px 12px 2px 1px rgba(37, 218, 121, 0.2);
+      border-radius: 5px;
       padding: 10px;
       .message1 {
         display: flex;
@@ -115,7 +116,6 @@
       flex-grow: 1;
       margin-left: 40px;
       box-sizing: border-box;
-      border: 1px solid #666666;
     }
   }
 </style>

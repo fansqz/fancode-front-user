@@ -1,47 +1,53 @@
 <template>
-  <div class="box">
-    <div ref="heatMap" class="about"></div>
-    <div class="select-year">
-      <el-scrollbar height="100px" class="select-year-scroll">
-        <p
-          v-for="item in activityYears"
-          type="info"
-          :key="item"
-          class="scrollbar-demo-item"
-          :class="{ 'scrollbar-demo-item-active': item == activityYear }"
-          @click="updateHeatMap(item)"
-        >
-          {{ item == '0' ? '至今' : item }}
-        </p>
-      </el-scrollbar>
+  <el-card class="card">
+    <div class="heat-map-container">
+      <div ref="heatMap" class="heat-map"></div>
+      <div class="select-year">
+        <el-scrollbar height="100px" class="select-year-scroll">
+          <p
+            v-for="item in activityYears"
+            type="info"
+            :key="item"
+            class="scrollbar-demo-item"
+            :class="{ 'scrollbar-demo-item-active': item == activityYear }"
+            @click="updateHeatMap(item)"
+          >
+            {{ item == '0' ? '至今' : item }}
+          </p>
+        </el-scrollbar>
+      </div>
     </div>
-  </div>
+  </el-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { getCurrentInstance, onMounted, ref } from 'vue';
-  import { reqActivityMap, reqActivityYear } from '@/api/account';
+  import { reqActivityMap, reqActivityYear } from '@/api/submission';
 
-  const { proxy } = getCurrentInstance();
+  let currentInstance = getCurrentInstance();
+  let proxy: any;
+  if (currentInstance != null) {
+    proxy = currentInstance.proxy;
+  }
   let heatMap = ref(null);
-  let range = [];
-  let data = [];
-  let activityYears = ref([]);
+  let range: string[] = [];
+  let data: any[] = [];
+  let activityYears = ref<string[]>([]);
   let activityYear = ref('0');
 
-  const updateHeatMap = async (year) => {
+  const updateHeatMap = async (year: string) => {
     activityYear.value = year;
     await getVirtualData(year);
     setOption();
   };
 
-  const getVirtualData = async (year) => {
+  const getVirtualData = async (year: string) => {
     // 读取data
     let result = await reqActivityMap(year);
     if (result.code == 200) {
       let data2 = result.data;
-      let newData = [];
-      data2.forEach((item) => {
+      let newData: any[] = [];
+      data2.forEach((item: any) => {
         let newItem = [];
         newItem.push(item.date);
         newItem.push(item.count);
@@ -73,7 +79,7 @@
     const myChart = proxy.$echarts.init(heatMap.value);
     myChart.setOption({
       tooltip: {
-        formatter: function (params) {
+        formatter: function (params: any) {
           return params.value[0] + ' : ' + params.value[1];
         },
       },
@@ -132,37 +138,42 @@
 </script>
 
 <style lang="scss" scoped>
-  .box {
-    height: 40%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .about {
+  .card {
+    width: 800px;
+
+    .heat-map-container {
+      height: 180px;
       width: 700px;
-      height: 200px;
-    }
-    .select-year {
-      margin-left: 20px;
-      width: 100px;
-      height: 200px;
+      border-radius: 5px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      .select-year-scroll {
-        height: 100px;
-        .scrollbar-demo-item {
-          width: 90px;
-          height: 25px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #9da19e;
-          border-radius: 5px;
-          background-color: rgba(212, 241, 221, 0.2);
-          cursor: pointer;
-        }
-        .scrollbar-demo-item-active {
-          background-color: rgba(98, 124, 107, 0.2);
+      .heat-map {
+        width: 700px;
+        height: 180px;
+      }
+      .select-year {
+        margin-left: 20px;
+        width: 100px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        .select-year-scroll {
+          height: 100px;
+          .scrollbar-demo-item {
+            width: 90px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #9da19e;
+            border-radius: 5px;
+            background-color: rgba(212, 241, 221, 0.2);
+            cursor: pointer;
+          }
+          .scrollbar-demo-item-active {
+            background-color: rgba(98, 124, 107, 0.2);
+          }
         }
       }
     }
