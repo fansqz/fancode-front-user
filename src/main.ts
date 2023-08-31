@@ -38,6 +38,9 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
 import Particles from 'particles.vue3';
 
+// 热力图
+import * as echarts from 'echarts';
+
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,
 });
@@ -57,4 +60,5 @@ app.use(pinia);
 app.use(VueMarkdownEditor);
 app.use(VMdPreview);
 app.use(Particles);
+app.config.globalProperties.$echarts = echarts;
 app.mount('#app');

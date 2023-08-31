@@ -35,6 +35,12 @@ export const constantRoute = [
         name: 'register',
         component: () => import('@/views/register/index.vue'),
       },
+      // 个人中心
+      {
+        path: '/myprofile',
+        name: 'myprofile',
+        component: () => import('@/views/my-profile/index.vue'),
+      },
     ],
   },
   {

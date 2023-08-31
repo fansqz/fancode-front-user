@@ -6,8 +6,8 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>我的</el-dropdown-item>
-          <el-dropdown-item>设置</el-dropdown-item>
+          <el-dropdown-item @click="changeRoute('myprofile')">个人中心</el-dropdown-item>
+          <el-dropdown-item>信息修改</el-dropdown-item>
           <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -25,6 +25,13 @@
   const logout = () => {
     userStore.userLogout();
     $router.push({ path: '/login', query: { redirect: $route.path } });
+  };
+
+  const changeRoute = (routeName: string, params = {}) => {
+    if ($route.name === routeName) {
+      return;
+    }
+    $router.push({ name: routeName, params });
   };
 </script>
 
