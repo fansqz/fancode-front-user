@@ -22,8 +22,8 @@
 </template>
 
 <script setup lang="ts">
-  import Logo from './logo/index.vue';
-  import Setting from './setting/index.vue';
+  import Logo from './logo.vue';
+  import Setting from './setting.vue';
   import { useRouter, useRoute } from 'vue-router';
   let $router = useRouter();
   let $route = useRoute();
