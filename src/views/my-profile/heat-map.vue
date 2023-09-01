@@ -64,7 +64,7 @@
       let previousYearDate = new Date(
         currentYear - 1,
         currentDate.getMonth() + 1,
-        currentDate.getDate(),
+        currentDate.getDate() + 1,
       );
       let start = previousYearDate.toISOString().slice(0, 10);
       range.push(start);
@@ -140,22 +140,17 @@
 <style lang="scss" scoped>
   .card {
     width: 800px;
-
+    border-radius: 5px;
     .heat-map-container {
       height: 180px;
-      width: 700px;
-      border-radius: 5px;
       display: flex;
-      justify-content: center;
-      align-items: center;
       .heat-map {
-        width: 700px;
+        width: 600px;
         height: 180px;
       }
       .select-year {
         margin-left: 20px;
-        width: 100px;
-        height: 200px;
+        height: 180px;
         display: flex;
         align-items: center;
         .select-year-scroll {

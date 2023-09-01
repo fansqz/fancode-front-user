@@ -41,6 +41,12 @@ export const constantRoute = [
         name: 'myprofile',
         component: () => import('@/views/my-profile/index.vue'),
       },
+      // 账号设置
+      {
+        path: '/account/setting',
+        name: 'accountSetting',
+        component: () => import('@/views/account-setting/index.vue'),
+      },
     ],
   },
   {

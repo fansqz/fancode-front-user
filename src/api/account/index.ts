@@ -32,6 +32,15 @@ export const reqResetPassword = (data: any): Promise<any> => {
   });
 };
 
+// 上传头像
+export const reqUploadAvatar = (data: any): Promise<any> => {
+  return request.post(API.AVATAR_URL, toFormData(data), {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
 // 修改密码
 export const reqChangePassword = (data: any): Promise<any> => {
   return request.post(API.PASSWORD_URL, toFormData(data), {
