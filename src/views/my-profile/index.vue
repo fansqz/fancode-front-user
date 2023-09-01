@@ -2,9 +2,7 @@
   <div class="profile-container">
     <el-card class="user-message">
       <div class="message1">
-        <div class="avatar">
-          <img :src="accountInfo.avatar" />
-        </div>
+        <img :src="accountInfo.avatar" class="avatar" />
         <div class="base-info">
           <div class="base-info-item1">
             {{ accountInfo.username }}
@@ -20,7 +18,7 @@
       </div>
     </el-card>
     <div class="active">
-      <HeatMap class="heat-map"></HeatMap>
+      <HeatMap></HeatMap>
       <SubmiteActive></SubmiteActive>
     </div>
   </div>
@@ -73,14 +71,15 @@
     width: 100%;
     box-sizing: border-box;
     display: flex;
-    padding: 50px 150px;
+    padding: 50px 200px;
     .user-message {
       height: 575px;
-      width: 240px;
+      width: 250px;
       box-sizing: border-box;
       border-radius: 5px;
       padding: 10px;
       .message1 {
+        width: 250px;
         display: flex;
         .avatar {
           height: 80px;

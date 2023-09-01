@@ -182,7 +182,7 @@
     align-items: center;
     .card {
       height: 90%;
-      width: 90%;
+      width: 70%;
       .account-form {
         padding: 10px 20px;
         .avatar-uploader {
