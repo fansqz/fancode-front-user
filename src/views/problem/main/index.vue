@@ -9,9 +9,17 @@
     <pane>
       <splitpanes horizontal>
         <pane>
-          <Editor v-model="userCode" />
+          <!--代码编辑区域-->
+          <Editor
+            v-model="userCode"
+            v-model:codeType="codeType"
+            v-model:languages="languages"
+            v-model:language="language"
+            @typeChange="typeChange"
+          />
         </pane>
         <pane>
+          <!--控制台-->
           <Console
             v-model="inputCase"
             :errorMessage="errorMessage"
@@ -34,18 +42,25 @@
   import ProblemDescription from './problem-description/index.vue';
   import Editor from './editor/index.vue';
   import Console from './console/index.vue';
-  import { reqProblem, reqUserCode } from '@/api/problem';
+  import { reqProblem, reqProblemTemplateCode } from '@/api/problem';
   import { reqExecute, reqSubmit } from '@/api/judge';
-
   const props = defineProps(['problemNumber']);
   let problem = reactive({
     id: 0,
     name: '',
+    number: '',
+    languages: '',
     description: '',
   });
   let problemDescriptionContent = ref();
   // 用户代码
   let userCode = ref('');
+  // 编程类型
+  let codeType = ref('core_code');
+  // 编程语言
+  let language = ref('');
+  // 可选的编程语言
+  let languages = ref<string[]>([]);
   // 输入用例
   let inputCase = ref('');
   // 错误信息
@@ -64,17 +79,26 @@
     if (result.code == 200) {
       problem = result.data;
       problemDescriptionContent.value = problem.description;
+      languages.value = problem.languages.split(',').filter((value) => value != '');
+      language.value = languages.value[0];
     }
     // 读取用户代码
-    result = await reqUserCode(number);
+    result = await reqProblemTemplateCode(number, language.value, codeType.value);
     if (result.code == 200) {
       userCode.value = result.data;
     }
   };
   load();
 
+  // 执行
   const execute = async () => {
-    let result = await reqExecute(problem.id, userCode.value, inputCase.value);
+    let result = await reqExecute({
+      problemID: problem.id,
+      code: userCode.value,
+      codeType: codeType.value,
+      language: language.value,
+      input: inputCase.value,
+    });
     if (result.code == 200) {
       let data = result.data;
       outputStatus.value = data.status;
@@ -83,14 +107,27 @@
     }
   };
 
+  // 提交
   const submit = async () => {
-    let result = await reqSubmit(problem.id, userCode.value);
+    let result = await reqSubmit({
+      problemID: problem.id,
+      code: userCode.value,
+      codeType: codeType.value,
+      language: language.value,
+    });
     if (result.code == 200) {
       let data = result.data;
       outputStatus.value = data.status;
       errorMessage.value = data.errorMessage;
       expectedOutput.value = data.expectedOutput;
       userOutput.value = data.userOutput;
+    }
+  };
+
+  const typeChange = async () => {
+    let result = await reqProblemTemplateCode(problem.number, language.value, codeType.value);
+    if (result.code == 200) {
+      userCode.value = result.data;
     }
   };
 </script>

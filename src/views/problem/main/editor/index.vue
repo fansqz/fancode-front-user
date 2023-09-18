@@ -1,5 +1,30 @@
 <template>
   <div class="editor">
+    <div class="select">
+      <el-select
+        v-model="language"
+        class="m-2"
+        placeholder="Select"
+        size="small"
+        @change="typeChange"
+      >
+        <el-option v-for="item in languages" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-select
+        v-model="codeType"
+        class="m-2"
+        placeholder="Select"
+        size="small"
+        @change="typeChange"
+      >
+        <el-option
+          v-for="item in codeTypes"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </div>
     <codemirror ref="cm" v-model="value" :options="cmdOption"></codemirror>
   </div>
 </template>
@@ -23,9 +48,26 @@
     tabSize: 4,
   };
 
+  let codeTypes = [
+    {
+      label: 'acm模式',
+      value: 'acm',
+    },
+    {
+      label: '核心代码模式',
+      value: 'core_code',
+    },
+  ];
+
   // 实现数据双向绑定
-  const props = defineProps(['modelValue']);
-  const emit = defineEmits(['update:modelValue']);
+  const props = defineProps(['modelValue', 'codeType', 'language', 'languages']);
+  const emit = defineEmits([
+    'update:modelValue',
+    'update:language',
+    'update:codeType',
+    'typeChange',
+  ]);
+
   const value = computed({
     get() {
       return props.modelValue;
@@ -34,11 +76,38 @@
       emit('update:modelValue', value);
     },
   });
+
+  const language = computed({
+    get() {
+      return props.language;
+    },
+    set(value) {
+      emit('update:language', value);
+    },
+  });
+
+  const codeType = computed({
+    get() {
+      return props.codeType;
+    },
+    set(value) {
+      emit('update:codeType', value);
+    },
+  });
+
+  let typeChange = () => {
+    emit('typeChange');
+  };
 </script>
 
 <style scoped lang="scss">
   .editor {
     height: 100%;
     width: 100%;
+    .select {
+      height: 30px;
+      width: 100%;
+      background-color: $base-header-background;
+    }
   }
 </style>

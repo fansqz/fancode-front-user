@@ -14,6 +14,10 @@ export const reqProblem = (problemNumber: string): Promise<any> => {
   return request.get(API.PROBLEM_URL + `/${problemNumber}`);
 };
 
-export const reqUserCode = (problemNumber: string): Promise<any> => {
-  return request.get(API.USER_CODE_URL + `/${problemNumber}`);
+export const reqProblemTemplateCode = (
+  problemNumber: string,
+  language: string,
+  codeType: string,
+): Promise<any> => {
+  return request.get(API.USER_CODE_URL + `/${problemNumber}/${language}/${codeType}`);
 };
