@@ -25,7 +25,12 @@
         />
       </el-select>
     </div>
-    <codemirror ref="cm" v-model="value" :options="cmdOption"></codemirror>
+    <div  class="editor-content">
+      <el-scrollbar >
+        <codemirror ref="cm" v-model="value" :options="cmdOption"></codemirror>
+      </el-scrollbar>
+    </div>
+
   </div>
 </template>
 
@@ -102,12 +107,20 @@
 
 <style scoped lang="scss">
   .editor {
+    position: relative;
     height: 100%;
     width: 100%;
     .select {
+      position: absolute;
       height: 30px;
       width: 100%;
       background-color: $base-header-background;
+    }
+    .editor-content {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      height: calc(100% - 30px);
     }
   }
 </style>

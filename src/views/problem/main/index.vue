@@ -9,7 +9,7 @@
     <pane>
       <splitpanes horizontal>
         <pane>
-          <!--代码编辑区域-->
+          <!--代码编辑区域--> 
           <Editor
             v-model="userCode"
             v-model:codeType="codeType"
