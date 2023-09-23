@@ -188,7 +188,7 @@
       height: 280px;
       margin-top: calc(50vh - 240px); /* 调整偏移量 */
       background-color: #ffffff;
-      border: 1px solid #666666;
+      border: 1px solid $base-border-color;
       box-shadow: 12px 12px 2px 1px rgba(37, 218, 121, 0.2);
       padding: 20px 35px;
       .title {

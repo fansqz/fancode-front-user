@@ -42,7 +42,7 @@
     width: 100%;
     height: $base-header-height;
     background-color: $base-header-background;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $base-border-color;
     .header-left {
       position: absolute;
       height: 100%;

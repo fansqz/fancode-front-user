@@ -106,7 +106,7 @@
       height: 50px;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid $border-color;
+      border: 1px solid $base-border-color;
       background-color: rgb(255, 255, 255);
       display: flex;
       flex-direction: row-reverse;

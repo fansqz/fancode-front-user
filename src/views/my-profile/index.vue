@@ -85,7 +85,7 @@
           height: 80px;
           width: 80px;
           box-sizing: border-box;
-          border: 1px solid #666666;
+          border: 1px solid $base-border-color;
         }
         .base-info {
           display: flex;
