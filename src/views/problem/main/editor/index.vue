@@ -25,12 +25,11 @@
         />
       </el-select>
     </div>
-    <div  class="editor-content">
-      <el-scrollbar >
+    <div class="editor-content">
+      <el-scrollbar>
         <codemirror ref="cm" v-model="value" :options="cmdOption"></codemirror>
       </el-scrollbar>
     </div>
-
   </div>
 </template>
 
