@@ -22,10 +22,10 @@
       />
     </div>
     <div class="option-bottom">
-      <div class="left"> </div>
+      <div class="left"></div>
       <div class="right">
-        <el-button class="button" type="info" @click="execute" plain>运行</el-button>
-        <el-button class="button" type="success" @click="submit" plain>提交</el-button>
+        <el-button class="button-execute" type="primary" @click="execute">运行</el-button>
+        <el-button class="button-submit" type="success" @click="submit">提交</el-button>
       </div>
     </div>
   </div>
@@ -96,13 +96,18 @@
       height: 50px;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid $base-border-color;
+      border-top: 1px solid $base-border-color;
       background-color: rgb(255, 255, 255);
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
-      .button {
-        margin-right: 20px;
+      .button-execute {
+        margin-left: 30px;
+        margin-right: 10px;
+      }
+      .button-submit {
+        margin-left: 10px;
+        margin-right: 30px;
       }
     }
   }
