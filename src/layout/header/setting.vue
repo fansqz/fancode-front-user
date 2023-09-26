@@ -2,9 +2,9 @@
   <div class="setting">
     <el-dropdown :hide-on-click="false" class="user_dropdown">
       <span class="el-dropdown-link">
-        {{ userStore.username }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+        {{ getUsername() }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
       </span>
-      <template #dropdown>
+      <template #dropdown v-if="isLogged()">
         <el-dropdown-menu>
           <el-dropdown-item @click="changeRoute('myprofile')">个人中心</el-dropdown-item>
           <el-dropdown-item @click="changeRoute('accountSetting')">信息修改</el-dropdown-item>
@@ -12,7 +12,7 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <img src="@/assets/vue.svg" style="width: 24px; height: 24px" class="user_image" />
+    <img :src="getAvatar()" style="width: 24px; height: 24px" class="user-image" />
   </div>
 </template>
 
@@ -22,6 +22,19 @@
   let userStore = useUserStore();
   let $router = useRouter();
   let $route = useRoute();
+
+  const getUsername = (): string => {
+    return userStore.token ? userStore.username : '请登录' ;
+  };
+
+  const isLogged = (): boolean => {
+    return !!userStore.token;
+  };
+
+  const getAvatar = (): string => {
+    return userStore.token ?  userStore.avatar : 'src/assets/avatar/avatar.png';
+  };
+
   const logout = () => {
     userStore.userLogout();
     $router.push({ path: '/login', query: { redirect: $route.path } });
@@ -46,7 +59,7 @@
     .user_dropdown {
       padding-right: 60px;
     }
-    .user_image {
+    .user-image {
       padding: 10px;
     }
   }

@@ -34,8 +34,3 @@ export const reqRegister = (data: any): Promise<any> => {
     },
   });
 };
-
-// 获取用户信息
-export const reqUserInfo = (): Promise<any> => {
-  return request.get(API.USERINFO_URL);
-};

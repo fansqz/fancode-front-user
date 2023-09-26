@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { defineStore } from 'pinia';
-import { reqLogin, reqUserInfo } from '@/api/auth';
+import { reqLogin } from '@/api/auth';
+import { reqAccountInfo } from '@/api/account';
 
 const useUserStore = defineStore('User', {
   state: (): any => {
     return {
       token: localStorage.getItem('TOKEN'),
+      avatar: '',
       email: '',
       phone: '',
-      sex: '',
       username: '',
       loginName: '',
     };
@@ -26,11 +27,13 @@ const useUserStore = defineStore('User', {
       }
     },
     async userInfo() {
-      const result = await reqUserInfo();
+      const result = await reqAccountInfo();
       if (result.code == 200) {
+        console.log(result);
+        console.log(result.data.avatar);
+        this.avatar = result.data.avatar;
         this.username = result.data.username;
         this.email = result.data.email;
-        this.sex = result.data.email;
         this.phone = result.data.phone;
         this.loginName = result.data.loginName;
       }
@@ -39,9 +42,9 @@ const useUserStore = defineStore('User', {
       this.token = '';
       this.username = '';
       this.email = '';
-      this.sex = '';
       this.phone = '';
       this.loginName = '';
+      this.avatar = '';
       localStorage.removeItem('TOKEN');
     },
   },
