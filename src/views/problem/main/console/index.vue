@@ -1,40 +1,25 @@
 <template>
   <div class="console">
-    <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" @select="handleSelect">
-      <el-menu-item index="1">输入用例</el-menu-item>
-      <el-menu-item index="2">输出</el-menu-item>
+    <el-menu
+      :default-active="activeIndex"
+      class="select-menu"
+      mode="horizontal"
+      @select="handleSelect"
+    >
+      <el-menu-item index="input">输入用例</el-menu-item>
+      <el-menu-item index="output">输出</el-menu-item>
     </el-menu>
-    <div class="input-div" v-if="activeIndex == '1'">
-      <el-input class="input" v-model="inputCase" type="textarea" placeholder="Please input">
-      </el-input>
+    <div class="input-div" v-if="activeIndex == 'input'">
+      <Input v-model="inputCase" />
     </div>
-    <div class="output-div" v-if="activeIndex == '2'">
-      <div v-if="outputStatus == 200">
-        <el-alert title="提交成功！" type="success" show-icon />
-      </div>
-      <div v-else-if="outputStatus == 201">
-        <el-alert title="运行成功！" type="success" show-icon>
-          {{ userOutput }}
-        </el-alert>
-      </div>
-      <div v-else-if="outputStatus == 202">
-        <el-alert title="输出错误！" type="warning" show-icon>
-          输出数据:{{ userOutput }} 正确数据 {{ expectedOutput }}
-        </el-alert>
-      </div>
-      <div v-else-if="outputStatus == 204">
-        <el-alert title=" 编译出错！" type="error" show-icon>
-          {{ errorMessage }}
-        </el-alert>
-      </div>
-      <div v-else-if="outputStatus == 205">
-        <el-alert title="运行出错！" type="error" show-icon>
-          {{ errorMessage }}
-        </el-alert>
-      </div>
-      <div v-else>
-        <el-alert title="暂无输出" type="info" show-icon />
-      </div>
+    <div class="output-div" v-if="activeIndex == 'output'">
+      <Output
+        :status="status"
+        :errorMessage="errorMessage"
+        :outputStatus="outputStatus"
+        :userOutput="userOutput"
+        :expectedOutput="expectedOutput"
+      />
     </div>
     <div class="option-bottom">
       <div class="left"> </div>
@@ -48,7 +33,10 @@
 
 <script setup lang="ts">
   import { ref, computed } from 'vue';
-  let activeIndex = ref('1');
+  import Output from './output.vue';
+  import Input from './input.vue';
+  // 用于控制当前是输入界面还是输出界面
+  let activeIndex = ref('input');
 
   const props = defineProps([
     'modelValue',
@@ -56,7 +44,9 @@
     'errorMessage',
     'expectedOutput',
     'userOutput',
+    'status',
   ]);
+
   const emit = defineEmits(['update:modelValue', 'submit', 'execute']);
   // input的双向绑定
   const inputCase = computed({
@@ -74,12 +64,12 @@
 
   const submit = () => {
     emit('submit');
-    activeIndex.value = '2';
+    activeIndex.value = 'output';
   };
 
   const execute = () => {
     emit('execute');
-    activeIndex.value = '2';
+    activeIndex.value = 'output';
   };
 </script>
 
@@ -89,7 +79,7 @@
     width: 100%;
     display: flex;
     flex-flow: column;
-    .el-menu {
+    .select-menu {
       height: 30px;
     }
     .input-div {

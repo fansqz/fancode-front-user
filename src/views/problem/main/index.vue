@@ -22,6 +22,7 @@
           <!--控制台-->
           <Console
             v-model="inputCase"
+            :status="status"
             :errorMessage="errorMessage"
             :outputStatus="outputStatus"
             :userOutput="userOutput"
@@ -61,6 +62,8 @@
   let language = ref('');
   // 可选的编程语言
   let languages = ref<string[]>([]);
+  // 运行状态,1表示有结果，0表示运行中
+  let status = ref(1);
   // 输入用例
   let inputCase = ref('');
   // 错误信息
@@ -92,6 +95,7 @@
 
   // 执行
   const execute = async () => {
+    status.value = 0;
     let result = await reqExecute({
       problemID: problem.id,
       code: userCode.value,
@@ -105,10 +109,12 @@
       errorMessage.value = data.errorMessage;
       userOutput.value = data.userOutput;
     }
+    status.value = 1;
   };
 
   // 提交
   const submit = async () => {
+    status.value = 0;
     let result = await reqSubmit({
       problemID: problem.id,
       code: userCode.value,
@@ -122,6 +128,7 @@
       expectedOutput.value = data.expectedOutput;
       userOutput.value = data.userOutput;
     }
+    status.value = 1;
   };
 
   const typeChange = async () => {
