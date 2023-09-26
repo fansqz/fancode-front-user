@@ -44,7 +44,10 @@
   let submissionList = ref([]);
 
   const getSubmissionList = async () => {
-    let result = await reqSubmissionList(pageNo.value, limit.value);
+    let result = await reqSubmissionList({
+      page: pageNo.value,
+      pageSize: limit.value,
+    });
     if (result.code == 200) {
       total.value = result.data.total;
       submissionList.value = result.data.list;

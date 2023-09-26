@@ -129,7 +129,7 @@
       align-items: center;
       .select-item1 {
         width: 150px;
-        margin-left: 15px;
+        margin-left: 30px;
         margin-right: 7px;
       }
       .select-item2 {

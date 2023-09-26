@@ -24,7 +24,7 @@
   let $route = useRoute();
 
   const getUsername = (): string => {
-    return userStore.token ? userStore.username : '请登录' ;
+    return userStore.token ? userStore.username : '请登录';
   };
 
   const isLogged = (): boolean => {
@@ -32,7 +32,7 @@
   };
 
   const getAvatar = (): string => {
-    return userStore.token ?  userStore.avatar : 'src/assets/avatar/avatar.png';
+    return userStore.token ? userStore.avatar : 'src/assets/avatar/avatar.png';
   };
 
   const logout = () => {

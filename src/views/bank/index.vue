@@ -63,7 +63,10 @@
   let problemNameStyle = ref();
 
   const getProblemList = async () => {
-    let result = await reqProblemList(pageNo.value, limit.value);
+    let result = await reqProblemList({
+      page: pageNo.value,
+      pageSize: limit.value,
+    });
     if (result.code == 200) {
       total.value = result.data.total;
       problemList.value = result.data.list;

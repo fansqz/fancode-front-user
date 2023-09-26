@@ -6,8 +6,10 @@ enum API {
   SUBMISSION_LIST = '/submission/list',
 }
 
-export const reqSubmissionList = (page: number, limit: number): Promise<any> => {
-  return request.get(API.SUBMISSION_LIST + `/${page}/${limit}`);
+export const reqSubmissionList = (data: any): Promise<any> => {
+  return request.get(API.SUBMISSION_LIST, {
+    params: data,
+  });
 };
 
 // 获取用户有提交的年份

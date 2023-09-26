@@ -6,8 +6,10 @@ enum API {
   USER_CODE_URL = '/problem/code',
 }
 
-export const reqProblemList = (page: number, limit: number): Promise<any> => {
-  return request.get(API.LIST_PROBLEM_URL + `/${page}/${limit}`);
+export const reqProblemList = (data: any): Promise<any> => {
+  return request.get(API.LIST_PROBLEM_URL, {
+    params: data,
+  });
 };
 
 export const reqProblem = (problemNumber: string): Promise<any> => {
