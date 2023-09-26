@@ -2,8 +2,8 @@
   <div class="editor">
     <div class="select">
       <el-select
+        class="select-item1"
         v-model="language"
-        class="m-2"
         placeholder="Select"
         size="small"
         @change="typeChange"
@@ -11,8 +11,8 @@
         <el-option v-for="item in languages" :key="item" :label="item" :value="item" />
       </el-select>
       <el-select
+        class="select-item2"
         v-model="codeType"
-        class="m-2"
         placeholder="Select"
         size="small"
         @change="typeChange"
@@ -120,15 +120,29 @@
     width: 100%;
     .select {
       position: absolute;
-      height: 30px;
+      height: 35px;
       width: 100%;
       background-color: $base-header-background;
+      box-sizing: border-box;
+      border-bottom: 1px solid $base-border-color;
+      display: flex;
+      align-items: center;
+      .select-item1 {
+        width: 150px;
+        margin-left: 15px;
+        margin-right: 7px;
+      }
+      .select-item2 {
+        width: 150px;
+        margin-left: 7px;
+        margin-right: 15px;
+      }
     }
     .editor-content {
       position: absolute;
-      top: 30px;
+      top: 35px;
       width: 100%;
-      height: calc(100% - 30px);
+      height: calc(100% - 35px);
     }
   }
 </style>

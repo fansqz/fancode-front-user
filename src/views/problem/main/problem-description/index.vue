@@ -13,7 +13,6 @@
   watchEffect(() => {
     if (props.content != undefined) {
       content.value = props.content;
-      console.log(content.value);
     }
   });
 </script>
