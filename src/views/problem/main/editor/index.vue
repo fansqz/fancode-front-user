@@ -25,32 +25,15 @@
         />
       </el-select>
     </div>
-    <div class="editor-content">
-      <el-scrollbar>
-        <codemirror ref="cm" v-model="value" :options="cmdOption"></codemirror>
-      </el-scrollbar>
-    </div>
+    <div ref="container" class="editor-content" />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  import { Codemirror } from 'vue-codemirror';
+  import { computed, watch, onMounted, ref } from 'vue';
+  import { editor } from 'monaco-editor';
 
-  // 配置
-  let cmdOption = {
-    // 主题
-    theme: 'idea',
-    // 显示函数
-    line: true,
-    lineNumbers: true,
-    // 软换行
-    lineWrapping: true,
-    // tab宽度
-    tabSize: 4,
-  };
+  const container = ref<HTMLElement>();
 
   let codeTypes = [
     {
@@ -72,15 +55,6 @@
     'typeChange',
   ]);
 
-  const value = computed({
-    get() {
-      return props.modelValue;
-    },
-    set(value) {
-      emit('update:modelValue', value);
-    },
-  });
-
   const language = computed({
     get() {
       return props.language;
@@ -97,6 +71,41 @@
     set(value) {
       emit('update:codeType', value);
     },
+  });
+
+  onMounted(() => {
+    const myEditor = editor.create(container.value!, {
+      value: props.modelValue,
+      language: language.value,
+      automaticLayout: true,
+    });
+
+    //给父组件实时返回最新文本
+    myEditor.onDidChangeModelContent(() => {
+      const value = myEditor.getValue();
+      emit('update:modelValue', value);
+    });
+
+    // 监控value变化
+    watch(
+      () => props.modelValue,
+      (newValue: string) => {
+        if (myEditor) {
+          const value = myEditor.getValue();
+          if (newValue !== value) {
+            myEditor.setValue(newValue);
+          }
+        }
+      },
+    );
+
+    // 监视props.language的变化
+    watch(language, (newLanguage) => {
+      const model = myEditor.getModel();
+      if (model) {
+        editor.setModelLanguage(model, newLanguage);
+      }
+    });
   });
 
   let typeChange = () => {
