@@ -2,7 +2,9 @@
   <splitpanes class="default-theme main">
     <!--题目展示-->
     <pane>
-      <ProblemDescription :content="problemDescriptionContent" />
+      <el-scrollbar>
+        <ProblemDescription :content="problemDescriptionContent" />
+      </el-scrollbar>
     </pane>
 
     <!--coding-->

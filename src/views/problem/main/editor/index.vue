@@ -25,6 +25,7 @@
         />
       </el-select>
     </div>
+
     <div ref="container" class="editor-content" />
   </div>
 </template>
@@ -77,7 +78,6 @@
     const myEditor = editor.create(container.value!, {
       value: props.modelValue,
       language: language.value,
-      automaticLayout: true,
     });
 
     //给父组件实时返回最新文本
