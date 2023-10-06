@@ -17,6 +17,8 @@
         :status="status"
         :errorMessage="errorMessage"
         :outputStatus="outputStatus"
+        :caseName="caseName"
+        :caseData="caseData"
         :userOutput="userOutput"
         :expectedOutput="expectedOutput"
       />
@@ -42,6 +44,8 @@
     'modelValue',
     'outputStatus',
     'errorMessage',
+    'caseName',
+    'caseData',
     'expectedOutput',
     'userOutput',
     'status',

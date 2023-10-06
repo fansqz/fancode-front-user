@@ -25,6 +25,8 @@
             :status="status"
             :errorMessage="errorMessage"
             :outputStatus="outputStatus"
+            :caseName="caseName"
+            :caseData="caseData"
             :userOutput="userOutput"
             :expectedOutput="expectedOutput"
             @execute="execute"
@@ -64,6 +66,8 @@
   let languages = ref<string[]>([]);
   // 运行状态,1表示有结果，0表示运行中
   let status = ref(1);
+  let caseName = ref('');
+  let caseData = ref('');
   // 输入用例
   let inputCase = ref('');
   // 错误信息
@@ -125,6 +129,8 @@
       let data = result.data;
       outputStatus.value = data.status;
       errorMessage.value = data.errorMessage;
+      caseName.value = data.caseName;
+      caseData.value = data.caseData;
       expectedOutput.value = data.expectedOutput;
       userOutput.value = data.userOutput;
     }
