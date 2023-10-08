@@ -30,7 +30,6 @@
 <style scoped lang="scss">
   .container {
     border-radius: 5px;
-
     .bank-list {
       display: flex;
       .bank-item {
@@ -45,6 +44,7 @@
         margin: 10px;
         border-radius: 5px;
         background: #efeeee;
+        cursor: pointer;
         .bank-icon {
           position: absolute;
           border-radius: 5px;

@@ -9,13 +9,13 @@ export const constantRoute = [
     path: '/',
     component: () => import('@/layout/index.vue'),
     name: 'root',
-    redirect: '/problem/bank',
+    redirect: '/home',
     children: [
       {
-        // 题库
-        path: '/problem/bank',
-        name: 'bank',
-        component: () => import('@/views/bank/index.vue'),
+        // home
+        path: '/home',
+        name: 'home',
+        component: () => import('@/views/home/index.vue'),
       },
       {
         // 竞赛

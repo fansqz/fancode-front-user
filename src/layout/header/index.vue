@@ -3,7 +3,7 @@
     <div class="header_left">
       <Logo class="logo"></Logo>
       <div
-        :class="{ nav_item: true, active_item: isActiveNavItem('bank') }"
+        :class="{ nav_item: true, active_item: isActiveNavItem('home') }"
         @click="changeRoute('bank')"
       >
         题库

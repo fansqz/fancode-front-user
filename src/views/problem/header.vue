@@ -6,7 +6,7 @@
         @mouseover="returnTextStyle = 'color:blue'"
         @mouseleave="returnTextStyle = 'color:black'"
         :style="returnTextStyle"
-        @click="changeRoute('bank')"
+        @click="changeRoute('home')"
       >
         <i class="iconfont icon-left"></i>
         <pre>返回</pre>

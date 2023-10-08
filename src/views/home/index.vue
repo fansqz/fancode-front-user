@@ -17,8 +17,8 @@
           <template v-slot="{ row }">
             <pre
               @click="gotoProblem(row.number)"
-              @mouseover="problemNameStyle = 'color:blue'"
-              @mouseleave="problemNameStyle = 'color:black'"
+              @mouseover="problemNameStyle = 'color:blue;cursor:pointer'"
+              @mouseleave="problemNameStyle = 'color:black;cursor:pointer'"
               :style="problemNameStyle"
               >{{ row.name }}</pre
             >
