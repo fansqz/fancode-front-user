@@ -1,6 +1,7 @@
 <template>
   <div class="box">
-    <el-card class="box-card">
+    <BankList class="bank-list" />
+    <el-card class="problem-list">
       <el-table style="margin: 10px 0px" border :data="problemList">
         <el-table-column label="序号" width="80px" align="center" type="index" />
         <el-table-column label="状态" width="80px" align="center">
@@ -47,6 +48,7 @@
 
 <script setup lang="ts">
   import { reqProblemList } from '@/api/problem';
+  import BankList from './bank-list.vue';
   import { ref, onMounted } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
   const $route = useRoute();
@@ -103,10 +105,22 @@
 
 <style scoped lang="scss">
   .box {
-    position: absolute;
+    position: relative;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    padding: 20px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .bank-list {
+      height: 100px;
+      width: 1000px;
+      margin: 40px 100px 10px 100px;
+    }
+    .problem-list {
+      height: auto;
+      width: 1000px;
+      margin: 10px 100px 20px 100px;
+    }
   }
 </style>
