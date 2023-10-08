@@ -18,6 +18,12 @@ export const constantRoute = [
         component: () => import('@/views/home/index.vue'),
       },
       {
+        // 题库
+        path: '/bank/:bankID',
+        name: 'bank',
+        component: () => import('@/views/bank/index.vue'),
+      },
+      {
         // 竞赛
         path: '/contest',
         name: 'contest',

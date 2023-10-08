@@ -2,7 +2,12 @@
   <div class="container">
     <el-scrollbar>
       <div class="bank-list">
-        <div v-for="(item, index) in bankList" :key="index" class="bank-item">
+        <div
+          v-for="(item, index) in bankList"
+          :key="index"
+          @click="handlerBankView(item.id)"
+          class="bank-item"
+        >
           <img :src="item.icon" class="bank-icon" />
           <div class="bank-message">
             <p class="bank-name">{{ item.name }}</p>
@@ -17,8 +22,18 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
   import { reqAllBankList } from '@/api/bank';
-  let bankList = ref<any[]>([]);
+  import { useRouter } from 'vue-router';
+  let $router = useRouter();
 
+  let bankList = ref<any[]>([]);
+  const handlerBankView = (bankID: string) => {
+    $router.push({
+      name: 'bank',
+      params: {
+        bankID: bankID,
+      },
+    });
+  };
   onMounted(async () => {
     let result = await reqAllBankList();
     if (result.code == 200) {

@@ -120,7 +120,6 @@
     .problem-list {
       height: auto;
       width: 1000px;
-      margin: 10px 100px 20px 100px;
     }
   }
 </style>
