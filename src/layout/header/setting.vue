@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
     <img :src="getAvatar()" class="avatar" />
-    <el-dropdown class="user_dropdown" >
+    <el-dropdown class="user_dropdown">
       <span class="el-dropdown-link">
         {{ getUsername() }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
       </span>
@@ -59,9 +59,9 @@
     flex-direction: row;
     .avatar {
       padding: 20px;
-      width: 24px; 
+      width: 24px;
       height: 24px;
-      border-radius: 50%
+      border-radius: 50%;
     }
     .user_dropdown {
       cursor: pointer;
