@@ -1,6 +1,7 @@
 <template>
   <div class="setting">
-    <el-dropdown :hide-on-click="false" class="user_dropdown">
+    <img :src="getAvatar()" class="avatar" />
+    <el-dropdown class="user_dropdown" >
       <span class="el-dropdown-link">
         {{ getUsername() }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
       </span>
@@ -12,7 +13,6 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <img :src="getAvatar()" style="width: 24px; height: 24px" class="user-image" />
   </div>
 </template>
 
@@ -55,12 +55,17 @@
     height: 100%;
     width: 100%;
     align-items: center;
-    flex-direction: row-reverse;
-    .user_dropdown {
-      padding-right: 60px;
+    justify-content: end;
+    flex-direction: row;
+    .avatar {
+      padding: 20px;
+      width: 24px; 
+      height: 24px;
+      border-radius: 50%
     }
-    .user-image {
-      padding: 10px;
+    .user_dropdown {
+      cursor: pointer;
+      padding-right: 40px;
     }
   }
 </style>
