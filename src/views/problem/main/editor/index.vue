@@ -1,29 +1,34 @@
 <template>
   <div class="editor">
-    <div class="select">
-      <el-select
-        class="select-item1"
-        v-model="language"
-        placeholder="Select"
-        size="small"
-        @change="typeChange"
-      >
-        <el-option v-for="item in languages" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select
-        class="select-item2"
-        v-model="codeType"
-        placeholder="Select"
-        size="small"
-        @change="typeChange"
-      >
-        <el-option
-          v-for="item in codeTypes"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
+    <div class="menu">
+      <div class="left">
+        <el-select
+          class="language-select"
+          v-model="language"
+          placeholder="Select"
+          size="small"
+          @change="typeChange"
+        >
+          <el-option v-for="item in languages" :key="item" :label="item" :value="item" />
+        </el-select>
+        <el-select
+          class="code-type-select"
+          v-model="codeType"
+          placeholder="Select"
+          size="small"
+          @change="typeChange"
+        >
+          <el-option
+            v-for="item in codeTypes"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+      <div class="right">
+        <el-button type="info" icon="RefreshRight" @click="reloadCode" text />
+      </div>
     </div>
 
     <div ref="container" class="editor-content" />
@@ -54,6 +59,7 @@
     'update:language',
     'update:codeType',
     'typeChange',
+    'reloadCode',
   ]);
 
   const language = computed({
@@ -108,8 +114,12 @@
     });
   });
 
-  let typeChange = () => {
+  const typeChange = () => {
     emit('typeChange');
+  };
+
+  const reloadCode = () => {
+    emit('reloadCode');
   };
 </script>
 
@@ -118,24 +128,30 @@
     position: relative;
     height: 100%;
     width: 100%;
-    .select {
-      position: absolute;
-      height: 35px;
-      width: 100%;
-      background-color: $base-header-background;
-      box-sizing: border-box;
-      border-bottom: 1px solid $base-border-color;
-      display: flex;
-      align-items: center;
-      .select-item1 {
-        width: 150px;
-        margin-left: 30px;
-        margin-right: 7px;
+    .menu {
+      .left {
+        position: absolute;
+        height: 35px;
+        width: 100%;
+        background-color: $base-header-background;
+        box-sizing: border-box;
+        border-bottom: 1px solid $base-border-color;
+        display: flex;
+        align-items: center;
+        .language-select {
+          width: 150px;
+          margin-left: 30px;
+          margin-right: 7px;
+        }
+        .code-type-select {
+          width: 150px;
+          margin-left: 7px;
+          margin-right: 15px;
+        }
       }
-      .select-item2 {
-        width: 150px;
-        margin-left: 7px;
-        margin-right: 15px;
+      .right {
+        position: absolute;
+        right: 10px;
       }
     }
     .editor-content {

@@ -18,6 +18,7 @@
             v-model:language="userCode.language"
             v-model:languages="languages"
             @typeChange="typeChange"
+            @reloadCode="reloadCode"
           />
         </pane>
         <pane>
@@ -136,6 +137,13 @@
   };
 
   const typeChange = async () => {
+    let result = await reqProblemTemplateCode(problem.id, userCode.language, userCode.codeType);
+    if (result.code == 200) {
+      userCode.code = result.data;
+    }
+  };
+
+  const reloadCode = async () => {
     let result = await reqProblemTemplateCode(problem.id, userCode.language, userCode.codeType);
     if (result.code == 200) {
       userCode.code = result.data;
