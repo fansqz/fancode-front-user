@@ -7,9 +7,9 @@
         <el-table-column label="状态" width="80px" align="center">
           <template v-slot="{ row }">
             <el-icon>
-              <SuccessFilled v-if="row.state == 1" style="color: rgb(29, 187, 29)" />
-              <RefreshRight v-if="row.state == 0" style="color: rgb(255, 255, 0)" />
-              <QuestionFilled v-if="row.state == -1" style="color: rgb(142, 144, 142)" />
+              <SuccessFilled v-if="row.status == 2" class="success-icon" />
+              <RefreshRight v-if="row.status == 1" class="in-progress-icon" />
+              <QuestionFilled v-if="row.status == 0" class="not-started-icon" />
             </el-icon>
           </template>
         </el-table-column>
@@ -120,6 +120,15 @@
     .problem-list {
       height: auto;
       width: 1000px;
+      .success-icon {
+        color: $sucess-color;
+      }
+      .in-progress-icon {
+        color: $warn-color;
+      }
+      .not-started-icon {
+        color: $info-color;
+      }
     }
   }
 </style>
