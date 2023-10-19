@@ -20,8 +20,9 @@
         </el-form-item>
         <el-form-item label="性别" label-width="100px ">
           <el-radio-group v-model="account.sex">
-            <el-radio border :label="0">女</el-radio>
+            <el-radio border :label="2">女</el-radio>
             <el-radio border :label="1">男</el-radio>
+            <el-radio border :label="0">未设置</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="出生日期" label-width="100px">
