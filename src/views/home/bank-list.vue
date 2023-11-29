@@ -58,7 +58,7 @@
         border: 1px solid #eeeeee;
         box-shadow: 0px 0px 10px rgb(228, 227, 227);
         overflow: hidden;
-        
+
         cursor: pointer;
 
         .bank-icon {

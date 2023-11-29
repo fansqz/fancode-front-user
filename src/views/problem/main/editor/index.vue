@@ -20,7 +20,11 @@
           size="small"
           @change="typeChange"
         >
-          <el-option v-for="item in codeTypes" :key="item.value" :label="item.label" :value="item.value"
+          <el-option
+            v-for="item in codeTypes"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
           />
         </el-select>
       </div>
@@ -122,14 +126,13 @@
 
     // 如果语言列表发生了改变修改selectedLanguage
     watch(
-        () => props.languages,
-        (newValue: string[]) => {
-          language.value = newValue[0];
-          reloadCode();
-        }
-      )
+      () => props.languages,
+      (newValue: string[]) => {
+        language.value = newValue[0];
+        reloadCode();
+      },
+    );
   });
-
 </script>
 
 <style scoped lang="scss">

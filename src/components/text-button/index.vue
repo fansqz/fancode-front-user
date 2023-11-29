@@ -3,8 +3,9 @@
     class="button"
     @mouseover="isHovered = true"
     @mouseleave="isHovered = false"
-    :class="{ 'hovered': isHovered }"
-  >{{ text }}</pre>
+    :class="{ hovered: isHovered }"
+    >{{ text }}</pre
+  >
 </template>
 
 <script setup lang="ts">

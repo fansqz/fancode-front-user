@@ -15,7 +15,7 @@
         </el-table-column>
         <el-table-column label="题目名称" align="center">
           <template v-slot="{ row }">
-            <TextButton @click="gotoProblem(row.number)" :text="row.name"/>
+            <TextButton @click="gotoProblem(row.number)" :text="row.name" />
           </template>
         </el-table-column>
         <el-table-column label="难度" width="100px" align="center">
