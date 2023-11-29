@@ -59,6 +59,7 @@
     description: '',
   });
   let problemDescriptionContent = ref();
+
   // 用户代码
   let userCode = reactive({
     code: '',
@@ -67,6 +68,7 @@
   });
   // 可选的编程语言
   let languages = ref<string[]>([]);
+  
   // 运行状态,1表示有结果，0表示运行中
   let status = ref(1);
   let caseName = ref('');
@@ -136,6 +138,7 @@
     status.value = 1;
   };
 
+  // 题目类型修改时需要重新获取模板代码
   const typeChange = async () => {
     let result = await reqProblemTemplateCode(problem.id, userCode.language, userCode.codeType);
     if (result.code == 200) {
@@ -143,6 +146,7 @@
     }
   };
 
+  // 点击重新获取题目时的方法
   const reloadCode = async () => {
     let result = await reqProblemTemplateCode(problem.id, userCode.language, userCode.codeType);
     if (result.code == 200) {

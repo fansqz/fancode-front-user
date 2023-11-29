@@ -2,6 +2,7 @@
   <div class="editor">
     <div class="menu">
       <div class="left">
+        <!--语言选择-->
         <el-select
           class="language-select"
           v-model="language"
@@ -11,6 +12,7 @@
         >
           <el-option v-for="item in languages" :key="item" :label="item" :value="item" />
         </el-select>
+        <!--变成类型选择-->
         <el-select
           class="code-type-select"
           v-model="codeType"
@@ -18,11 +20,7 @@
           size="small"
           @change="typeChange"
         >
-          <el-option
-            v-for="item in codeTypes"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+          <el-option v-for="item in codeTypes" :key="item.value" :label="item.label" :value="item.value"
           />
         </el-select>
       </div>
@@ -79,6 +77,15 @@
       emit('update:codeType', value);
     },
   });
+  codeType.value = codeTypes[1].value;
+
+  const typeChange = () => {
+    emit('typeChange');
+  };
+
+  const reloadCode = () => {
+    emit('reloadCode');
+  };
 
   onMounted(() => {
     const myEditor = editor.create(container.value!, {
@@ -112,15 +119,17 @@
         editor.setModelLanguage(model, newLanguage);
       }
     });
+
+    // 如果语言列表发生了改变修改selectedLanguage
+    watch(
+        () => props.languages,
+        (newValue: string[]) => {
+          language.value = newValue[0];
+          reloadCode();
+        }
+      )
   });
 
-  const typeChange = () => {
-    emit('typeChange');
-  };
-
-  const reloadCode = () => {
-    emit('reloadCode');
-  };
 </script>
 
 <style scoped lang="scss">

@@ -61,18 +61,20 @@
         height: $base-header-height;
       }
       .nav_item {
-        width: 80px;
+        width: 35px;
         height: $base-header-height;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        color: rgb(33, 201, 89);
+        margin: 0px 10px;
+        color: #999999;
       }
       .active_item {
         box-sizing: border-box;
-        font-weight: 600;
-        border-bottom: 2px solid #666666;
+        font-weight: 500;
+        color: #333333;
+        border-bottom: 3px solid #333333;
       }
     }
     .header_right {

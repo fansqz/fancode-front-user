@@ -44,22 +44,23 @@
 
 <style scoped lang="scss">
   .container {
-    border-radius: 5px;
     .bank-list {
       display: flex;
+      justify-content: space-between;
       .bank-item {
         position: relative;
         flex-shrink: 0;
         display: flex;
         align-items: center;
-        justify-content: center;
-        text-align: center;
-        width: 230px;
+        width: 220px;
         height: 80px;
-        margin: 10px;
         border-radius: 5px;
-        background: #efeeee;
+        border: 1px solid #eeeeee;
+        box-shadow: 0px 0px 10px rgb(228, 227, 227);
+        overflow: hidden;
+        
         cursor: pointer;
+
         .bank-icon {
           position: absolute;
           border-radius: 5px;

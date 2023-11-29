@@ -15,13 +15,7 @@
         </el-table-column>
         <el-table-column label="题目名称" align="center">
           <template v-slot="{ row }">
-            <pre
-              @click="gotoProblem(row.number)"
-              @mouseover="problemNameStyle = 'color:blue;cursor:pointer'"
-              @mouseleave="problemNameStyle = 'color:black;cursor:pointer'"
-              :style="problemNameStyle"
-              >{{ row.name }}</pre
-            >
+            <TextButton @click="gotoProblem(row.number)" :text="row.name"/>
           </template>
         </el-table-column>
         <el-table-column label="难度" width="100px" align="center">
@@ -60,9 +54,6 @@
   let limit = ref<number>(10);
   let total = ref<number>(0);
   let problemList = ref([]);
-
-  // 题目名称的样式
-  let problemNameStyle = ref();
 
   const getProblemList = async () => {
     let result = await reqProblemList({

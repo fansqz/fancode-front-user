@@ -25,6 +25,7 @@
     }
   };
 
+  // 读取题目，比如题目名称等
   const load = async () => {
     problemNumber.value = getProblemNumber();
     let problem;
