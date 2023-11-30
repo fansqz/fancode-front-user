@@ -64,6 +64,7 @@
     'reloadCode',
   ]);
 
+  // 选择的语言
   const language = computed({
     get() {
       return props.language;
@@ -73,6 +74,7 @@
     },
   });
 
+  // code类型
   const codeType = computed({
     get() {
       return props.codeType;
@@ -81,7 +83,6 @@
       emit('update:codeType', value);
     },
   });
-  codeType.value = codeTypes[1].value;
 
   const typeChange = () => {
     emit('typeChange');
@@ -123,15 +124,6 @@
         editor.setModelLanguage(model, newLanguage);
       }
     });
-
-    // 如果语言列表发生了改变修改selectedLanguage
-    watch(
-      () => props.languages,
-      (newValue: string[]) => {
-        language.value = newValue[0];
-        reloadCode();
-      },
-    );
   });
 </script>
 
