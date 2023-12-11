@@ -14,7 +14,6 @@
           <!--代码编辑区域-->
           <Editor
             v-model="userCode.code"
-            v-model:codeType="userCode.codeType"
             v-model:language="userCode.language"
             v-model:languages="languages"
             @typeChange="typeChange"
@@ -63,7 +62,6 @@
   // 用户代码
   let userCode = reactive({
     code: '',
-    codeType: '',
     language: '',
   });
   // 可选的编程语言
@@ -96,7 +94,6 @@
     result = await reqUserCode(problem.id);
     if (result.code == 200) {
       userCode.code = result.data.code;
-      userCode.codeType = result.data.codeType;
       userCode.language = result.data.language;
     }
   };
@@ -140,7 +137,7 @@
 
   // 题目类型修改时需要重新获取模板代码
   const typeChange = async () => {
-    let result = await reqProblemTemplateCode(problem.id, userCode.language, userCode.codeType);
+    let result = await reqProblemTemplateCode(problem.id, userCode.language);
     if (result.code == 200) {
       userCode.code = result.data;
     }
@@ -148,7 +145,7 @@
 
   // 点击重新获取题目时的方法
   const reloadCode = async () => {
-    let result = await reqProblemTemplateCode(problem.id, userCode.language, userCode.codeType);
+    let result = await reqProblemTemplateCode(problem.id, userCode.language);
     if (result.code == 200) {
       userCode.code = result.data;
     }

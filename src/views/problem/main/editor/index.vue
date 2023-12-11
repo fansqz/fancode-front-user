@@ -12,21 +12,6 @@
         >
           <el-option v-for="item in languages" :key="item" :label="item" :value="item" />
         </el-select>
-        <!--变成类型选择-->
-        <el-select
-          class="code-type-select"
-          v-model="codeType"
-          placeholder="Select"
-          size="small"
-          @change="typeChange"
-        >
-          <el-option
-            v-for="item in codeTypes"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
       </div>
       <div class="right">
         <el-button type="info" icon="RefreshRight" @click="reloadCode" text />
@@ -43,26 +28,9 @@
 
   const container = ref<HTMLElement>();
 
-  let codeTypes = [
-    {
-      label: 'acm模式',
-      value: 'acm',
-    },
-    {
-      label: '核心代码模式',
-      value: 'core_code',
-    },
-  ];
-
   // 实现数据双向绑定
-  const props = defineProps(['modelValue', 'codeType', 'language', 'languages']);
-  const emit = defineEmits([
-    'update:modelValue',
-    'update:language',
-    'update:codeType',
-    'typeChange',
-    'reloadCode',
-  ]);
+  const props = defineProps(['modelValue', 'language', 'languages']);
+  const emit = defineEmits(['update:modelValue', 'update:language', 'typeChange', 'reloadCode']);
 
   // 选择的语言
   const language = computed({
@@ -71,16 +39,6 @@
     },
     set(value) {
       emit('update:language', value);
-    },
-  });
-
-  // code类型
-  const codeType = computed({
-    get() {
-      return props.codeType;
-    },
-    set(value) {
-      emit('update:codeType', value);
     },
   });
 
@@ -146,11 +104,6 @@
           width: 150px;
           margin-left: 30px;
           margin-right: 7px;
-        }
-        .code-type-select {
-          width: 150px;
-          margin-left: 7px;
-          margin-right: 15px;
         }
       }
       .right {

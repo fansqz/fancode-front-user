@@ -22,10 +22,12 @@
     </div>
     <div v-else-if="outputStatus == 203">
       <el-alert title="编译出错！" type="warning" show-icon />
+      <br />
       <el-alert type="warning">{{ errorMessage }}</el-alert>
     </div>
     <div v-else-if="outputStatus == 204">
       <el-alert title="运行出错！" type="error" show-icon />
+      <br />
       <el-alert type="warning">{{ errorMessage }}</el-alert>
     </div>
     <div v-else>
