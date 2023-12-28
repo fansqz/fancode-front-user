@@ -45,7 +45,7 @@
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
   import ProblemDescription from './problem-description/index.vue';
-  import Editor from './editor/index.vue';
+  import Editor from '@/components/code-editor/index.vue';
   import Console from './console/index.vue';
   import { reqProblem, reqProblemTemplateCode } from '@/api/problem';
   import { reqExecute, reqSubmit, reqUserCode } from '@/api/judge';
