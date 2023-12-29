@@ -66,11 +66,13 @@
     activeIndex.value = key;
   };
 
+  // 提交
   const submit = () => {
     emit('submit');
     activeIndex.value = 'output';
   };
 
+  // 执行
   const execute = () => {
     emit('execute');
     activeIndex.value = 'output';

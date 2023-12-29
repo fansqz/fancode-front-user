@@ -1,9 +1,9 @@
 <template>
   <pre
     class="button"
-    @mouseover="style = 'color:blue'"
-    @mouseleave="style = 'color:#4089ef'"
-    :style="style"
+    @mouseover="isHovered = true"
+    @mouseleave="isHovered = false"
+    :class="{ hovered: isHovered }"
     >{{ text }}</pre
   >
 </template>
@@ -11,11 +11,16 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   defineProps(['text']);
-  let style = ref('color:#4089ef');
+  const isHovered = ref(false);
 </script>
 
 <style scoped lang="scss">
   .button {
     cursor: pointer;
+    color: #333333;
+  }
+
+  .hovered {
+    color: #4499ee;
   }
 </style>
