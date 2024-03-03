@@ -11,13 +11,13 @@
     <pane>
       <splitpanes horizontal>
         <pane>
+          <!--选择语言或者主题区域-->
+          <EditorSelector class="editor-switcher"/>
           <!--代码编辑区域-->
           <Editor
-            v-model="userCode.code"
-            v-model:language="userCode.language"
-            v-model:languages="languages"
-            @typeChange="typeChange"
-            @reloadCode="reloadCode"
+            class="editor"
+            :value="value"
+            :options="{}"
           />
         </pane>
         <pane>
@@ -41,14 +41,19 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive, ref } from 'vue';
+  import { reactive, ref, toRef } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
   import ProblemDescription from './problem-description/index.vue';
-  import Editor from '@/components/code-editor/index.vue';
+  import Editor from '@/components/code-editor/editor/index.vue';
+  import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from './console/index.vue';
-  import { reqProblem, reqProblemTemplateCode } from '@/api/problem';
+  import { reqProblem } from '@/api/problem';
   import { reqExecute, reqSubmit, reqUserCode } from '@/api/judge';
+  import { storeToRefs } from 'pinia';
+  import useDebugStore from '@/store/modules/debug.ts';
+
+
   const props = defineProps(['problemNumber']);
   let problem = reactive({
     id: '',
@@ -59,13 +64,9 @@
   });
   let problemDescriptionContent = ref();
 
-  // 用户代码
-  let userCode = reactive({
-    code: '',
-    language: '',
-  });
-  // 可选的编程语言
-  let languages = ref<string[]>([]);
+  let debugStore = useDebugStore();
+
+  let { value, languages, language } = storeToRefs(debugStore);
 
   // 运行状态,1表示有结果，0表示运行中
   let status = ref(1);
@@ -93,8 +94,8 @@
     // 读取用户代码
     result = await reqUserCode(problem.id);
     if (result.code == 200) {
-      userCode.code = result.data.code;
-      userCode.language = result.data.language;
+      value.value = result.data.code;
+      language.value = result.data.language;
     }
   };
   load();
@@ -105,7 +106,8 @@
     let result = await reqExecute({
       problemID: problem.id,
       input: inputCase.value,
-      ...userCode,
+      userCode: value.value,
+      language: language.value,
     });
     if (result.code == 200) {
       let data = result.data;
@@ -121,7 +123,8 @@
     status.value = 0;
     let result = await reqSubmit({
       problemID: problem.id,
-      ...userCode,
+      userCode: value.value,
+      language: language.value,
     });
     if (result.code == 200) {
       let data = result.data;
@@ -135,26 +138,21 @@
     status.value = 1;
   };
 
-  // 题目类型修改时需要重新获取模板代码
-  const typeChange = async () => {
-    let result = await reqProblemTemplateCode(problem.id, userCode.language);
-    if (result.code == 200) {
-      userCode.code = result.data;
-    }
-  };
-
-  // 点击重新获取题目时的方法
-  const reloadCode = async () => {
-    let result = await reqProblemTemplateCode(problem.id, userCode.language);
-    if (result.code == 200) {
-      userCode.code = result.data;
-    }
-  };
 </script>
 
 <style scoped lang="scss">
   .main {
     position: relative;
     height: calc(100vh - $base-header-height);
+    .editor-switcher {
+      position: relative;
+      height: 35px;
+      width: 100%;
+    }
+    .editor{
+      position: relative;
+      height: calc(100% - 35px);
+      width: 100%;
+    }
   }
 </style>
