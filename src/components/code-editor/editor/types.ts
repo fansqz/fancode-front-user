@@ -1,4 +1,4 @@
-import { editor, languages } from 'monaco-editor';
+import { editor } from 'monaco-editor';
 import { Ref } from 'vue';
 
 // editor实例
@@ -15,7 +15,7 @@ export type VsCode = {
   // 目标元素
   target: Ref<HTMLElement | undefined>;
   // 调试的文件内容
-  value: Ref<string>;
+  code: Ref<string>;
   // ===========以下是可选的===============
   // 是否第一行只读
   firstLineReadOnly?: boolean;

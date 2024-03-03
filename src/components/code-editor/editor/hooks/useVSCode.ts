@@ -18,7 +18,7 @@ export const useVsCode = (vscode: VsCode) => {
   return new Promise((resolve) => {
     let {
       target,
-      value,
+      code,
       firstLineReadOnly,
       readonly = false,
       onContentChanged,
@@ -39,7 +39,7 @@ export const useVsCode = (vscode: VsCode) => {
         target.value,
         getConfigs({
           language: debugStore.language,
-          value: value.value,
+          value: code.value,
           readOnly: readonly,
           theme: debugStore.theme,
         }),
@@ -47,9 +47,9 @@ export const useVsCode = (vscode: VsCode) => {
 
       // 监控value的变化
       watch(
-        () => value.value,
+        () => code.value,
         () => {
-          editUtils.setContent(editorInstance, value.value);
+          editUtils.setContent(editorInstance, code.value);
         },
       );
 
@@ -118,7 +118,7 @@ export const useVsCode = (vscode: VsCode) => {
 
       // 监控内容修改，执行回调
       editorInstance.onDidChangeModelContent(
-        debounce(async (e) => {
+        debounce(async () => {
           // 使用防抖，在不输入内容的时候进行保存
           onContentChanged?.(editorInstance.getValue());
         }, 600),

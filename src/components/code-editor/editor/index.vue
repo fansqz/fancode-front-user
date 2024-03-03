@@ -7,13 +7,13 @@
   import { useVsCode } from './hooks/useVSCode';
 
   const props = defineProps<{
-    value: string;
+    code: string;
     options: {
       readonly?: boolean;
       firstLineEdit?: boolean;
     };
   }>();
-  const { options, value } = toRefs(props);
+  const { options, code } = toRefs(props);
   const emits = defineEmits<{
     // 修改文本事件
     (event: 'onChangeValue', value: string, type: 'input' | 'blur'): void;
@@ -48,7 +48,7 @@
 
   const editor = ref<HTMLElement>();
   useVsCode({
-    value: value,
+    code: code,
     target: editor,
     firstLineReadOnly: !options.value.firstLineEdit,
     readonly: options.value.readonly,

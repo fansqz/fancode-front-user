@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 // 使用 Pinia 创建一个状态存储
 const useDebugStore = defineStore('debug', {
   state: () => ({
-    value: '',
+    // 编辑器代码
+    code: '',
     // 题目id
     problemId: '',
     // 主题

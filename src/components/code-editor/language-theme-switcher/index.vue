@@ -32,7 +32,7 @@
   let debugStore = useDebugStore();
   // 主题列表
   let themeList = ref(getAllTheme());
-  let { theme, value, language, languages, problemId } = storeToRefs(debugStore);
+  let { theme, code, language, languages, problemId } = storeToRefs(debugStore);
   theme.value = 'monokai-light';
 
   const languageChange = () => {
@@ -43,7 +43,7 @@
   const reloadCode = async () => {
     let result = await reqProblemTemplateCode(problemId.value, language.value);
     if (result.code == 200) {
-      value.value = result.data;
+      code.value = result.data;
     }
   };
 </script>

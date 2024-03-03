@@ -14,7 +14,7 @@
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
-          <Editor class="editor" :value="value" :options="{}" />
+          <Editor class="editor" :code="code" :options="{}" @onChangeValue="handleCodeChange"/>
         </pane>
         <pane>
           <!--控制台-->
@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive, ref, toRef } from 'vue';
+  import { reactive, ref, onMounted,watch } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
   import ProblemDescription from './problem-description/index.vue';
@@ -60,9 +60,8 @@
   let problemDescriptionContent = ref();
 
   let debugStore = useDebugStore();
-
-  let { value, languages, language } = storeToRefs(debugStore);
-
+  let { code, languages, language } = storeToRefs(debugStore);
+  let userCode = '';
   // 运行状态,1表示有结果，0表示运行中
   let status = ref(1);
   let caseName = ref('');
@@ -89,7 +88,7 @@
     // 读取用户代码
     result = await reqUserCode(problem.id);
     if (result.code == 200) {
-      value.value = result.data.code;
+      code.value = result.data.code;
       language.value = result.data.language;
     }
   };
@@ -101,7 +100,7 @@
     let result = await reqExecute({
       problemID: problem.id,
       input: inputCase.value,
-      userCode: value.value,
+      userCode: userCode,
       language: language.value,
     });
     if (result.code == 200) {
@@ -118,7 +117,7 @@
     status.value = 0;
     let result = await reqSubmit({
       problemID: problem.id,
-      userCode: value.value,
+      userCode: userCode,
       language: language.value,
     });
     if (result.code == 200) {
@@ -132,6 +131,17 @@
     }
     status.value = 1;
   };
+
+  const handleCodeChange = (value: string, type: string) => {
+    userCode = value;
+  };
+
+  onMounted(() => {
+    watch(() => code.value,
+    () => {
+      userCode = code.value;
+    });
+  });
 </script>
 
 <style scoped lang="scss">
