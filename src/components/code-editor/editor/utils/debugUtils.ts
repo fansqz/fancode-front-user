@@ -23,7 +23,10 @@ export const highlightLine = (model: Model | null, lineNum: number) => {
 };
 
 // 取消高亮指定行
-export const cancelHighlightLine = (model: Model | null, decorationsIdentifier: string | string[]) => {
+export const cancelHighlightLine = (
+  model: Model | null,
+  decorationsIdentifier: string | string[],
+) => {
   if (!model) {
     return;
   }
@@ -42,16 +45,20 @@ export const debug = (debugInfo: DebugInfo) => {
   const { instance, model } = debugInfo;
   let { oldModel } = debugInfo;
   // 如果model和oldModel都是null，则认为不执行任何操作
-  if (!model && !oldModel) { return; }
-  if (!oldModel) { oldModel = model; }
+  if (!model && !oldModel) {
+    return;
+  }
+  if (!oldModel) {
+    oldModel = model;
+  }
   const currentLine = Number(debugInfo.currentline ?? 0);
   const previousLine = Number(debugInfo.preline ?? 0);
   // 如果之前有行被高亮，现在取消该行的高亮
   if (oldModel && !oldModel.isDisposed() && previousLine && previousLine > 0) {
     const decorations = oldModel?.getLineDecorations(previousLine);
     const decorationsIds = decorations
-      .filter(item => item.options.className?.includes('debug-line'))
-      .map(item => item.id);
+      .filter((item) => item.options.className?.includes('debug-line'))
+      .map((item) => item.id);
     cancelHighlightLine(oldModel, decorationsIds);
   }
   // 高亮当前行，并且让它在编辑器视图中居中

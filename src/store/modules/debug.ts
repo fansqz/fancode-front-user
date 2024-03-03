@@ -1,19 +1,17 @@
-
 import { defineStore } from 'pinia';
-
 
 // 使用 Pinia 创建一个状态存储
 const useDebugStore = defineStore('debug', {
   state: () => ({
-    value: "",
+    value: '',
     // 题目id
-    problemId: "",
+    problemId: '',
     // 主题
-    theme: "monokai-light",
+    theme: 'monokai-light',
     // 判断当前标签页编程题目的语言类型
-    language: "go",
+    language: 'go',
     // 可选的语言
-    languages: ["c"],
+    languages: ['c'],
     // 判断用户是否处于调试状态
     isDebug: false,
     // 判断是否调试结束的标志
@@ -24,10 +22,8 @@ const useDebugStore = defineStore('debug', {
     // 出现错误的行位置
     currentErrorLocation: [],
   }),
-  actions: {
-  },
-  getters: {
-  }
+  actions: {},
+  getters: {},
 });
 
 export default useDebugStore;

@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="editor"
-    class="editor"
-  />
+  <div ref="editor" class="editor" />
 </template>
 
 <script setup lang="ts">
@@ -39,7 +36,9 @@
   };
 
   const onSetBP = (breakpoints?: number[]) => {
-    if (breakpoints) { emits('onSetBP', breakpoints); }
+    if (breakpoints) {
+      emits('onSetBP', breakpoints);
+    }
   };
 
   const onChangeBP = (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => {
@@ -62,15 +61,15 @@
 </script>
 
 <style scoped lang="scss">
-@import "./style/breakPoint.scss";
-@import "./style/debug.scss";
-.editor {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  max-height: 100% !important;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
+  @import './style/breakPoint.scss';
+  @import './style/debug.scss';
+  .editor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-height: 100% !important;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 </style>

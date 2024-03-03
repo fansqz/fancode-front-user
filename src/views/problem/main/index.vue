@@ -12,13 +12,9 @@
       <splitpanes horizontal>
         <pane>
           <!--选择语言或者主题区域-->
-          <EditorSelector class="editor-switcher"/>
+          <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
-          <Editor
-            class="editor"
-            :value="value"
-            :options="{}"
-          />
+          <Editor class="editor" :value="value" :options="{}" />
         </pane>
         <pane>
           <!--控制台-->
@@ -52,7 +48,6 @@
   import { reqExecute, reqSubmit, reqUserCode } from '@/api/judge';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug.ts';
-
 
   const props = defineProps(['problemNumber']);
   let problem = reactive({
@@ -137,7 +132,6 @@
     }
     status.value = 1;
   };
-
 </script>
 
 <style scoped lang="scss">
@@ -149,7 +143,7 @@
       height: 35px;
       width: 100%;
     }
-    .editor{
+    .editor {
       position: relative;
       height: calc(100% - 35px);
       width: 100%;

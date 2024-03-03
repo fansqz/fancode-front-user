@@ -17,7 +17,9 @@ export function setBreakPoint(editorInstance: EditorInstance, onHandleBP: OnHand
 
   editorInstance.onMouseUp((e) => {
     model = editorInstance.getModel();
-    if (!model) { return; }
+    if (!model) {
+      return;
+    }
     if (e.target.type === editor.MouseTargetType.GUTTER_GLYPH_MARGIN) {
       // 点击了断点，删除存在透明度的断点
       if (!e.target.position) {
@@ -65,49 +67,53 @@ export function setBreakPoint(editorInstance: EditorInstance, onHandleBP: OnHand
       }
     }
   });
-  editorInstance.onMouseMove(throttle((e: editor.IEditorMouseEvent) => {
-    // 离开上述所有区域，删除存在透明度的断点
-    model = editorInstance.getModel();
-    if (!model) { return; }
-    removeTDecorations(model);
-    switch (e.target.type) {
-      // 移动到行号区域
-      case editor.MouseTargetType.GUTTER_LINE_NUMBERS: {
-        if (!e.target.position) {
-          return;
-        }
-        const { lineNumber } = e.target.position;
-        const decorations = model.getLineDecorations(lineNumber);
-        // {decorations}为什么是数组？因为一行可以有多个Decoration
-        const existBP = existBreakPoint(decorations);
-        if (!existBP) {
-          // 不存在断点就可以显示存在透明度的断点
-          model.deltaDecorations([], [getBreakPointOption(lineNumber, 'hide')]);
-        }
-        // 存在断点，无事发生
-        break;
+  editorInstance.onMouseMove(
+    throttle((e: editor.IEditorMouseEvent) => {
+      // 离开上述所有区域，删除存在透明度的断点
+      model = editorInstance.getModel();
+      if (!model) {
+        return;
       }
-      // 移动到断点区域
-      case editor.MouseTargetType.GUTTER_GLYPH_MARGIN: {
-        // 暂时先这样写吧
-        if (!e.target.position) {
-          return;
+      removeTDecorations(model);
+      switch (e.target.type) {
+        // 移动到行号区域
+        case editor.MouseTargetType.GUTTER_LINE_NUMBERS: {
+          if (!e.target.position) {
+            return;
+          }
+          const { lineNumber } = e.target.position;
+          const decorations = model.getLineDecorations(lineNumber);
+          // {decorations}为什么是数组？因为一行可以有多个Decoration
+          const existBP = existBreakPoint(decorations);
+          if (!existBP) {
+            // 不存在断点就可以显示存在透明度的断点
+            model.deltaDecorations([], [getBreakPointOption(lineNumber, 'hide')]);
+          }
+          // 存在断点，无事发生
+          break;
         }
-        const { lineNumber } = e.target.position;
-        const decorations = model.getLineDecorations(lineNumber);
-        const existBP = existBreakPoint(decorations);
-        if (!existBP) {
-          // 不存在断点就可以显示存在透明度的断点
-          model.deltaDecorations([], [getBreakPointOption(lineNumber, 'hide')]);
+        // 移动到断点区域
+        case editor.MouseTargetType.GUTTER_GLYPH_MARGIN: {
+          // 暂时先这样写吧
+          if (!e.target.position) {
+            return;
+          }
+          const { lineNumber } = e.target.position;
+          const decorations = model.getLineDecorations(lineNumber);
+          const existBP = existBreakPoint(decorations);
+          if (!existBP) {
+            // 不存在断点就可以显示存在透明度的断点
+            model.deltaDecorations([], [getBreakPointOption(lineNumber, 'hide')]);
+          }
+          // 存在断点，无事发生
+          break;
         }
-        // 存在断点，无事发生
-        break;
+        default: {
+          removeTDecorations(model);
+        }
       }
-      default: {
-        removeTDecorations(model);
-      }
-    }
-  }, 100));
+    }, 100),
+  );
 }
 
 /**
@@ -117,7 +123,9 @@ export function setBreakPoint(editorInstance: EditorInstance, onHandleBP: OnHand
  */
 export function updateBreakPoint(editorInstance: EditorInstance) {
   const model = editorInstance.getModel();
-  if (!model) { return []; }
+  if (!model) {
+    return [];
+  }
   const decorations = model.getAllDecorations();
   const breakpoints = getBreakPointLineNumber(decorations);
   return breakpoints;

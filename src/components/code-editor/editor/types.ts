@@ -32,7 +32,6 @@ export type VsCode = {
   onChangeBP?: (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => void;
 };
 
-
 export type DebugInfo = {
   model: Model | null;
   oldModel?: Model | null;

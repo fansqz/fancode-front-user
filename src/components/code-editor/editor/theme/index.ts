@@ -24,7 +24,6 @@ export const changeTheme = async (theme: string, editorInstance: EditorInstance)
   editorInstance.updateOptions({ theme });
 };
 
-
 /**
  * 获取所有的主题列表
  * @returns 所有的主题列表

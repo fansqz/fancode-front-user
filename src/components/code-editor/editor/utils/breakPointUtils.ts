@@ -10,7 +10,7 @@ import { Model } from '../types';
 export const existBreakPoint = (decorations: editor.IModelDecoration[], transparent = false) => {
   const str = transparent ? 'hide' : 'active';
   // 判断这行有没有断点
-  return decorations.some(item => item.options.glyphMarginClassName?.split(' ').includes(str));
+  return decorations.some((item) => item.options.glyphMarginClassName?.split(' ').includes(str));
 };
 
 // TODO: 重构下，封装抽取这几个字符串，不好维护
@@ -25,8 +25,8 @@ export const getBreakPointsIds = (
     all: 'breakpoint',
   };
   return decorations
-    .filter(item => item.options.glyphMarginClassName?.split(' ').includes(map[options]))
-    .map(item => item.id);
+    .filter((item) => item.options.glyphMarginClassName?.split(' ').includes(map[options]))
+    .map((item) => item.id);
 };
 
 /**
@@ -35,7 +35,9 @@ export const getBreakPointsIds = (
  * @description 删除所有存在透明度的断点
  */
 export const removeTDecorations = (model?: Model | null) => {
-  if (!model) { return; }
+  if (!model) {
+    return;
+  }
   const allDecorations = model.getAllDecorations();
   const TBPIds = getBreakPointsIds(allDecorations, 'TBP');
   model.deltaDecorations(TBPIds, []);
@@ -57,7 +59,7 @@ export const checkBreakPoints = (lineStr: string) => {
     /\*\/[\s(){}]*$/, // 5."*/"之后全为空白符或者括号
   ];
   // every是一个false终止，some是一个true终止
-  return patterns.every(value => !value.test(lineStr));
+  return patterns.every((value) => !value.test(lineStr));
 };
 
 /**
@@ -83,7 +85,8 @@ export const getBreakPointOption = (lineNumber: number, mode: 'hide' | 'active' 
  * @param decorations 通过model.getAllDecorations获取
  * @returns lineNumber数组
  */
-export const getBreakPointLineNumber = (decorations: editor.IModelDeltaDecoration[]) => decorations
-  .filter(decoration => decoration.options.glyphMarginClassName?.split(' ').includes('active'))
-  // 这里startLineNumber和endLineNumber都是一样的，因为new Range(lineNumber, 1, lineNumber, 1)
-  .map(decoration => decoration.range.startLineNumber);
+export const getBreakPointLineNumber = (decorations: editor.IModelDeltaDecoration[]) =>
+  decorations
+    .filter((decoration) => decoration.options.glyphMarginClassName?.split(' ').includes('active'))
+    // 这里startLineNumber和endLineNumber都是一样的，因为new Range(lineNumber, 1, lineNumber, 1)
+    .map((decoration) => decoration.range.startLineNumber);
