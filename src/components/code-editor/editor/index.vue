@@ -5,6 +5,14 @@
 <script setup lang="ts">
   import { ref, toRefs } from 'vue';
   import { useVsCode } from './hooks/useVSCode';
+  import useDebugStore from '@/store/modules/debug';
+  import { storeToRefs } from 'pinia';
+  import { reqAddBreakpoint, reqRemoveBreakpoint } from '@/api/debug';
+
+
+  const debugStore = useDebugStore();
+  // 调试的一些结构
+  const { debugData, isDebug, key } = storeToRefs(debugStore);
 
   const props = defineProps<{
     code: string;
@@ -24,6 +32,8 @@
   }>();
 
   const onContentChanged = (value: string) => {
+    // 内容发送修改时先更新代码
+    code.value = value;
     emits('onChangeValue', value, 'input');
   };
 
@@ -41,9 +51,19 @@
     }
   };
 
-  const onChangeBP = (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => {
+  const onUpdateBP = (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => {
     onSetBP(breakpoints);
     emits('onUpdateBP', lineNum, mode);
+    // 断点更新
+    debugData.value.breakpoints = breakpoints;
+    // 如果处于调试中，发送添加断点的命令
+    if (isDebug.value === true) {
+      if (mode == 'add') {
+        reqAddBreakpoint(key.value, [lineNum]);
+      } else {
+        reqRemoveBreakpoint(key.value, [lineNum]);
+      }
+    };
   };
 
   const editor = ref<HTMLElement>();
@@ -56,7 +76,7 @@
     onEditorBlur,
     onCtrlS,
     onSetBP,
-    onChangeBP,
+    onUpdateBP,
   });
 </script>
 

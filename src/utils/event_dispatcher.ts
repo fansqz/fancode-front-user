@@ -1,6 +1,6 @@
-type EventListenerCallback<T = any> = (data: T) => void;
+export type EventListenerCallback<T = any> = (data: T) => void;
 
-class EventDispatcher<T = any> {
+export class EventDispatcher<T = any> {
   private listeners: { [event: string]: EventListenerCallback<T>[] };
   constructor() {
     this.listeners = {};
@@ -30,10 +30,3 @@ class EventDispatcher<T = any> {
     }
   }
 }
-
-// 使用示例
-const dispatcher = new EventDispatcher<string>();
-dispatcher.on('myEvent', (data) => {
-  console.log(data); // data 类型为 string
-});
-dispatcher.dispatch('myEvent', 'Hello, World!');

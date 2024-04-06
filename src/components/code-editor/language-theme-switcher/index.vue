@@ -27,12 +27,12 @@
   import { storeToRefs } from 'pinia';
   import { getAllTheme } from '../editor/theme';
   import { reqProblemTemplateCode } from '@/api/problem';
-  import useDebugStore from '@/store/modules/debug';
+  import useCodingStore from '@/store/modules/coding';
 
-  let debugStore = useDebugStore();
+  let codingStore = useCodingStore();
   // 主题列表
   let themeList = ref(getAllTheme());
-  let { theme, code, language, languages, problemId } = storeToRefs(debugStore);
+  let { theme, code, editorUpdateCode, language, languages, problemId } = storeToRefs(codingStore);
   theme.value = 'monokai-light';
 
   const languageChange = () => {
@@ -44,6 +44,7 @@
     let result = await reqProblemTemplateCode(problemId.value, language.value);
     if (result.code == 200) {
       code.value = result.data;
+      editorUpdateCode.value = true;
     }
   };
 </script>

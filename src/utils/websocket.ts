@@ -1,4 +1,5 @@
 import useUserStore from '@/store/modules/user';
+import { EventDispatcher,EventListenerCallback } from './event_dispatcher';
 
 const dispatcher = new EventDispatcher<string>();
 let ws: WebSocket | null = null;
@@ -18,11 +19,11 @@ function closeWebSocket() {
 /**
  * 初始化websocket
  */
-function initWebSocket() {
+function initWebSocket(fun:()=> any) {
   if (ws) {
     return;
   } // 连接存在，退出初始化操作
-  ws = new WebSocket(import.meta.env.VITE_SERVE + import.meta.env.VITE_APP_BASE_API + '/ws');
+  ws = new WebSocket(`${import.meta.env.VITE_WS_SERVE}/${user.token}`);
 
   // 消息响应
   ws.onmessage = (e) => {
@@ -32,18 +33,21 @@ function initWebSocket() {
   // 连接关闭
   ws.onclose = (e) => {
     console.log(`WS关闭 ${new Date()}`, e);
-    dispatcher.dispatch('onmessage', 'websocket close');
+    ws = null;
+    dispatcher.dispatch('onclose', 'websocket close');
   };
 
   // 连接打开
   ws.onopen = (e) => {
+    fun();
     console.log(`WS开启 ${new Date()}`, e);
     dispatcher.dispatch('onopent', 'websocket open');
-    // 发送心跳数据
+    // ws成功连接时，将当前的连接模式设置为ws
     heartBeat = window.setInterval(() => {
-      sendWebSocket({ type: 117 });
-      console.log('heartbeat', new Date());
-    }, 5000);
+      // 心跳包做心跳检测
+      sendWebSocket({ type: 'ping', content: null });
+      console.log('xdb-heartbeat', new Date());
+    }, 40000);
   };
 
   // 连接异常
@@ -60,27 +64,13 @@ function initWebSocket() {
  * 发送消息到websocket
  */
 function sendWebSocket(data: any) {
-  // 封装请求，加上时间戳标识
-  data.token = user.token;
-  console.log('ws 请求', data);
-  return new Promise((resolve, reject) => {
-    initWebSocket();
-    if (ws && ws.readyState === 0) {
-      setTimeout(() => {
-        if (ws && ws.readyState === ws.OPEN) {
-          ws!.send(JSON.stringify(data));
-          resolve('websocket send message success');
-        } else {
-          reject('websocket not open'); // 请求失败
-        }
-      }, 1000);
-    } else if (ws && ws.readyState === ws.OPEN) {
-      ws!.send(JSON.stringify(data));
-      resolve('websocket send message success');
-    } else {
-      reject('websocket not open'); // 请求失败
-    }
-  });
+  if (ws?.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(data));
+  } else {
+    initWebSocket(() => {
+      ws?.send(JSON.stringify(data));
+    });
+  }
 }
 
 // 注册websocket事件的监听

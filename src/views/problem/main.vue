@@ -1,0 +1,122 @@
+<template>
+  <splitpanes class="default-theme main">
+    <!--题目展示-->
+    <pane>
+      <el-scrollbar>
+        <ProblemDescription :content="problemDescriptionContent" />
+      </el-scrollbar>
+    </pane>
+
+    <!--coding-->
+    <pane>
+      <splitpanes horizontal>
+        <pane>
+          <!--选择语言或者主题区域-->
+          <EditorSelector class="editor-switcher" />
+          <!--代码编辑区域-->
+          <Editor class="editor" :code="code" :options="{}" 
+            @onChangeValue="handleCodeChange"
+            @onUpdateBP=""
+          />
+          <!--debug操作浮窗-->
+          <DebugButtonBar class="debug-button-bar"/>
+        </pane>
+        <pane>
+          <!--控制台-->
+          <Console class="console"/>
+          <!--coding-button-bar-->
+          <CodeButtonBar class="code-button-bar"/>
+        </pane>
+      </splitpanes>
+    </pane>
+  </splitpanes>
+</template>
+
+<script setup lang="ts">
+  import { reactive, ref } from 'vue';
+  import { Splitpanes, Pane } from 'splitpanes';
+  import 'splitpanes/dist/splitpanes.css';
+  import ProblemDescription from '@/components/problem-description/index.vue';
+  import Editor from '@/components/code-editor/editor/index.vue';
+  import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
+  import Console from '@/components/code-editor/console/index.vue';
+  import CodeButtonBar from '@/components/code-editor/coding-button-bar/index.vue';
+  import DebugButtonBar from '@/components/code-editor/debug-button-bar/index.vue'
+  import { reqProblem } from '@/api/problem';
+  import { reqUserCode } from '@/api/judge';
+  import { storeToRefs } from 'pinia';
+  import useCodingStore from '@/store/modules/coding.ts';
+
+  const props = defineProps(['problemNumber']);
+  let problem = reactive({
+    id: '',
+    name: '',
+    number: '',
+    languages: '',
+    description: '',
+  });
+  let problemDescriptionContent = ref();
+
+  let codingStore = useCodingStore();
+  let { code, languages, language, editorUpdateCode } = storeToRefs(codingStore);
+
+  const load = async () => {
+    let result = await reqProblem(props.problemNumber);
+    // 读取题目
+    if (result.code == 200) {
+      problem = result.data;
+      problemDescriptionContent.value = problem.description;
+      languages.value = problem.languages.split(',').filter((value) => value != '');
+    }
+    // 读取用户代码
+    result = await reqUserCode(problem.id);
+    if (result.code == 200) {
+      code.value = result.data.code;
+      editorUpdateCode.value = true;
+      language.value = result.data.language;
+    }
+  };
+  load();
+
+
+  const handleCodeChange = (value: string, type: string) => {
+  };
+
+  const handleUpdateBP = () => {
+
+  };
+
+  const startDebug = () => {
+
+  };
+
+</script>
+
+<style scoped lang="scss">
+  .main {
+    position: relative;
+    height: calc(100vh - $base-header-height);
+    .editor-switcher {
+      position: relative;
+      height: 35px;
+      width: 100%;
+    }
+    .editor {
+      position: relative;
+      height: calc(100% - 35px);
+      width: 100%;
+    }
+    .debug-button-bar {
+      right: 0%;
+      bottom: 50%;
+    }
+    .console {
+      position: relative;
+      height: calc(100% - 40px);
+    }
+    .code-button-bar {
+      position: relative;
+      height: calc(40px);
+    }
+  }
+</style>

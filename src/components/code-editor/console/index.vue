@@ -8,75 +8,40 @@
     >
       <el-menu-item index="input">输入用例</el-menu-item>
       <el-menu-item index="output">输出</el-menu-item>
+      <el-menu-item index="terminal">调试终端</el-menu-item>
     </el-menu>
     <div class="input-div" v-if="activeIndex == 'input'">
-      <Input v-model="inputCase" />
+      <Input/>
     </div>
     <div class="output-div" v-if="activeIndex == 'output'">
-      <Output
-        :status="status"
-        :errorMessage="errorMessage"
-        :outputStatus="outputStatus"
-        :caseName="caseName"
-        :caseData="caseData"
-        :userOutput="userOutput"
-        :expectedOutput="expectedOutput"
-      />
+      <Output/>
     </div>
-    <div class="option-bottom">
-      <div class="left"></div>
-      <div class="right">
-        <el-button class="button-execute" type="primary" @click="execute">运行</el-button>
-        <el-button class="button-submit" type="success" @click="submit">提交</el-button>
-      </div>
+    <div class="terminal-div" v-if="activeIndex == 'terminal'">
+      <DebugTerminal/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
+  import { ref, watch } from 'vue';
   import Output from './output.vue';
   import Input from './input.vue';
+  import DebugTerminal from './debug_terminal.vue';
+  import useCodingStore from '@/store/modules/coding';
+  import { storeToRefs } from 'pinia';
   // 用于控制当前是输入界面还是输出界面
-  let activeIndex = ref('input');
-
-  const props = defineProps([
-    'modelValue',
-    'outputStatus',
-    'errorMessage',
-    'caseName',
-    'caseData',
-    'expectedOutput',
-    'userOutput',
-    'status',
-  ]);
-
-  const emit = defineEmits(['update:modelValue', 'submit', 'execute']);
-  // input的双向绑定
-  const inputCase = computed({
-    get() {
-      return props.modelValue;
-    },
-    set(value) {
-      emit('update:modelValue', value);
-    },
-  });
-
+  const activeIndex = ref('input');
+  const codingStore = useCodingStore();
+  const { output } = storeToRefs(codingStore);
   const handleSelect = (key: string) => {
     activeIndex.value = key;
   };
-
-  // 提交
-  const submit = () => {
-    emit('submit');
+  watch(() => output, () => {
     activeIndex.value = 'output';
-  };
-
-  // 执行
-  const execute = () => {
-    emit('execute');
-    activeIndex.value = 'output';
-  };
+  },
+  {
+    deep: true
+  });
 </script>
 
 <style scoped lang="scss">
@@ -97,6 +62,10 @@
       flex: 1;
       background-color: rgb(255, 255, 255);
       padding: 15px;
+    }
+    .terminal-div {
+      flex: 1;
+      background-color: rgb(255, 255, 255);
     }
     .option-bottom {
       height: 50px;

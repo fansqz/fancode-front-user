@@ -1,7 +1,7 @@
 import { editor, Range } from 'monaco-editor';
 import throttle from 'lodash.throttle';
 import { ElMessageBox } from 'element-plus';
-import type { OnHandleBP, EditorInstance } from '../types';
+import type { onUpdateBP, EditorInstance } from '../types';
 import {
   checkBreakPoints,
   existBreakPoint,
@@ -11,7 +11,7 @@ import {
   removeTDecorations,
 } from './breakPointUtils';
 
-export function setBreakPoint(editorInstance: EditorInstance, onHandleBP: OnHandleBP | null) {
+export function setBreakPoint(editorInstance: EditorInstance, onUpdateBP?: onUpdateBP) {
   let model = editorInstance.getModel();
   removeTDecorations(model);
 
@@ -33,7 +33,7 @@ export function setBreakPoint(editorInstance: EditorInstance, onHandleBP: OnHand
         const BPIds = getBreakPointsIds(decorations, 'BP');
         model.deltaDecorations(BPIds, []);
         const allDecorations = model.getAllDecorations();
-        onHandleBP?.(getBreakPointLineNumber(allDecorations), lineNumber, 'del');
+        onUpdateBP?.(getBreakPointLineNumber(allDecorations), lineNumber, 'del');
         return;
       }
       const existTBP = existBreakPoint(decorations, true);
@@ -53,7 +53,7 @@ export function setBreakPoint(editorInstance: EditorInstance, onHandleBP: OnHand
           },
         ]);
         const allDecorations = model.getAllDecorations();
-        onHandleBP?.(getBreakPointLineNumber(allDecorations), lineNumber, 'add');
+        onUpdateBP?.(getBreakPointLineNumber(allDecorations), lineNumber, 'add');
 
         const checkBP = checkBreakPoints(model.getLinesContent()[lineNumber - 1]); // lineNumber是从1开始的
         if (!checkBP) {

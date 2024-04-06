@@ -1,11 +1,13 @@
 import { computed, onBeforeUnmount, onMounted, watch } from 'vue';
 import { editor } from 'monaco-editor';
 import useDebugStore from '@/store/modules/debug';
+import useCodingStore from '@/store/modules/coding';
 import { initTheme, changeTheme } from '../theme';
 import debounce from 'lodash.debounce';
 import { EditorInstance, VsCode } from '../types';
 import editUtils from '../utils/editUtils';
 import { debug, cancelHighlightLine, highlightLine, scrollIntoView } from '../utils/debugUtils';
+import { setBreakPoint } from '../utils/breakpoint';
 const { getConfigs } = await import('../conf');
 
 // TODO: 调试时修改代码改变高亮行，输入改变时更新断点
@@ -15,6 +17,7 @@ const { getConfigs } = await import('../conf');
  */
 export const useVsCode = (vscode: VsCode) => {
   const debugStore = useDebugStore();
+  const codingStore = useCodingStore();
   return new Promise((resolve) => {
     let {
       target,
@@ -24,6 +27,7 @@ export const useVsCode = (vscode: VsCode) => {
       onContentChanged,
       onEditorBlur,
       onCtrlS,
+      onUpdateBP,
     } = vscode;
 
     let editorInstance: EditorInstance;
@@ -38,24 +42,27 @@ export const useVsCode = (vscode: VsCode) => {
       editorInstance = editor.create(
         target.value,
         getConfigs({
-          language: debugStore.language,
+          language: codingStore.language,
           value: code.value,
           readOnly: readonly,
-          theme: debugStore.theme,
+          theme: codingStore.theme,
         }),
       );
 
       // 监控value的变化
       watch(
-        () => code.value,
+        () => codingStore.editorUpdateCode,
         () => {
-          editUtils.setContent(editorInstance, code.value);
+          if (codingStore.editorUpdateCode == true) {
+            editUtils.setContent(editorInstance, code.value);
+            codingStore.editorUpdateCode = false;
+          }
         },
       );
 
       // 监控语言变化
       watch(
-        () => debugStore.language,
+        () => codingStore.language,
         async (val) => {
           const model = editorInstance.getModel();
           if (model) {
@@ -66,7 +73,7 @@ export const useVsCode = (vscode: VsCode) => {
 
       // 监控主题变化
       watch(
-        () => debugStore.theme,
+        () => codingStore.theme,
         async (val) => {
           changeTheme(val, editorInstance);
         },
@@ -112,6 +119,9 @@ export const useVsCode = (vscode: VsCode) => {
         // 深度监听
         { deep: true },
       );
+
+      // 监控断点情况
+      setBreakPoint(editorInstance, onUpdateBP)
 
       // 成功回调
       resolve(editorInstance);

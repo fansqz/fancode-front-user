@@ -8,7 +8,7 @@ export type Model = editor.ITextModel;
 
 export type ThemeData = editor.IStandaloneThemeData;
 
-export type OnHandleBP = (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => void;
+export type onUpdateBP = (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => void;
 
 // vscode创建的请求
 export type VsCode = {
@@ -29,7 +29,7 @@ export type VsCode = {
   onCtrlS?: (value: string) => void;
   onSetBP?: (breakpoints?: number[]) => void;
   // 断点改变
-  onChangeBP?: (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => void;
+  onUpdateBP?: onUpdateBP;
 };
 
 export type DebugInfo = {
