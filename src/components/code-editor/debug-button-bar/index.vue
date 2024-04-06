@@ -13,9 +13,8 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-import ContinueButton from './debug-button-continue.vue';
-import NextButton from './debug-button-next.vue';
-import TerminateButton from './debug-button-terminate.vue';
+  import ContinueButton from './debug-button-continue.vue';
+  import NextButton from './debug-button-next.vue';
+  import TerminateButton from './debug-button-terminate.vue';
 </script>

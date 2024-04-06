@@ -1,6 +1,5 @@
 import { sendWebSocket, onWebSocketEvent } from '@/utils/websocket';
 
-
 // 启动调试
 export const reqStartDebug = (code: string, language: string) => {
   sendWebSocket({
@@ -14,10 +13,9 @@ export const reqStartDebug = (code: string, language: string) => {
   });
 };
 
-
 // 初始化监控websocket的调试功能
 export const initDebugWebsocketListen = () => {
-  onWebSocketEvent("onmessage", (data: any) => {
+  onWebSocketEvent('onmessage', (data: any) => {
     if (data.type != 'debug') {
       return;
     }

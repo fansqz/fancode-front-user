@@ -4,7 +4,9 @@
       <el-alert title="提交成功！" type="success" show-icon />
     </div>
     <div v-else-if="output.statusCode == 201">
-      <el-alert title="运行成功！" type="success" show-icon> 输出数据: {{ output.userOutput }} </el-alert>
+      <el-alert title="运行成功！" type="success" show-icon>
+        输出数据: {{ output.userOutput }}
+      </el-alert>
     </div>
     <div v-else-if="output.statusCode == 202">
       <el-alert title="输出错误！" type="warning" show-icon />
@@ -40,8 +42,8 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import useCodingStore from '@/store/modules/coding';
-const codingStore = useCodingStore();
-const { output } = storeToRefs(codingStore);
+  import { storeToRefs } from 'pinia';
+  import useCodingStore from '@/store/modules/coding';
+  const codingStore = useCodingStore();
+  const { output } = storeToRefs(codingStore);
 </script>

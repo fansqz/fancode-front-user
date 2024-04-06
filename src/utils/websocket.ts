@@ -1,5 +1,5 @@
 import useUserStore from '@/store/modules/user';
-import { EventDispatcher,EventListenerCallback } from './event_dispatcher';
+import { EventDispatcher, EventListenerCallback } from './event_dispatcher';
 
 const dispatcher = new EventDispatcher<string>();
 let ws: WebSocket | null = null;
@@ -19,7 +19,7 @@ function closeWebSocket() {
 /**
  * 初始化websocket
  */
-function initWebSocket(fun:()=> any) {
+function initWebSocket(fun: () => any) {
   if (ws) {
     return;
   } // 连接存在，退出初始化操作

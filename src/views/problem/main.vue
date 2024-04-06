@@ -14,18 +14,21 @@
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
-          <Editor class="editor" :code="code" :options="{}" 
+          <Editor
+            class="editor"
+            :code="code"
+            :options="{}"
             @onChangeValue="handleCodeChange"
             @onUpdateBP=""
           />
           <!--debug操作浮窗-->
-          <DebugButtonBar class="debug-button-bar"/>
+          <DebugButtonBar class="debug-button-bar" />
         </pane>
         <pane>
           <!--控制台-->
-          <Console class="console"/>
+          <Console class="console" />
           <!--coding-button-bar-->
-          <CodeButtonBar class="code-button-bar"/>
+          <CodeButtonBar class="code-button-bar" />
         </pane>
       </splitpanes>
     </pane>
@@ -41,7 +44,7 @@
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from '@/components/code-editor/console/index.vue';
   import CodeButtonBar from '@/components/code-editor/coding-button-bar/index.vue';
-  import DebugButtonBar from '@/components/code-editor/debug-button-bar/index.vue'
+  import DebugButtonBar from '@/components/code-editor/debug-button-bar/index.vue';
   import { reqProblem } from '@/api/problem';
   import { reqUserCode } from '@/api/judge';
   import { storeToRefs } from 'pinia';
@@ -78,18 +81,11 @@
   };
   load();
 
+  const handleCodeChange = (value: string, type: string) => {};
 
-  const handleCodeChange = (value: string, type: string) => {
-  };
+  const handleUpdateBP = () => {};
 
-  const handleUpdateBP = () => {
-
-  };
-
-  const startDebug = () => {
-
-  };
-
+  const startDebug = () => {};
 </script>
 
 <style scoped lang="scss">

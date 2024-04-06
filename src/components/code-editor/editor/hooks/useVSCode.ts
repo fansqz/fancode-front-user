@@ -121,7 +121,7 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       // 监控断点情况
-      setBreakPoint(editorInstance, onUpdateBP)
+      setBreakPoint(editorInstance, onUpdateBP);
 
       // 成功回调
       resolve(editorInstance);

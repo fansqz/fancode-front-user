@@ -18,7 +18,7 @@ const useCodingStore = defineStore('coding', {
 
     // 输入框数据
     input: '',
-    
+
     // 输出框数据
     output: {
       // status为0就是正在加载中，status为1就是加载成功
@@ -36,7 +36,6 @@ const useCodingStore = defineStore('coding', {
       // 预期输出
       expectedOutput: '',
     },
-
   }),
   actions: {},
   getters: {},

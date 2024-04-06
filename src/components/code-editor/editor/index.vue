@@ -9,7 +9,6 @@
   import { storeToRefs } from 'pinia';
   import { reqAddBreakpoint, reqRemoveBreakpoint } from '@/api/debug';
 
-
   const debugStore = useDebugStore();
   // 调试的一些结构
   const { debugData, isDebug, key } = storeToRefs(debugStore);
@@ -63,7 +62,7 @@
       } else {
         reqRemoveBreakpoint(key.value, [lineNum]);
       }
-    };
+    }
   };
 
   const editor = ref<HTMLElement>();

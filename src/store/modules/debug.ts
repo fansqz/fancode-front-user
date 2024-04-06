@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-
 // 扩展 state 以类型化各个属性，特别是breakpoints.
 interface DebugState {
   key: string;

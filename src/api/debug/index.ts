@@ -25,50 +25,65 @@ export const reqListenDebugEvent = (key: string): EventSource => {
   let baseURL = new URL(import.meta.env.VITE_APP_BASE_API, import.meta.env.VITE_SERVE);
   let debugURL = new URL(API.SSE_URL + '/' + key, baseURL);
   var source = new EventSource(debugURL);
-  return source
+  return source;
 };
 
 export const reqSendToConsole = (key: string, input: string): Promise<any> => {
-  return request.post(API.SEND_TO_CONSOLE_URL, toFormData({
-    input: input,
-    key: key,
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return request.post(
+    API.SEND_TO_CONSOLE_URL,
+    toFormData({
+      input: input,
+      key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  }); 
+  );
 };
 
 export const reqNext = (key: string): Promise<any> => {
-  return request.post(API.NEXT_URL, toFormData({
-    key: key,
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return request.post(
+    API.NEXT_URL,
+    toFormData({
+      key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 };
 
 export const reqStep = (key: string): Promise<any> => {
-  return request.post(API.STEP_URL, toFormData({
-    key: key,
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return request.post(
+    API.STEP_URL,
+    toFormData({
+      key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 };
 
 export const reqContinue = (key: string): Promise<any> => {
-  return request.post(API.STEP_URL, toFormData({
-    key: key,
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return request.post(
+    API.STEP_URL,
+    toFormData({
+      key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 };
-
 
 export const reqAddBreakpoint = (key: string, breakpoints: Number[]): Promise<any> => {
   return request.post(API.ADD_BREAKPOINTS_URL, {
@@ -85,12 +100,15 @@ export const reqRemoveBreakpoint = (key: string, breakpoints: Number[]): Promise
 };
 
 export const reqTerminate = (key: string): Promise<any> => {
-  return request.post(API.TERMINATE_URL, toFormData({
-    key: key,
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return request.post(
+    API.TERMINATE_URL,
+    toFormData({
+      key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 };
-

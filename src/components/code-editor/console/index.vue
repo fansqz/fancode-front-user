@@ -11,13 +11,13 @@
       <el-menu-item index="terminal">调试终端</el-menu-item>
     </el-menu>
     <div class="input-div" v-if="activeIndex == 'input'">
-      <Input/>
+      <Input />
     </div>
     <div class="output-div" v-if="activeIndex == 'output'">
-      <Output/>
+      <Output />
     </div>
     <div class="terminal-div" v-if="activeIndex == 'terminal'">
-      <DebugTerminal/>
+      <DebugTerminal />
     </div>
   </div>
 </template>
@@ -36,12 +36,15 @@
   const handleSelect = (key: string) => {
     activeIndex.value = key;
   };
-  watch(() => output, () => {
-    activeIndex.value = 'output';
-  },
-  {
-    deep: true
-  });
+  watch(
+    () => output,
+    () => {
+      activeIndex.value = 'output';
+    },
+    {
+      deep: true,
+    },
+  );
 </script>
 
 <style scoped lang="scss">
