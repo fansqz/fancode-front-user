@@ -1,31 +1,38 @@
 <template>
-  <div :class="{'button': true, 'button-show': buttonShow}"  
-  @mouseover="mouseover"
-  @mouseout="mouseout">
-    <i :class="{
-      'iconfont icon-indeterminate': true,
-      'able': able,
-      'unable': !able,
-    }
-    " @click="terminateDebug"></i>
+  <div
+    :class="{ button: true, 'button-show': buttonShow }"
+    @mouseover="mouseover"
+    @mouseout="mouseout"
+  >
+    <i
+      :class="{
+        'iconfont icon-indeterminate': true,
+        able: able,
+        unable: !able,
+      }"
+      @click="terminateDebug"
+    ></i>
   </div>
 </template>
 
 <script setup lang="ts">
   import { reqCloseDebugSession } from '@/api/debug/index.ts';
   import useDebugStore from '@/store/modules/debug';
-  import { ref, watch } from 'vue'; 
-  import { storeToRefs } from 'pinia';  
-import { ElMessage } from 'element-plus';
+  import { ref, watch } from 'vue';
+  import { storeToRefs } from 'pinia';
+  import { ElMessage } from 'element-plus';
 
   const debugStore = useDebugStore();
   let { isDebug } = storeToRefs(debugStore);
 
   // 判断按钮是出于可执行还是不可执行状态
   let able = ref(false);
-  watch(() => isDebug.value, () => {
-    able.value = isDebug.value;
-  });
+  watch(
+    () => isDebug.value,
+    () => {
+      able.value = isDebug.value;
+    },
+  );
 
   let buttonShow = ref(false);
   const terminateDebug = async () => {
@@ -50,7 +57,7 @@ import { ElMessage } from 'element-plus';
   const mouseout = () => {
     // 鼠标移出，隐藏按钮
     buttonShow.value = false;
-  }; 
+  };
 </script>
 
 <style scoped lang="scss">
@@ -62,7 +69,7 @@ import { ElMessage } from 'element-plus';
     justify-content: center;
     align-items: center;
     .able {
-      color:rgb(210, 57, 37);
+      color: rgb(210, 57, 37);
       transition: color 0.2s;
     }
     .unable {
@@ -73,5 +80,4 @@ import { ElMessage } from 'element-plus';
   .button-show {
     background-color: rgb(227, 227, 227);
   }
-
 </style>

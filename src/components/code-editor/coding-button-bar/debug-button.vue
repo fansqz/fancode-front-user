@@ -11,7 +11,12 @@
 <script setup lang="ts">
   import { ElMessage } from 'element-plus';
   import useCodingStore from '@/store/modules/coding';
-  import { reqCreateDebugSession, reqStart, reqListenDebugEvent, reqCloseDebugSession } from '@/api/debug/index.ts';
+  import {
+    reqCreateDebugSession,
+    reqStart,
+    reqListenDebugEvent,
+    reqCloseDebugSession,
+  } from '@/api/debug/index.ts';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
   import { listenDebugEvent } from './debug-event-listen.ts';
@@ -26,10 +31,10 @@
       let result = await reqCloseDebugSession(key.value);
       if (result.code != 200) {
         ElMessage({
-            showClose: true,
-            message: result.message,
-            type: 'error',
-          });
+          showClose: true,
+          message: result.message,
+          type: 'error',
+        });
       }
     }
     let result = await reqCreateDebugSession(language.value);
@@ -40,7 +45,12 @@
       listenDebugEvent(eventSource);
       // 发送启动调试命令
       setTimeout(async () => {
-        let result2 = await reqStart(key.value, code.value, language.value, debugStore.debugData.breakpoints);
+        let result2 = await reqStart(
+          key.value,
+          code.value,
+          language.value,
+          debugStore.debugData.breakpoints,
+        );
         if (result2.code != 200) {
           ElMessage({
             showClose: true,

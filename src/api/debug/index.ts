@@ -17,17 +17,25 @@ enum API {
 }
 
 export const reqCreateDebugSession = (language: string): Promise<any> => {
-  return request.post(API.CREATE_DEBUG_SESSION_URL, toFormData({
-    language: language,
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return request.post(
+    API.CREATE_DEBUG_SESSION_URL,
+    toFormData({
+      language: language,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 };
 
-
-export const reqStart = (key: string, code: string, language: string, breakpoints: number[]): Promise<any> => {
+export const reqStart = (
+  key: string,
+  code: string,
+  language: string,
+  breakpoints: number[],
+): Promise<any> => {
   return request.post(API.START_URL, {
     key: key,
     code: code,
