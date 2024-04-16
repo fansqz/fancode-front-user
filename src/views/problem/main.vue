@@ -81,11 +81,9 @@
   };
   load();
 
-  const handleCodeChange = (value: string, type: string) => {};
-
-  const handleUpdateBP = () => {};
-
-  const startDebug = () => {};
+  const handleCodeChange = (value: string, _type: string) => {
+    code.value = value;
+  };
 </script>
 
 <style scoped lang="scss">

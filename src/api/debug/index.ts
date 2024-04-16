@@ -2,19 +2,34 @@ import request from '@/utils/request';
 import { toFormData } from '@/utils/format';
 
 enum API {
+  CREATE_DEBUG_SESSION_URL = '/debug/session/create',
   START_URL = '/debug/start',
   SSE_URL = '/debug/sse',
   NEXT_URL = '/debug/next',
-  STEP_URL = '/debug/step',
+  STEP_IN_URL = '/debug/step/in',
+  STEP_OUT_URL = '/debug/step/out',
+  STEP_OVER_URL = '/debug/step/over',
   CONTINUE_URL = '/debug/continue',
   SEND_TO_CONSOLE_URL = '/debug/sendToConsole',
   ADD_BREAKPOINTS_URL = '/debug/addBreakpoints',
   REMOVE_BREAKPOINTS_URL = '/debug/removeBreakpoints',
-  TERMINATE_URL = '/debug/terminate',
+  CLOSE_DEBUG_SESSION_URL = '/debug/session/close',
 }
 
-export const reqStart = (code: string, language: string, breakpoints: number[]): Promise<any> => {
+export const reqCreateDebugSession = (language: string): Promise<any> => {
+  return request.post(API.CREATE_DEBUG_SESSION_URL, toFormData({
+    language: language,
+  }), {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+
+export const reqStart = (key: string, code: string, language: string, breakpoints: number[]): Promise<any> => {
   return request.post(API.START_URL, {
+    key: key,
     code: code,
     language: language,
     breakpoints: breakpoints,
@@ -43,9 +58,9 @@ export const reqSendToConsole = (key: string, input: string): Promise<any> => {
   );
 };
 
-export const reqNext = (key: string): Promise<any> => {
+export const reqStepIn = (key: string): Promise<any> => {
   return request.post(
-    API.NEXT_URL,
+    API.STEP_IN_URL,
     toFormData({
       key: key,
     }),
@@ -57,9 +72,23 @@ export const reqNext = (key: string): Promise<any> => {
   );
 };
 
-export const reqStep = (key: string): Promise<any> => {
+export const reqStepOut = (key: string): Promise<any> => {
   return request.post(
-    API.STEP_URL,
+    API.STEP_OUT_URL,
+    toFormData({
+      key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+};
+
+export const reqStepOver = (key: string): Promise<any> => {
+  return request.post(
+    API.STEP_OVER_URL,
     toFormData({
       key: key,
     }),
@@ -73,7 +102,7 @@ export const reqStep = (key: string): Promise<any> => {
 
 export const reqContinue = (key: string): Promise<any> => {
   return request.post(
-    API.STEP_URL,
+    API.CONTINUE_URL,
     toFormData({
       key: key,
     }),
@@ -99,9 +128,9 @@ export const reqRemoveBreakpoint = (key: string, breakpoints: Number[]): Promise
   });
 };
 
-export const reqTerminate = (key: string): Promise<any> => {
+export const reqCloseDebugSession = (key: string): Promise<any> => {
   return request.post(
-    API.TERMINATE_URL,
+    API.CLOSE_DEBUG_SESSION_URL,
     toFormData({
       key: key,
     }),

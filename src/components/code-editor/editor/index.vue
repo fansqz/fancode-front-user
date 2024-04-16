@@ -31,8 +31,6 @@
   }>();
 
   const onContentChanged = (value: string) => {
-    // 内容发送修改时先更新代码
-    code.value = value;
     emits('onChangeValue', value, 'input');
   };
 

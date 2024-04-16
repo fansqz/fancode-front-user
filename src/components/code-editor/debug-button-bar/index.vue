@@ -5,8 +5,10 @@
         <div class="debug-title">
           <i ref="dpt" class="fas fa-arrows-alt fa-lg" style="cursor: move" title="调试栏"></i>
         </div>
-        <ContinueButton class="debug-btn" />
-        <NextButton class="debug-btn" />
+        <StepOrContinueButton type = "continue" class="debug-btn" />
+        <StepOrContinueButton type = "step-over" class="debug-btn" />
+        <StepOrContinueButton type = "step-in" class="debug-btn" />
+        <StepOrContinueButton type = "step-out" class="debug-btn" />
         <TerminateButton class="debug-btn" />
       </div>
     </el-card>
@@ -14,7 +16,6 @@
 </template>
 
 <script setup lang="ts">
-  import ContinueButton from './debug-button-continue.vue';
-  import NextButton from './debug-button-next.vue';
+  import StepOrContinueButton from './debug-button-step-continue.vue';
   import TerminateButton from './debug-button-terminate.vue';
 </script>

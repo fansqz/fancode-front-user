@@ -11,7 +11,7 @@
 <script setup lang="ts">
   import { ElMessage } from 'element-plus';
   import useCodingStore from '@/store/modules/coding';
-  import { reqStart, reqListenDebugEvent } from '@/api/debug/index.ts';
+  import { reqCreateDebugSession, reqStart, reqListenDebugEvent, reqCloseDebugSession } from '@/api/debug/index.ts';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
   import { listenDebugEvent } from './debug-event-listen.ts';
@@ -21,15 +21,34 @@
   const { language, code } = storeToRefs(codingStore);
   let { isDebug, key } = storeToRefs(debugStore);
   const startDebug = async () => {
-    // 启动调试
-    let result = await reqStart(code.value, language.value, debugStore.debugData.breakpoints);
+    // 创建调试session
+    if (isDebug.value) {
+      let result = await reqCloseDebugSession(key.value);
+      if (result.code != 200) {
+        ElMessage({
+            showClose: true,
+            message: result.message,
+            type: 'error',
+          });
+      }
+    }
+    let result = await reqCreateDebugSession(language.value);
     if (result.code == 200) {
-      // 启动调试成功
-      isDebug.value = true;
       key.value = result.data;
       // 启动监控管道
       let eventSource = reqListenDebugEvent(key.value);
       listenDebugEvent(eventSource);
+      // 发送启动调试命令
+      setTimeout(async () => {
+        let result2 = await reqStart(key.value, code.value, language.value, debugStore.debugData.breakpoints);
+        if (result2.code != 200) {
+          ElMessage({
+            showClose: true,
+            message: result.message,
+            type: 'error',
+          });
+        }
+      }, 1000);
     } else {
       ElMessage({
         showClose: true,

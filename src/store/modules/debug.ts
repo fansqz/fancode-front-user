@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 interface DebugState {
   key: string;
   isDebug: boolean;
+  stopped: boolean;
   debugData: {
     breakpoints: number[];
     lineNum: number;
@@ -18,6 +19,8 @@ const useDebugStore = defineStore('debug', {
     key: '',
     // 判断用户是否处于调试状态
     isDebug: false,
+    // 程序暂停，到达断点或者单步调试等命令
+    stopped: false,
 
     debugData: {
       breakpoints: [],

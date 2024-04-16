@@ -14,9 +14,9 @@
   const submit = async () => {
     output.value.status = 0;
     let result = await reqSubmit({
-      problemID: problemId,
-      code: code,
-      language: language,
+      problemID: problemId.value,
+      code: code.value,
+      language: language.value,
     });
     if (result.code == 200) {
       let data = result.data;
