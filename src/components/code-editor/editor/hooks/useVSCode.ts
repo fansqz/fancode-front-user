@@ -16,17 +16,11 @@ const { getConfigs } = await import('../conf');
  * @param { VsCode } params
  */
 export const useVsCode = (vscode: VsCode) => {
-  console.log("初始化 useVsCode");
+  console.log('初始化 useVsCode');
   const debugStore = useDebugStore();
   const codingStore = useCodingStore();
   return new Promise((resolve) => {
-    let {
-      target,
-      onContentChanged,
-      onEditorBlur,
-      onCtrlS,
-      onUpdateBP,
-    } = vscode;
+    let { target, onContentChanged, onEditorBlur, onCtrlS, onUpdateBP } = vscode;
 
     let stopValueWatch: WatchStopHandle;
     let editorInstance: EditorInstance;

@@ -153,7 +153,7 @@ export const reqCloseDebugSession = (key: string): Promise<any> => {
   );
 };
 
-export const reqGetStackTrace = (key: string):Promise<any> => {
+export const reqGetStackTrace = (key: string): Promise<any> => {
   return request.post(
     API.GET_STACK_TRACN_URL,
     toFormData({
@@ -182,7 +182,7 @@ export const reqGetFrameVariables = (key: string, frameId: string): Promise<any>
   );
 };
 
-export const reqGetVariables = (key: string, reference: string):Promise<any> => {
+export const reqGetVariables = (key: string, reference: string): Promise<any> => {
   return request.post(
     API.GET_VARIABLES_URL,
     toFormData({

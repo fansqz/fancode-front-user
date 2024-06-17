@@ -45,12 +45,7 @@
       listenDebugEvent(key.value, eventSource);
       // 发送启动调试命令
       setTimeout(async () => {
-        let result2 = await reqStart(
-          key.value,
-          code.value,
-          language.value,
-          debugStore.breakpoints,
-        );
+        let result2 = await reqStart(key.value, code.value, language.value, debugStore.breakpoints);
         if (result2.code != 200) {
           ElMessage({
             showClose: true,

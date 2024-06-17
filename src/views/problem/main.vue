@@ -14,11 +14,7 @@
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
-          <Editor
-            class="editor"
-            @onChangeValue="handleCodeChange"
-            @onUpdateBP=""
-          />
+          <Editor class="editor" @onChangeValue="handleCodeChange" @onUpdateBP="" />
           <!--debug操作浮窗-->
           <DebugButtonBar class="debug-button-bar" />
         </pane>

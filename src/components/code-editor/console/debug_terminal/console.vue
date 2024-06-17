@@ -12,21 +12,22 @@
                 v-for="item in sentInputs"
                 type="success"
                 class="sent-input"
-                :closable="false">
-                <div style="white-space: pre-wrap;">{{ item }}</div>
+                :closable="false"
+              >
+                <div style="white-space: pre-wrap">{{ item }}</div>
               </el-alert>
-              <el-input class="current-input"
+              <el-input
+                class="current-input"
                 v-model="currentInput"
                 :rows="1"
                 type="textarea"
                 @keydown.enter.native="enterEvent($event)"
-                placeholder="点击回车发送, 点击ctrl+回车则换行" 
+                placeholder="点击回车发送, 点击ctrl+回车则换行"
               />
             </div>
           </div>
-
         </div>
-        <div class="output"  v-if="outputs.length != 0">
+        <div class="output" v-if="outputs.length != 0">
           <div class="left">
             <el-text>输出:</el-text>
           </div>
@@ -37,8 +38,9 @@
                 :type="item.type"
                 :title="item.title"
                 class="output"
-                :closable="false">
-                <div style="white-space: pre-wrap;">{{ item.message }}</div>
+                :closable="false"
+              >
+                <div style="white-space: pre-wrap">{{ item.message }}</div>
               </el-alert>
             </div>
           </div>
@@ -49,28 +51,28 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted } from "vue";
+  import { onMounted, onUnmounted } from 'vue';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
   import { reqSendToConsole } from '@/api/debug';
   import { ElMessage } from 'element-plus';
   import { DebugEventDispatcher } from '../../debug-event-dispatcher';
- 
+
   const debugStore = useDebugStore();
   let { key, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
-  
+
   onMounted(() => {
     // 注册一些事件
-    DebugEventDispatcher.on("launch", onLaunch);
-    DebugEventDispatcher.on("output", onOutput);
-    DebugEventDispatcher.on("compile", onCompile);
-    DebugEventDispatcher.on("connect", onConnect)
+    DebugEventDispatcher.on('launch', onLaunch);
+    DebugEventDispatcher.on('output', onOutput);
+    DebugEventDispatcher.on('compile', onCompile);
+    DebugEventDispatcher.on('connect', onConnect);
   });
   onUnmounted(() => {
-    DebugEventDispatcher.off("launch", onLaunch);
-    DebugEventDispatcher.off("output", onOutput);
-    DebugEventDispatcher.off("compile", onCompile);
-    DebugEventDispatcher.off("connect", onConnect);
+    DebugEventDispatcher.off('launch', onLaunch);
+    DebugEventDispatcher.off('output', onOutput);
+    DebugEventDispatcher.off('compile', onCompile);
+    DebugEventDispatcher.off('connect', onConnect);
   });
 
   // 监控输出
@@ -79,7 +81,7 @@
     if (outputs.value.length > 0 && outputs.value[outputs.value.length - 1].event == 'output') {
       let oldOutput = outputs.value[outputs.value.length - 1].message;
       outputs.value[outputs.value.length - 1] = {
-        ...outputs.value[outputs.value.length - 1], 
+        ...outputs.value[outputs.value.length - 1],
         message: oldOutput + data.output,
       };
     } else {
@@ -121,41 +123,38 @@
     outputs.value = [];
   };
 
-
   let enterEvent = async (event: any) => {
-      if(!event.ctrlKey){
-        // 取消
-        event.preventDefault();
-        if (!isDebug.value) {
-          ElMessage({
-            showClose: true,
-            message: '未开启调试，无法向程序发送输入',
-            type: 'info',
-          });
-          return;
-        }
-        // 发送命令给gdb
-        let result = await reqSendToConsole(key.value, currentInput.value + "\n");
-        if (result.code != 200) {
-          ElMessage({
-            showClose: true,
-            message: '发送失败',
-            type: 'error',
-          });
-        } else {
-          let inputText = currentInput.value.replace(/\r/g, '');
-          sentInputs.value.push(inputText);
-          currentInput.value = "";
-        }
-       }else{
-        currentInput.value += '\n';
+    if (!event.ctrlKey) {
+      // 取消
+      event.preventDefault();
+      if (!isDebug.value) {
+        ElMessage({
+          showClose: true,
+          message: '未开启调试，无法向程序发送输入',
+          type: 'info',
+        });
+        return;
       }
-  }
-
-
+      // 发送命令给gdb
+      let result = await reqSendToConsole(key.value, currentInput.value + '\n');
+      if (result.code != 200) {
+        ElMessage({
+          showClose: true,
+          message: '发送失败',
+          type: 'error',
+        });
+      } else {
+        let inputText = currentInput.value.replace(/\r/g, '');
+        sentInputs.value.push(inputText);
+        currentInput.value = '';
+      }
+    } else {
+      currentInput.value += '\n';
+    }
+  };
 </script>
 <style lang="scss" scoped>
-  .console{
+  .console {
     width: 100%;
     height: 100%;
     padding: 5px;
@@ -183,8 +182,8 @@
                 margin: 4px 0px;
               }
               .current-input {
-                overflow-x: hidden;  
-                overflow-y: visible;  
+                overflow-x: hidden;
+                overflow-y: visible;
                 border-color: rgba(82, 168, 236, 0.8);
               }
             }
@@ -207,10 +206,8 @@
               }
             }
           }
-
         }
       }
-
     }
   }
 </style>

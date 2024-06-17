@@ -40,7 +40,6 @@
     }
   };
 
-
   const onUpdateBP = (bps: number[], lineNum: number, mode: 'add' | 'del') => {
     onSetBP(bps);
     emits('onUpdateBP', lineNum, mode);
@@ -65,7 +64,6 @@
     onSetBP,
     onUpdateBP,
   });
-
 </script>
 
 <style scoped lang="scss">

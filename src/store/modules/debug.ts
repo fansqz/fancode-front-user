@@ -34,7 +34,7 @@ const useDebugStore = defineStore('debug', {
     // 执行的输出
     outputs: [],
     // 调试结束
-    
+
     // 出现错误的行位置
     currentErrorLocation: [],
   }),
