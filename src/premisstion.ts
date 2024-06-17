@@ -11,7 +11,6 @@ const userStore = useUserStore(pinia);
 
 // 全局前置守卫
 router.beforeEach(async (to: any, from: any, next: any) => {
-  console.log(to);
   // 顶部标题
   document.title = setting.title + '-' + to.meta.title;
   // 进度条
@@ -19,7 +18,7 @@ router.beforeEach(async (to: any, from: any, next: any) => {
   // 判断用户是否登录
   const token = userStore.token;
 
-  // 如果是login，有token则通行，没token则到登录页面
+  // 如果是login
   if (to.path == '/login') {
     if (token) {
       next({ path: '/' });
@@ -29,18 +28,13 @@ router.beforeEach(async (to: any, from: any, next: any) => {
     return;
   }
 
-  // 注册直接放行
-  if (to.path == '/register') {
-    next();
-  }
-
   // 没有token则路由到login
   if (!token) {
     next({ path: '/login', query: { redirect: to.path } });
     return;
   }
 
-  // 不是登录和注册，且token存在，则获取用户信息
+  // 获取用户名称，如果获取不到用户名称则进行获取
   const username = userStore.username;
   if (!username) {
     try {

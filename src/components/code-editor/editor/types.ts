@@ -14,13 +14,7 @@ export type onUpdateBP = (breakpoints: number[], lineNum: number, mode: 'add' | 
 export type VsCode = {
   // 目标元素
   target: Ref<HTMLElement | undefined>;
-  // 调试的文件内容
-  code: Ref<string>;
   // ===========以下是可选的===============
-  // 是否第一行只读
-  firstLineReadOnly?: boolean;
-  // 是否只读
-  readonly?: boolean;
   // 内容修改时的回调
   onContentChanged?: (value: string) => void;
   // 失去焦点的回调

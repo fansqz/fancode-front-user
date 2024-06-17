@@ -19,7 +19,7 @@
   } from '@/api/debug/index.ts';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
-  import { listenDebugEvent } from './debug-event-listen.ts';
+  import { listenDebugEvent } from '../debug-event-listen.ts';
 
   const codingStore = useCodingStore();
   const debugStore = useDebugStore();
@@ -42,14 +42,14 @@
       key.value = result.data;
       // 启动监控管道
       let eventSource = reqListenDebugEvent(key.value);
-      listenDebugEvent(eventSource);
+      listenDebugEvent(key.value, eventSource);
       // 发送启动调试命令
       setTimeout(async () => {
         let result2 = await reqStart(
           key.value,
           code.value,
           language.value,
-          debugStore.debugData.breakpoints,
+          debugStore.breakpoints,
         );
         if (result2.code != 200) {
           ElMessage({

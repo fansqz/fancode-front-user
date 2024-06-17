@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, toRefs } from 'vue';
+  import { ref } from 'vue';
   import { useVsCode } from './hooks/useVSCode';
   import useDebugStore from '@/store/modules/debug';
   import { storeToRefs } from 'pinia';
@@ -11,16 +11,8 @@
 
   const debugStore = useDebugStore();
   // 调试的一些结构
-  const { debugData, isDebug, key } = storeToRefs(debugStore);
+  const { breakpoints, isDebug, key } = storeToRefs(debugStore);
 
-  const props = defineProps<{
-    code: string;
-    options: {
-      readonly?: boolean;
-      firstLineEdit?: boolean;
-    };
-  }>();
-  const { options, code } = toRefs(props);
   const emits = defineEmits<{
     // 修改文本事件
     (event: 'onChangeValue', value: string, type: 'input' | 'blur'): void;
@@ -42,17 +34,18 @@
     emits('onChangeValue', value, 'blur');
   };
 
-  const onSetBP = (breakpoints?: number[]) => {
-    if (breakpoints) {
-      emits('onSetBP', breakpoints);
+  const onSetBP = (bps?: number[]) => {
+    if (bps) {
+      emits('onSetBP', bps);
     }
   };
 
-  const onUpdateBP = (breakpoints: number[], lineNum: number, mode: 'add' | 'del') => {
-    onSetBP(breakpoints);
+
+  const onUpdateBP = (bps: number[], lineNum: number, mode: 'add' | 'del') => {
+    onSetBP(bps);
     emits('onUpdateBP', lineNum, mode);
     // 断点更新
-    debugData.value.breakpoints = breakpoints;
+    breakpoints.value = bps;
     // 如果处于调试中，发送添加断点的命令
     if (isDebug.value === true) {
       if (mode == 'add') {
@@ -65,16 +58,14 @@
 
   const editor = ref<HTMLElement>();
   useVsCode({
-    code: code,
     target: editor,
-    firstLineReadOnly: !options.value.firstLineEdit,
-    readonly: options.value.readonly,
     onContentChanged,
     onEditorBlur,
     onCtrlS,
     onSetBP,
     onUpdateBP,
   });
+
 </script>
 
 <style scoped lang="scss">

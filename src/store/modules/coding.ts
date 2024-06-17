@@ -6,7 +6,7 @@ const useCodingStore = defineStore('coding', {
     // 编辑器代码
     code: '',
     // 是否编辑器需要更新代码
-    editorUpdateCode: false,
+    editorUpdateCode: 0,
     // 题目id
     problemId: '',
     // 主题

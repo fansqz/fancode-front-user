@@ -10,13 +10,13 @@
       <el-menu-item index="output">输出</el-menu-item>
       <el-menu-item index="terminal">调试终端</el-menu-item>
     </el-menu>
-    <div class="input-div" v-if="activeIndex == 'input'">
+    <div class="input-div" v-show="activeIndex == 'input'">
       <Input />
     </div>
-    <div class="output-div" v-if="activeIndex == 'output'">
+    <div class="output-div" v-show="activeIndex == 'output'">
       <Output />
     </div>
-    <div class="terminal-div" v-if="activeIndex == 'terminal'">
+    <div class="terminal-div" v-show="activeIndex == 'terminal'">
       <DebugTerminal />
     </div>
   </div>
@@ -26,7 +26,7 @@
   import { ref, watch } from 'vue';
   import Output from './output.vue';
   import Input from './input.vue';
-  import DebugTerminal from './debug_terminal.vue';
+  import DebugTerminal from './debug_terminal/index.vue';
   import useCodingStore from '@/store/modules/coding';
   import { storeToRefs } from 'pinia';
   // 用于控制当前是输入界面还是输出界面
@@ -53,6 +53,7 @@
     width: 100%;
     display: flex;
     flex-flow: column;
+    position: absolute;
     .select-menu {
       height: 30px;
     }
@@ -67,7 +68,9 @@
       padding: 15px;
     }
     .terminal-div {
+      position: relative;
       flex: 1;
+      height: calc(100% - 30%);
       background-color: rgb(255, 255, 255);
     }
     .option-bottom {

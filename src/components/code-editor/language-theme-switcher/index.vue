@@ -44,7 +44,7 @@
     let result = await reqProblemTemplateCode(problemId.value, language.value);
     if (result.code == 200) {
       code.value = result.data;
-      editorUpdateCode.value = true;
+      editorUpdateCode.value++;
     }
   };
 </script>

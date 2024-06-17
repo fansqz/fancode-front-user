@@ -5,11 +5,12 @@ interface DebugState {
   key: string;
   isDebug: boolean;
   stopped: boolean;
-  debugData: {
-    breakpoints: number[];
-    lineNum: number;
-  };
-  currentErrorLocation: number[]; // 假设这也是一个数字数组
+  breakpoints: number[];
+  lineNum: number;
+  sentInputs: string[];
+  currentInput: string;
+  outputs: any[];
+  currentErrorLocation: number[];
 }
 
 // 使用 Pinia 创建一个状态存储
@@ -21,11 +22,19 @@ const useDebugStore = defineStore('debug', {
     isDebug: false,
     // 程序暂停，到达断点或者单步调试等命令
     stopped: false,
+    // 断点
+    breakpoints: [],
+    // 调试停留行号
+    lineNum: 0,
 
-    debugData: {
-      breakpoints: [],
-      lineNum: 0,
-    },
+    // 已发送的input
+    sentInputs: [],
+    // 当前编辑的input
+    currentInput: '',
+    // 执行的输出
+    outputs: [],
+    // 调试结束
+    
     // 出现错误的行位置
     currentErrorLocation: [],
   }),

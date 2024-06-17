@@ -13,6 +13,9 @@ enum API {
   SEND_TO_CONSOLE_URL = '/debug/sendToConsole',
   ADD_BREAKPOINTS_URL = '/debug/addBreakpoints',
   REMOVE_BREAKPOINTS_URL = '/debug/removeBreakpoints',
+  GET_STACK_TRACN_URL = '/debug/stackTrace',
+  GET_FRAME_VARIABLES_URL = '/debug/frame/variables',
+  GET_VARIABLES_URL = '/debug/variables',
   CLOSE_DEBUG_SESSION_URL = '/debug/session/close',
 }
 
@@ -141,6 +144,50 @@ export const reqCloseDebugSession = (key: string): Promise<any> => {
     API.CLOSE_DEBUG_SESSION_URL,
     toFormData({
       key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+};
+
+export const reqGetStackTrace = (key: string):Promise<any> => {
+  return request.post(
+    API.GET_STACK_TRACN_URL,
+    toFormData({
+      key: key,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+};
+
+export const reqGetFrameVariables = (key: string, frameId: string): Promise<any> => {
+  return request.post(
+    API.GET_FRAME_VARIABLES_URL,
+    toFormData({
+      key: key,
+      frameId: frameId,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+};
+
+export const reqGetVariables = (key: string, reference: string):Promise<any> => {
+  return request.post(
+    API.GET_VARIABLES_URL,
+    toFormData({
+      key: key,
+      reference: reference,
     }),
     {
       headers: {

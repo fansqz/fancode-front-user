@@ -16,8 +16,6 @@
           <!--代码编辑区域-->
           <Editor
             class="editor"
-            :code="code"
-            :options="{}"
             @onChangeValue="handleCodeChange"
             @onUpdateBP=""
           />
@@ -61,22 +59,24 @@
   let problemDescriptionContent = ref();
 
   let codingStore = useCodingStore();
-  let { code, languages, language, editorUpdateCode } = storeToRefs(codingStore);
+  let { code, languages, language, editorUpdateCode, problemId } = storeToRefs(codingStore);
 
   const load = async () => {
     let result = await reqProblem(props.problemNumber);
+    // 添加
     // 读取题目
     if (result.code == 200) {
       problem = result.data;
       problemDescriptionContent.value = problem.description;
       languages.value = problem.languages.split(',').filter((value) => value != '');
+      problemId.value = problem.id;
     }
     // 读取用户代码
     result = await reqUserCode(problem.id);
     if (result.code == 200) {
-      code.value = result.data.code;
-      editorUpdateCode.value = true;
       language.value = result.data.language;
+      code.value = result.data.code;
+      editorUpdateCode.value++;
     }
   };
   load();

@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, onMounted, watch } from 'vue';
+import { WatchStopHandle, onBeforeUnmount, onMounted, watch } from 'vue';
 import { editor } from 'monaco-editor';
 import useDebugStore from '@/store/modules/debug';
 import useCodingStore from '@/store/modules/coding';
@@ -16,20 +16,19 @@ const { getConfigs } = await import('../conf');
  * @param { VsCode } params
  */
 export const useVsCode = (vscode: VsCode) => {
+  console.log("初始化 useVsCode");
   const debugStore = useDebugStore();
   const codingStore = useCodingStore();
   return new Promise((resolve) => {
     let {
       target,
-      code,
-      firstLineReadOnly,
-      readonly = false,
       onContentChanged,
       onEditorBlur,
       onCtrlS,
       onUpdateBP,
     } = vscode;
 
+    let stopValueWatch: WatchStopHandle;
     let editorInstance: EditorInstance;
     onMounted(async () => {
       if (!target.value) {
@@ -43,20 +42,20 @@ export const useVsCode = (vscode: VsCode) => {
         target.value,
         getConfigs({
           language: codingStore.language,
-          value: code.value,
-          readOnly: readonly,
+          value: codingStore.code,
+          readOnly: false,
           theme: codingStore.theme,
         }),
       );
 
       // 监控value的变化
-      watch(
+      stopValueWatch = watch(
         () => codingStore.editorUpdateCode,
         () => {
-          if (codingStore.editorUpdateCode == true) {
-            editUtils.setContent(editorInstance, code.value);
-            codingStore.editorUpdateCode = false;
+          if (codingStore.editorUpdateCode > 0) {
+            editorInstance?.setValue(codingStore.code);
           }
+          codingStore.editorUpdateCode = 0;
         },
       );
 
@@ -79,12 +78,10 @@ export const useVsCode = (vscode: VsCode) => {
         },
       );
 
-      const currentDebug = computed(() => debugStore.debugData);
       // 调试
       watch(
-        () => currentDebug.value.lineNum,
+        () => debugStore.lineNum,
         async (val, oldVal) => {
-          console.log('进入调试', val, oldVal);
           const model = editorInstance.getModel();
           debug({ model, currentline: val, preline: oldVal, instance: editorInstance });
         },
@@ -141,15 +138,13 @@ export const useVsCode = (vscode: VsCode) => {
 
       // 添加对ctl + s的监听
       editUtils.addSaveCodeListener(editorInstance, onCtrlS);
-
-      // 是否第一行只读
-      if (firstLineReadOnly) {
-        editUtils.firstLineReadOnly(editorInstance);
-      }
     });
 
     // 在组件即将卸载前执行，做些销毁动作
     onBeforeUnmount(() => {
+      stopValueWatch();
+      let model = editorInstance.getModel();
+      model?.dispose();
       editorInstance?.dispose();
       console.log('离开咯', editorInstance);
     });
