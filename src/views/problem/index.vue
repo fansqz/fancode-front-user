@@ -8,7 +8,7 @@
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
   import Header from './header.vue';
-  import Main from './main/index.vue';
+  import Main from './main.vue';
   import { ref } from 'vue';
   import { reqProblem } from '@/api/problem';
 

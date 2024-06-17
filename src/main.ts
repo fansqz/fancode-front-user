@@ -41,6 +41,9 @@ import Particles from 'particles.vue3';
 // 热力图
 import * as echarts from 'echarts';
 
+import { initDebugWebsocketListen } from './ws/debug';
+import { initWebSocket } from './utils/websocket';
+
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,
 });
@@ -62,3 +65,6 @@ app.use(VMdPreview);
 app.use(Particles);
 app.config.globalProperties.$echarts = echarts;
 app.mount('#app');
+
+// 初始化调试功能websocket的监控
+initDebugWebsocketListen();

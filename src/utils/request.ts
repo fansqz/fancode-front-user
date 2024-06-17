@@ -4,9 +4,9 @@ import { ElMessage } from 'element-plus';
 import useUserStore from '@/store/modules/user';
 
 const request = axios.create({
-  baseURL: import.meta.env.VITE_SERVE + import.meta.env.BASE_URL,
+  baseURL: import.meta.env.VITE_SERVE + import.meta.env.VITE_APP_BASE_API,
   // 请求超时时间
-  timeout: 5000,
+  timeout: 50000,
 });
 
 // 添加请求和响应拦截器

@@ -29,13 +29,13 @@ const useUserStore = defineStore('User', {
     async userInfo() {
       const result = await reqAccountInfo();
       if (result.code == 200) {
-        console.log(result);
-        console.log(result.data.avatar);
         this.avatar = result.data.avatar;
         this.username = result.data.username;
         this.email = result.data.email;
         this.phone = result.data.phone;
         this.loginName = result.data.loginName;
+      } else {
+        return Promise.reject(new Error(result.message));
       }
     },
     userLogout() {

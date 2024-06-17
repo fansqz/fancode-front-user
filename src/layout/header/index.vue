@@ -35,8 +35,6 @@
     $router.push({ name: routeName, params });
   };
   const isActiveNavItem = (routeName: string) => {
-    console.log($route.name);
-    console.log($route.name === routeName);
     return $route.name === routeName;
   };
 </script>
