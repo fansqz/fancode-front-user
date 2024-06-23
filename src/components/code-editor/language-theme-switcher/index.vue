@@ -26,7 +26,7 @@
   import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { getAllTheme } from '../editor/theme';
-  import { reqProblemTemplateCode } from '@/api/problem';
+  import { reqProblemTemplateCode, reqUserCode } from '@/api/problem';
   import useCodingStore from '@/store/modules/coding';
 
   let codingStore = useCodingStore();
@@ -36,12 +36,21 @@
   theme.value = 'monokai-light';
 
   const languageChange = () => {
-    reloadCode();
+    getUserCode();
   };
 
   // 重新加载代码
   const reloadCode = async () => {
     let result = await reqProblemTemplateCode(problemId.value, language.value);
+    if (result.code == 200) {
+      code.value = result.data;
+      editorUpdateCode.value++;
+    }
+  };
+
+  // 读取用户代码
+  const getUserCode = async () => {
+    let result = await reqUserCode(problemId.value, language.value);
     if (result.code == 200) {
       code.value = result.data;
       editorUpdateCode.value++;

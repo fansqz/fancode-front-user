@@ -70,16 +70,12 @@
       for (let i in variables) {
         let treeNode = {
           name: `${variables[i].name}(${variables[i].type})`,
-          id: `${reference}-${variables[i].name}`,
+          reference: variables[i].reference,
           children: [],
           isLeaf: variables[i].reference == '',
         };
         if (variables[i].value != '') {
           treeNode.name = `${treeNode.name}:${variables[i].value}`;
-        }
-        // 如果子节点不为空，重新设置id为reference
-        if (variables[i].reference != '') {
-          treeNode.id = variables[i].reference;
         }
         tree.push(treeNode);
       }

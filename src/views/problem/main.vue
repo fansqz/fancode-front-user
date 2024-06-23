@@ -39,8 +39,7 @@
   import Console from '@/components/code-editor/console/index.vue';
   import CodeButtonBar from '@/components/code-editor/coding-button-bar/index.vue';
   import DebugButtonBar from '@/components/code-editor/debug-button-bar/index.vue';
-  import { reqProblem } from '@/api/problem';
-  import { reqUserCode } from '@/api/judge';
+  import { reqProblem, reqUserCodeByProblemID, reqSaveUserCode } from '@/api/problem';
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';
 
@@ -68,7 +67,7 @@
       problemId.value = problem.id;
     }
     // 读取用户代码
-    result = await reqUserCode(problem.id);
+    result = await reqUserCodeByProblemID(problem.id);
     if (result.code == 200) {
       language.value = result.data.language;
       code.value = result.data.code;
@@ -79,7 +78,10 @@
 
   const handleCodeChange = (value: string, _type: string) => {
     code.value = value;
+    reqSaveUserCode(problem.id, language.value, value);
   };
+
+  // 监控代码变化，如果发生变化就进行
 </script>
 
 <style scoped lang="scss">

@@ -1,30 +1,36 @@
 <template>
   <div class="debug_terminal">
-    <div class="left">
-      <div class="frames_title">
-        <el-text class="frames_text">frames</el-text>
-      </div>
-      <Frames class="frames" @selectFrame="handleSelectFrame" />
-    </div>
-    <div class="right">
-      <el-menu
-        :default-active="activeIndex"
-        class="select-menu"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-menu-item index="console">console</el-menu-item>
-        <el-menu-item index="variables">variables</el-menu-item>
-      </el-menu>
-      <div class="console" v-show="activeIndex == 'console'">
-        <Console />
-      </div>
-      <div class="variables" v-show="activeIndex == 'variables'">
-        <el-scrollbar class="scrollbar">
-          <Variables ref="variablesRef" :frameId="frameId" />
-        </el-scrollbar>
-      </div>
-    </div>
+    <splitpanes>
+      <pane size="25%">
+        <div class="left">
+          <div class="frames_title">
+            <el-text class="frames_text">frames</el-text>
+          </div>
+          <Frames class="frames" @selectFrame="handleSelectFrame" />
+        </div>
+      </pane>
+      <pane size="75%">
+        <div class="right">
+          <el-menu
+            :default-active="activeIndex"
+            class="select-menu"
+            mode="horizontal"
+            @select="handleSelect"
+          >
+            <el-menu-item index="console">console</el-menu-item>
+            <el-menu-item index="variables">variables</el-menu-item>
+          </el-menu>
+          <div class="console" v-show="activeIndex == 'console'">
+            <Console />
+          </div>
+          <div class="variables" v-show="activeIndex == 'variables'">
+            <el-scrollbar class="scrollbar">
+              <Variables ref="variablesRef" :frameId="frameId" />
+            </el-scrollbar>
+          </div>
+        </div>
+      </pane>
+    </splitpanes>
   </div>
 </template>
 
@@ -33,6 +39,7 @@
   import Variables from './variables.vue';
   import Frames from './frames.vue';
   import { ref } from 'vue';
+  import { Splitpanes, Pane } from 'splitpanes';
 
   const activeIndex = ref('console');
   const frameId = ref('');
@@ -58,10 +65,10 @@
     flex-flow: row nowrap;
     position: absolute;
     .left {
-      width: 25%;
-      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
       position: relative;
-      border-right: 1px solid $base-border-color;
+      background-color: rgb(255, 255, 255);
       .frames_title {
         height: 25px;
         width: 100%;
@@ -76,9 +83,10 @@
       }
     }
     .right {
-      width: 75%;
-      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
       position: relative;
+      background-color: rgb(255, 255, 255);
       .select-menu {
         height: 25px;
         width: 100%;
