@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import { toFormData } from '@/utils/format';
 
 enum API {
   LIST_PROBLEM_URL = '/problem/list',
@@ -17,5 +18,26 @@ export const reqProblem = (problemNumber: string): Promise<any> => {
 };
 
 export const reqProblemTemplateCode = (problemID: string, language: string): Promise<any> => {
+  return request.get(API.USER_CODE_URL + `/template/${problemID}/${language}`);
+};
+
+export const reqUserCode = (problemID: string, language: string): Promise<any> => {
   return request.get(API.USER_CODE_URL + `/${problemID}/${language}`);
+};
+
+export const reqUserCodeByProblemID = (problemID: string): Promise<any> => {
+  return request.get(API.USER_CODE_URL + `/${problemID}`);
+};
+
+
+export const reqSaveUserCode = (problemID: string, language: string, code: string): Promise<any> => {
+  return request.post(API.USER_CODE_URL + "/save", toFormData({
+    code: code,
+    language: language,
+    problemID: problemID,
+  }), {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
