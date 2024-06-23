@@ -68,7 +68,7 @@
       height: 100%;
       width: 100%;
       position: relative;
-      background-color:rgb(255, 255, 255);
+      background-color: rgb(255, 255, 255);
       .frames_title {
         height: 25px;
         width: 100%;
@@ -86,7 +86,7 @@
       height: 100%;
       width: 100%;
       position: relative;
-      background-color:rgb(255, 255, 255);
+      background-color: rgb(255, 255, 255);
       .select-menu {
         height: 25px;
         width: 100%;

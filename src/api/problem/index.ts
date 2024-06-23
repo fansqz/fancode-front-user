@@ -29,15 +29,22 @@ export const reqUserCodeByProblemID = (problemID: string): Promise<any> => {
   return request.get(API.USER_CODE_URL + `/${problemID}`);
 };
 
-
-export const reqSaveUserCode = (problemID: string, language: string, code: string): Promise<any> => {
-  return request.post(API.USER_CODE_URL + "/save", toFormData({
-    code: code,
-    language: language,
-    problemID: problemID,
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+export const reqSaveUserCode = (
+  problemID: string,
+  language: string,
+  code: string,
+): Promise<any> => {
+  return request.post(
+    API.USER_CODE_URL + '/save',
+    toFormData({
+      code: code,
+      language: language,
+      problemID: problemID,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 };

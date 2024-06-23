@@ -81,7 +81,6 @@
     reqSaveUserCode(problem.id, language.value, value);
   };
 
-
   // 监控代码变化，如果发生变化就进行
 </script>
 
