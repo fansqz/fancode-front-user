@@ -19,82 +19,75 @@ import { AV_DirectedAdjoinMatrixGraph } from './dataStruct/av_DirectedAdjoinMatr
 import { AV_DuLinkList } from './dataStruct/av_DuLinkList';
 import { AV_Force } from './dataStruct/av_Force';
 import { AV_PCTree } from './dataStruct/av_PCTree';
-import {  AV_PTree } from './dataStruct/av_PTree';
-import {  AV_List } from './dataStruct/av_List';
-import { AV_Heap} from './dataStruct/av_Heap'
+import { AV_PTree } from './dataStruct/av_PTree';
+import { AV_List } from './dataStruct/av_List';
+import { AV_Heap } from './dataStruct/av_Heap';
 
-
-export const Layouts = {/*  */
-    BinaryTree: AV_BinaryTree, 
-    LinkList: AV_LinkList, 
-    Array: AV_Array,
-    ChainHashTable: AV_ChainHashTable,
-    Stack: AV_Stack,
-    LinkStack: AV_LinkStack,
-    LinkQueue: AV_LinkQueue,
-    GeneralizedList: AV_GeneralizedList,
-    HashTable: AV_HashTable,
-    SqQueue: AV_CLenQueue,
-    TriTree: AV_TriTree,
-    AdjoinMatrixGraph: AV_AdjoinMatrixGraph,
-    AdjoinTableGraph: AV_AdjoinTableGraph,
-    CLenQueue: AV_CLenQueue,
-    DirectedAdjoinTableGraph: AV_DirectedAdjoinTableGraph,
-    DirectedAdjoinMatrixGraph: AV_DirectedAdjoinMatrixGraph,
-    DuLinkList: AV_DuLinkList,
-    Force: AV_Force,
-    PCTree: AV_PCTree,
-    PTree: AV_PTree,
-    List: AV_List,
-    CTagQueue: AV_SqQueue,
-    Heap: AV_Heap
+export const Layouts = {
+  /*  */ BinaryTree: AV_BinaryTree,
+  LinkList: AV_LinkList,
+  Array: AV_Array,
+  ChainHashTable: AV_ChainHashTable,
+  Stack: AV_Stack,
+  LinkStack: AV_LinkStack,
+  LinkQueue: AV_LinkQueue,
+  GeneralizedList: AV_GeneralizedList,
+  HashTable: AV_HashTable,
+  SqQueue: AV_CLenQueue,
+  TriTree: AV_TriTree,
+  AdjoinMatrixGraph: AV_AdjoinMatrixGraph,
+  AdjoinTableGraph: AV_AdjoinTableGraph,
+  CLenQueue: AV_CLenQueue,
+  DirectedAdjoinTableGraph: AV_DirectedAdjoinTableGraph,
+  DirectedAdjoinMatrixGraph: AV_DirectedAdjoinMatrixGraph,
+  DuLinkList: AV_DuLinkList,
+  Force: AV_Force,
+  PCTree: AV_PCTree,
+  PTree: AV_PTree,
+  List: AV_List,
+  CTagQueue: AV_SqQueue,
+  Heap: AV_Heap,
 };
 
-
-
-Object.keys(Layouts).map(item => {
-    let layout = Layouts[item];
-    SV.registerLayout(item, layout);
+Object.keys(Layouts).map((item) => {
+  let layout = Layouts[item];
+  SV.registerLayout(item, layout);
 });
-
 
 export const Visualizer = SV;
 Visualizer.instance = null;
 
-
 /**
  * 临时遍历分析（用于可视化面板的左上角信息表）
- * @param {*} sources 
+ * @param {*} sources
  */
 export function FloatExternalAnalyse(sources) {
-    const externalList = {  };
+  const externalList = {};
 
-    Object.keys(sources).map(name => {
-        const group = sources[name],
-              layout = sources[name].layouter;
+  Object.keys(sources).map((name) => {
+    const group = sources[name],
+      layout = sources[name].layouter;
 
-        if(externalList[layout] === undefined && layout != undefined) {
-            externalList[layout] = [];
+    if (externalList[layout] === undefined && layout != undefined) {
+      externalList[layout] = [];
+    }
+
+    if (group.data) {
+      group.data.forEach((item) => {
+        if (!item.external) {
+          return;
         }
 
-        if(group.data){
-            group.data.forEach(item => {
-                if(!item.external) {
-                    return;
-                }
-    
-                if(Array.isArray(item.external)) {
-                    externalList[layout].push(...item.external);
-                }
-    
-                if(typeof item.external === 'string') {
-                    externalList[layout].push(item.external);
-                }
-            });
+        if (Array.isArray(item.external)) {
+          externalList[layout].push(...item.external);
         }
-    });
 
-    return externalList;
+        if (typeof item.external === 'string') {
+          externalList[layout].push(item.external);
+        }
+      });
+    }
+  });
+
+  return externalList;
 }
-
-
