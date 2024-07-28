@@ -42,7 +42,6 @@ import Particles from 'particles.vue3';
 import * as echarts from 'echarts';
 
 import { initDebugWebsocketListen } from './ws/debug';
-import { initWebSocket } from './utils/websocket';
 
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,

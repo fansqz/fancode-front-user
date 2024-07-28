@@ -10,7 +10,7 @@ import pinia from './store';
 const userStore = useUserStore(pinia);
 
 // 全局前置守卫
-router.beforeEach(async (to: any, from: any, next: any) => {
+router.beforeEach(async (to: any, _from: any, next: any) => {
   // 顶部标题
   document.title = setting.title + '-' + to.meta.title;
   // 进度条

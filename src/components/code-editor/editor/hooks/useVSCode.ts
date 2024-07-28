@@ -8,7 +8,6 @@ import { EditorInstance, VsCode } from '../types';
 import editUtils from '../utils/editUtils';
 import { debug, cancelHighlightLine, highlightLine, scrollIntoView } from '../utils/debugUtils';
 import { setBreakPoint } from '../utils/breakpoint';
-const { getConfigs } = await import('../conf');
 
 // TODO: 调试时修改代码改变高亮行，输入改变时更新断点
 /**
@@ -31,6 +30,8 @@ export const useVsCode = (vscode: VsCode) => {
       // 必须先初始化主题再创建实例
       await initTheme();
 
+      const { getConfigs } = await import('../conf');
+      
       // 创建editor实例
       editorInstance = editor.create(
         target.value,
