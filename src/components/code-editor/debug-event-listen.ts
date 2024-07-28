@@ -5,11 +5,11 @@ import { DebugEventDispatcher } from './debug-event-dispatcher';
 
 const debugStore = useDebugStore();
 
-let { key, isDebug, stopped } = storeToRefs(debugStore);
+let { id, isDebug, stopped } = storeToRefs(debugStore);
 
-export const listenDebugEvent = (debugKey: string, eventSource: EventSource) => {
+export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
   eventSource.onmessage = function (event) {
-    if (debugKey != key.value) {
+    if (debugId != id.value) {
       return;
     }
     if (event.data == 'connect success') {
@@ -38,7 +38,7 @@ export const listenDebugEvent = (debugKey: string, eventSource: EventSource) => 
       DebugEventDispatcher.dispatch('exited', data);
       isDebug.value = false;
       // 程序执行结束也关闭调试session
-      reqCloseDebugSession(key.value);
+      reqCloseDebugSession(id.value);
       debugStore.lineNum = 0;
     }
     if (data.event == 'output') {

@@ -54,13 +54,13 @@
   );
   const handleStep = async () => {
     if (type.value == 'continue') {
-      reqContinue(debugStore.key);
+      reqContinue(debugStore.id);
     } else if (type.value == 'step-in') {
-      reqStepIn(debugStore.key);
+      reqStepIn(debugStore.id);
     } else if (type.value == 'step-out') {
-      reqStepOut(debugStore.key);
+      reqStepOut(debugStore.id);
     } else if (type.value == 'step-over') {
-      reqStepOver(debugStore.key);
+      reqStepOver(debugStore.id);
     }
   };
 

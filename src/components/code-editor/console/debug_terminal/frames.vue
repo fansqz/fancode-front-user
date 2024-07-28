@@ -23,7 +23,7 @@
   import useDebugStore from '@/store/modules/debug';
 
   const debugStore = useDebugStore();
-  let { key } = storeToRefs(debugStore);
+  let { id } = storeToRefs(debugStore);
   const emit = defineEmits(['selectFrame']);
   const defaultActive = ref('');
   // 栈帧
@@ -39,7 +39,7 @@
   });
 
   const onStopped = async () => {
-    let result = await reqGetStackTrace(key.value);
+    let result = await reqGetStackTrace(id.value);
     if (result.code == 200) {
       stackFrames.value = result.data;
       console.log(stackFrames);
