@@ -31,7 +31,7 @@ export const useVsCode = (vscode: VsCode) => {
       await initTheme();
 
       const { getConfigs } = await import('../conf');
-      
+
       // 创建editor实例
       editorInstance = editor.create(
         target.value,
