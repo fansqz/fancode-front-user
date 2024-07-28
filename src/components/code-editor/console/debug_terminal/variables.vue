@@ -18,7 +18,7 @@
   import { reqGetFrameVariables, reqGetVariables } from '@/api/debug';
 
   const debugStore = useDebugStore();
-  const { key, isDebug } = storeToRefs(debugStore);
+  const { id, isDebug } = storeToRefs(debugStore);
   const treeData = ref([]); // 树的数据源
   const props = defineProps(['frameId']);
   const treeRef = ref();
@@ -41,7 +41,7 @@
   };
 
   const getVariablesByFrameId = async (frameId: string, resolve: any) => {
-    let result = await reqGetFrameVariables(key.value, frameId);
+    let result = await reqGetFrameVariables(id.value, frameId);
     if (result.code == 200) {
       let variables = result.data;
       let tree = [];
@@ -63,7 +63,7 @@
 
   const getVariables = async (reference: string, resolve: any) => {
     console.log(reference);
-    let result = await reqGetVariables(key.value, reference);
+    let result = await reqGetVariables(id.value, reference);
     if (result.code == 200) {
       let variables = result.data;
       let tree = [];

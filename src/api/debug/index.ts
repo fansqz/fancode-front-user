@@ -34,32 +34,32 @@ export const reqCreateDebugSession = (language: string): Promise<any> => {
 };
 
 export const reqStart = (
-  key: string,
+  Id: string,
   code: string,
   language: string,
   breakpoints: number[],
 ): Promise<any> => {
   return request.post(API.START_URL, {
-    key: key,
+    Id: Id,
     code: code,
     language: language,
     breakpoints: breakpoints,
   });
 };
 
-export const reqListenDebugEvent = (key: string): EventSource => {
+export const reqListenDebugEvent = (Id: string): EventSource => {
   let baseURL = new URL(import.meta.env.VITE_APP_BASE_API, import.meta.env.VITE_SERVE);
-  let debugURL = new URL(API.SSE_URL + '/' + key, baseURL);
+  let debugURL = new URL(API.SSE_URL + '/' + Id, baseURL);
   var source = new EventSource(debugURL);
   return source;
 };
 
-export const reqSendToConsole = (key: string, input: string): Promise<any> => {
+export const reqSendToConsole = (id: string, input: string): Promise<any> => {
   return request.post(
     API.SEND_TO_CONSOLE_URL,
     toFormData({
       input: input,
-      key: key,
+      id: id,
     }),
     {
       headers: {
@@ -69,11 +69,11 @@ export const reqSendToConsole = (key: string, input: string): Promise<any> => {
   );
 };
 
-export const reqStepIn = (key: string): Promise<any> => {
+export const reqStepIn = (id: string): Promise<any> => {
   return request.post(
     API.STEP_IN_URL,
     toFormData({
-      key: key,
+      id: id,
     }),
     {
       headers: {
@@ -83,11 +83,11 @@ export const reqStepIn = (key: string): Promise<any> => {
   );
 };
 
-export const reqStepOut = (key: string): Promise<any> => {
+export const reqStepOut = (id: string): Promise<any> => {
   return request.post(
     API.STEP_OUT_URL,
     toFormData({
-      key: key,
+      id: id,
     }),
     {
       headers: {
@@ -97,11 +97,11 @@ export const reqStepOut = (key: string): Promise<any> => {
   );
 };
 
-export const reqStepOver = (key: string): Promise<any> => {
+export const reqStepOver = (id: string): Promise<any> => {
   return request.post(
     API.STEP_OVER_URL,
     toFormData({
-      key: key,
+      id: id,
     }),
     {
       headers: {
@@ -111,11 +111,11 @@ export const reqStepOver = (key: string): Promise<any> => {
   );
 };
 
-export const reqContinue = (key: string): Promise<any> => {
+export const reqContinue = (id: string): Promise<any> => {
   return request.post(
     API.CONTINUE_URL,
     toFormData({
-      key: key,
+      id: id,
     }),
     {
       headers: {
@@ -125,25 +125,25 @@ export const reqContinue = (key: string): Promise<any> => {
   );
 };
 
-export const reqAddBreakpoint = (key: string, breakpoints: Number[]): Promise<any> => {
+export const reqAddBreakpoint = (id: string, breakpoints: Number[]): Promise<any> => {
   return request.post(API.ADD_BREAKPOINTS_URL, {
-    key: key,
+    id: id,
     breakpoints: breakpoints,
   });
 };
 
-export const reqRemoveBreakpoint = (key: string, breakpoints: Number[]): Promise<any> => {
+export const reqRemoveBreakpoint = (id: string, breakpoints: Number[]): Promise<any> => {
   return request.post(API.REMOVE_BREAKPOINTS_URL, {
-    key: key,
+    id: id,
     breakpoints: breakpoints,
   });
 };
 
-export const reqCloseDebugSession = (key: string): Promise<any> => {
+export const reqCloseDebugSession = (id: string): Promise<any> => {
   return request.post(
     API.CLOSE_DEBUG_SESSION_URL,
     toFormData({
-      key: key,
+      id: id,
     }),
     {
       headers: {
@@ -153,11 +153,11 @@ export const reqCloseDebugSession = (key: string): Promise<any> => {
   );
 };
 
-export const reqGetStackTrace = (key: string): Promise<any> => {
+export const reqGetStackTrace = (id: string): Promise<any> => {
   return request.post(
     API.GET_STACK_TRACN_URL,
     toFormData({
-      key: key,
+      id: id,
     }),
     {
       headers: {
@@ -167,11 +167,11 @@ export const reqGetStackTrace = (key: string): Promise<any> => {
   );
 };
 
-export const reqGetFrameVariables = (key: string, frameId: string): Promise<any> => {
+export const reqGetFrameVariables = (id: string, frameId: string): Promise<any> => {
   return request.post(
     API.GET_FRAME_VARIABLES_URL,
     toFormData({
-      key: key,
+      id: id,
       frameId: frameId,
     }),
     {
@@ -182,11 +182,11 @@ export const reqGetFrameVariables = (key: string, frameId: string): Promise<any>
   );
 };
 
-export const reqGetVariables = (key: string, reference: string): Promise<any> => {
+export const reqGetVariables = (id: string, reference: string): Promise<any> => {
   return request.post(
     API.GET_VARIABLES_URL,
     toFormData({
-      key: key,
+      id: id,
       reference: reference,
     }),
     {

@@ -59,7 +59,7 @@
   import { DebugEventDispatcher } from '../../debug-event-dispatcher';
 
   const debugStore = useDebugStore();
-  let { key, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
+  let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
 
   onMounted(() => {
     // 注册一些事件
@@ -136,7 +136,7 @@
         return;
       }
       // 发送命令给gdb
-      let result = await reqSendToConsole(key.value, currentInput.value + '\n');
+      let result = await reqSendToConsole(id.value, currentInput.value + '\n');
       if (result.code != 200) {
         ElMessage({
           showClose: true,

@@ -11,7 +11,7 @@
 
   const debugStore = useDebugStore();
   // 调试的一些结构
-  const { breakpoints, isDebug, key } = storeToRefs(debugStore);
+  const { breakpoints, isDebug, id } = storeToRefs(debugStore);
 
   const emits = defineEmits<{
     // 修改文本事件
@@ -48,9 +48,9 @@
     // 如果处于调试中，发送添加断点的命令
     if (isDebug.value === true) {
       if (mode == 'add') {
-        reqAddBreakpoint(key.value, [lineNum]);
+        reqAddBreakpoint(id.value, [lineNum]);
       } else {
-        reqRemoveBreakpoint(key.value, [lineNum]);
+        reqRemoveBreakpoint(id.value, [lineNum]);
       }
     }
   };

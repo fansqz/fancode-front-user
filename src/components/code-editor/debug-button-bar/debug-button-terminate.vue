@@ -36,7 +36,7 @@
 
   let buttonShow = ref(false);
   const terminateDebug = async () => {
-    let result = await reqCloseDebugSession(debugStore.key);
+    let result = await reqCloseDebugSession(debugStore.id);
     if (result.code == 200) {
       isDebug.value = false;
     } else {

@@ -24,11 +24,11 @@
   const codingStore = useCodingStore();
   const debugStore = useDebugStore();
   const { language, code } = storeToRefs(codingStore);
-  let { isDebug, key } = storeToRefs(debugStore);
+  let { isDebug, id } = storeToRefs(debugStore);
   const startDebug = async () => {
     // 创建调试session
     if (isDebug.value) {
-      let result = await reqCloseDebugSession(key.value);
+      let result = await reqCloseDebugSession(id.value);
       if (result.code != 200) {
         ElMessage({
           showClose: true,
@@ -39,13 +39,13 @@
     }
     let result = await reqCreateDebugSession(language.value);
     if (result.code == 200) {
-      key.value = result.data;
+      id.value = result.data;
       // 启动监控管道
-      let eventSource = reqListenDebugEvent(key.value);
-      listenDebugEvent(key.value, eventSource);
+      let eventSource = reqListenDebugEvent(id.value);
+      listenDebugEvent(id.value, eventSource);
       // 发送启动调试命令
       setTimeout(async () => {
-        let result2 = await reqStart(key.value, code.value, language.value, debugStore.breakpoints);
+        let result2 = await reqStart(id.value, code.value, language.value, debugStore.breakpoints);
         if (result2.code != 200) {
           ElMessage({
             showClose: true,
