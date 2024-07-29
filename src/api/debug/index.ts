@@ -47,9 +47,10 @@ export const reqStart = (
   });
 };
 
-export const reqListenDebugEvent = (Id: string): EventSource => {
-  let baseURL = new URL(import.meta.env.VITE_APP_BASE_API, import.meta.env.VITE_SERVE);
-  let debugURL = new URL(API.SSE_URL + '/' + Id, baseURL);
+export const reqListenDebugEvent = (id: string): EventSource => {
+  let baseApi = import.meta.env.VITE_APP_BASE_API;
+  let serve = import.meta.env.VITE_SERVE;
+  let debugURL = new URL(`${baseApi}${API.SSE_URL}/${id}`, serve);
   var source = new EventSource(debugURL);
   return source;
 };
