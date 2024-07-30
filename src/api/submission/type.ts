@@ -13,11 +13,11 @@ type SubmissionListPageInfo = PageInfo & {
 };
 
 type SubmissionListResponse = BaseResponse & {
-  data: SubmissionListPageInfo | null;
+  data: SubmissionListPageInfo;
 };
 
 type ActivityYearResponse = BaseResponse & {
-  data: string[] | null;
+  data: string[];
 };
 
 type ActivityItem = {

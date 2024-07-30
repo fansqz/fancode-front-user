@@ -62,6 +62,12 @@
     CompileEventDispatcher,
     ConnectEventDispatcher,
   } from '../../debug-event-dispatcher';
+  import {
+    LaunchEvent,
+    OutputEvent,
+    CompileEvent,
+    ConnectEvent,
+  } from '@/api/debug/event'
 
   const debugStore = useDebugStore();
   let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
@@ -81,7 +87,7 @@
   });
 
   // 监控输出
-  const onOutput = (data: any) => {
+  const onOutput = (data: OutputEvent) => {
     console.log(data);
     if (outputs.value.length > 0 && outputs.value[outputs.value.length - 1].event == 'output') {
       let oldOutput = outputs.value[outputs.value.length - 1].message;
@@ -99,7 +105,7 @@
     }
   };
 
-  const onLaunch = (data: any) => {
+  const onLaunch = (data: LaunchEvent) => {
     if (data.success != true) {
       outputs.value.push({
         type: 'error',
@@ -110,7 +116,7 @@
     }
   };
 
-  const onCompile = (data: any) => {
+  const onCompile = (data: CompileEvent) => {
     console.log(data);
     if (data.success != true) {
       outputs.value.push({
@@ -123,7 +129,7 @@
   };
 
   // 启动一个新的调试管道时候清除原来的input和output
-  const onConnect = (_data: any) => {
+  const onConnect = (_data: ConnectEvent) => {
     sentInputs.value = [];
     outputs.value = [];
   };

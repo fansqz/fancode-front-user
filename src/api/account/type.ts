@@ -25,7 +25,9 @@ type UpdateAccountRequest = {
 type UpdateAccountResponse = BaseResponse & {};
 
 type UploadAvatarRequest = {
-  avatar: File;
+  avatar: File,
 };
 
-type UploadAvatarResponse = BaseResponse & {};
+type UploadAvatarResponse = BaseResponse & {
+  data: string,
+};
