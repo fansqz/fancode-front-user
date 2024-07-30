@@ -56,7 +56,12 @@
   import useDebugStore from '@/store/modules/debug';
   import { reqSendToConsole } from '@/api/debug';
   import { ElMessage } from 'element-plus';
-  import { LaunchEventDispatcher, OutputEventDispatcher, CompileEventDispatcher, ConnectEventDispatcher } from '../../debug-event-dispatcher';
+  import {
+    LaunchEventDispatcher,
+    OutputEventDispatcher,
+    CompileEventDispatcher,
+    ConnectEventDispatcher,
+  } from '../../debug-event-dispatcher';
 
   const debugStore = useDebugStore();
   let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);

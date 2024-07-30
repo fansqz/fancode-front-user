@@ -1,13 +1,15 @@
 import useDebugStore from '@/store/modules/debug';
 import { storeToRefs } from 'pinia';
 import { reqCloseDebugSession } from '@/api/debug/index.ts';
-import { ConnectEventDispatcher,
-  StoppedEventDispatcher, 
+import {
+  ConnectEventDispatcher,
+  StoppedEventDispatcher,
   LaunchEventDispatcher,
   ContinuedDispatcher,
   ExitedEventDispatcher,
   OutputEventDispatcher,
-  CompileEventDispatcher} from './debug-event-dispatcher';
+  CompileEventDispatcher,
+} from './debug-event-dispatcher';
 
 const debugStore = useDebugStore();
 
