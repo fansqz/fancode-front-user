@@ -56,23 +56,23 @@
   import useDebugStore from '@/store/modules/debug';
   import { reqSendToConsole } from '@/api/debug';
   import { ElMessage } from 'element-plus';
-  import { DebugEventDispatcher } from '../../debug-event-dispatcher';
+  import { LaunchEventDispatcher, OutputEventDispatcher, CompileEventDispatcher, ConnectEventDispatcher } from '../../debug-event-dispatcher';
 
   const debugStore = useDebugStore();
   let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
 
   onMounted(() => {
     // 注册一些事件
-    DebugEventDispatcher.on('launch', onLaunch);
-    DebugEventDispatcher.on('output', onOutput);
-    DebugEventDispatcher.on('compile', onCompile);
-    DebugEventDispatcher.on('connect', onConnect);
+    LaunchEventDispatcher.on('launch', onLaunch);
+    OutputEventDispatcher.on('output', onOutput);
+    CompileEventDispatcher.on('compile', onCompile);
+    ConnectEventDispatcher.on('connect', onConnect);
   });
   onUnmounted(() => {
-    DebugEventDispatcher.off('launch', onLaunch);
-    DebugEventDispatcher.off('output', onOutput);
-    DebugEventDispatcher.off('compile', onCompile);
-    DebugEventDispatcher.off('connect', onConnect);
+    LaunchEventDispatcher.off('launch', onLaunch);
+    OutputEventDispatcher.off('output', onOutput);
+    CompileEventDispatcher.off('compile', onCompile);
+    ConnectEventDispatcher.off('connect', onConnect);
   });
 
   // 监控输出

@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue';
-  import { DebugEventDispatcher } from '../../debug-event-dispatcher';
+  import { StoppedEventDispatcher } from '../../debug-event-dispatcher';
   import { storeToRefs } from 'pinia';
   import { reqGetStackTrace } from '@/api/debug';
   import useDebugStore from '@/store/modules/debug';
@@ -32,10 +32,10 @@
   // 注册监听程序暂停事件，程序暂停读取栈帧
   onMounted(() => {
     // 注册一些事件
-    DebugEventDispatcher.on('stopped', onStopped);
+    StoppedEventDispatcher.on('stopped', onStopped);
   });
   onUnmounted(() => {
-    DebugEventDispatcher.off('stopped', onStopped);
+    StoppedEventDispatcher.off('stopped', onStopped);
   });
 
   const onStopped = async () => {
