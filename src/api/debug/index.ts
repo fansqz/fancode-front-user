@@ -44,10 +44,9 @@ export const reqListenDebugEvent = (id: string): EventSource => {
 };
 
 // reqStart 开始调试
-export const reqStart =(req: StartRequset): Promise<StartResponse> => {
+export const reqStart = (req: StartRequset): Promise<StartResponse> => {
   return request.post(API.START_URL, req);
 };
-
 
 // reqSendToConsole 发送用户输入到目标程序
 export const reqSendToConsole = (id: string, input: string): Promise<SendToConsoleResponse> => {
@@ -126,7 +125,10 @@ export const reqContinue = (id: string): Promise<ContinueResponse> => {
 };
 
 // reqAddBreakpoint 添加断点
-export const reqAddBreakpoint = (id: string, breakpoints: Number[]): Promise<AddBreakpointResponse> => {
+export const reqAddBreakpoint = (
+  id: string,
+  breakpoints: Number[],
+): Promise<AddBreakpointResponse> => {
   return request.post(API.ADD_BREAKPOINTS_URL, {
     id: id,
     breakpoints: breakpoints,
@@ -134,7 +136,10 @@ export const reqAddBreakpoint = (id: string, breakpoints: Number[]): Promise<Add
 };
 
 // reqRemoveBreakpoint 移除断点
-export const reqRemoveBreakpoint = (id: string, breakpoints: Number[]): Promise<RemoveBreakpointResponse> => {
+export const reqRemoveBreakpoint = (
+  id: string,
+  breakpoints: Number[],
+): Promise<RemoveBreakpointResponse> => {
   return request.post(API.REMOVE_BREAKPOINTS_URL, {
     id: id,
     breakpoints: breakpoints,
@@ -172,7 +177,10 @@ export const reqGetStackTrace = (id: string): Promise<GetStackTraceResponse> => 
 };
 
 // reqGetFrameVariables 根据栈帧id获取某个栈帧的所有局部变量
-export const reqGetFrameVariables = (id: string, frameId: string): Promise<GetFrameVariablesResponse> => {
+export const reqGetFrameVariables = (
+  id: string,
+  frameId: string,
+): Promise<GetFrameVariablesResponse> => {
   return request.post(
     API.GET_FRAME_VARIABLES_URL,
     toFormData({

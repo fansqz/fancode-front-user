@@ -45,10 +45,11 @@
       listenDebugEvent(id.value, eventSource);
       // 发送启动调试命令
       let startReq = {
-          id: id.value,
-          code: code.value,
-          language: language.value,
-          breakpoints: debugStore.breakpoints};
+        id: id.value,
+        code: code.value,
+        language: language.value,
+        breakpoints: debugStore.breakpoints,
+      };
       setTimeout(async () => {
         let result2 = await reqStart(startReq);
         if (result2.code != 200) {

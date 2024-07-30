@@ -1,17 +1,16 @@
-
 type BaseResponse = {
-  code: number,
-  message: string,
+  code: number;
+  message: string;
 };
 
 type PageInfo = {
-  size: number,
-  total: number,
+  size: number;
+  total: number;
 };
 
 type PageQuery = {
-  page: number,
-  pageSize: number,
-  sortProperty: string | undefined,
-  sortRule: string | undefined,
+  page: number;
+  pageSize: number;
+  sortProperty: string | undefined;
+  sortRule: string | undefined;
 };

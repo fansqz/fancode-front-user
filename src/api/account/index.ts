@@ -23,7 +23,6 @@ export const reqUpdateAccount = (data: UpdateAccountRequest): Promise<UpdateAcco
   });
 };
 
-
 // 上传头像
 export const reqUploadAvatar = (data: UploadAvatarRequest): Promise<UploadAvatarResponse> => {
   return request.post(API.AVATAR_URL, toFormData(data), {

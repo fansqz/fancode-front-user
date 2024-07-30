@@ -20,7 +20,10 @@ export const reqProblem = (problemNumber: string): Promise<ProblemResponse> => {
 };
 
 // 获取题目的模板代码
-export const reqProblemTemplateCode = (problemID: number, language: string): Promise<ProblemTemplateCodeResponse> => {
+export const reqProblemTemplateCode = (
+  problemID: number,
+  language: string,
+): Promise<ProblemTemplateCodeResponse> => {
   return request.get(API.USER_CODE_URL + `/template/${problemID}/${language}`);
 };
 
@@ -30,19 +33,17 @@ export const reqUserCode = (problemID: number, language: string): Promise<UserCo
 };
 
 // 根据题目id获取用户代码
-export const reqUserCodeByProblemID = (problemID: number): Promise<ReqUserCodeByProblemIDResponse> => {
+export const reqUserCodeByProblemID = (
+  problemID: number,
+): Promise<ReqUserCodeByProblemIDResponse> => {
   return request.get(API.USER_CODE_URL + `/${problemID}`);
 };
 
 // 保存用户代码
 export const reqSaveUserCode = (req: SaveUserCodeRequest): Promise<SaveUserCodeResponse> => {
-  return request.post(
-    API.USER_CODE_URL + '/save',
-    toFormData(req),
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+  return request.post(API.USER_CODE_URL + '/save', toFormData(req), {
+    headers: {
+      'Content-Type': 'multipart/form-data',
     },
-  );
+  });
 };
