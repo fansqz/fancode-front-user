@@ -23,7 +23,6 @@
   import { onMounted, ref } from 'vue';
   import { reqAllBankList } from '@/api/bank';
   import { useRouter } from 'vue-router';
-  import { ProblemBankForList } from '@/api/bank/type';
   let $router = useRouter();
 
   let bankList = ref<any[]>([]);

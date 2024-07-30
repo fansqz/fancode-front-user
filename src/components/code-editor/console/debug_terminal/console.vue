@@ -62,12 +62,7 @@
     CompileEventDispatcher,
     ConnectEventDispatcher,
   } from '../../debug-event-dispatcher';
-  import {
-    LaunchEvent,
-    OutputEvent,
-    CompileEvent,
-    ConnectEvent,
-  } from '@/api/debug/event'
+  import { LaunchEvent, OutputEvent, CompileEvent, ConnectEvent } from '@/api/debug/event';
 
   const debugStore = useDebugStore();
   let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
