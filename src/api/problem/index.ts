@@ -7,40 +7,38 @@ enum API {
   USER_CODE_URL = '/problem/code',
 }
 
-export const reqProblemList = (data: any): Promise<any> => {
+// 获取题目列表
+export const reqProblemList = (data: ProblemListRequest): Promise<ProblemListResponse> => {
   return request.get(API.LIST_PROBLEM_URL, {
     params: data,
   });
 };
 
-export const reqProblem = (problemNumber: string): Promise<any> => {
+// 获取题目详情
+export const reqProblem = (problemNumber: string): Promise<ProblemResponse> => {
   return request.get(API.PROBLEM_URL + `/${problemNumber}`);
 };
 
-export const reqProblemTemplateCode = (problemID: string, language: string): Promise<any> => {
+// 获取题目的模板代码
+export const reqProblemTemplateCode = (problemID: number, language: string): Promise<ProblemTemplateCodeResponse> => {
   return request.get(API.USER_CODE_URL + `/template/${problemID}/${language}`);
 };
 
-export const reqUserCode = (problemID: string, language: string): Promise<any> => {
+// 保存用户代码
+export const reqUserCode = (problemID: number, language: string): Promise<UserCodeResponse> => {
   return request.get(API.USER_CODE_URL + `/${problemID}/${language}`);
 };
 
-export const reqUserCodeByProblemID = (problemID: string): Promise<any> => {
+// 根据题目id获取用户代码
+export const reqUserCodeByProblemID = (problemID: number): Promise<ReqUserCodeByProblemIDResponse> => {
   return request.get(API.USER_CODE_URL + `/${problemID}`);
 };
 
-export const reqSaveUserCode = (
-  problemID: string,
-  language: string,
-  code: string,
-): Promise<any> => {
+// 保存用户代码
+export const reqSaveUserCode = (req: SaveUserCodeRequest): Promise<SaveUserCodeResponse> => {
   return request.post(
     API.USER_CODE_URL + '/save',
-    toFormData({
-      code: code,
-      language: language,
-      problemID: problemID,
-    }),
+    toFormData(req),
     {
       headers: {
         'Content-Type': 'multipart/form-data',

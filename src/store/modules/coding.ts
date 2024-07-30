@@ -8,7 +8,7 @@ const useCodingStore = defineStore('coding', {
     // 是否编辑器需要更新代码
     editorUpdateCode: 0,
     // 题目id
-    problemId: '',
+    problemId: 0,
     // 主题
     theme: 'monokai-light',
     // 判断当前标签页编程题目的语言类型
