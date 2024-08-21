@@ -2,7 +2,7 @@
   <splitpanes class="default-theme main">
     <!--题目展示-->
     <pane>
-        <VisaulPane :content="problemDescriptionContent"/>
+      <VisaulPane :content="problemDescriptionContent" />
     </pane>
 
     <!--coding-->

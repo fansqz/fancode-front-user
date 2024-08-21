@@ -10,7 +10,6 @@ import {
   DebugEvent,
 } from '@/api/debug/event';
 
-
 // 设置不同的事件分发器
 export const ConnectEventDispatcher = new EventDispatcher<ConnectEvent>();
 

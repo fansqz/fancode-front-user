@@ -1,11 +1,15 @@
 import request from '@/utils/request';
-import { VisualizeRequest, VisualizeResponse, VisualizeDescriptionTemplateResponse, VisualizeDescriptionTemplateListResponse } from './type';
+import {
+  VisualizeRequest,
+  VisualizeResponse,
+  VisualizeDescriptionTemplateResponse,
+  VisualizeDescriptionTemplateListResponse,
+} from './type';
 
 enum API {
   VISUALIZE_URL = '/visualize/debug',
   TEMPLATE_URL = '/visualize/template',
-};
-
+}
 
 // 可视化数据结构请求
 export const reqVisualize = (data: VisualizeRequest): Promise<VisualizeResponse> => {
@@ -16,6 +20,8 @@ export const reqAllDescriptionTemplate = (): Promise<VisualizeDescriptionTemplat
   return request.get(`${API.TEMPLATE_URL}/list`);
 };
 
-export const reqDescriptionTemplate = (type: string): Promise<VisualizeDescriptionTemplateResponse> => {
+export const reqDescriptionTemplate = (
+  type: string,
+): Promise<VisualizeDescriptionTemplateResponse> => {
   return request.get(`${API.TEMPLATE_URL}/${type}`);
 };
