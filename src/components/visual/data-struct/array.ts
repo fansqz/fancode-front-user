@@ -1,8 +1,7 @@
-// @ts-nocheck
-import DefaultOptions from '../defaultOptions';
+import DefaultOptions from '../default-options';
 
 export const AV_Array = {
-  sourcesPreprocess(sources) {
+  sourcesPreprocess(sources: any[]) {
     const firstElement = sources[0];
 
     if (firstElement.external) {
@@ -13,7 +12,7 @@ export const AV_Array = {
     return sources;
   },
 
-  defineLeakRule(nodes) {
+  defineLeakRule(_nodes: any[]) {
     return [];
   },
 
@@ -52,7 +51,7 @@ export const AV_Array = {
     };
   },
 
-  layout(elements) {
+  layout(elements: any[]) {
     let arr = elements;
 
     for (let i = 0; i < arr.length; i++) {

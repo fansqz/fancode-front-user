@@ -53,13 +53,15 @@
   // 每页展示多少条数据
   let limit = ref<number>(10);
   let total = ref<number>(0);
-  let problemList = ref([]);
+  let problemList = ref<any[]>([]);
 
   const getProblemList = async () => {
-    let result = await reqProblemList({
+    let req = {
+      bankID: undefined,
       page: pageNo.value,
       pageSize: limit.value,
-    });
+    };
+    let result = await reqProblemList(req);
     if (result.code == 200) {
       total.value = result.data.total;
       problemList.value = result.data.list;

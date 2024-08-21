@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEMO</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            user-select: none;
+        }
+        
+        .container {
+            background-color: #fafafa;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+        
+        .down {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        #container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #leak {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            top: 100px;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 4px;
+            border-top: 1px dashed #000;
+            pointer-events: none;
+            transition: opacity 0.75s ease-in-out;
+        }
+        
+        #leak>span {
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div id="leak">
+            <span>泄漏区</span>
+        </div>
+    </div>
+
+    <button id="btn-prev">prev</button>
+    <button id="btn-next">next</button>
+    <button id="resize">resize</button>
+    <button id="relayout">relayout</button>
+    <button id="switch-mode">switch mode</button>
+    <button id="brush-select">brush-select</button>
+    <span id="pos"></span>
+
+    <script src="./../dist/sv.js"></script>
+    <script>
+        const Group = SV.Group,
+            Bound = SV.Bound,
+            G6 = SV.G6,
+            Vector = SV.Vector;
+    </script>
+    <script src="./Layouter/LinkList.js"></script>
+    <script src="./Layouter/BinaryTree.js"></script>
+    <script src="./Layouter/TriTree.js"></script>
+    <script src="./Layouter/Stack.js"></script>
+    <script src="./Layouter/LinkQueue.js"></script>
+    <script src="./Layouter/GeneralizedList.js"></script>
+    <script src="./Layouter/ChainHashTable.js"></script>
+    <script src="./Layouter/Array.js"></script>
+    <script src="./Layouter/HashTable.js"></script>
+    <script src="./Layouter/LinkStack.js"></script>
+    <script src="./Layouter/AdjoinMatrixGraph.js"></script>
+    <script src="./Layouter/AdjoinTableGraph.js"></script>
+    <script src="./Layouter/SqQueue.js"></script>
+    <script src="./Layouter/PTree.js"></script>
+    <script src="./Layouter/PCTree.js"></script>
+    <script src="./Layouter/Force.js"></script>
+    <script src="./Layouter/IndentedTree.js"></script>
+    <script src="./data.js"></script>
+
+    <script>
+        let isForce = false;
+
+        let dataIndex = 0;
+        curData = SOURCES_DATA[dataIndex];
+        // 判断是否需要力导向布局
+        Object.keys(curData).forEach(key => {
+            if(curData[key].layouter === "Force")    isForce = true;
+        });
+        let cur = SV(document.getElementById('container'), {
+            view: {
+                leakAreaHeight: 130,
+                groupPadding: 40,
+            },
+        }, isForce);
+
+        let enableBrushSelect = false;
+
+        const container = document.getElementById('container'),
+            pos = document.getElementById('pos');
+
+        const leak = document.getElementById('leak');
+
+        cur.render(curData);
+
+        document.getElementById('btn-next').addEventListener('click', e => {
+            curData = SOURCES_DATA[++dataIndex];
+            cur.render(curData);
+        });
+
+        document.getElementById('btn-prev').addEventListener('click', e => {
+            curData = SOURCES_DATA[--dataIndex];
+            cur.render(curData);
+        });
+
+        document.getElementById('resize').addEventListener('click', e => {
+            container.style.height = 800 + 'px';
+            cur.resize(container.offsetWidth, container.offsetHeight);
+        });
+
+        document.getElementById('relayout').addEventListener('click', e => {
+            cur.reLayout();
+        });
+
+        document.getElementById('switch-mode').addEventListener('click', e => {
+            cur.updateStyle('Array', newArrayOption);
+        });
+
+        document.getElementById('brush-select').addEventListener('click', e => {
+            enableBrushSelect = !enableBrushSelect;
+            cur.switchBrushSelect(enableBrushSelect);
+        });
+
+        cur.on('onLeakAreaUpdate', payload => {
+            leak.style.opacity = payload.hasLeak ? 1 : 0;
+            leak.style.top = payload.leakAreaY - 40 + 'px';
+        });
+
+        // -------------------------------------------------------------------------------------------------------
+
+        container.addEventListener('mousemove', e => {
+            let x = e.offsetX,
+                y = e.offsetY;
+            pos.innerHTML = `${x},${y}`;
+        });
+    </script>
+</body>
+
+</html>

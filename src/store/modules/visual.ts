@@ -1,29 +1,24 @@
 import { defineStore } from 'pinia';
+import { VisualizeDescription, VisualizeData } from '@/api/visual/type.ts'
 
-interface VisualData {
-  type: string;
-  sources: any[];
-}
+type VisualizeState = {
+  // 可视化是否开启
+  action: boolean,
+  // 可视化描述的json结构
+  descriptionJson: string,
+  // 可视化描述
+  description: VisualizeDescription | null,
+  // 可视化数据
+  data: VisualizeData | null,
+};
 
-// 扩展 state 以类型化各个属性，特别是breakpoints.
-interface VisualState {
-  visualData: VisualData;
-  curSelectElementId: number;
-  hasTriggerLastStep: boolean;
-}
-
-// 使用 Pinia 创建一个状态存储
-const useVisualState = defineStore('visual', {
-  state: (): VisualState => ({
-    visualData: {
-      type: '',
-      sources: [],
-    },
-    curSelectElementId: 0,
-    hasTriggerLastStep: false,
-  }),
-  actions: {},
-  getters: {},
+const useVisualizeStore = defineStore('visual', {
+  state: (): VisualizeState => ({
+    action: false,
+    descriptionJson: '',
+      description: null,
+      data: null,
+  })
 });
 
-export default useVisualState;
+export default useVisualizeStore;

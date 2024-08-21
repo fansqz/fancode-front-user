@@ -79,3 +79,5 @@ export type ExitedEvent = {
 export type TerminatedEvent = {
   event: DebugEventType;
 };
+
+export type DebugEvent = ConnectEvent | StoppedEvent | LaunchEvent | ContinuedEvent | ExitedEvent | OutputEvent | CompileEvent

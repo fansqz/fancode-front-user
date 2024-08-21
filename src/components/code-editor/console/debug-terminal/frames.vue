@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue';
-  import { StoppedEventDispatcher } from '../../debug-event-dispatcher';
+  import { StoppedEventDispatcher } from '@/api/debug/debug-event-dispatcher';
   import { storeToRefs } from 'pinia';
   import { reqGetStackTrace } from '@/api/debug';
   import useDebugStore from '@/store/modules/debug';

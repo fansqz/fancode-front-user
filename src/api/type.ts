@@ -11,6 +11,6 @@ type PageInfo = {
 type PageQuery = {
   page: number;
   pageSize: number;
-  sortProperty: string | undefined;
-  sortRule: string | undefined;
+  sortProperty?: string;
+  sortRule?: string;
 };

@@ -1,5 +1,5 @@
 import useUserStore from '@/store/modules/user';
-import { EventDispatcher, EventListenerCallback } from './event_dispatcher';
+import { EventDispatcher, EventListenerCallback } from './event-dispatcher';
 
 const dispatcher = new EventDispatcher<string>();
 let ws: WebSocket | null = null;

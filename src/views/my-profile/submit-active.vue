@@ -41,7 +41,7 @@
   // 每页展示多少条数据
   let limit = ref<number>(5);
   let total = ref<number>(0);
-  let submissionList = ref([]);
+  let submissionList = ref();
 
   const getSubmissionList = async () => {
     let result = await reqSubmissionList({

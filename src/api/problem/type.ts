@@ -23,6 +23,7 @@ type ProblemListResponse = BaseResponse & {
 };
 
 type UserProblem = {
+  id: number;
   bankID: number;
   name: string;
   number: string;

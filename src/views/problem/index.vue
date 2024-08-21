@@ -28,12 +28,11 @@
   // 读取题目，比如题目名称等
   const load = async () => {
     problemNumber.value = getProblemNumber();
-    let problem;
     let result = await reqProblem(problemNumber.value);
     if (result.code == 200) {
-      problem = result.data;
+      let problem = result.data;
+      problemName.value = problem.name;
     }
-    problemName.value = problem.name;
   };
 
   load();

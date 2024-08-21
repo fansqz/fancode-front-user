@@ -19,7 +19,7 @@
   } from '@/api/debug/index.ts';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
-  import { listenDebugEvent } from '../debug-event-listen.ts';
+  import { listenDebugEvent } from '@/api/debug/debug-event-listen.ts';
 
   const codingStore = useCodingStore();
   const debugStore = useDebugStore();

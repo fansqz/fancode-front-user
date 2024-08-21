@@ -2,9 +2,7 @@
   <splitpanes class="default-theme main">
     <!--题目展示-->
     <pane>
-      <el-scrollbar>
-        <ProblemDescription :content="problemDescriptionContent" />
-      </el-scrollbar>
+        <VisaulPane :content="problemDescriptionContent"/>
     </pane>
 
     <!--coding-->
@@ -33,7 +31,7 @@
   import { reactive, ref } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
-  import ProblemDescription from '@/components/problem-description/index.vue';
+  import VisaulPane from './visual-pane/index.vue';
   import Editor from '@/components/code-editor/editor/index.vue';
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from '@/components/code-editor/console/index.vue';
@@ -45,14 +43,13 @@
 
   const props = defineProps(['problemNumber']);
   let problem = reactive({
-    id: '',
+    id: 0,
     name: '',
     number: '',
     languages: '',
     description: '',
   });
-  let problemDescriptionContent = ref();
-
+  let problemDescriptionContent = ref('');
   let codingStore = useCodingStore();
   let { code, languages, language, editorUpdateCode, problemId } = storeToRefs(codingStore);
 
@@ -67,10 +64,10 @@
       problemId.value = problem.id;
     }
     // 读取用户代码
-    result = await reqUserCodeByProblemID(problem.id);
+    let result2 = await reqUserCodeByProblemID(problem.id);
     if (result.code == 200) {
-      language.value = result.data.language;
-      code.value = result.data.code;
+      language.value = result2.data.language;
+      code.value = result2.data.code;
       editorUpdateCode.value++;
     }
   };
@@ -78,7 +75,12 @@
 
   const handleCodeChange = (value: string, _type: string) => {
     code.value = value;
-    reqSaveUserCode(problem.id, language.value, value);
+    let req = {
+      problemID: problem.id,
+      language: language.value,
+      code: value,
+    };
+    reqSaveUserCode(req);
   };
 
   // 监控代码变化，如果发生变化就进行

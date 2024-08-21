@@ -61,7 +61,7 @@
     OutputEventDispatcher,
     CompileEventDispatcher,
     ConnectEventDispatcher,
-  } from '../../debug-event-dispatcher';
+  } from '@/api/debug/debug-event-dispatcher';
   import { LaunchEvent, OutputEvent, CompileEvent, ConnectEvent } from '@/api/debug/event';
 
   const debugStore = useDebugStore();
