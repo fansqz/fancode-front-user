@@ -1,6 +1,8 @@
 <template>
   <div class="problemDescription">
-    <v-md-preview :text="content"></v-md-preview>
+    <el-scrollbar>
+      <v-md-preview :text="content"></v-md-preview>
+    </el-scrollbar>
   </div>
 </template>
 

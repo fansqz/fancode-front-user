@@ -26,7 +26,7 @@
   import { ref, watch } from 'vue';
   import Output from './output.vue';
   import Input from './input.vue';
-  import DebugTerminal from './debug_terminal/index.vue';
+  import DebugTerminal from './debug-terminal/index.vue';
   import useCodingStore from '@/store/modules/coding';
   import { storeToRefs } from 'pinia';
   // 用于控制当前是输入界面还是输出界面

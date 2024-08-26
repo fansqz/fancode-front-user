@@ -37,7 +37,7 @@
     username: '',
     birthDay: '',
     introduction: '',
-    codingAge: '',
+    codingAge: 0,
   });
 
   onMounted(async () => {

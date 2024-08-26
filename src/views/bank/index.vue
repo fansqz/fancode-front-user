@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
   import { reqProblemList } from '@/api/problem';
-  import { reqGetBank } from '@/api/bank';
+  import { reqBank } from '@/api/bank';
   import { ref, reactive, onMounted } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
 
@@ -77,7 +77,7 @@
   let problemList = ref([]);
 
   const getProblemBank = async (bankID: string) => {
-    let result = await reqGetBank(bankID);
+    let result = await reqBank(bankID);
     if (result.code == 200) {
       let data = result.data;
       problemBank.name = data.name;

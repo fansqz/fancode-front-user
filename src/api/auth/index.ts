@@ -9,7 +9,7 @@ enum API {
 }
 
 // 登录
-export const reqLogin = (data: any): Promise<any> => {
+export const reqLogin = (data: LoginRequest): Promise<LoginResponse> => {
   return request.post(API.LOGIN_URL, toFormData(data), {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -18,7 +18,7 @@ export const reqLogin = (data: any): Promise<any> => {
 };
 
 // 发送验证码
-export const reqSendCode = (data: any): Promise<any> => {
+export const reqSendCode = (data: SendCodeRequest): Promise<SendCodeResponse> => {
   return request.post(API.CODE_SEND_URL, toFormData(data), {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -27,7 +27,7 @@ export const reqSendCode = (data: any): Promise<any> => {
 };
 
 // 注册
-export const reqRegister = (data: any): Promise<any> => {
+export const reqRegister = (data: RegisterRequest): Promise<RegisterReponse> => {
   return request.post(API.REGISTER_URL, toFormData(data), {
     headers: {
       'Content-Type': 'multipart/form-data',

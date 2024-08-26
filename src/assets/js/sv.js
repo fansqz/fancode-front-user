@@ -91604,6 +91604,21 @@
             'rect',
           );
         },
+        8937: (t, e, n) => {
+          'use strict';
+          Object.defineProperty(e, '__esModule', { value: !0 });
+          const r = n(5962);
+          e.default = r.Util.registerShape(
+            'indented-tree-node',
+            {
+              getAnchorPoints: () => [
+                [0.5, 1],
+                [0, 0.5],
+              ],
+            },
+            'rect',
+          );
+        },
         2645: (t, e, n) => {
           'use strict';
           Object.defineProperty(e, '__esModule', { value: !0 });
@@ -92196,19 +92211,20 @@
             c = n(1273),
             l = n(4259),
             h = n(5419),
-            f = n(8629),
-            d = n(4704),
-            p = n(6768),
-            g = n(705),
-            v = n(4198),
-            y = n(3766),
-            m = n(5962);
+            f = n(8937),
+            d = n(8629),
+            p = n(4704),
+            g = n(6768),
+            v = n(705),
+            y = n(4198),
+            m = n(3766),
+            b = n(5962);
           (e.SV = function (t, e = {}, n) {
             return new r.Engine(t, e, n);
           }),
             (e.SV.Group = o.Group),
             (e.SV.Bound = i.Bound),
-            (e.SV.Vector = y.Vector),
+            (e.SV.Vector = m.Vector),
             (e.SV.Mat3 = a.default.Util.mat3),
             (e.SV.G6 = a.default),
             (e.SV.registeredLayout = {}),
@@ -92217,14 +92233,15 @@
               u.default,
               c.default,
               h.default,
-              d.default,
               p.default,
-              v.default,
               g.default,
-              f.default,
+              y.default,
+              v.default,
+              d.default,
               l.default,
+              f.default,
             ]),
-            (e.SV.registerShape = m.Util.registerShape),
+            (e.SV.registerShape = b.Util.registerShape),
             (e.SV.registerLayout = function (t, n) {
               'function' != typeof n.sourcesPreprocess &&
                 (n.sourcesPreprocess = function (t) {
@@ -92999,8 +93016,7 @@
             o = n(145),
             a = n(2248),
             s = n(5962),
-            u = n(6945),
-            c = n(6182);
+            u = n(6945);
           e.Engine = class {
             constructor(t, e, n) {
               (this.engineOptions = Object.assign({}, e)),
@@ -93057,19 +93073,6 @@
                   !r &&
                     t.isHide &&
                     (t.modelList.forEach((t) => n.showItem(t.G6Item)), (t.isHide = !1));
-              });
-            }
-            hideGroupsById(t) {
-              const e = Array.isArray(t) ? t : [t],
-                n = this.viewContainer.getG6Instance();
-              this.modelConstructor.getLayoutGroupTable().forEach((t) => {
-                t.modelList.forEach((t) => {
-                  n.showItem(t.G6Item),
-                    e.forEach((e) => {
-                      ((t instanceof c.SVMarker && t.targetId.includes(e)) || t.id.includes(e)) &&
-                        n.hideItem(t.G6Item);
-                    });
-                });
               });
             }
             getAllModels() {

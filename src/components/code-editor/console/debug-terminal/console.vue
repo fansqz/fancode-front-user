@@ -56,27 +56,33 @@
   import useDebugStore from '@/store/modules/debug';
   import { reqSendToConsole } from '@/api/debug';
   import { ElMessage } from 'element-plus';
-  import { DebugEventDispatcher } from '../../debug-event-dispatcher';
+  import {
+    LaunchEventDispatcher,
+    OutputEventDispatcher,
+    CompileEventDispatcher,
+    ConnectEventDispatcher,
+  } from '@/api/debug/debug-event-dispatcher';
+  import { LaunchEvent, OutputEvent, CompileEvent, ConnectEvent } from '@/api/debug/event';
 
   const debugStore = useDebugStore();
   let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
 
   onMounted(() => {
     // 注册一些事件
-    DebugEventDispatcher.on('launch', onLaunch);
-    DebugEventDispatcher.on('output', onOutput);
-    DebugEventDispatcher.on('compile', onCompile);
-    DebugEventDispatcher.on('connect', onConnect);
+    LaunchEventDispatcher.on('launch', onLaunch);
+    OutputEventDispatcher.on('output', onOutput);
+    CompileEventDispatcher.on('compile', onCompile);
+    ConnectEventDispatcher.on('connect', onConnect);
   });
   onUnmounted(() => {
-    DebugEventDispatcher.off('launch', onLaunch);
-    DebugEventDispatcher.off('output', onOutput);
-    DebugEventDispatcher.off('compile', onCompile);
-    DebugEventDispatcher.off('connect', onConnect);
+    LaunchEventDispatcher.off('launch', onLaunch);
+    OutputEventDispatcher.off('output', onOutput);
+    CompileEventDispatcher.off('compile', onCompile);
+    ConnectEventDispatcher.off('connect', onConnect);
   });
 
   // 监控输出
-  const onOutput = (data: any) => {
+  const onOutput = (data: OutputEvent) => {
     console.log(data);
     if (outputs.value.length > 0 && outputs.value[outputs.value.length - 1].event == 'output') {
       let oldOutput = outputs.value[outputs.value.length - 1].message;
@@ -94,7 +100,7 @@
     }
   };
 
-  const onLaunch = (data: any) => {
+  const onLaunch = (data: LaunchEvent) => {
     if (data.success != true) {
       outputs.value.push({
         type: 'error',
@@ -105,7 +111,7 @@
     }
   };
 
-  const onCompile = (data: any) => {
+  const onCompile = (data: CompileEvent) => {
     console.log(data);
     if (data.success != true) {
       outputs.value.push({
@@ -118,7 +124,7 @@
   };
 
   // 启动一个新的调试管道时候清除原来的input和output
-  const onConnect = (_data: any) => {
+  const onConnect = (_data: ConnectEvent) => {
     sentInputs.value = [];
     outputs.value = [];
   };

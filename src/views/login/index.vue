@@ -130,7 +130,7 @@
   const login = async () => {
     // 判断表单校验是否通过
     await loginElFrom.value.validate();
-    let data: any;
+    let data;
     if (loginForm.loginType == 'password') {
       data = {
         type: loginForm.loginType,

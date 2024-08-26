@@ -1,10 +1,8 @@
 <template>
-  <splitpanes class="default-theme main">
+  <splitpanes class="default-theme main" @resized="resizeVisualPane">
     <!--题目展示-->
-    <pane>
-      <el-scrollbar>
-        <ProblemDescription :content="problemDescriptionContent" />
-      </el-scrollbar>
+    <pane @resized="resizeVisualPane">
+      <LeftPane ref="leftPane" class="left-pane" :content="problemDescriptionContent" />
     </pane>
 
     <!--coding-->
@@ -33,7 +31,7 @@
   import { reactive, ref } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
-  import ProblemDescription from '@/components/problem-description/index.vue';
+  import LeftPane from './left-pane/index.vue';
   import Editor from '@/components/code-editor/editor/index.vue';
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from '@/components/code-editor/console/index.vue';
@@ -45,16 +43,16 @@
 
   const props = defineProps(['problemNumber']);
   let problem = reactive({
-    id: '',
+    id: 0,
     name: '',
     number: '',
     languages: '',
     description: '',
   });
-  let problemDescriptionContent = ref();
-
+  let problemDescriptionContent = ref('');
   let codingStore = useCodingStore();
   let { code, languages, language, editorUpdateCode, problemId } = storeToRefs(codingStore);
+  const leftPane = ref<InstanceType<typeof LeftPane> | null>();
 
   const load = async () => {
     let result = await reqProblem(props.problemNumber);
@@ -67,10 +65,10 @@
       problemId.value = problem.id;
     }
     // 读取用户代码
-    result = await reqUserCodeByProblemID(problem.id);
+    let result2 = await reqUserCodeByProblemID(problem.id);
     if (result.code == 200) {
-      language.value = result.data.language;
-      code.value = result.data.code;
+      language.value = result2.data.language;
+      code.value = result2.data.code;
       editorUpdateCode.value++;
     }
   };
@@ -78,16 +76,31 @@
 
   const handleCodeChange = (value: string, _type: string) => {
     code.value = value;
-    reqSaveUserCode(problem.id, language.value, value);
+    let req = {
+      problemID: problem.id,
+      language: language.value,
+      code: value,
+    };
+    reqSaveUserCode(req);
   };
 
-  // 监控代码变化，如果发生变化就进行
+  /**
+   * 当拉伸/缩放可视化面板时调用
+   * - 当可视化面板尺寸发生变化时，需重新调整可视化视图
+   */
+  const resizeVisualPane = () => {
+    leftPane.value.resizeVisualView();
+  };
 </script>
 
 <style scoped lang="scss">
   .main {
     position: relative;
     height: calc(100vh - $base-header-height);
+    .left-pane {
+      height: 100%;
+      widows: 100%;
+    }
     .editor-switcher {
       position: relative;
       height: 35px;

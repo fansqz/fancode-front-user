@@ -5,10 +5,10 @@ enum API {
   BANK_URL = '/problemBank',
 }
 
-export const reqAllBankList = (): Promise<any> => {
+export const reqAllBankList = (): Promise<AllBankListResponse> => {
   return request.get(API.All_BANK_URL);
 };
 
-export const reqGetBank = (bankID: string): Promise<any> => {
+export const reqBank = (bankID: string): Promise<BankResponse> => {
   return request.get(API.BANK_URL + `/${bankID}`);
 };

@@ -7,30 +7,20 @@ enum API {
   CODE_URL = '/judge/code',
 }
 
-export const reqSubmit = (obj: any): Promise<any> => {
-  return request.post(API.SUBMITE_URL, toFormData(obj), {
+// reqSubmit 提交用户程序
+export const reqSubmit = (req: SubmitRequest): Promise<SubmitResponse> => {
+  return request.post(API.SUBMITE_URL, toFormData(req), {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
 };
 
-export const reqExecute = (obj: any): Promise<any> => {
-  return request.post(API.EXECUTE_URL, toFormData(obj), {
+// reqExecute 执行用户程序
+export const reqExecute = (req: ExecuteRequest): Promise<ExecuteResponse> => {
+  return request.post(API.EXECUTE_URL, toFormData(req), {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
-};
-
-export const reqSaveCode = (obj: any): Promise<any> => {
-  return request.post(API.CODE_URL, toFormData(obj), {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-};
-
-export const reqUserCode = (problemID: string): Promise<any> => {
-  return request.get(API.CODE_URL + `/${problemID}`);
 };
