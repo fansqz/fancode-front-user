@@ -1,5 +1,5 @@
 <template>
-  <div class="visual_contaner" >
+  <div class="visual_contaner">
     <div class="visaul" id="visaul">
       <div id="leak"></div>
     </div>
@@ -13,7 +13,6 @@
       <span id="pos"></span>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -27,8 +26,8 @@
     sources: Sources;
     action: boolean;
   }>();
-  const { sources, action} = toRefs(props)
-  
+  const { sources, action } = toRefs(props);
+
   let cur: Engine;
   let container: HTMLElement | null;
   onMounted(() => {
@@ -62,33 +61,38 @@
       pos.innerHTML = `${x},${y}`;
     });
 
-    watch(() => sources.value, () => {
-      console.log(sources)
-      if (action.value) {
-        cur.render(sources.value);
-      }
-    })
+    watch(
+      () => sources.value,
+      () => {
+        console.log(sources);
+        if (action.value) {
+          cur.render(sources.value);
+        }
+      },
+    );
 
-    watch(() => action.value, () => {
-      if (action.value) {
-        cur.render(sources.value);
-      } else {
-        cur.render({});
-      }
-    })
+    watch(
+      () => action.value,
+      () => {
+        if (action.value) {
+          cur.render(sources.value);
+        } else {
+          cur.render({});
+        }
+      },
+    );
   });
-  
 
-    /**
-    * 销毁可视化视图
+  /**
+   * 销毁可视化视图
    */
   let disposeVisualView = () => {
-      if (cur) {
-        cur.destroy();
-      }
+    if (cur) {
+      cur.destroy();
+    }
   };
 
-    /**
+  /**
    * 调整可视化视图尺寸
    */
   const resizeVisualView = (width: number, height: number) => {
@@ -98,7 +102,7 @@
   };
 
   defineExpose({
-    resizeVisualView
+    resizeVisualView,
   });
 </script>
 

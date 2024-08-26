@@ -1,5 +1,5 @@
 <template>
-  <splitpanes class="default-theme main"  @resized="resizeVisualPane">
+  <splitpanes class="default-theme main" @resized="resizeVisualPane">
     <!--题目展示-->
     <pane @resized="resizeVisualPane">
       <LeftPane ref="leftPane" class="left-pane" :content="problemDescriptionContent" />
@@ -91,7 +91,6 @@
   const resizeVisualPane = () => {
     leftPane.value.resizeVisualView();
   };
-
 </script>
 
 <style scoped lang="scss">

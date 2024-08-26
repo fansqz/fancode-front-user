@@ -149,5 +149,3 @@ SV.registerLayout('Indented', {
     this.layoutItem(root, elements, layoutOptions);
   },
 });
-
-

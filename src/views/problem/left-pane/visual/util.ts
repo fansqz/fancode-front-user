@@ -1,27 +1,33 @@
-import { VariableVisualizeData } from '@/api/visual/type'
+import { VariableVisualizeData } from '@/api/visual/type';
 import { reqVariableVisualize } from '@/api/visual';
-import { ArrayData, ArrayNode } from '@/components/visual/type/array'
-import { ElMessage } from 'element-plus'
-import { ArrayDescription, VisualizeDescription } from '@/store/modules/visual'
+import { ArrayData, ArrayNode } from '@/components/visual/type/array';
+import { ElMessage } from 'element-plus';
+import { ArrayDescription, VisualizeDescription } from '@/store/modules/visual';
 import { Source } from 'structv2';
 
-export const reqVisualizeData = async (debugID: string, description: VisualizeDescription): Promise<Source> => {
+export const reqVisualizeData = async (
+  debugID: string,
+  description: VisualizeDescription,
+): Promise<Source> => {
   if (description.type == 'array') {
-    return reqArrayVisualizeData(debugID, description)
+    return reqArrayVisualizeData(debugID, description);
   }
-}
+};
 
 // 请求数组可视化数据
-const reqArrayVisualizeData = async (debugID: string, description: ArrayDescription): Promise<ArrayData> => {
+const reqArrayVisualizeData = async (
+  debugID: string,
+  description: ArrayDescription,
+): Promise<ArrayData> => {
   // 请求可视化数据
   let req = {
     debugID: debugID,
     query: {
       structVars: [description.arrayName],
       pointVars: description.pointNames,
-    }
-  }
-  let result = await reqVariableVisualize(req)
+    },
+  };
+  let result = await reqVariableVisualize(req);
   if (result.code != 200) {
     ElMessage({
       showClose: true,
@@ -31,39 +37,42 @@ const reqArrayVisualizeData = async (debugID: string, description: ArrayDescript
     return {
       data: [],
       layouter: 'array',
-    }
+    };
   }
   // 将后端返回的可视化数据转成av需要的可视化数据
-  return convertArrayVisualizeData(description, result.data)
-}
+  return convertArrayVisualizeData(description, result.data);
+};
 
-const convertArrayVisualizeData = (_description: ArrayDescription, data: VariableVisualizeData): ArrayData => {
+const convertArrayVisualizeData = (
+  _description: ArrayDescription,
+  data: VariableVisualizeData,
+): ArrayData => {
   // 将第一个struct[0]作为数组的数据
-  let struct = data.structs[0]
-  let nodes: ArrayNode[] = [] 
-  for (let i  = 0; i < struct.values.length; i++) {
+  let struct = data.structs[0];
+  let nodes: ArrayNode[] = [];
+  for (let i = 0; i < struct.values.length; i++) {
     let node: ArrayNode = {
       id: struct.values[i].name,
       index: struct.values[i].name,
       data: struct.values[i].value,
-    }
+    };
     if (i === 0) {
       // 头指针
-      node.headExternal = data.structs[0].name
+      node.headExternal = data.structs[0].name;
     }
-    nodes.push(node)
+    nodes.push(node);
   }
   // 设置指针
   for (let i = 0; i < data.points.length; i++) {
-    let index = data.points[i].value
+    let index = data.points[i].value;
     if (nodes[index].external != undefined) {
-      nodes[index].external.push(data.points[i].name)
+      nodes[index].external.push(data.points[i].name);
     } else {
-      nodes[index].external = [data.points[i].name]
+      nodes[index].external = [data.points[i].name];
     }
   }
   return {
     data: nodes,
     layouter: 'array',
-  }
-}
+  };
+};

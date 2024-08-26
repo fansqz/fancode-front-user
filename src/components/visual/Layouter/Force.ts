@@ -1,9 +1,8 @@
 import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions } from 'structv2';
 import G6 from '@antv/g6';
 
-
 SV.registerLayout('Force', {
-  defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions{
+  defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
     return {
       node: {
         default: {
@@ -11,8 +10,8 @@ SV.registerLayout('Force', {
           label: '[data]',
           size: 20,
           labelOptions: {
-            style: { 
-              fontSize: 20
+            style: {
+              fontSize: 20,
             },
           },
           style: {

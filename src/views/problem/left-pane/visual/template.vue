@@ -33,7 +33,7 @@
   import { reqAllDescriptionTemplate, reqDescriptionTemplate } from '@/api/visual/index.ts';
 
   const visualizeStore = useVisualizeStore();
-  const { descriptionJson, action} = storeToRefs(visualizeStore);
+  const { descriptionJson, action } = storeToRefs(visualizeStore);
   const singleTableRef = ref<InstanceType<typeof ElTable>>();
   const descriptionTemplateList = ref<VisualizeDescriptionTemplate[]>();
 
@@ -62,18 +62,17 @@
   const handlerVisualizeAction = (val: boolean) => {
     // 启动可视化调试
     if (val) {
-      flushVisualize()
+      flushVisualize();
     }
   };
 
   // 刷新可视化
   const flushVisualize = () => {
-    const jsonObject: VisualizeDescription = JSON.parse(currentDesciprtionJson.value)
+    const jsonObject: VisualizeDescription = JSON.parse(currentDesciprtionJson.value);
     // 设置当前可视化模板
-    descriptionJson.value = currentDesciprtionJson.value
-    visualizeStore.description = jsonObject
+    descriptionJson.value = currentDesciprtionJson.value;
+    visualizeStore.description = jsonObject;
   };
-
 </script>
 
 <style lang="scss" scoped>

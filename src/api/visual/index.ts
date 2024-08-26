@@ -13,11 +13,15 @@ enum API {
   TEMPLATE_URL = '/visualize/template',
 }
 
-export const reqStructVisualize = (data: StructVisualizeRequest): Promise<StructuralVisualizeResponse> => {
+export const reqStructVisualize = (
+  data: StructVisualizeRequest,
+): Promise<StructuralVisualizeResponse> => {
   return request.post(`${API.VISUALIZE_URL}/struct`, data);
 };
 
-export const reqVariableVisualize = (data: VariableVisualizeRequest): Promise<VariableVisualizeResponse> => {
+export const reqVariableVisualize = (
+  data: VariableVisualizeRequest,
+): Promise<VariableVisualizeResponse> => {
   return request.post(`${API.VISUALIZE_URL}/variable`, data);
 };
 
