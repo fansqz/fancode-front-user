@@ -1,7 +1,9 @@
 import request from '@/utils/request';
 import {
-  VisualizeRequest,
-  VisualizeResponse,
+  StructVisualizeRequest,
+  VariableVisualizeRequest,
+  StructuralVisualizeResponse,
+  VariableVisualizeResponse,
   VisualizeDescriptionTemplateResponse,
   VisualizeDescriptionTemplateListResponse,
 } from './type';
@@ -11,9 +13,12 @@ enum API {
   TEMPLATE_URL = '/visualize/template',
 }
 
-// 可视化数据结构请求
-export const reqVisualize = (data: VisualizeRequest): Promise<VisualizeResponse> => {
-  return request.post(API.VISUALIZE_URL, data);
+export const reqStructVisualize = (data: StructVisualizeRequest): Promise<StructuralVisualizeResponse> => {
+  return request.post(`${API.VISUALIZE_URL}/struct`, data);
+};
+
+export const reqVariableVisualize = (data: VariableVisualizeRequest): Promise<VariableVisualizeResponse> => {
+  return request.post(`${API.VISUALIZE_URL}/variable`, data);
 };
 
 export const reqAllDescriptionTemplate = (): Promise<VisualizeDescriptionTemplateListResponse> => {

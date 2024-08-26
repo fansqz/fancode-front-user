@@ -1,8 +1,8 @@
 <template>
-  <splitpanes class="default-theme main">
+  <splitpanes class="default-theme main"  @resized="resizeVisualPane">
     <!--题目展示-->
-    <pane>
-      <VisaulPane :content="problemDescriptionContent" />
+    <pane @resized="resizeVisualPane">
+      <LeftPane ref="leftPane" class="left-pane" :content="problemDescriptionContent" />
     </pane>
 
     <!--coding-->
@@ -31,7 +31,7 @@
   import { reactive, ref } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
-  import VisaulPane from './visual-pane/index.vue';
+  import LeftPane from './left-pane/index.vue';
   import Editor from '@/components/code-editor/editor/index.vue';
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from '@/components/code-editor/console/index.vue';
@@ -52,6 +52,7 @@
   let problemDescriptionContent = ref('');
   let codingStore = useCodingStore();
   let { code, languages, language, editorUpdateCode, problemId } = storeToRefs(codingStore);
+  const leftPane = ref<InstanceType<typeof LeftPane> | null>();
 
   const load = async () => {
     let result = await reqProblem(props.problemNumber);
@@ -83,13 +84,24 @@
     reqSaveUserCode(req);
   };
 
-  // 监控代码变化，如果发生变化就进行
+  /**
+   * 当拉伸/缩放可视化面板时调用
+   * - 当可视化面板尺寸发生变化时，需重新调整可视化视图
+   */
+  const resizeVisualPane = () => {
+    leftPane.value.resizeVisualView();
+  };
+
 </script>
 
 <style scoped lang="scss">
   .main {
     position: relative;
     height: calc(100vh - $base-header-height);
+    .left-pane {
+      height: 100%;
+      widows: 100%;
+    }
     .editor-switcher {
       position: relative;
       height: 35px;

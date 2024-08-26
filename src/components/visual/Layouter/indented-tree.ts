@@ -51,8 +51,7 @@ SV.registerLayout('Indented', {
    * 对子树进行递归布局
    */
   //判断是否是B节点
-
-  layoutItem(node, elements, layoutOptions) {
+  layoutItem(node: SVNode, elements: SVNode[], layoutOptions: LayoutOptions) {
     if (!node) {
       return null;
     }
@@ -66,7 +65,7 @@ SV.registerLayout('Indented', {
       let childLength = node.child.length;
       console.log(childLength);
       for (let i = 0; i < childLength; i++) {
-        parent = node;
+        let parent = node;
 
         let tempY;
         // console.log(node.child[i].get('parent'));
@@ -118,38 +117,24 @@ SV.registerLayout('Indented', {
       yInterval = layoutOptions.yInterval;
     let tempY;
     for (let k = 0; k < node['child'].length; k++) {
-      if (!node['child'][k].child) {
-        node['child'][k].set('x', parent.get('x') + 60 + xInterval);
+      if (!node.child[k].child) {
+        node.child[k].set('x', parent.get('x') + 60 + xInterval);
         console.log(node);
-        node['child'][k].set('y', tempY + 40 + yInterval); //D/F的坐标
+        node.child[k].set('y', tempY + 40 + yInterval); //D/F的坐标
         tempY = node['child'][k].get('y');
         console.log(tempY);
       } //node.child[k=g]
-      if (node['child'][k].child) {
-        node['child'][k].set('x', parent.get('x') + 60 + xInterval);
-        node['child'][k].set('y', tempY + 40 + yInterval); //c
-        tempY = node['child'][k].get('y');
-        console.log(node['child'][k]);
-        this.LayoutChild(node['child'][k], layoutOptions);
+      if (node.child[k].child) {
+        node.child[k].set('x', parent.get('x') + 60 + xInterval);
+        node.child[k].set('y', tempY + 40 + yInterval); //c
+        tempY = node.child[k].get('y');
+        console.log(node.child[k]);
+        this.LayoutChild(node.child[k], layoutOptions);
       }
     }
   },
-  //返回第一层子节点
-  // isFirstChild(elements,node) {
-  //     let Root = elements[0];
-  //     console.log(Root);
-  //     console.log(node.id);
-  //     console.log(node);
-  //     for (g = 0; g < Root.child.length; g++)
-  //     {
 
-  //         if (Root.child[g].id === node.id) {
-  //             return node;
-  //  }
-
-  //         }
-  // },
-
+  // 布局函数
   layout(elements: SVNode[], layoutOptions: LayoutOptions) {
     let root = elements[0];
 
@@ -164,3 +149,5 @@ SV.registerLayout('Indented', {
     this.layoutItem(root, elements, layoutOptions);
   },
 });
+
+

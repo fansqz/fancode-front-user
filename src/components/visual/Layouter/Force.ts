@@ -1,8 +1,9 @@
-import { SV } from 'structv2';
+import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions } from 'structv2';
 import G6 from '@antv/g6';
 
+
 SV.registerLayout('Force', {
-  defineOptions() {
+  defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions{
     return {
       node: {
         default: {
@@ -10,7 +11,9 @@ SV.registerLayout('Force', {
           label: '[data]',
           size: 20,
           labelOptions: {
-            style: { fontSize: 20 },
+            style: { 
+              fontSize: 20
+            },
           },
           style: {
             stroke: 'red',
@@ -27,9 +30,8 @@ SV.registerLayout('Force', {
             stroke: '#333',
             lineAppendWidth: 6,
             cursor: 'pointer',
-            // endArrow: 'default',
             startArrow: {
-              path: Arrow.circle(2, -1),
+              path: G6.Arrow.circle(2, -1),
               fill: '#333',
             },
           },
@@ -61,5 +63,5 @@ SV.registerLayout('Force', {
     };
   },
 
-  layout(e) {},
+  layout(_nodes: SVNode[], _layoutOptions: LayoutOptions) {},
 });

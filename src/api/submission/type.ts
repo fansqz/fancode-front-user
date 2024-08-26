@@ -1,30 +1,30 @@
 type SubmissionListRequest = PageQuery & {};
 
 type Submission = {
-  id: number;
-  problemName: string;
-  status: number;
-  errorMessage: string;
-  createdAt: string;
+  id: number
+  problemName: string
+  status: number
+  errorMessage: string
+  createdAt: string
 };
 
 type SubmissionListPageInfo = PageInfo & {
-  list: Submission[];
+  list: Submission[]
 };
 
 type SubmissionListResponse = BaseResponse & {
-  data: SubmissionListPageInfo;
+  data: SubmissionListPageInfo
 };
 
 type ActivityYearResponse = BaseResponse & {
-  data: string[];
+  data: string[]
 };
 
 type ActivityItem = {
-  date: string;
-  count: number;
+  date: string
+  count: number
 };
 
 type ActivityMapResponse = BaseResponse & {
-  data: ActivityItem[] | null;
+  data: ActivityItem[] | null
 };

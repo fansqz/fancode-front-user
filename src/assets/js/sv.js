@@ -36678,19 +36678,17 @@
                       c = r.get('dPercentText'),
                       l = t.y + e / 1.5 + 16;
                     !c || c.destroyed
-                      ? ((c = i
-                          .get('group')
-                          .addShape('text', {
-                            attrs: {
-                              text: ''.concat(u, '%'),
-                              x: t.x,
-                              y: l,
-                              fill: '#aaa',
-                              stroke: '#fff',
-                              lineWidth: 1,
-                              fontSize: 12,
-                            },
-                          })),
+                      ? ((c = i.get('group').addShape('text', {
+                          attrs: {
+                            text: ''.concat(u, '%'),
+                            x: t.x,
+                            y: l,
+                            fill: '#aaa',
+                            stroke: '#fff',
+                            lineWidth: 1,
+                            fontSize: 12,
+                          },
+                        })),
                         r.set('dPercentText', c))
                       : c.attr({ text: ''.concat(u, '%'), x: t.x, y: l });
                   }
@@ -39710,12 +39708,10 @@
                         capture: !1,
                         name: 'max-text-shape',
                       }))),
-                    (this.foregroundShape = this.group
-                      .addGroup()
-                      .addShape('rect', {
-                        attrs: Zo({ x: 0, y: this.y, height: r }, this.foregroundStyle),
-                        name: 'foreground-shape',
-                      })),
+                    (this.foregroundShape = this.group.addGroup().addShape('rect', {
+                      attrs: Zo({ x: 0, y: this.y, height: r }, this.foregroundStyle),
+                      name: 'foreground-shape',
+                    })),
                     this.foregroundShape.on('mousedown', function (t) {
                       t.target.attr('cursor', 'grabbing');
                     }),
@@ -46722,13 +46718,11 @@
                 e.emit('nodeselectchange', { selectedItems: { nodes: o, edges: s }, select: !0 });
             },
             createLasso: function () {
-              var t = this.graph
-                .get('delegateGroup')
-                .addShape('path', {
-                  attrs: (0, c.__assign)({ path: [] }, this.delegateStyle),
-                  capture: !1,
-                  name: 'lasso-shape',
-                });
+              var t = this.graph.get('delegateGroup').addShape('path', {
+                attrs: (0, c.__assign)({ path: [] }, this.delegateStyle),
+                capture: !1,
+                name: 'lasso-shape',
+              });
               return (this.lasso = t), (this.delegate = t), (this.points = []), t;
             },
             updateLasso: function (t) {
@@ -57803,22 +57797,20 @@
                           )
                             P.push(0);
                           return (
-                            (D = T.createKernel(f.gForceBundle)
-                              .setDispatch([p, 1, 1])
-                              .setBinding({
-                                u_Data: y,
-                                u_damping: n.damping,
-                                u_maxSpeed: n.maxSpeed,
-                                u_minMovement: n.minMovement,
-                                u_coulombDisScale: n.coulombDisScale,
-                                u_factor: n.factor,
-                                u_NodeAttributeArray1: A,
-                                u_NodeAttributeArray2: C,
-                                MAX_EDGE_PER_VERTEX: v,
-                                VERTEX_COUNT: p,
-                                u_AveMovement: P,
-                                u_interval: n.interval,
-                              })),
+                            (D = T.createKernel(f.gForceBundle).setDispatch([p, 1, 1]).setBinding({
+                              u_Data: y,
+                              u_damping: n.damping,
+                              u_maxSpeed: n.maxSpeed,
+                              u_minMovement: n.minMovement,
+                              u_coulombDisScale: n.coulombDisScale,
+                              u_factor: n.factor,
+                              u_NodeAttributeArray1: A,
+                              u_NodeAttributeArray2: C,
+                              MAX_EDGE_PER_VERTEX: v,
+                              VERTEX_COUNT: p,
+                              u_AveMovement: P,
+                              u_interval: n.interval,
+                            })),
                             (L = T.createKernel(f.aveMovementBundle)
                               .setDispatch([1, 1, 1])
                               .setBinding({

@@ -44,7 +44,6 @@
       stackFrames.value = result.data;
       console.log(stackFrames);
       defaultActive.value = stackFrames.value[0].id;
-      console.log(stackFrames.value[0].id);
       emit('selectFrame', stackFrames.value[0].id);
     }
   };

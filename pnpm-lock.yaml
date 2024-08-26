@@ -73,7 +73,7 @@ dependencies:
     version: 3.1.5
   structv2:
     specifier: github:leaf-dawn/StructV2
-    version: git@github.com+leaf-dawn/StructV2/41ea3cd13d2471e454650662271b0e6c2f5b9d51
+    version: git@github.com+leaf-dawn/StructV2/92b9097dbef326ff06d87f60deacb04e7db3be5d
   stylelint:
     specifier: ^15.10.2
     version: 15.10.2
@@ -7473,10 +7473,10 @@ packages:
       tslib: 2.3.0
     dev: false
 
-  git@github.com+leaf-dawn/StructV2/41ea3cd13d2471e454650662271b0e6c2f5b9d51:
-    resolution: {commit: 41ea3cd13d2471e454650662271b0e6c2f5b9d51, repo: git@github.com:leaf-dawn/StructV2.git, type: git}
+  git@github.com+leaf-dawn/StructV2/92b9097dbef326ff06d87f60deacb04e7db3be5d:
+    resolution: {commit: 92b9097dbef326ff06d87f60deacb04e7db3be5d, repo: git@github.com:leaf-dawn/StructV2.git, type: git}
     name: structv2
-    version: 0.0.4
+    version: 0.0.6
     dependencies:
       '@antv/g6': 4.8.24
       merge: 2.1.1

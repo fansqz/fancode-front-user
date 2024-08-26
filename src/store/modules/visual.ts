@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { VisualizeDescription, VisualizeData } from '@/api/visual/type.ts';
 
 type VisualizeState = {
   // 可视化是否开启
@@ -7,9 +6,7 @@ type VisualizeState = {
   // 可视化描述的json结构
   descriptionJson: string;
   // 可视化描述
-  description: VisualizeDescription | null;
-  // 可视化数据
-  data: VisualizeData | null;
+  description: VisualizeDescription | undefined;
 };
 
 const useVisualizeStore = defineStore('visual', {
@@ -17,8 +14,29 @@ const useVisualizeStore = defineStore('visual', {
     action: false,
     descriptionJson: '',
     description: null,
-    data: null,
   }),
 });
 
 export default useVisualizeStore;
+
+// 可视化描述类型
+export type VisualizeDescription = ArrayDescription | BinaryTreeDescription | any;
+
+// 数组可视化描述
+export type ArrayDescription = {
+  type: 'array'
+  arrayName: string
+  pointNames: string[]
+};
+
+// 二叉树可视化描述
+export type BinaryTreeDescription = {
+  type: 'binaryTree'
+  // 二叉树节点结构体名称
+  treeNode: string
+  // 左子树和右边子树属性名称
+  left: string
+  right: string
+};
+
+

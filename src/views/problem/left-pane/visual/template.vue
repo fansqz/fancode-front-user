@@ -1,38 +1,31 @@
 <template>
-  <el-collapse accordion class="visual-description-collapse">
-    <el-collapse-item name="1">
-      <template #title><el-text class="title">可视化数据定义</el-text></template>
-      <div class="visual-description-input">
-        <el-table
-          size="small"
-          ref="singleTableRef"
-          class="templateSelect"
-          :data="descriptionTemplateList"
-          highlight-current-row
-          @current-change="handleCurrentChange"
-        >
-          <el-table-column property="name" label="可视化模板" class="item" />
-        </el-table>
-        <el-input
-          class="input"
-          v-model="currentDesciprtionJson"
-          type="textarea"
-          :rows="5"
-          placeholder="Please input"
-        />
-        <div class="option">
-          <el-switch v-model="action" @change="handlerVisualizeAction" />
-          <el-button type="primary" link @click="flushVisualize">刷新</el-button>
-        </div>
-      </div>
-    </el-collapse-item>
-    <Visaul />
-  </el-collapse>
+  <div class="visual-description-input">
+    <el-table
+      size="small"
+      ref="singleTableRef"
+      class="templateSelect"
+      :data="descriptionTemplateList"
+      highlight-current-row
+      @current-change="handleCurrentChange"
+    >
+      <el-table-column property="name" label="可视化模板" class="item" />
+    </el-table>
+    <el-input
+      class="input"
+      v-model="currentDesciprtionJson"
+      type="textarea"
+      :rows="5"
+      placeholder="Please input"
+    />
+    <div class="option">
+      <el-switch v-model="action" @change="handlerVisualizeAction" />
+      <el-button type="primary" link @click="flushVisualize">刷新</el-button>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import useVisualizeStore from '@/store/modules/visual.ts';
-  import Visaul from '@/components/visual/index.vue';
+  import useVisualizeStore, { VisualizeDescription } from '@/store/modules/visual.ts';
   import { ref, onMounted } from 'vue';
   import { storeToRefs } from 'pinia';
   import { ElTable } from 'element-plus';
@@ -40,7 +33,7 @@
   import { reqAllDescriptionTemplate, reqDescriptionTemplate } from '@/api/visual/index.ts';
 
   const visualizeStore = useVisualizeStore();
-  const { descriptionJson, action } = storeToRefs(visualizeStore);
+  const { descriptionJson, action} = storeToRefs(visualizeStore);
   const singleTableRef = ref<InstanceType<typeof ElTable>>();
   const descriptionTemplateList = ref<VisualizeDescriptionTemplate[]>();
 
@@ -69,24 +62,22 @@
   const handlerVisualizeAction = (val: boolean) => {
     // 启动可视化调试
     if (val) {
-      descriptionJson.value = currentDesciprtionJson.value;
+      flushVisualize()
     }
   };
 
   // 刷新可视化
   const flushVisualize = () => {
-    descriptionJson.value = currentDesciprtionJson.value;
+    const jsonObject: VisualizeDescription = JSON.parse(currentDesciprtionJson.value)
+    // 设置当前可视化模板
+    descriptionJson.value = currentDesciprtionJson.value
+    visualizeStore.description = jsonObject
   };
+
 </script>
 
 <style lang="scss" scoped>
-  .visual-description-collapse {
-    .title {
-      padding: 0px 20px;
-    }
-  }
   .visual-description-input {
-    padding: 5px 10px;
     box-sizing: border-box;
     width: 100%;
     display: flex;

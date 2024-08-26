@@ -1,27 +1,17 @@
-import { SV } from 'structv2';
+import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions } from 'structv2';
 
-SV.registerLayout('Array', {
-  sourcesPreprocess(sources) {
-    const firstElement = sources[0];
-
-    if (firstElement.external) {
-      firstElement.headExternal = firstElement.external;
-      delete firstElement.external;
-    }
-
-    return sources;
-  },
-
-  defineLeakRule(nodes) {
+// 数组
+SV.registerLayout('array', {
+  defineLeakRule(_models: SVNode[]): SVNode[] {
     return [];
   },
 
-  defineOptions() {
+  defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
     return {
       node: {
         default: {
           type: 'array-node',
-          label: '[id]',
+          label: '[data]',
           size: [60, 30],
           labelOptions: {
             style: { fontSize: 20 },
@@ -58,12 +48,10 @@ SV.registerLayout('Array', {
     };
   },
 
-  layout(elements) {
-    let arr = elements;
-
+  layout(nodes: SVNode[], _layoutOptions: LayoutOptions) {
+    let arr = nodes;
     for (let i = 0; i < arr.length; i++) {
       let width = arr[i].get('size')[0];
-
       if (i > 0) {
         arr[i].set('x', arr[i - 1].get('x') + width);
       }
