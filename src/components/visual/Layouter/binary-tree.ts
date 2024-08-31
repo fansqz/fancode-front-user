@@ -142,5 +142,3 @@ SV.registerLayout('binaryTree', {
     }
   },
 });
-
-

@@ -94,11 +94,10 @@
     }
   };
 
-
   // 处理滚轮事件
   const handleScroll = (event) => {
     // ctrl + 滚轮放大缩小图像
-    if(event.ctrlKey) {
+    if (event.ctrlKey) {
       event.preventDefault();
       if (event.deltaY > 0) {
         resizeZoom(1);
@@ -119,7 +118,7 @@
     const newZoom = currentZoom + increment / 100;
     // 设置新的缩放级别
     cur.getGraphInstance().zoomTo(newZoom);
-  }
+  };
 
   defineExpose({
     resizeVisualView,

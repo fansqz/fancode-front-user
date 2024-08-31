@@ -8,7 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 // 对外暴露插件对象
 export default {
   install(app: App) {
-    app.component("JsonEditor", JsonEditor);
+    app.component('JsonEditor', JsonEditor);
     app.component('SvgIcon', SvgIcon);
     app.component('TextButton', TextButton);
     // 注册element-plus的图标为全局组件

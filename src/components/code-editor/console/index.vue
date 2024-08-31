@@ -50,14 +50,14 @@
   // 监控调试事件
   onMounted(() => {
     LaunchEventDispatcher.on('launch', onLaunch);
-  })
+  });
   onUnmounted(() => {
     LaunchEventDispatcher.off('launch', onLaunch);
   });
-  
+
   const onLaunch = () => {
     // 监控调试开始事件，设置当前终端为“调试终端”
-    activeIndex.value = "terminal";
+    activeIndex.value = 'terminal';
   };
 </script>
 

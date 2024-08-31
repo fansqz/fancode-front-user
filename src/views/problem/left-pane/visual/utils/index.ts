@@ -1,7 +1,7 @@
 import { VisualizeDescription } from '@/store/modules/visual';
 import { Source } from 'structv2';
-import reqArrayVisualizeData from './array'
-import reqBinaryTreeVisualizeData from './binary-tree'
+import reqArrayVisualizeData from './array';
+import reqBinaryTreeVisualizeData from './binary-tree';
 
 export const reqVisualizeData = async (
   debugID: string,

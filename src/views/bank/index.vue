@@ -60,8 +60,8 @@
 
   const $route = useRoute();
   const $router = useRouter();
-  
-  let bankID: number = +$route.params.bankID
+
+  let bankID: number = +$route.params.bankID;
   // 题库信息
   let problemBank = reactive({
     id: bankID,

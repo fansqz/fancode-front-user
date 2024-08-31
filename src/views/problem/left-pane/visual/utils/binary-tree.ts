@@ -14,7 +14,7 @@ const reqBinaryTreeVisualizeData = async (
     query: {
       struct: description.treeNode,
       values: [description.data],
-      points: [description.left, description.right]
+      points: [description.left, description.right],
     },
   };
   let result = await reqStructVisualize(req);
@@ -43,7 +43,7 @@ const convertqBinaryTreeVisualizeData = (
   for (let i = 0; i < data.nodes.length; i++) {
     let node = data.nodes[i];
     let btNode: BinaryTreeNode = {
-      id: "0",
+      id: '0',
     };
     btNode.id = node.id;
     btNode.data = node.values[0].value;
@@ -72,7 +72,7 @@ const convertqBinaryTreeVisualizeData = (
         if (node.external == undefined) {
           node.external = [];
         }
-        nodes[j].external.push(pointer.name)
+        nodes[j].external.push(pointer.name);
       }
     }
   }

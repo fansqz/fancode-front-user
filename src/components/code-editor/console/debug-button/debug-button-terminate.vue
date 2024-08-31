@@ -39,7 +39,7 @@
     if (result.code == 200) {
       isDebug.value = false;
     } else {
-      console.log(result.message)
+      console.log(result.message);
       isDebug.value = false;
     }
   };

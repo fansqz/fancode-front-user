@@ -2,11 +2,11 @@ import { defineStore } from 'pinia';
 
 type VisualizeState = {
   // 可视化是否开启
-  action: boolean
+  action: boolean;
   // 可视化描述的json结构
-  descriptionJson: string
+  descriptionJson: string;
   // 可视化描述
-  description: VisualizeDescription | undefined
+  description: VisualizeDescription | undefined;
 };
 
 const useVisualizeStore = defineStore('visual', {
@@ -24,19 +24,19 @@ export type VisualizeDescription = ArrayDescription | BinaryTreeDescription | an
 
 // 数组可视化描述
 export type ArrayDescription = {
-  type: 'array'
-  arrayName: string
-  pointNames: string[]
+  type: 'array';
+  arrayName: string;
+  pointNames: string[];
 };
 
 // 二叉树可视化描述
 export type BinaryTreeDescription = {
-  type: 'binaryTree'
+  type: 'binaryTree';
   // 二叉树节点结构体名称
-  treeNode: string
+  treeNode: string;
   // 数据域
-  data: string
+  data: string;
   // 左子树和右边子树属性名称
-  left: string
-  right: string
+  left: string;
+  right: string;
 };

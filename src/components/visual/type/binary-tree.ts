@@ -4,10 +4,10 @@ export type BinaryTreeData = {
 };
 
 export type BinaryTreeNode = {
-  id: string
-  root?: boolean
-  external?: string[]
+  id: string;
+  root?: boolean;
+  external?: string[];
   // 数据
-  data?: string
+  data?: string;
   child?: string[];
 };

@@ -5,8 +5,8 @@
     </div>
     <el-collapse ref="visualTemplate" accordion class="visual-description-collapse">
       <el-collapse-item name="1">
-          <template #title><el-text class="title">可视化数据定义</el-text></template>
-          <VisaulTemplate class="visual-description"/>
+        <template #title><el-text class="title">可视化数据定义</el-text></template>
+        <VisaulTemplate class="visual-description" />
       </el-collapse-item>
     </el-collapse>
   </div>

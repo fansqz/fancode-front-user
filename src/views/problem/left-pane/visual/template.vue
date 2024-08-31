@@ -11,14 +11,13 @@
       >
         <el-table-column property="name" label="可视化模板" class="item" />
       </el-table>
-      <JsonEditor class="input" v-model="currentDesciprtionJson"/>
+      <JsonEditor class="input" v-model="currentDesciprtionJson" />
       <div class="option">
         <el-switch v-model="action" @change="handlerVisualizeAction" />
         <el-button type="primary" link @click="flushVisualize">刷新</el-button>
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -74,34 +73,33 @@
 </script>
 
 <style lang="scss" scoped>
-.visual-description {
-  .visual-description-input {
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    .templateSelect {
-      width: 20%;
-      margin-left: 20px;
-      margin-right: 10px;
-      height: 150px;
-      .item {
-        height: 25px;
-        margin: 10px;
+  .visual-description {
+    .visual-description-input {
+      box-sizing: border-box;
+      width: 100%;
+      display: flex;
+      .templateSelect {
+        width: 20%;
+        margin-left: 20px;
+        margin-right: 10px;
+        height: 150px;
+        .item {
+          height: 25px;
+          margin: 10px;
+        }
+      }
+      .input {
+        width: calc(80% - 100px);
+        height: 150px;
+      }
+      .option {
+        width: 40px;
+        height: 150px;
+        margin-right: 20px;
+        margin-left: 10px;
+        display: flex;
+        flex-flow: column;
       }
     }
-    .input {
-      width: calc(80% - 100px);
-      height: 150px;
-    }
-    .option {
-      width: 40px;
-      height: 150px;
-      margin-right: 20px;
-      margin-left: 10px;
-      display: flex;
-      flex-flow: column;
-    }
   }
-}
-
 </style>
