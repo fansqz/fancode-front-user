@@ -3,18 +3,7 @@ import { reqVariableVisualize } from '@/api/visual';
 import { ArrayData, ArrayNode } from '@/components/visual/type/array';
 import { ElMessage } from 'element-plus';
 import { ArrayDescription, VisualizeDescription } from '@/store/modules/visual';
-import { Source } from 'structv2';
 
-export const reqVisualizeData = async (
-  debugID: string,
-  description: VisualizeDescription,
-): Promise<Source> => {
-  if (description.type == 'array') {
-    return reqArrayVisualizeData(debugID, description);
-  }
-};
-
-// 请求数组可视化数据
 const reqArrayVisualizeData = async (
   debugID: string,
   description: ArrayDescription,
@@ -76,3 +65,6 @@ const convertArrayVisualizeData = (
     layouter: 'array',
   };
 };
+
+// 请求数组可视化数据
+export default reqArrayVisualizeData;

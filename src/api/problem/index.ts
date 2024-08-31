@@ -1,5 +1,15 @@
 import request from '@/utils/request';
 import { toFormData } from '@/utils/format';
+import {
+  ProblemListRequest,
+  ProblemListResponse,
+  ProblemResponse,
+  ProblemTemplateCodeResponse,
+  ReqUserCodeByProblemIDResponse,
+  SaveUserCodeRequest,
+  UserCodeResponse,
+  SaveUserCodeResponse,
+} from './type';
 
 enum API {
   LIST_PROBLEM_URL = '/problem/list',

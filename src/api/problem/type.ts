@@ -1,10 +1,10 @@
-type ProblemListRequest = {
-  bankID: number | undefined;
+export type ProblemListRequest = {
+  bankID?: number;
   page?: number;
   pageSize?: number;
 };
 
-type UserProblemForList = {
+export type UserProblemForList = {
   id: number;
   name: string;
   number: string;
@@ -14,15 +14,15 @@ type UserProblemForList = {
   status: number;
 };
 
-type ProblemListPageInfo = PageInfo & {
+export type ProblemListPageInfo = PageInfo & {
   list: UserProblemForList[];
 };
 
-type ProblemListResponse = BaseResponse & {
+export type ProblemListResponse = BaseResponse & {
   data: ProblemListPageInfo;
 };
 
-type UserProblem = {
+export type UserProblem = {
   id: number;
   bankID: number;
   name: string;
@@ -35,35 +35,35 @@ type UserProblem = {
   enable: number;
 };
 
-type ProblemResponse = BaseResponse & {
+export type ProblemResponse = BaseResponse & {
   data: UserProblem;
 };
 
-type ProblemTemplateCodeResponse = BaseResponse & {
+export type ProblemTemplateCodeResponse = BaseResponse & {
   data: string;
 };
 
-type UserCodeResponse = BaseResponse & {
+export type UserCodeResponse = BaseResponse & {
   data: string;
 };
 
-type UserCode = {
+export type UserCode = {
   id: number;
   problemID: number;
   language: string;
   code: string;
 };
 
-type ReqUserCodeByProblemIDResponse = BaseResponse & {
+export type ReqUserCodeByProblemIDResponse = BaseResponse & {
   data: UserCode;
 };
 
-type SaveUserCodeRequest = {
+export type SaveUserCodeRequest = {
   problemID: number;
   language: string;
   code: string;
 };
 
-type SaveUserCodeResponse = BaseResponse & {
+export type SaveUserCodeResponse = BaseResponse & {
   data: string;
 };

@@ -1,16 +1,7 @@
 <template>
   <div class="visual_contaner">
-    <div class="visaul" id="visaul">
+    <div class="visaul" id="visaul" @wheel="handleScroll">
       <div id="leak"></div>
-    </div>
-    <div class="option">
-      <button id="btn-prev">prev</button>
-      <button id="btn-next">next</button>
-      <button id="resize">resize</button>
-      <button id="relayout">relayout</button>
-      <button id="switch-mode">switch mode</button>
-      <button id="brush-select">brush-select</button>
-      <span id="pos"></span>
     </div>
   </div>
 </template>
@@ -19,76 +10,78 @@
   import './layouter/indented-tree.ts';
   import './layouter/force.ts';
   import './layouter/array.ts';
+  import './layouter/binary-tree.ts';
   import { SV, Sources, Engine } from 'structv2';
-  import { onMounted, watch, toRefs } from 'vue';
+  import { onMounted, watch, toRefs, onUnmounted } from 'vue';
 
   const props = defineProps<{
     sources: Sources;
     action: boolean;
   }>();
   const { sources, action } = toRefs(props);
-
   let cur: Engine;
   let container: HTMLElement | null;
+  let leak: HTMLElement | null;
   onMounted(() => {
-    let isForce = false;
-    cur = SV(
-      document.getElementById('visaul'),
-      {
-        view: {
-          groupPadding: 40,
-        },
-      },
-      isForce,
-    );
     container = document.getElementById('visaul');
-    const pos = document.getElementById('pos');
-
-    const leak = document.getElementById('leak');
-
-    if (props.action) {
-      cur.render(props.sources);
-    }
-
-    cur.on('onLeakAreaUpdate', (payload) => {
-      leak.style.opacity = payload.hasLeak ? '1' : '0';
-      leak.style.top = payload.leakAreaY - 40 + 'px';
-    });
-
-    container.addEventListener('mousemove', (e) => {
-      let x = e.offsetX,
-        y = e.offsetY;
-      pos.innerHTML = `${x},${y}`;
-    });
-
+    leak = document.getElementById('leak');
+    // 监控source变化，更新资源
     watch(
       () => sources.value,
       () => {
-        console.log(sources);
-        if (action.value) {
-          cur.render(sources.value);
-        }
+        console.log(sources.value);
+        updateVisualView(sources.value);
       },
     );
 
+    // 监控可视化启动
     watch(
       () => action.value,
       () => {
         if (action.value) {
-          cur.render(sources.value);
+          updateVisualView(sources.value);
         } else {
-          cur.render({});
+          updateVisualView(null);
         }
       },
     );
   });
 
+  onUnmounted(() => {
+    disposeVisualView();
+  });
+
+  // 更新可视化数据
+  const updateVisualView = (sources: Sources) => {
+    if (sources == null || sources == undefined) {
+      disposeVisualView();
+    }
+    // 可视化视图为空则初始化
+    if (cur == null || cur == undefined) {
+      cur = SV(
+        container,
+        {
+          view: {
+            groupPadding: 0,
+          },
+        },
+        false,
+      );
+      cur.on('onLeakAreaUpdate', (payload) => {
+        leak.style.opacity = payload.hasLeak ? '1' : '0';
+        leak.style.top = payload.leakAreaY - 40 + 'px';
+      });
+    }
+    cur.render(sources);
+  };
+
   /**
    * 销毁可视化视图
    */
-  let disposeVisualView = () => {
-    if (cur) {
+  const disposeVisualView = () => {
+    if (cur != null) {
       cur.destroy();
+      cur = null;
     }
   };
 
@@ -100,6 +93,33 @@
       cur.resize(width, height);
     }
   };
+
+
+  // 处理滚轮事件
+  const handleScroll = (event) => {
+    // ctrl + 滚轮放大缩小图像
+    if(event.ctrlKey) {
+      event.preventDefault();
+      if (event.deltaY > 0) {
+        resizeZoom(1);
+      } else {
+        resizeZoom(-1);
+      }
+    }
+  };
+
+  // 放大和缩小可视化结构
+  const resizeZoom = (increment: number) => {
+    if (cur == null) {
+      return;
+    }
+    // 获取当前视图的缩放级别
+    const currentZoom = cur.getGraphInstance().getZoom();
+    // 计算新的缩放级别
+    const newZoom = currentZoom + increment / 100;
+    // 设置新的缩放级别
+    cur.getGraphInstance().zoomTo(newZoom);
+  }
 
   defineExpose({
     resizeVisualView,

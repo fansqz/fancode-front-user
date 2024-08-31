@@ -9,6 +9,6 @@ export const reqAllBankList = (): Promise<AllBankListResponse> => {
   return request.get(API.All_BANK_URL);
 };
 
-export const reqBank = (bankID: string): Promise<BankResponse> => {
+export const reqBank = (bankID: number): Promise<BankResponse> => {
   return request.get(API.BANK_URL + `/${bankID}`);
 };

@@ -20,7 +20,6 @@
   import useDebugStore from '@/store/modules/debug';
   import { ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { ElMessage } from 'element-plus';
 
   const debugStore = useDebugStore();
   let { isDebug } = storeToRefs(debugStore);
@@ -40,11 +39,8 @@
     if (result.code == 200) {
       isDebug.value = false;
     } else {
-      ElMessage({
-        showClose: true,
-        message: result.message,
-        type: 'error',
-      });
+      console.log(result.message)
+      isDebug.value = false;
     }
   };
 

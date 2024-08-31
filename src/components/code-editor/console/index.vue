@@ -23,12 +23,14 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { onMounted, onUnmounted, ref, watch } from 'vue';
   import Output from './output.vue';
   import Input from './input.vue';
   import DebugTerminal from './debug-terminal/index.vue';
   import useCodingStore from '@/store/modules/coding';
   import { storeToRefs } from 'pinia';
+  import { LaunchEventDispatcher } from '@/api/debug/debug-event-dispatcher';
+
   // 用于控制当前是输入界面还是输出界面
   const activeIndex = ref('input');
   const codingStore = useCodingStore();
@@ -45,6 +47,18 @@
       deep: true,
     },
   );
+  // 监控调试事件
+  onMounted(() => {
+    LaunchEventDispatcher.on('launch', onLaunch);
+  })
+  onUnmounted(() => {
+    LaunchEventDispatcher.off('launch', onLaunch);
+  });
+  
+  const onLaunch = () => {
+    // 监控调试开始事件，设置当前终端为“调试终端”
+    activeIndex.value = "terminal";
+  };
 </script>
 
 <style scoped lang="scss">

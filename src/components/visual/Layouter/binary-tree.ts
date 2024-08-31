@@ -1,8 +1,8 @@
-import { SV } from 'structv2';
+import { SV, SourceNode, LayoutGroupOptions, Group, SVNode, LayoutOptions } from 'structv2';
 import G6 from '@antv/g6';
 
-SV.registerLayout('BinaryTree', {
-  defineOptions() {
+SV.registerLayout('binaryTree', {
+  defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
     return {
       node: {
         default: {
@@ -26,8 +26,9 @@ SV.registerLayout('BinaryTree', {
             lineAppendWidth: 6,
             cursor: 'pointer',
             endArrow: 'default',
+            preventOverlap: true, //防重叠
             startArrow: {
-              path: Arrow.circle(2, -1),
+              path: G6.Arrow.circle(2, -1),
               fill: '#333',
             },
           },
@@ -49,11 +50,8 @@ SV.registerLayout('BinaryTree', {
         },
       },
       layout: {
-        xInterval: 40,
-        yInterval: 40,
-      },
-      behavior: {
-        // dragNode: false
+        xInterval: 50,
+        yInterval: 50,
       },
     };
   },
@@ -61,7 +59,7 @@ SV.registerLayout('BinaryTree', {
   /**
    * 对子树进行递归布局
    */
-  layoutItem(node, layoutOptions) {
+  layoutItem(node: SVNode, layoutOptions: LayoutOptions) {
     // 次双亲不进行布局
     if (!node) {
       return null;
@@ -110,8 +108,8 @@ SV.registerLayout('BinaryTree', {
     if (leftGroup && rightGroup) {
       let move = Math.abs(rightBound.x - layoutOptions.xInterval - leftBound.x - leftBound.width);
       if (move > 0) {
-        leftGroup.translate(-move / 2, 0);
-        rightGroup.translate(move / 2, 0);
+        leftGroup.translate(-move / 2 - 1, 0);
+        rightGroup.translate(move / 2 + 1, 0);
       }
     }
 
@@ -136,24 +134,13 @@ SV.registerLayout('BinaryTree', {
     return group;
   },
 
-  /**
-   * 布局函数
-   * @param {*} elements
-   * @param {*} layoutOptions
-   */
-  layout(elements, layoutOptions) {
-    let root = elements[0];
-    this.layoutItem(root, layoutOptions);
+  layout(elements: SVNode[], layoutOptions: LayoutOptions) {
+    for (let element of elements) {
+      if (element.root) {
+        this.layoutItem(element, layoutOptions);
+      }
+    }
   },
 });
 
-[
-  {
-    id: 6385328,
-    data: '',
-    external: ['L'],
-    root: true,
-    after: null,
-    next: null,
-  },
-];
+
