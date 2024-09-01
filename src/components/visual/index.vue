@@ -1,7 +1,6 @@
 <template>
   <div class="visual_contaner">
-    <div class="visaul" id="visaul" @wheel="handleScroll">
-    </div>
+    <div class="visaul" id="visaul" @wheel="handleScroll"> </div>
   </div>
 </template>
 

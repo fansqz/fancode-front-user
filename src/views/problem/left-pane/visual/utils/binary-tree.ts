@@ -26,7 +26,7 @@ const reqBinaryTreeVisualizeData = async (
     });
     return {
       data: [],
-      layouter: 'binaryTree'
+      layouter: 'binaryTree',
     };
   }
   // 将后端返回的可视化数据转成av需要的可视化数据
@@ -61,7 +61,6 @@ const convertqBinaryTreeVisualizeData = (
     }
     nodes.push(btNode);
   }
-
 
   // 找出根节点，如果没有谁指向该节点，这个节点就是根节点。
   let existRoot = false;
