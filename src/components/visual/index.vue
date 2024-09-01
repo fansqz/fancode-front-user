@@ -1,7 +1,6 @@
 <template>
   <div class="visual_contaner">
     <div class="visaul" id="visaul" @wheel="handleScroll">
-      <div id="leak"></div>
     </div>
   </div>
 </template>
@@ -21,10 +20,8 @@
   const { sources, action } = toRefs(props);
   let cur: Engine;
   let container: HTMLElement | null;
-  let leak: HTMLElement | null;
   onMounted(() => {
     container = document.getElementById('visaul');
-    leak = document.getElementById('leak');
     // 监控source变化，更新资源
     watch(
       () => sources.value,
@@ -67,10 +64,6 @@
         },
         false,
       );
-      cur.on('onLeakAreaUpdate', (payload) => {
-        leak.style.opacity = payload.hasLeak ? '1' : '0';
-        leak.style.top = payload.leakAreaY - 40 + 'px';
-      });
     }
     cur.render(sources);
   };
@@ -138,17 +131,6 @@
       top: 0px;
       height: 100%;
       width: 100%;
-    }
-    #leak {
-      position: absolute;
-      left: 0;
-      top: 100px;
-      opacity: 0;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 4px;
-      pointer-events: none;
-      transition: opacity 0.5s ease-in-out;
     }
     .option {
       position: absolute;

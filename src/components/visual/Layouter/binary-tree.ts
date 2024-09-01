@@ -108,8 +108,8 @@ SV.registerLayout('binaryTree', {
     if (leftGroup && rightGroup) {
       let move = Math.abs(rightBound.x - layoutOptions.xInterval - leftBound.x - leftBound.width);
       if (move > 0) {
-        leftGroup.translate(-move / 2 - 1, 0);
-        rightGroup.translate(move / 2 + 1, 0);
+        leftGroup.translate(-move / 2, 0);
+        rightGroup.translate(move / 2, 0);
       }
     }
 
@@ -135,10 +135,21 @@ SV.registerLayout('binaryTree', {
   },
 
   layout(elements: SVNode[], layoutOptions: LayoutOptions) {
+    let groups = [];
+    // 解决多棵树相交问题
     for (let element of elements) {
       if (element.root) {
-        this.layoutItem(element, layoutOptions);
+        let group = this.layoutItem(element, layoutOptions);
+        groups.push(group);
       }
+    }
+    // 避免多棵相交
+    for (let i = 0; i < groups.length - 1; i++) {
+      let bound1 = groups[i].getBound();
+      let bound2 = groups[i + 1].getBound();
+      let move = Math.abs(bound2.x - layoutOptions.xInterval - bound1.x -bound1.width);
+      console.log(groups[i + 1]);
+      groups[i + 1].translate(move, 0);
     }
   },
 });

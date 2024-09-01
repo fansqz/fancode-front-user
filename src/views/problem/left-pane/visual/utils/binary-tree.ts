@@ -26,7 +26,7 @@ const reqBinaryTreeVisualizeData = async (
     });
     return {
       data: [],
-      layouter: 'binaryTree',
+      layouter: 'binaryTree'
     };
   }
   // 将后端返回的可视化数据转成av需要的可视化数据
@@ -39,7 +39,8 @@ const convertqBinaryTreeVisualizeData = (
 ): BinaryTreeData => {
   let nodes: BinaryTreeNode[] = [];
 
-  // 遍历所有二叉树节点
+  // 遍历所有二叉树节点，因为二叉树的渲染要从根节点开始一直到子节点，所以必须根节点在上面
+  let nextIDSet = new Set();
   for (let i = 0; i < data.nodes.length; i++) {
     let node = data.nodes[i];
     let btNode: BinaryTreeNode = {
@@ -56,11 +57,23 @@ const convertqBinaryTreeVisualizeData = (
       } else {
         btNode.child[1] = node.points[j].value;
       }
-    }
-    if (i == 0) {
-      btNode.root = true;
+      nextIDSet.add(node.points[j].value);
     }
     nodes.push(btNode);
+  }
+
+
+  // 找出根节点，如果没有谁指向该节点，这个节点就是根节点。
+  let existRoot = false;
+  for (let node of nodes) {
+    if (!nextIDSet.has(node.id)) {
+      node.root = true;
+      existRoot = true;
+    }
+  }
+  // 不存在根节点，则第一个节点设置为根节点
+  if (!existRoot) {
+    nodes[0].root = true;
   }
 
   // 设置指针
