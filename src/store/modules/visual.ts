@@ -24,19 +24,29 @@ export type VisualizeDescription = ArrayDescription | BinaryTreeDescription | an
 
 // 数组可视化描述
 export type ArrayDescription = {
-  type: 'array';
-  arrayName: string;
-  pointNames: string[];
+  type: 'array'
+  arrayName: string
+  pointNames: string[]
 };
 
 // 二叉树可视化描述
 export type BinaryTreeDescription = {
-  type: 'binaryTree';
+  type: 'binaryTree'
   // 二叉树节点结构体名称
-  treeNode: string;
+  treeNode: string
   // 数据域
-  data: string;
+  data: string
   // 左子树和右边子树属性名称
-  left: string;
-  right: string;
+  left: string
+  right: string
+};
+
+// 图的可视化描述
+export type GraphDescription = {
+  type: 'graph'
+  // 二叉树节点结构体名称
+  graphNode: string
+  // 数据域
+  data: string
+  nexts: string[]
 };

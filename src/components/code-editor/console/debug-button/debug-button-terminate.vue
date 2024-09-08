@@ -35,6 +35,10 @@
 
   let buttonShow = ref(false);
   const terminateDebug = async () => {
+    if (!able.value) {
+      // 按钮处于不可点击状态
+      return;
+    }
     let result = await reqCloseDebugSession(debugStore.id);
     if (result.code == 200) {
       isDebug.value = false;

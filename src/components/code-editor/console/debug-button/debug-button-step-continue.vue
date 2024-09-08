@@ -53,6 +53,10 @@
     },
   );
   const handleStep = async () => {
+    if (!able.value) {
+      // 按钮处于不可点击状态
+      return;
+    }
     if (type.value == 'continue') {
       reqContinue(debugStore.id);
     } else if (type.value == 'step-in') {

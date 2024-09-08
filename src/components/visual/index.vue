@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
   import './layouter/indented-tree.ts';
-  import './layouter/force.ts';
+  import './layouter/graph.ts';
   import './layouter/array.ts';
   import './layouter/binary-tree.ts';
   import { SV, Sources, Engine } from 'structv2';
@@ -51,7 +51,14 @@
   const updateVisualView = (sources: Sources) => {
     if (sources == null || sources == undefined) {
       disposeVisualView();
+      return
     }
+    let isForce = false;
+    Object.keys(sources).forEach((key) => {
+      if (sources[key].isForce == true) {
+        isForce = true;
+      }
+    });
     // 可视化视图为空则初始化
     if (cur == null || cur == undefined) {
       cur = SV(
@@ -61,7 +68,7 @@
             groupPadding: 0,
           },
         },
-        false,
+        isForce,
       );
     }
     cur.render(sources);

@@ -29,7 +29,7 @@
   import DebugTerminal from './debug-terminal/index.vue';
   import useCodingStore from '@/store/modules/coding';
   import { storeToRefs } from 'pinia';
-  import { LaunchEventDispatcher } from '@/api/debug/debug-event-dispatcher';
+  import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher';
 
   // 用于控制当前是输入界面还是输出界面
   const activeIndex = ref('input');
@@ -49,13 +49,13 @@
   );
   // 监控调试事件
   onMounted(() => {
-    LaunchEventDispatcher.on('launch', onLaunch);
+    CompileEventDispatcher.on('compile', onCompile);
   });
   onUnmounted(() => {
-    LaunchEventDispatcher.off('launch', onLaunch);
+    CompileEventDispatcher.off('compile', onCompile);
   });
 
-  const onLaunch = () => {
+  const onCompile = () => {
     // 监控调试开始事件，设置当前终端为“调试终端”
     activeIndex.value = 'terminal';
   };
