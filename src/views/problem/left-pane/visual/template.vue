@@ -1,25 +1,21 @@
 <template>
-  <div class="visual-description-input">
-    <el-table
-      size="small"
-      ref="singleTableRef"
-      class="templateSelect"
-      :data="descriptionTemplateList"
-      highlight-current-row
-      @current-change="handleCurrentChange"
-    >
-      <el-table-column property="name" label="可视化模板" class="item" />
-    </el-table>
-    <el-input
-      class="input"
-      v-model="currentDesciprtionJson"
-      type="textarea"
-      :rows="5"
-      placeholder="Please input"
-    />
-    <div class="option">
-      <el-switch v-model="action" @change="handlerVisualizeAction" />
-      <el-button type="primary" link @click="flushVisualize">刷新</el-button>
+  <div class="visual-description">
+    <div class="visual-description-input">
+      <el-table
+        size="small"
+        ref="singleTableRef"
+        class="templateSelect"
+        :data="descriptionTemplateList"
+        highlight-current-row
+        @current-change="handleCurrentChange"
+      >
+        <el-table-column property="name" label="可视化模板" class="item" />
+      </el-table>
+      <JsonEditor class="input" v-model="currentDesciprtionJson" />
+      <div class="option">
+        <el-switch v-model="action" @change="handlerVisualizeAction" />
+        <el-button type="primary" link @click="flushVisualize">刷新</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +25,7 @@
   import { ref, onMounted } from 'vue';
   import { storeToRefs } from 'pinia';
   import { ElTable } from 'element-plus';
+  import JsonEditor from '@/components/json-editor/index.vue';
   import { VisualizeDescriptionTemplate } from '@/api/visual/type.ts';
   import { reqAllDescriptionTemplate, reqDescriptionTemplate } from '@/api/visual/index.ts';
 
@@ -76,24 +73,33 @@
 </script>
 
 <style lang="scss" scoped>
-  .visual-description-input {
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    .templateSelect {
-      width: 100px;
-      height: 120px;
-      .item {
-        height: 20px;
-      }
-    }
-    .input {
-      width: 50%;
-      height: 120px;
-    }
-    .option {
+  .visual-description {
+    .visual-description-input {
+      box-sizing: border-box;
+      width: 100%;
       display: flex;
-      flex-flow: column;
+      .templateSelect {
+        width: 20%;
+        margin-left: 20px;
+        margin-right: 10px;
+        height: 150px;
+        .item {
+          height: 25px;
+          margin: 10px;
+        }
+      }
+      .input {
+        width: calc(80% - 100px);
+        height: 150px;
+      }
+      .option {
+        width: 40px;
+        height: 150px;
+        margin-right: 20px;
+        margin-left: 10px;
+        display: flex;
+        flex-flow: column;
+      }
     }
   }
 </style>

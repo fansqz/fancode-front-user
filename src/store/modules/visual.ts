@@ -34,7 +34,19 @@ export type BinaryTreeDescription = {
   type: 'binaryTree';
   // 二叉树节点结构体名称
   treeNode: string;
+  // 数据域
+  data: string;
   // 左子树和右边子树属性名称
   left: string;
   right: string;
+};
+
+// 图的可视化描述
+export type GraphDescription = {
+  type: 'graph';
+  // 二叉树节点结构体名称
+  graphNode: string;
+  // 数据域
+  data: string;
+  nexts: string[];
 };

@@ -28,6 +28,13 @@
               <Variables ref="variablesRef" :frameId="frameId" />
             </el-scrollbar>
           </div>
+          <div class="debug-buttons">
+            <StepOrContinueButton type="continue" class="debug-btn" />
+            <StepOrContinueButton type="step-over" class="debug-btn" />
+            <StepOrContinueButton type="step-in" class="debug-btn" />
+            <StepOrContinueButton type="step-out" class="debug-btn" />
+            <TerminateButton class="debug-btn" />
+          </div>
         </div>
       </pane>
     </splitpanes>
@@ -38,6 +45,8 @@
   import Console from './console.vue';
   import Variables from './variables.vue';
   import Frames from './frames.vue';
+  import StepOrContinueButton from '../debug-button/debug-button-step-continue.vue';
+  import TerminateButton from '../debug-button/debug-button-terminate.vue';
   import { ref } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
 
@@ -102,6 +111,17 @@
           height: 100%;
           width: 100%;
         }
+      }
+      .debug-buttons {
+        z-index: 9999;
+        position: absolute;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        top: 0px;
+        right: 20px;
+        width: 140px;
+        height: 25px;
       }
     }
   }

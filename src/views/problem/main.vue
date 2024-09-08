@@ -8,7 +8,7 @@
     <!--coding-->
     <pane>
       <splitpanes horizontal>
-        <pane>
+        <pane size="70">
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
@@ -16,7 +16,7 @@
           <!--debug操作浮窗-->
           <DebugButtonBar class="debug-button-bar" />
         </pane>
-        <pane>
+        <pane size="30">
           <!--控制台-->
           <Console class="console" />
           <!--coding-button-bar-->
@@ -35,8 +35,7 @@
   import Editor from '@/components/code-editor/editor/index.vue';
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from '@/components/code-editor/console/index.vue';
-  import CodeButtonBar from '@/components/code-editor/coding-button-bar/index.vue';
-  import DebugButtonBar from '@/components/code-editor/debug-button-bar/index.vue';
+  import CodeButtonBar from '@/components/code-editor/coding-button/index.vue';
   import { reqProblem, reqUserCodeByProblemID, reqSaveUserCode } from '@/api/problem';
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';

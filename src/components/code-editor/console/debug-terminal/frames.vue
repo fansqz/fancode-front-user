@@ -62,6 +62,7 @@
     flex-flow: column;
     position: relative;
     .frames-menu-item {
+      width: 100%;
       height: 25px;
     }
     .no_data_show {

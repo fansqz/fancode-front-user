@@ -1,8 +1,8 @@
-import { SV } from 'structv2';
+import { SV, SourceNode, LayoutGroupOptions, Group, SVNode, LayoutOptions } from 'structv2';
 import G6 from '@antv/g6';
 
-SV.registerLayout('BinaryTree', {
-  defineOptions() {
+SV.registerLayout('binaryTree', {
+  defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
     return {
       node: {
         default: {
@@ -26,8 +26,9 @@ SV.registerLayout('BinaryTree', {
             lineAppendWidth: 6,
             cursor: 'pointer',
             endArrow: 'default',
+            preventOverlap: true, //防重叠
             startArrow: {
-              path: Arrow.circle(2, -1),
+              path: G6.Arrow.circle(2, -1),
               fill: '#333',
             },
           },
@@ -49,11 +50,8 @@ SV.registerLayout('BinaryTree', {
         },
       },
       layout: {
-        xInterval: 40,
-        yInterval: 40,
-      },
-      behavior: {
-        // dragNode: false
+        xInterval: 50,
+        yInterval: 50,
       },
     };
   },
@@ -61,7 +59,7 @@ SV.registerLayout('BinaryTree', {
   /**
    * 对子树进行递归布局
    */
-  layoutItem(node, layoutOptions) {
+  layoutItem(node: SVNode, layoutOptions: LayoutOptions) {
     // 次双亲不进行布局
     if (!node) {
       return null;
@@ -136,24 +134,22 @@ SV.registerLayout('BinaryTree', {
     return group;
   },
 
-  /**
-   * 布局函数
-   * @param {*} elements
-   * @param {*} layoutOptions
-   */
-  layout(elements, layoutOptions) {
-    let root = elements[0];
-    this.layoutItem(root, layoutOptions);
+  layout(elements: SVNode[], layoutOptions: LayoutOptions) {
+    let groups = [];
+    // 解决多棵树相交问题
+    for (let element of elements) {
+      if (element.root) {
+        let group = this.layoutItem(element, layoutOptions);
+        groups.push(group);
+      }
+    }
+    // 避免多棵相交
+    for (let i = 0; i < groups.length - 1; i++) {
+      let bound1 = groups[i].getBound();
+      let bound2 = groups[i + 1].getBound();
+      let move = Math.abs(bound2.x - layoutOptions.xInterval - bound1.x - bound1.width);
+      console.log(groups[i + 1]);
+      groups[i + 1].translate(move, 0);
+    }
   },
 });
-
-[
-  {
-    id: 6385328,
-    data: '',
-    external: ['L'],
-    root: true,
-    after: null,
-    next: null,
-  },
-];

@@ -1,8 +1,7 @@
 import { SV } from 'structv2';
-import G6 from '@antv/g6';
 
 SV.registerLayout('Stack', {
-  sourcesPreprocess(sources, options) {
+  sourcesPreprocess(sources, _options) {
     const stackBottomNode = sources[sources.length - 1];
 
     if (stackBottomNode.external) {

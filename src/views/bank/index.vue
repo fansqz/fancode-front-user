@@ -53,30 +53,33 @@
 
 <script setup lang="ts">
   import { reqProblemList } from '@/api/problem';
+  import { ProblemListRequest } from '@/api/problem/type';
   import { reqBank } from '@/api/bank';
   import { ref, reactive, onMounted } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
 
   const $route = useRoute();
   const $router = useRouter();
+
+  let bankID: number = +$route.params.bankID;
   // 题库信息
   let problemBank = reactive({
-    id: $route.params.bankID as string,
+    id: bankID,
     name: '',
     icon: '',
     description: '',
   });
 
   // 搜索的参数
-  let listQuery = reactive({
+  let listQuery = reactive<ProblemListRequest>({
     page: 1,
     pageSize: 10,
-    bankID: $route.params.bankID,
+    bankID: bankID,
   });
   let total = ref<number>(0);
   let problemList = ref([]);
 
-  const getProblemBank = async (bankID: string) => {
+  const getProblemBank = async (bankID: number) => {
     let result = await reqBank(bankID);
     if (result.code == 200) {
       let data = result.data;
