@@ -34,10 +34,10 @@ SV.registerLayout('graph', {
         },
       },
       layout: {
-          radius: 150,
-          interval: 250,
-          xInterval: 50,
-          yInterval: 50
+        radius: 150,
+        interval: 250,
+        xInterval: 50,
+        yInterval: 50,
       },
       indexLabel: {
         index: { position: 'bottom' },
@@ -51,13 +51,13 @@ SV.registerLayout('graph', {
 
   layout(nodes: SVNode[], layoutOptions: LayoutOptions) {
     let nodeLength = nodes.length;
-    let intervalAngle = 2 * Math.PI / nodes.length;
+    let intervalAngle = (2 * Math.PI) / nodes.length;
     let { radius } = layoutOptions;
     for (let i = 0; i < nodeLength; i++) {
       let [x, y] = Vector.rotation(-intervalAngle * i, [0, -radius]);
       nodes[i].set('x', x);
       nodes[i].set('y', y);
-      console.log("x" + x, "y" + y)
+      console.log('x' + x, 'y' + y);
     }
   },
 });

@@ -51,7 +51,7 @@
   const updateVisualView = (sources: Sources) => {
     if (sources == null || sources == undefined) {
       disposeVisualView();
-      return
+      return;
     }
     let isForce = false;
     Object.keys(sources).forEach((key) => {
