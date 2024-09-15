@@ -57,6 +57,7 @@
   import { reqBank } from '@/api/bank';
   import { ref, reactive, onMounted } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
+  import { reqGetURL } from '@/api/common';
 
   const $route = useRoute();
   const $router = useRouter();
@@ -84,7 +85,10 @@
     if (result.code == 200) {
       let data = result.data;
       problemBank.name = data.name;
-      problemBank.icon = data.icon;
+      let result2 = await reqGetURL(data.icon);
+      if (result2.code == 200) {
+        problemBank.icon = result2.data;
+      }
       problemBank.description = data.description;
     }
   };

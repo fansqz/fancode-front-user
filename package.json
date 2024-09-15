@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "build:pro": "vue-tsc && vite build --mode production",
     "build:test": "vue-tsc && vite build --mode test",
     "commitlint": "commitlint --config commitlint.config.cjs -e -V",

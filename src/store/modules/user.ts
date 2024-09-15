@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia';
 import { reqLogin } from '@/api/auth';
 import { reqAccountInfo } from '@/api/account';
+import { reqGetURL } from '@/api/common';
 
 const useUserStore = defineStore('User', {
   state: (): any => {
@@ -27,9 +28,14 @@ const useUserStore = defineStore('User', {
       }
     },
     async userInfo() {
-      const result = await reqAccountInfo();
+      let result = await reqAccountInfo();
       if (result.code == 200) {
         this.avatar = result.data.avatar;
+        // 读取头像
+        let result2 = await reqGetURL(this.avatar);
+        if (result2.code == 200) {
+          this.avatar = result2.data;
+        }
         this.username = result.data.username;
         this.email = result.data.email;
         this.phone = result.data.phone;
