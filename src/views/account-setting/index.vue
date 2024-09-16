@@ -11,7 +11,7 @@
             :http-request="uploadAvatar"
             :before-upload="beforeUpload"
           >
-            <el-image v-if="account.avatar" :src="account.avatar" class="avatar" />
+            <el-image v-if="account.avatarURL" :src="account.avatarURL" class="avatar" />
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
         </el-form-item>
@@ -51,6 +51,7 @@
   const $router = useRouter();
   let account = reactive({
     avatar: '',
+    avatarURL: '',
     username: '',
     introduction: '',
     sex: '',
@@ -62,9 +63,10 @@
     try {
       let result = await reqAccountInfo();
       if (result.code == 200) {
+        account.avatar = result.data.avatar;
         let result2 = await reqGetURL(result.data.avatar);
         if (result2.code == 200) {
-          account.avatar = result2.data;
+          account.avatarURL = result2.data;
         }
         account.username = result.data.username;
         account.introduction = result.data.introduction;
@@ -134,6 +136,10 @@
     });
     if (result.code == 200) {
       account.avatar = result.data;
+      let result2 = await reqGetURL(account.avatar);
+      if (result2.code == 200) {
+        account.avatarURL = result2.data;
+      }
       ElMessage({
         type: 'success',
         message: '头像上传成功',
