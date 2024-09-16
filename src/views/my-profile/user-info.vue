@@ -1,7 +1,7 @@
 <template>
   <el-card class="card">
     <div class="user-message">
-      <img :src="accountInfo.avatar" class="avatar" />
+      <el-image :src="accountInfo.avatar" class="avatar" />
       <div class="base-info">
         <div class="base-info-item1">
           {{ accountInfo.username }}

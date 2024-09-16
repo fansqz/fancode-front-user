@@ -8,7 +8,7 @@
           @click="handlerBankView(item.id)"
           class="bank-item"
         >
-          <img :src="item.icon" class="bank-icon" />
+          <el-image :src="item.icon" class="bank-icon" />
           <div class="bank-message">
             <p class="bank-name">{{ item.name }}</p>
             <p class="bank-description">介绍：{{ item.description }}</p>

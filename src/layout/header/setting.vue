@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <img v-if="getAvatar() != ''" :src="getAvatar()" class="avatar" />
+    <el-image v-if="getAvatar() != ''" :src="getAvatar()" class="avatar" />
     <img v-if="getAvatar() == ''" src="@/assets/avatar/avatar.png" class="avatar" />
     <el-dropdown class="user_dropdown">
       <span class="el-dropdown-link">
@@ -59,7 +59,7 @@
     justify-content: end;
     flex-direction: row;
     .avatar {
-      padding: 20px;
+      margin-right: 20px;
       width: 24px;
       height: 24px;
       border-radius: 50%;
