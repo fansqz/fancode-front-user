@@ -45,6 +45,7 @@
   import { ElMessage } from 'element-plus';
   import { useRoute, useRouter } from 'vue-router';
   import { reqAccountInfo, reqUpdateAccount, reqUploadAvatar } from '@/api/account';
+  import { reqGetURL } from '@/api/common';
 
   const $route = useRoute();
   const $router = useRouter();
@@ -61,7 +62,10 @@
     try {
       let result = await reqAccountInfo();
       if (result.code == 200) {
-        account.avatar = result.data.avatar;
+        let result2 = await reqGetURL(result.data.avatar);
+        if (result2.code == 200) {
+          account.avatar = result2.data;
+        }
         account.username = result.data.username;
         account.introduction = result.data.introduction;
         account.sex = result.data.sex;
