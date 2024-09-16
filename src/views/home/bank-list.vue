@@ -8,7 +8,7 @@
           @click="handlerBankView(item.id)"
           class="bank-item"
         >
-          <img :src="item.icon" class="bank-icon" />
+          <el-image :src="item.icon" class="bank-icon" />
           <div class="bank-message">
             <p class="bank-name">{{ item.name }}</p>
             <p class="bank-description">介绍：{{ item.description }}</p>
@@ -23,6 +23,7 @@
   import { onMounted, ref } from 'vue';
   import { reqAllBankList } from '@/api/bank';
   import { useRouter } from 'vue-router';
+  import { reqGetURL } from '@/api/common';
   let $router = useRouter();
 
   let bankList = ref<any[]>([]);
@@ -37,7 +38,15 @@
   onMounted(async () => {
     let result = await reqAllBankList();
     if (result.code == 200) {
-      bankList.value = result.data;
+      let banks = result.data;
+      // 设置头像
+      for (let bank of banks) {
+        let result2 = await reqGetURL(bank.icon);
+        if (result2.code == 200) {
+          bank.icon = result2.data;
+        }
+      }
+      bankList.value = banks;
     }
   });
 </script>

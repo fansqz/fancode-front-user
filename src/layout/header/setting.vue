@@ -1,6 +1,7 @@
 <template>
   <div class="setting">
-    <img :src="getAvatar()" class="avatar" />
+    <el-image v-if="getAvatar() != ''" :src="getAvatar()" class="avatar" />
+    <img v-if="getAvatar() == ''" src="@/assets/avatar/avatar.png" class="avatar" />
     <el-dropdown class="user_dropdown">
       <span class="el-dropdown-link">
         {{ getUsername() }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
@@ -32,7 +33,7 @@
   };
 
   const getAvatar = (): string => {
-    return userStore.token ? userStore.avatar : 'src/assets/avatar/avatar.png';
+    return userStore.token ? userStore.avatar : '';
   };
 
   const logout = () => {
@@ -58,7 +59,7 @@
     justify-content: end;
     flex-direction: row;
     .avatar {
-      padding: 20px;
+      margin-right: 20px;
       width: 24px;
       height: 24px;
       border-radius: 50%;

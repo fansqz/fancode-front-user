@@ -2,7 +2,7 @@ import { VariableVisualizeData } from '@/api/visual/type';
 import { reqVariableVisualize } from '@/api/visual';
 import { ArrayData, ArrayNode } from '@/components/visual/type/array';
 import { ElMessage } from 'element-plus';
-import { ArrayDescription, VisualizeDescription } from '@/store/modules/visual';
+import { ArrayDescription } from '@/store/modules/visual';
 
 const reqArrayVisualizeData = async (
   debugID: string,

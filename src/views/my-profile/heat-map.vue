@@ -141,6 +141,7 @@
   .card {
     width: 800px;
     border-radius: 5px;
+    margin-top: 20px;
     .heat-map-container {
       height: 180px;
       display: flex;

@@ -11,7 +11,7 @@
             :http-request="uploadAvatar"
             :before-upload="beforeUpload"
           >
-            <img v-if="account.avatar" :src="account.avatar" class="avatar" />
+            <el-image v-if="account.avatar" :src="account.avatar" class="avatar" />
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
         </el-form-item>
