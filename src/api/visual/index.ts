@@ -1,36 +1,37 @@
 import request from '@/utils/request';
 import {
-  StructVisualizeRequest,
-  VariableVisualizeRequest,
-  StructuralVisualizeResponse,
-  VariableVisualizeResponse,
-  VisualizeDescriptionTemplateResponse,
-  VisualizeDescriptionTemplateListResponse,
+  StructVisualRequest,
+  VariableVisualRequest,
+  StructVisualResponse,
+  VariableVisualResponse,
+  VisualDescriptionTemplateResponse,
+  VisualDescriptionTemplateListResponse,
 } from './type';
 
 enum API {
-  VISUALIZE_URL = '/visualize/debug',
-  TEMPLATE_URL = '/visualize/template',
+  VisaulURL= '/visual/debug',
+  TemplateURL = '/visual/template',
+  Setting = '/visaul/setting'
 }
 
-export const reqStructVisualize = (
-  data: StructVisualizeRequest,
-): Promise<StructuralVisualizeResponse> => {
-  return request.post(`${API.VISUALIZE_URL}/struct`, data);
+export const reqStructVisual = (
+  data: StructVisualRequest,
+): Promise<StructVisualResponse> => {
+  return request.post(`${API.VisaulURL}/struct`, data);
 };
 
-export const reqVariableVisualize = (
-  data: VariableVisualizeRequest,
-): Promise<VariableVisualizeResponse> => {
-  return request.post(`${API.VISUALIZE_URL}/variable`, data);
+export const reqVariableVisual = (
+  data: VariableVisualRequest,
+): Promise<VariableVisualResponse> => {
+  return request.post(`${API.VisaulURL}/variable`, data);
 };
 
-export const reqAllDescriptionTemplate = (): Promise<VisualizeDescriptionTemplateListResponse> => {
-  return request.get(`${API.TEMPLATE_URL}/list`);
+export const reqAllDescriptionTemplate = (): Promise<VisualDescriptionTemplateListResponse> => {
+  return request.get(`${API.TemplateURL}/list`);
 };
 
 export const reqDescriptionTemplate = (
   type: string,
-): Promise<VisualizeDescriptionTemplateResponse> => {
-  return request.get(`${API.TEMPLATE_URL}/${type}`);
+): Promise<VisualDescriptionTemplateResponse> => {
+  return request.get(`${API.TemplateURL}/${type}`);
 };

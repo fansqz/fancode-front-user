@@ -28,8 +28,8 @@
   import { getAllTheme } from '../editor/theme';
   import { reqProblemTemplateCode, reqUserCode } from '@/api/problem';
   import useCodingStore from '@/store/modules/coding';
-
   let codingStore = useCodingStore();
+
   // 主题列表
   let themeList = ref(getAllTheme());
   let { theme, code, editorUpdateCode, language, languages, problemId } = storeToRefs(codingStore);

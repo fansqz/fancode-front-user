@@ -1,10 +1,10 @@
-import { StructuralVisualizeData } from '@/api/visual/type';
-import { reqStructVisualize } from '@/api/visual';
+import { StructVisualData } from '@/api/visual/type';
+import { reqStructVisual } from '@/api/visual';
 import { BinaryTreeData, BinaryTreeNode } from '@/components/visual/type/binary-tree';
 import { ElMessage } from 'element-plus';
 import { BinaryTreeDescription } from '@/store/modules/visual';
 
-const reqBinaryTreeVisualizeData = async (
+const reqBinaryTreeVisualData = async (
   debugID: string,
   description: BinaryTreeDescription,
 ): Promise<BinaryTreeData> => {
@@ -17,7 +17,7 @@ const reqBinaryTreeVisualizeData = async (
       points: [description.left, description.right],
     },
   };
-  let result = await reqStructVisualize(req);
+  let result = await reqStructVisual(req);
   if (result.code != 200) {
     ElMessage({
       showClose: true,
@@ -30,12 +30,12 @@ const reqBinaryTreeVisualizeData = async (
     };
   }
   // 将后端返回的可视化数据转成av需要的可视化数据
-  return convertqBinaryTreeVisualizeData(description, result.data);
+  return convertqBinaryTreeVisualData(description, result.data);
 };
 
-const convertqBinaryTreeVisualizeData = (
+const convertqBinaryTreeVisualData = (
   description: BinaryTreeDescription,
-  data: StructuralVisualizeData,
+  data: StructVisualData,
 ): BinaryTreeData => {
   let nodes: BinaryTreeNode[] = [];
 
@@ -95,4 +95,4 @@ const convertqBinaryTreeVisualizeData = (
 };
 
 // 请求数组可视化数据
-export default reqBinaryTreeVisualizeData;
+export default reqBinaryTreeVisualData;

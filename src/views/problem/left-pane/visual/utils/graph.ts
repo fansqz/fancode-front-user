@@ -1,10 +1,10 @@
-import { StructuralVisualizeData } from '@/api/visual/type';
-import { reqStructVisualize } from '@/api/visual';
+import { StructVisualData } from '@/api/visual/type';
+import { reqStructVisual } from '@/api/visual';
 import { GraphData, GraphNode } from '@/components/visual/type/graph';
 import { ElMessage } from 'element-plus';
 import { GraphDescription } from '@/store/modules/visual';
 
-const reqGraphVisualizeData = async (
+const reqGraphVisualData = async (
   debugID: string,
   description: GraphDescription,
 ): Promise<GraphData> => {
@@ -17,7 +17,7 @@ const reqGraphVisualizeData = async (
       points: description.nexts,
     },
   };
-  let result = await reqStructVisualize(req);
+  let result = await reqStructVisual(req);
   if (result.code != 200) {
     ElMessage({
       showClose: true,
@@ -30,12 +30,12 @@ const reqGraphVisualizeData = async (
     };
   }
   // 将后端返回的可视化数据转成av需要的可视化数据
-  return convertGraphVisualizeData(description, result.data);
+  return convertGraphVisualData(description, result.data);
 };
 
-const convertGraphVisualizeData = (
+const convertGraphVisualData = (
   _description: GraphDescription,
-  data: StructuralVisualizeData,
+  data: StructVisualData,
 ): GraphData => {
   let nodes: GraphNode[] = [];
 
@@ -78,4 +78,4 @@ const convertGraphVisualizeData = (
 };
 
 // 请求数组可视化数据
-export default reqGraphVisualizeData;
+export default reqGraphVisualData;

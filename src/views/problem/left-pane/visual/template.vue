@@ -13,26 +13,26 @@
       </el-table>
       <JsonEditor class="input" v-model="currentDesciprtionJson" />
       <div class="option">
-        <el-switch v-model="action" @change="handlerVisualizeAction" />
-        <el-button type="primary" link @click="flushVisualize">刷新</el-button>
+        <el-switch v-model="action" @change="handlerVisualAction" />
+        <el-button type="primary" link @click="flushVisual">刷新</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import useVisualizeStore, { VisualizeDescription } from '@/store/modules/visual.ts';
+  import useVisualStore, { VisualDescription } from '@/store/modules/visual.ts';
   import { ref, onMounted } from 'vue';
   import { storeToRefs } from 'pinia';
   import { ElTable } from 'element-plus';
   import JsonEditor from '@/components/json-editor/index.vue';
-  import { VisualizeDescriptionTemplate } from '@/api/visual/type.ts';
+  import { VisualDescriptionTemplate } from '@/api/visual/type.ts';
   import { reqAllDescriptionTemplate, reqDescriptionTemplate } from '@/api/visual/index.ts';
 
-  const visualizeStore = useVisualizeStore();
-  const { descriptionJson, action } = storeToRefs(visualizeStore);
+  const visualStore = useVisualStore();
+  const { descriptionJson, action } = storeToRefs(visualStore);
   const singleTableRef = ref<InstanceType<typeof ElTable>>();
-  const descriptionTemplateList = ref<VisualizeDescriptionTemplate[]>();
+  const descriptionTemplateList = ref<VisualDescriptionTemplate[]>();
 
   // 当前输入框中的可视化描述数据
   const currentDesciprtionJson = ref('');
@@ -47,7 +47,7 @@
     }
   });
 
-  const handleCurrentChange = async (val: VisualizeDescriptionTemplate | undefined) => {
+  const handleCurrentChange = async (val: VisualDescriptionTemplate | undefined) => {
     if (val != undefined) {
       let result = await reqDescriptionTemplate(val.type);
       if (result.code == 200) {
@@ -56,19 +56,19 @@
     }
   };
 
-  const handlerVisualizeAction = (val: boolean) => {
+  const handlerVisualAction = (val: boolean) => {
     // 启动可视化调试
     if (val) {
-      flushVisualize();
+      flushVisual();
     }
   };
 
   // 刷新可视化
-  const flushVisualize = () => {
-    const jsonObject: VisualizeDescription = JSON.parse(currentDesciprtionJson.value);
+  const flushVisual = () => {
+    const jsonObject: VisualDescription = JSON.parse(currentDesciprtionJson.value);
     // 设置当前可视化模板
     descriptionJson.value = currentDesciprtionJson.value;
-    visualizeStore.description = jsonObject;
+    visualStore.description = jsonObject;
   };
 </script>
 

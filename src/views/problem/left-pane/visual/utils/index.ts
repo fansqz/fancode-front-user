@@ -1,18 +1,18 @@
-import { VisualizeDescription } from '@/store/modules/visual';
+import { VisualDescription } from '@/store/modules/visual';
 import { Source } from 'structv2';
-import reqArrayVisualizeData from './array';
-import reqBinaryTreeVisualizeData from './binary-tree';
-import reqGraphVisualizeData from './graph';
+import reqArrayVisualData from './array';
+import reqBinaryTreeVisualData from './binary-tree';
+import reqGraphVisualData from './graph';
 
-export const reqVisualizeData = async (
+export const reqVisualData = async (
   debugID: string,
-  description: VisualizeDescription,
+  description: VisualDescription,
 ): Promise<Source> => {
   if (description.type == 'array') {
-    return reqArrayVisualizeData(debugID, description);
+    return reqArrayVisualData(debugID, description);
   } else if (description.type == 'binaryTree') {
-    return reqBinaryTreeVisualizeData(debugID, description);
+    return reqBinaryTreeVisualData(debugID, description);
   } else if (description.type == 'graph') {
-    return reqGraphVisualizeData(debugID, description);
+    return reqGraphVisualData(debugID, description);
   }
 };
