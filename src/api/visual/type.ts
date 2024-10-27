@@ -3,7 +3,6 @@ export type VisualType = string;
 export const ArrayType: VisualType = 'array';
 export const BinaryTreeType: VisualType = 'binaryTree';
 
-
 // 可视化设置
 
 // 结构体导向可视化请求

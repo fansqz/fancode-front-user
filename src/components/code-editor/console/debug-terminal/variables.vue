@@ -50,7 +50,7 @@
           name: `${variables[i].name}(${variables[i].type})`,
           reference: variables[i].reference,
           children: [],
-          isLeaf: variables[i].reference == '' ||  variables[i].reference == '0',
+          isLeaf: variables[i].reference == '' || variables[i].reference == '0',
         };
         if (variables[i].value != '') {
           treeNode.name = `${treeNode.name}:${variables[i].value}`;
@@ -72,7 +72,7 @@
           name: `${variables[i].name}(${variables[i].type})`,
           reference: variables[i].reference,
           children: [],
-          isLeaf: variables[i].reference == '' ||  variables[i].reference == '0',
+          isLeaf: variables[i].reference == '' || variables[i].reference == '0',
         };
         if (variables[i].value != '') {
           treeNode.name = `${treeNode.name}:${variables[i].value}`;
