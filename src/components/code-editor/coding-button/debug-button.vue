@@ -35,7 +35,10 @@
           message: result.message,
           type: 'error',
         });
+      } else {
+        isDebug.value = false;
       }
+      return;
     }
     let result = await reqCreateDebugSession(language.value);
     if (result.code == 200) {
