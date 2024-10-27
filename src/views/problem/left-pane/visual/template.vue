@@ -28,7 +28,12 @@
   import { ElTable } from 'element-plus';
   import JsonEditor from '@/components/json-editor/index.vue';
   import { VisualDescriptionTemplate } from '@/api/visual/type.ts';
-  import { reqAllDescriptionTemplate, reqDescriptionTemplate, reqGetVisualSetting, reqSaveVisualSetting } from '@/api/visual/index.ts';
+  import {
+    reqAllDescriptionTemplate,
+    reqDescriptionTemplate,
+    reqGetVisualSetting,
+    reqSaveVisualSetting,
+  } from '@/api/visual/index.ts';
 
   const codingStore = useCodingStore();
   const visualStore = useVisualStore();

@@ -18,11 +18,15 @@ enum API {
   Setting = '/visual/setting',
 }
 
-export const reqSaveVisualSetting = (data: SaveVisualSettingRequest): Promise<SaveVisualSettingResponse> => {
+export const reqSaveVisualSetting = (
+  data: SaveVisualSettingRequest,
+): Promise<SaveVisualSettingResponse> => {
   return request.post(`${API.Setting}/save`, data);
 };
 
-export const reqGetVisualSetting = (data: GetVisualSettingRequest): Promise<GetVisualSettingResponse> => {
+export const reqGetVisualSetting = (
+  data: GetVisualSettingRequest,
+): Promise<GetVisualSettingResponse> => {
   return request.get(`${API.Setting}/${data.problemID}/${data.language}`);
 };
 
