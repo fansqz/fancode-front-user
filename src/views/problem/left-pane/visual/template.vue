@@ -23,7 +23,7 @@
 <script setup lang="ts">
   import useVisualStore, { VisualDescription } from '@/store/modules/visual.ts';
   import useCodingStore from '@/store/modules/coding';
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { ElTable } from 'element-plus';
   import JsonEditor from '@/components/json-editor/index.vue';
@@ -52,7 +52,18 @@
     if (result.code == 200) {
       descriptionTemplateList.value = result.data;
     }
+    updateDescriptionTemplate();
+  });
 
+  
+  watch(
+    () => language.value,
+    () => {
+      updateDescriptionTemplate();
+    },
+  );
+
+  const updateDescriptionTemplate = async () => {
     // 读取可视化设置
     let settingResult = await reqGetVisualSetting({
       problemID: problemId.value,
@@ -61,7 +72,7 @@
     if (settingResult.code == 200) {
       currentDesciprtionJson.value = settingResult.data;
     }
-  });
+  };
 
   const saveSetting = async () => {
     // 保存用户的可视化设置
