@@ -55,7 +55,6 @@
     updateDescriptionTemplate();
   });
 
-  
   watch(
     () => language.value,
     () => {

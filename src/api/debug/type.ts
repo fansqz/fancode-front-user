@@ -26,7 +26,7 @@ type AddBreakpointResponse = BaseResponse & {};
 
 type RemoveBreakpointResponse = BaseResponse & {};
 
-type CloseDebugSessionResponse = BaseResponse & {};
+type TerminatedResponse = BaseResponse & {};
 
 // 栈帧
 type StackFrame = {

@@ -16,7 +16,7 @@ enum API {
   GetStackTraceURL = '/debug/stackTrace',
   GetFrameVariablesURL = '/debug/frame/variables',
   GetVariablesURL = '/debug/variables',
-  CloseSessionURL = '/debug/session/close',
+  TerminateURL = '/debug/terminate',
 }
 
 // reqCreateDebugSession 创建一个调试session
@@ -146,10 +146,10 @@ export const reqRemoveBreakpoint = (
   });
 };
 
-// reqCloseDebugSession 关闭调试session
-export const reqCloseDebugSession = (id: string): Promise<CloseDebugSessionResponse> => {
+// reqTerminate 关闭调试session
+export const reqTerminate = (id: string): Promise<TerminatedResponse> => {
   return request.post(
-    API.CloseSessionURL,
+    API.TerminateURL,
     toFormData({
       id: id,
     }),

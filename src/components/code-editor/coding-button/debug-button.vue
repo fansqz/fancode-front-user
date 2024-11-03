@@ -15,7 +15,7 @@
     reqCreateDebugSession,
     reqStart,
     reqListenDebugEvent,
-    reqCloseDebugSession,
+    reqTerminate,
   } from '@/api/debug/index.ts';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
@@ -28,7 +28,7 @@
   const startDebug = async () => {
     // 创建调试session
     if (isDebug.value) {
-      let result = await reqCloseDebugSession(id.value);
+      let result = await reqTerminate(id.value);
       if (result.code != 200) {
         ElMessage({
           showClose: true,

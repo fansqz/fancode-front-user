@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-  import { reqCloseDebugSession } from '@/api/debug/index.ts';
+  import { reqTerminate } from '@/api/debug/index.ts';
   import useDebugStore from '@/store/modules/debug';
   import { ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
@@ -39,7 +39,7 @@
       // 按钮处于不可点击状态
       return;
     }
-    let result = await reqCloseDebugSession(debugStore.id);
+    let result = await reqTerminate(debugStore.id);
     if (result.code == 200) {
       isDebug.value = false;
     } else {
