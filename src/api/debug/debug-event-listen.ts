@@ -50,7 +50,6 @@ export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
     if (data.event == 'exited') {
       ExitedEventDispatcher.dispatch('exited', data);
       DebugEventDispatcher.dispatch('exited', data);
-      isDebug.value = false;
       // 程序执行结束也关闭调试session
       reqTerminate(id.value);
     }
@@ -63,9 +62,10 @@ export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
       DebugEventDispatcher.dispatch('compile', data);
     }
     if (data.event == 'terminated') {
-        debugStore.lineNum = 0;
-        // 关闭sse
-        eventSource.close();
+      isDebug.value = false;
+      debugStore.lineNum = 0;
+      // 关闭sse
+      eventSource.close();
     }
   };
 };

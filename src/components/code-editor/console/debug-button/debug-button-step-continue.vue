@@ -35,7 +35,7 @@
   // 添加点击间隔的状态和时间常量
   const clickInterval = 100;
   let lastClicked = 0;
-    // 判断按钮是出于可执行还是不可执行状态
+  // 判断按钮是出于可执行还是不可执行状态
   let able = ref(false);
   watch(
     () => isDebug.value,
@@ -58,7 +58,7 @@
   const handleStep = async () => {
     // 检查距离上次点击的时间是否小于设定的间隔
     const now = Date.now();
-    if (!able.value || (now - lastClicked < clickInterval)) {
+    if (!able.value || now - lastClicked < clickInterval) {
       return;
     }
     lastClicked = now;

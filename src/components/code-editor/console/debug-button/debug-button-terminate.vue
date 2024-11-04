@@ -39,13 +39,7 @@
       // 按钮处于不可点击状态
       return;
     }
-    let result = await reqTerminate(debugStore.id);
-    if (result.code == 200) {
-      isDebug.value = false;
-    } else {
-      console.log(result.message);
-      isDebug.value = false;
-    }
+    await reqTerminate(debugStore.id);
   };
 
   const mouseover = () => {
