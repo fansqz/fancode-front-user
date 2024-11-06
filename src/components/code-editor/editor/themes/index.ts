@@ -56,8 +56,6 @@ export const wire = async (languageId, editor) => {
 };
 
 /**
- * 用于改变主题时（调用editorInstance.updateOptions({theme:""})）动态导入主题，目前没用上
- * 使用vscode主题https://www.cnblogs.com/wanglinmantan/p/15345204.html
  * @param theme 主题名称
  * @param editorInstance 编辑器实例
  */
