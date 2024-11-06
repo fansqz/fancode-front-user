@@ -25,15 +25,13 @@
   import useDebugStore from '@/store/modules/debug';
   import { listenDebugEvent } from '@/api/debug/debug-event-listen.ts';
   import { ref, onMounted, onUnmounted } from 'vue';
-  import {
-    CompileEventDispatcher,
-  } from '@/api/debug/debug-event-dispatcher';
+  import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher';
 
   const codingStore = useCodingStore();
   const debugStore = useDebugStore();
   const { language, code } = storeToRefs(codingStore);
   let { isDebug, id } = storeToRefs(debugStore);
-  let loading = ref(false)
+  let loading = ref(false);
 
   const startDebug = async () => {
     // 调试状态，那么关闭调试
@@ -45,7 +43,7 @@
           message: result.message,
           type: 'error',
         });
-      } 
+      }
       return;
     }
     loading.value = true;
@@ -88,14 +86,13 @@
   const onCompile = () => {
     loading.value = false;
   };
-  
+
   onMounted(() => {
     CompileEventDispatcher.on('compile', onCompile);
   });
   onUnmounted(() => {
     CompileEventDispatcher.off('compile', onCompile);
   });
-
 </script>
 
 <style scoped lang="scss">
