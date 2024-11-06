@@ -2,7 +2,7 @@ import { WatchStopHandle, onBeforeUnmount, onMounted, watch } from 'vue';
 import { editor } from 'monaco-editor';
 import useDebugStore from '@/store/modules/debug';
 import useCodingStore from '@/store/modules/coding';
-import { initTheme, changeTheme,wire } from '../themes';
+import { initTheme, changeTheme, wire } from '../themes';
 import debounce from 'lodash.debounce';
 import { EditorInstance, VsCode } from '../types';
 import editUtils from '../utils/editUtils';
@@ -44,7 +44,7 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       // 设置语言
-      wire(codingStore.language, editorInstance)
+      wire(codingStore.language, editorInstance);
 
       // 监控value的变化
       stopValueWatch = watch(
@@ -64,7 +64,7 @@ export const useVsCode = (vscode: VsCode) => {
           const model = editorInstance.getModel();
           if (model) {
             // 设置语言
-            wire(val, editorInstance)          
+            wire(val, editorInstance);
           }
         },
       );
