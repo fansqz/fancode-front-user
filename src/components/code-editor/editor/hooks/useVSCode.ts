@@ -15,7 +15,6 @@ import { setBreakPoint } from '../utils/breakpoint';
  * @param { VsCode } params
  */
 export const useVsCode = (vscode: VsCode) => {
-  console.log('初始化 useVsCode');
   const debugStore = useDebugStore();
   const codingStore = useCodingStore();
   return new Promise((resolve) => {

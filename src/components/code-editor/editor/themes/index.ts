@@ -1,5 +1,4 @@
 import { EditorInstance } from '../types';
-import { loadWASM } from 'onigasm';
 import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
 import {
@@ -15,8 +14,6 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
  * https://github.com/brijeshb42/monaco-themes
  */
 export const initTheme = async () => {
-  // 加载onigasm文件
-  await loadWASM(`./src/assets/onigasm/onigasm.wasm`);
   // 加载主题
   for (let theme of codeThemeList.values()) {
     let themeData = await (await fetch(`./src/assets/themes/${theme}.json`)).json();
