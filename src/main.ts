@@ -40,7 +40,6 @@ import Particles from 'particles.vue3';
 import * as echarts from 'echarts';
 import { loadWASM } from 'onigasm';
 
-
 const app = createApp(App);
 
 // 初始化编辑器
