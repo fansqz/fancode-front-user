@@ -40,18 +40,27 @@ import Particles from 'particles.vue3';
 import * as echarts from 'echarts';
 import { loadWASM } from 'onigasm';
 
-VueMarkdownEditor.use(vuepressTheme, {
-  Prism,
-});
-VMdPreview.use(vuepressTheme, {
-  Prism,
-});
 
 const app = createApp(App);
 
-// 初始化编辑器，需要加载onigasm.wasm文件
-const initCodeEditor = () => {
+// 初始化编辑器
+const initCodeEditor = (_app) => {
+  // 需要加载onigasm.wasm文件
   loadWASM(`./src/assets/onigasm/onigasm.wasm`);
+};
+
+// 初始化markdown编辑器
+const initMarkdowmEditor = (app) => {
+  VueMarkdownEditor.use(vuepressTheme, {
+    Prism,
+  });
+  VMdPreview.use(vuepressTheme, {
+    Prism,
+  });
+  // Prism 代码高亮
+  app.use(Particles);
+  app.use(VueMarkdownEditor);
+  app.use(VMdPreview);
 };
 
 app.use(ElementPlus, {
@@ -61,10 +70,8 @@ app.use(ElementPlus, {
 app.use(gloalComponent);
 app.use(router);
 app.use(pinia);
-app.use(VueMarkdownEditor);
-app.use(VMdPreview);
-app.use(Particles);
 app.config.globalProperties.$echarts = echarts;
 app.mount('#app');
 
-initCodeEditor();
+initCodeEditor(app);
+initMarkdowmEditor(app);
