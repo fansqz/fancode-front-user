@@ -72,6 +72,7 @@ export type ContinuedEvent = {
 export type ExitedEvent = {
   event: DebugEventType;
   exitCode: number;
+  message: string;
 };
 
 // TerminatedEvent
