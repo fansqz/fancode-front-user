@@ -1,11 +1,7 @@
 import { EditorInstance } from '../types';
 import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
-import {
-  scopeNameMap,
-  tmGrammarJsonMap,
-  codeThemeList,
-} from './config';
+import { scopeNameMap, tmGrammarJsonMap, codeThemeList } from './config';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 /**
@@ -44,7 +40,7 @@ export const wire = async (languageId, editor) => {
   });
   // 注册语言
   monaco.languages.register({ id: languageId });
-  
+
   await wireTmGrammars(monaco, registry, grammars, editor);
 };
 

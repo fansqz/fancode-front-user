@@ -1,5 +1,5 @@
 import { WatchStopHandle, onBeforeUnmount, onMounted, watch } from 'vue';
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 
 import useDebugStore from '@/store/modules/debug';
 import useCodingStore from '@/store/modules/coding';
@@ -39,7 +39,7 @@ export const useVsCode = (vscode: VsCode) => {
           value: codingStore.code,
           readOnly: false,
           theme: codingStore.theme,
-          language:codingStore.language,
+          language: codingStore.language,
         }),
       );
 
