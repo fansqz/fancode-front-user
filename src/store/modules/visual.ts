@@ -20,7 +20,11 @@ const useVisualStore = defineStore('visual', {
 export default useVisualStore;
 
 // 可视化描述类型
-export type VisualDescription = ArrayDescription | BinaryTreeDescription | LinkListDescription | any;
+export type VisualDescription =
+  | ArrayDescription
+  | BinaryTreeDescription
+  | LinkListDescription
+  | any;
 
 // 数组可视化描述
 export type ArrayDescription = {

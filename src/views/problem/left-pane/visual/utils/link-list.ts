@@ -46,7 +46,7 @@ const convertLinkListVisualData = (
   // 转换节点数据
   for (let i = 0; i < data.nodes.length; i++) {
     let node = data.nodes[i];
-    let lnode: LinkListNode = {id: '0', next: ''};
+    let lnode: LinkListNode = { id: '0', next: '' };
     lnode.id = node.id;
     if (node.values && node.values.length != 0) {
       lnode.data = node.values[0].value;
@@ -55,11 +55,11 @@ const convertLinkListVisualData = (
       for (let p of node.points) {
         // 设置next指针
         if (p.name == description.next) {
-          lnode.next = p.value
+          lnode.next = p.value;
         }
         // 设置pre指针
         if (p.name == description.pre) {
-          lnode.pre = p.value
+          lnode.pre = p.value;
         }
       }
     }
