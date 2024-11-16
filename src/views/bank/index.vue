@@ -139,6 +139,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0px;
     .bank-card {
       height: auto;
       width: 1000px;
