@@ -1,4 +1,4 @@
-import { editor, Range } from 'monaco-editor';
+import { editor, Range } from 'monaco-editor/esm/vs/editor/editor.api';
 import { DebugInfo, EditorInstance, Model } from '../types';
 
 // 高亮指定行

@@ -1,4 +1,4 @@
-import { editor } from 'monaco-editor';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { Ref } from 'vue';
 
 // editor实例

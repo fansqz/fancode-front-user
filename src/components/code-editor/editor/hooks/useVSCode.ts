@@ -1,5 +1,6 @@
 import { WatchStopHandle, onBeforeUnmount, onMounted, watch } from 'vue';
-import { editor } from 'monaco-editor';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
+
 import useDebugStore from '@/store/modules/debug';
 import useCodingStore from '@/store/modules/coding';
 import { initTheme, changeTheme, wire } from '../themes';
@@ -35,10 +36,10 @@ export const useVsCode = (vscode: VsCode) => {
       editorInstance = editor.create(
         target.value,
         getConfigs({
-          language: codingStore.language,
           value: codingStore.code,
           readOnly: false,
           theme: codingStore.theme,
+          language:codingStore.language,
         }),
       );
 
@@ -62,7 +63,8 @@ export const useVsCode = (vscode: VsCode) => {
         async (val) => {
           const model = editorInstance.getModel();
           if (model) {
-            // 设置语言
+            //设置语言
+            editor.setModelLanguage(model, val);
             wire(val, editorInstance);
           }
         },

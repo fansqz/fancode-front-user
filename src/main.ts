@@ -43,9 +43,9 @@ import { loadWASM } from 'onigasm';
 const app = createApp(App);
 
 // 初始化编辑器
-const initCodeEditor = (_app) => {
+const initCodeEditor = async (_app) => {
   // 需要加载onigasm.wasm文件
-  loadWASM(`./src/assets/onigasm/onigasm.wasm`);
+  await loadWASM(`./src/assets/onigasm/onigasm.wasm`);
 };
 
 // 初始化markdown编辑器
@@ -72,5 +72,5 @@ app.use(pinia);
 app.config.globalProperties.$echarts = echarts;
 app.mount('#app');
 
-initCodeEditor(app);
+await initCodeEditor(app);
 initMarkdowmEditor(app);

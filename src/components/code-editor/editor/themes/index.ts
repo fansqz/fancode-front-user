@@ -4,7 +4,6 @@ import { wireTmGrammars } from 'monaco-editor-textmate';
 import {
   scopeNameMap,
   tmGrammarJsonMap,
-  monacoEditorInnerLanguages,
   codeThemeList,
 } from './config';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
@@ -31,13 +30,12 @@ export const wire = async (languageId, editor) => {
   // 语言id到作用域名称的映射
   const grammars = new Map();
   grammars.set(languageId, scopeNameMap[languageId]);
+
   // 创建一个注册表，可以从作用域名称创建语法
   const registry = new Registry({
     getGrammarDefinition: async (scopeName: string, _dependentScope: string) => {
       let jsonMap = tmGrammarJsonMap[scopeName];
-      if (!jsonMap) {
-        return null;
-      }
+      console.log(scopeName);
       return {
         format: 'json',
         content: await (await fetch(`./src/assets/grammars/${jsonMap}`)).text(),
@@ -45,10 +43,8 @@ export const wire = async (languageId, editor) => {
     },
   });
   // 注册语言
-  if (!monacoEditorInnerLanguages.includes(languageId)) {
-    monaco.languages.register({ id: languageId });
-  }
-
+  monaco.languages.register({ id: languageId });
+  
   await wireTmGrammars(monaco, registry, grammars, editor);
 };
 
