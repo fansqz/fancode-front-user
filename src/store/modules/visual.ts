@@ -20,7 +20,7 @@ const useVisualStore = defineStore('visual', {
 export default useVisualStore;
 
 // 可视化描述类型
-export type VisualDescription = ArrayDescription | BinaryTreeDescription | any;
+export type VisualDescription = ArrayDescription | BinaryTreeDescription | LinkListDescription | any;
 
 // 数组可视化描述
 export type ArrayDescription = {
@@ -49,4 +49,15 @@ export type GraphDescription = {
   // 数据域
   data: string;
   nexts: string[];
+};
+
+// 链表的可视化描述
+export type LinkListDescription = {
+  type: 'linkList';
+  // 链表节点
+  linkNode: string;
+  // 数据域
+  data: string;
+  next: string;
+  pre?: string;
 };

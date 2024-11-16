@@ -39,7 +39,6 @@ const convertGraphVisualData = (
 ): GraphData => {
   let nodes: GraphNode[] = [];
 
-  // 遍历所有二叉树节点，因为二叉树的渲染要从根节点开始一直到子节点，所以必须根节点在上面
   for (let i = 0; i < data.nodes.length; i++) {
     let node = data.nodes[i];
     let gnode: GraphNode = {
@@ -58,7 +57,7 @@ const convertGraphVisualData = (
     nodes.push(gnode);
   }
 
-  // 设置指针
+  // 设置变量数据
   for (let i = 0; i < data.points.length; i++) {
     let pointer = data.points[i];
     for (let j = 0; j < nodes.length; j++) {
