@@ -1,11 +1,11 @@
 import request from '@/utils/request';
 
 enum API {
-  GET_URL = '/common/getURL',
+  GetURL = '/common/getURL',
 }
 
 export const reqGetURL = (path: string): Promise<URLResponse> => {
-  return request.get(API.GET_URL, {
+  return request.get(API.GetURL, {
     params: {
       path: path,
     },

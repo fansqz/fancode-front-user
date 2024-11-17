@@ -4,7 +4,7 @@
       <Logo class="logo"></Logo>
       <div
         :class="{ nav_item: true, active_item: isActiveNavItem('home') }"
-        @click="changeRoute('bank')"
+        @click="changeRoute('home')"
       >
         题库
       </div>

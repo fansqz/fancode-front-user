@@ -1,10 +1,10 @@
-import { StructuralVisualizeData } from '@/api/visual/type';
-import { reqStructVisualize } from '@/api/visual';
+import { StructVisualData } from '@/api/visual/type';
+import { reqStructVisual } from '@/api/visual';
 import { GraphData, GraphNode } from '@/components/visual/type/graph';
 import { ElMessage } from 'element-plus';
 import { GraphDescription } from '@/store/modules/visual';
 
-const reqGraphVisualizeData = async (
+const reqGraphVisualData = async (
   debugID: string,
   description: GraphDescription,
 ): Promise<GraphData> => {
@@ -17,7 +17,7 @@ const reqGraphVisualizeData = async (
       points: description.nexts,
     },
   };
-  let result = await reqStructVisualize(req);
+  let result = await reqStructVisual(req);
   if (result.code != 200) {
     ElMessage({
       showClose: true,
@@ -30,16 +30,15 @@ const reqGraphVisualizeData = async (
     };
   }
   // 将后端返回的可视化数据转成av需要的可视化数据
-  return convertGraphVisualizeData(description, result.data);
+  return convertGraphVisualData(description, result.data);
 };
 
-const convertGraphVisualizeData = (
+const convertGraphVisualData = (
   _description: GraphDescription,
-  data: StructuralVisualizeData,
+  data: StructVisualData,
 ): GraphData => {
   let nodes: GraphNode[] = [];
 
-  // 遍历所有二叉树节点，因为二叉树的渲染要从根节点开始一直到子节点，所以必须根节点在上面
   for (let i = 0; i < data.nodes.length; i++) {
     let node = data.nodes[i];
     let gnode: GraphNode = {
@@ -58,7 +57,7 @@ const convertGraphVisualizeData = (
     nodes.push(gnode);
   }
 
-  // 设置指针
+  // 设置变量数据
   for (let i = 0; i < data.points.length; i++) {
     let pointer = data.points[i];
     for (let j = 0; j < nodes.length; j++) {
@@ -78,4 +77,4 @@ const convertGraphVisualizeData = (
 };
 
 // 请求数组可视化数据
-export default reqGraphVisualizeData;
+export default reqGraphVisualData;

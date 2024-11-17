@@ -25,15 +25,15 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { getAllTheme } from '../editor/theme';
+  import { getAllTheme } from '../editor/themes';
   import { reqProblemTemplateCode, reqUserCode } from '@/api/problem';
   import useCodingStore from '@/store/modules/coding';
-
   let codingStore = useCodingStore();
+
   // 主题列表
   let themeList = ref(getAllTheme());
   let { theme, code, editorUpdateCode, language, languages, problemId } = storeToRefs(codingStore);
-  theme.value = 'monokai-light';
+  theme.value = themeList.value[0];
 
   const languageChange = () => {
     getUserCode();

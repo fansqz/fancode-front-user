@@ -19,7 +19,6 @@ import pinia from '@/store';
 import './premisstion';
 // 全局样式
 import '@/styles/index.scss';
-
 // markdown
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -37,20 +36,31 @@ import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
 import Particles from 'particles.vue3';
-
 // 热力图
 import * as echarts from 'echarts';
-
-import { initDebugWebsocketListen } from './ws/debug';
-
-VueMarkdownEditor.use(vuepressTheme, {
-  Prism,
-});
-VMdPreview.use(vuepressTheme, {
-  Prism,
-});
+import { loadWASM } from 'onigasm';
 
 const app = createApp(App);
+
+// 初始化编辑器
+const initCodeEditor = async (_app) => {
+  // 需要加载onigasm.wasm文件
+  await loadWASM(`./src/assets/onigasm/onigasm.wasm`);
+};
+
+// 初始化markdown编辑器
+const initMarkdowmEditor = (app) => {
+  VueMarkdownEditor.use(vuepressTheme, {
+    Prism,
+  });
+  VMdPreview.use(vuepressTheme, {
+    Prism,
+  });
+  // Prism 代码高亮
+  app.use(Particles);
+  app.use(VueMarkdownEditor);
+  app.use(VMdPreview);
+};
 
 app.use(ElementPlus, {
   //element-plus国际化
@@ -59,11 +69,8 @@ app.use(ElementPlus, {
 app.use(gloalComponent);
 app.use(router);
 app.use(pinia);
-app.use(VueMarkdownEditor);
-app.use(VMdPreview);
-app.use(Particles);
 app.config.globalProperties.$echarts = echarts;
 app.mount('#app');
 
-// 初始化调试功能websocket的监控
-initDebugWebsocketListen();
+await initCodeEditor(app);
+initMarkdowmEditor(app);

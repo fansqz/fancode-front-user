@@ -1,54 +1,56 @@
 <template>
-  <div class="container">
-    <div class="bank-card">
-      <div class="bank">
-        <div class="bank-icon">
-          <el-image :src="problemBank.icon" />
+  <el-scrollbar>
+    <div class="container">
+      <div class="bank-card">
+        <div class="bank">
+          <div class="bank-icon">
+            <el-image :src="problemBank.icon" />
+          </div>
+          <div class="bank-message">
+            <div class="bank-name">{{ problemBank.name }}</div>
+            <div class="bank-description">{{ problemBank.description }}</div>
+          </div>
         </div>
-        <div class="bank-message">
-          <div class="bank-name">题库名称: {{ problemBank.name }}</div>
-          <div class="bank-description">描述: {{ problemBank.description }}</div>
-        </div>
-      </div>
 
-      <div class="problem-list">
-        <el-table style="margin: 10px 0px" border :data="problemList">
-          <el-table-column label="序号" width="80px" align="center" type="index" />
-          <el-table-column label="状态" width="80px" align="center">
-            <template v-slot="{ row }">
-              <el-icon>
-                <SuccessFilled v-if="row.status == 2" class="success-icon" />
-                <RefreshRight v-if="row.status == 1" class="in-progress-icon" />
-                <QuestionFilled v-if="row.status == 0" class="not-started-icon" />
-              </el-icon>
-            </template>
-          </el-table-column>
-          <el-table-column label="题目名称" align="center">
-            <template v-slot="{ row }">
-              <TextButton @click="gotoProblem(row.number)" :text="row.name" />
-            </template>
-          </el-table-column>
-          <el-table-column label="难度" width="100px" align="center">
-            <template v-slot="{ row }">
-              <pre>{{ row.difficulty }}</pre>
-            </template>
-          </el-table-column>
-        </el-table>
-        <!--分页器组件-->
-        <el-pagination
-          @current-change="changePageNo"
-          @size-change="changePageSize"
-          v-model:current-page="listQuery.page"
-          v-model:page-size="listQuery.pageSize"
-          :page-sizes="[10, 20, 30, 50]"
-          :background="true"
-          layout="prev, pager, next, jumper, ->,sizes, total"
-          :total="total"
-          style="margin: 0px 3%"
-        />
+        <div class="problem-list">
+          <el-table style="margin: 10px 0px" border :data="problemList">
+            <el-table-column label="序号" width="80px" align="center" type="index" />
+            <el-table-column label="状态" width="80px" align="center">
+              <template v-slot="{ row }">
+                <el-icon>
+                  <SuccessFilled v-if="row.status == 2" class="success-icon" />
+                  <RefreshRight v-if="row.status == 1" class="in-progress-icon" />
+                  <QuestionFilled v-if="row.status == 0" class="not-started-icon" />
+                </el-icon>
+              </template>
+            </el-table-column>
+            <el-table-column label="题目名称" align="center">
+              <template v-slot="{ row }">
+                <TextButton @click="gotoProblem(row.number)" :text="row.name" />
+              </template>
+            </el-table-column>
+            <el-table-column label="难度" width="100px" align="center">
+              <template v-slot="{ row }">
+                <pre>{{ row.difficulty }}</pre>
+              </template>
+            </el-table-column>
+          </el-table>
+          <!--分页器组件-->
+          <el-pagination
+            @current-change="changePageNo"
+            @size-change="changePageSize"
+            v-model:current-page="listQuery.page"
+            v-model:page-size="listQuery.pageSize"
+            :page-sizes="[10, 20, 30, 50]"
+            :background="true"
+            layout="prev, pager, next, jumper, ->,sizes, total"
+            :total="total"
+            style="margin: 0px 3%"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </el-scrollbar>
 </template>
 
 <script setup lang="ts">
@@ -139,6 +141,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0px;
     .bank-card {
       height: auto;
       width: 1000px;
@@ -171,6 +174,12 @@
             font-size: 30px;
             font-weight: bold;
             color: rgb(53, 54, 54);
+          }
+          .bank-description {
+            font-size: normal;
+            font-weight: normal;
+            color: $base-small-font-color;
+            margin: 10px 0px;
           }
         }
       }

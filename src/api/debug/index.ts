@@ -2,27 +2,27 @@ import request from '@/utils/request';
 import { toFormData } from '@/utils/format';
 
 enum API {
-  CREATE_DEBUG_SESSION_URL = '/debug/session/create',
-  START_URL = '/debug/start',
-  SSE_URL = '/debug/sse',
-  NEXT_URL = '/debug/next',
-  STEP_IN_URL = '/debug/step/in',
-  STEP_OUT_URL = '/debug/step/out',
-  STEP_OVER_URL = '/debug/step/over',
-  CONTINUE_URL = '/debug/continue',
-  SEND_TO_CONSOLE_URL = '/debug/sendToConsole',
-  ADD_BREAKPOINTS_URL = '/debug/addBreakpoints',
-  REMOVE_BREAKPOINTS_URL = '/debug/removeBreakpoints',
-  GET_STACK_TRACN_URL = '/debug/stackTrace',
-  GET_FRAME_VARIABLES_URL = '/debug/frame/variables',
-  GET_VARIABLES_URL = '/debug/variables',
-  CLOSE_DEBUG_SESSION_URL = '/debug/session/close',
+  CreateSessionURL = '/debug/session/create',
+  StartURL = '/debug/start',
+  SseURL = '/debug/sse',
+  NextURL = '/debug/next',
+  StepInURL = '/debug/step/in',
+  StepOutURL = '/debug/step/out',
+  StepOverURL = '/debug/step/over',
+  ContinueURL = '/debug/continue',
+  SendToConsoleURL = '/debug/sendToConsole',
+  AddBreakpointsURL = '/debug/addBreakpoints',
+  RemoveBreakpointsURL = '/debug/removeBreakpoints',
+  GetStackTraceURL = '/debug/stackTrace',
+  GetFrameVariablesURL = '/debug/frame/variables',
+  GetVariablesURL = '/debug/variables',
+  TerminateURL = '/debug/terminate',
 }
 
 // reqCreateDebugSession 创建一个调试session
 export const reqCreateDebugSession = (language: string): Promise<CreateDebugSessionResponse> => {
   return request.post(
-    API.CREATE_DEBUG_SESSION_URL,
+    API.CreateSessionURL,
     toFormData({
       language: language,
     }),
@@ -38,20 +38,20 @@ export const reqCreateDebugSession = (language: string): Promise<CreateDebugSess
 export const reqListenDebugEvent = (id: string): EventSource => {
   let baseApi = import.meta.env.VITE_APP_BASE_API;
   let serve = import.meta.env.VITE_SERVE;
-  let debugURL = new URL(`${baseApi}${API.SSE_URL}/${id}`, serve);
+  let debugURL = new URL(`${baseApi}${API.SseURL}/${id}`, serve);
   var source = new EventSource(debugURL);
   return source;
 };
 
 // reqStart 开始调试
 export const reqStart = (req: StartRequset): Promise<StartResponse> => {
-  return request.post(API.START_URL, req);
+  return request.post(API.StartURL, req);
 };
 
 // reqSendToConsole 发送用户输入到目标程序
 export const reqSendToConsole = (id: string, input: string): Promise<SendToConsoleResponse> => {
   return request.post(
-    API.SEND_TO_CONSOLE_URL,
+    API.SendToConsoleURL,
     toFormData({
       input: input,
       id: id,
@@ -67,7 +67,7 @@ export const reqSendToConsole = (id: string, input: string): Promise<SendToConso
 // reqStepIn 单步调试，会进入函数内部
 export const reqStepIn = (id: string): Promise<StepInResponse> => {
   return request.post(
-    API.STEP_IN_URL,
+    API.StepInURL,
     toFormData({
       id: id,
     }),
@@ -82,7 +82,7 @@ export const reqStepIn = (id: string): Promise<StepInResponse> => {
 // reqStepOut 单步调试，会跳出函数外部
 export const reqStepOut = (id: string): Promise<StepOutResponse> => {
   return request.post(
-    API.STEP_OUT_URL,
+    API.StepOutURL,
     toFormData({
       id: id,
     }),
@@ -97,7 +97,7 @@ export const reqStepOut = (id: string): Promise<StepOutResponse> => {
 // reqStepOver 单步调试，不会进入函数内部
 export const reqStepOver = (id: string): Promise<StepOverResponse> => {
   return request.post(
-    API.STEP_OVER_URL,
+    API.StepOverURL,
     toFormData({
       id: id,
     }),
@@ -112,7 +112,7 @@ export const reqStepOver = (id: string): Promise<StepOverResponse> => {
 // reqContinue continue程序继续执行直到遇到下一个断点
 export const reqContinue = (id: string): Promise<ContinueResponse> => {
   return request.post(
-    API.CONTINUE_URL,
+    API.ContinueURL,
     toFormData({
       id: id,
     }),
@@ -129,7 +129,7 @@ export const reqAddBreakpoint = (
   id: string,
   breakpoints: Number[],
 ): Promise<AddBreakpointResponse> => {
-  return request.post(API.ADD_BREAKPOINTS_URL, {
+  return request.post(API.AddBreakpointsURL, {
     id: id,
     breakpoints: breakpoints,
   });
@@ -140,16 +140,16 @@ export const reqRemoveBreakpoint = (
   id: string,
   breakpoints: Number[],
 ): Promise<RemoveBreakpointResponse> => {
-  return request.post(API.REMOVE_BREAKPOINTS_URL, {
+  return request.post(API.RemoveBreakpointsURL, {
     id: id,
     breakpoints: breakpoints,
   });
 };
 
-// reqCloseDebugSession 关闭调试session
-export const reqCloseDebugSession = (id: string): Promise<CloseDebugSessionResponse> => {
+// reqTerminate 关闭调试session
+export const reqTerminate = (id: string): Promise<TerminatedResponse> => {
   return request.post(
-    API.CLOSE_DEBUG_SESSION_URL,
+    API.TerminateURL,
     toFormData({
       id: id,
     }),
@@ -164,7 +164,7 @@ export const reqCloseDebugSession = (id: string): Promise<CloseDebugSessionRespo
 // reqGetStackTrace 根据debugid获取当前线程栈帧
 export const reqGetStackTrace = (id: string): Promise<GetStackTraceResponse> => {
   return request.post(
-    API.GET_STACK_TRACN_URL,
+    API.GetStackTraceURL,
     toFormData({
       id: id,
     }),
@@ -182,7 +182,7 @@ export const reqGetFrameVariables = (
   frameId: string,
 ): Promise<GetFrameVariablesResponse> => {
   return request.post(
-    API.GET_FRAME_VARIABLES_URL,
+    API.GetFrameVariablesURL,
     toFormData({
       id: id,
       frameId: frameId,
@@ -198,7 +198,7 @@ export const reqGetFrameVariables = (
 // reqGetVariables 根据引用获取某个变量的内容
 export const reqGetVariables = (id: string, reference: string): Promise<GetVariablesResponse> => {
   return request.post(
-    API.GET_VARIABLES_URL,
+    API.GetVariablesURL,
     toFormData({
       id: id,
       reference: reference,

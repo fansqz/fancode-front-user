@@ -1,8 +1,8 @@
-import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions } from 'structv2';
+import { SV } from 'structv2';
 import G6 from '@antv/g6';
 
-// 单向链表
-SV.registerLayout('LinkList', {
+// 链表
+SV.registerLayout('linkList', {
   sourcesPreprocess(sources) {
     let root = sources[0];
 
@@ -14,7 +14,7 @@ SV.registerLayout('LinkList', {
     return sources;
   },
 
-  defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
+  defineOptions() {
     return {
       node: {
         default: {
@@ -23,7 +23,7 @@ SV.registerLayout('LinkList', {
           size: [60, 30],
           style: {
             stroke: '#333',
-            fill: '#eaffd0',
+            fill: '#cfddfe',
             cursor: 'pointer',
           },
         },
@@ -31,8 +31,8 @@ SV.registerLayout('LinkList', {
       link: {
         next: {
           type: 'line',
-          sourceAnchor: 2,
-          targetAnchor: 6,
+          sourceAnchor: 6,
+          targetAnchor: 5,
           style: {
             stroke: '#333',
             endArrow: 'default',
@@ -42,11 +42,10 @@ SV.registerLayout('LinkList', {
             },
           },
         },
-        loopNext: {
-          type: 'quadratic',
-          curveOffset: -100,
-          sourceAnchor: 2,
-          targetAnchor: 7,
+        pre: {
+          type: 'line',
+          sourceAnchor: 7,
+          targetAnchor: 2,
           style: {
             stroke: '#333',
             endArrow: 'default',
@@ -60,7 +59,7 @@ SV.registerLayout('LinkList', {
       marker: {
         rootExternal: {
           type: 'pointer',
-          anchor: 6,
+          anchor: 0,
           offset: 8,
           style: {
             fill: '#f08a5d',
@@ -83,11 +82,11 @@ SV.registerLayout('LinkList', {
   },
 
   /**
-   *
+   * 对子树进行递归布局
    * @param node
    * @param parent
    */
-  layoutItem(node: SVNode, prev: SVNode, layoutOptions: LayoutOptions) {
+  layoutItem(node, prev, layoutOptions) {
     if (!node) {
       return null;
     }
@@ -104,8 +103,8 @@ SV.registerLayout('LinkList', {
     }
   },
 
-  layout(nodes: SVNode[], layoutOptions: LayoutOptions) {
-    let root = nodes[0];
+  layout(elements, layoutOptions) {
+    let root = elements[0];
     this.layoutItem(root, null, layoutOptions);
   },
 });

@@ -1,4 +1,5 @@
 import { editor, Range } from 'monaco-editor';
+
 import { Model } from '../types';
 
 /**

@@ -1,43 +1,45 @@
 <template>
-  <div class="box">
-    <BankList class="bank-list" />
-    <el-card class="problem-list">
-      <el-table style="margin: 10px 0px" border :data="problemList">
-        <el-table-column label="序号" width="80px" align="center" type="index" />
-        <el-table-column label="状态" width="80px" align="center">
-          <template v-slot="{ row }">
-            <el-icon>
-              <SuccessFilled v-if="row.status == 2" class="success-icon" />
-              <RefreshRight v-if="row.status == 1" class="in-progress-icon" />
-              <QuestionFilled v-if="row.status == 0" class="not-started-icon" />
-            </el-icon>
-          </template>
-        </el-table-column>
-        <el-table-column label="题目名称" align="center">
-          <template v-slot="{ row }">
-            <TextButton @click="gotoProblem(row.number)" :text="row.name" />
-          </template>
-        </el-table-column>
-        <el-table-column label="难度" width="100px" align="center">
-          <template v-slot="{ row }">
-            <pre>{{ row.difficulty }}</pre>
-          </template>
-        </el-table-column>
-      </el-table>
-      <!--分页器组件-->
-      <el-pagination
-        @current-change="changePageNo"
-        @size-change="changePageSize"
-        v-model:current-page="pageNo"
-        v-model:page-size="limit"
-        :page-sizes="[10, 20, 30, 50]"
-        :background="true"
-        layout="prev, pager, next, jumper, ->,sizes, total"
-        :total="total"
-        style="margin: 0px 3%"
-      />
-    </el-card>
-  </div>
+  <el-scrollbar>
+    <div class="box">
+      <BankList class="bank-list" />
+      <el-card class="problem-list">
+        <el-table style="margin: 10px 0px" border :data="problemList">
+          <el-table-column label="序号" width="80px" align="center" type="index" />
+          <el-table-column label="状态" width="80px" align="center">
+            <template v-slot="{ row }">
+              <el-icon>
+                <SuccessFilled v-if="row.status == 2" class="success-icon" />
+                <RefreshRight v-if="row.status == 1" class="in-progress-icon" />
+                <QuestionFilled v-if="row.status == 0" class="not-started-icon" />
+              </el-icon>
+            </template>
+          </el-table-column>
+          <el-table-column label="题目名称" align="center">
+            <template v-slot="{ row }">
+              <TextButton @click="gotoProblem(row.number)" :text="row.name" />
+            </template>
+          </el-table-column>
+          <el-table-column label="难度" width="100px" align="center">
+            <template v-slot="{ row }">
+              <pre>{{ row.difficulty }}</pre>
+            </template>
+          </el-table-column>
+        </el-table>
+        <!--分页器组件-->
+        <el-pagination
+          @current-change="changePageNo"
+          @size-change="changePageSize"
+          v-model:current-page="pageNo"
+          v-model:page-size="limit"
+          :page-sizes="[10, 20, 30, 50]"
+          :background="true"
+          layout="prev, pager, next, jumper, ->,sizes, total"
+          :total="total"
+          style="margin: 0px 3%"
+        />
+      </el-card>
+    </div>
+  </el-scrollbar>
 </template>
 
 <script setup lang="ts">

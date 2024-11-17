@@ -25,7 +25,6 @@ const useDebugStore = defineStore('debug', {
     breakpoints: [],
     // 调试停留行号
     lineNum: 0,
-
     // 已发送的input
     sentInputs: [],
     // 当前编辑的input

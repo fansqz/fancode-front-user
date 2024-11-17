@@ -61,8 +61,15 @@
     OutputEventDispatcher,
     CompileEventDispatcher,
     ConnectEventDispatcher,
+    ExitedEventDispatcher,
   } from '@/api/debug/debug-event-dispatcher';
-  import { LaunchEvent, OutputEvent, CompileEvent, ConnectEvent } from '@/api/debug/event';
+  import {
+    LaunchEvent,
+    OutputEvent,
+    CompileEvent,
+    ConnectEvent,
+    ExitedEvent,
+  } from '@/api/debug/event';
 
   const debugStore = useDebugStore();
   let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
@@ -73,17 +80,18 @@
     OutputEventDispatcher.on('output', onOutput);
     CompileEventDispatcher.on('compile', onCompile);
     ConnectEventDispatcher.on('connect', onConnect);
+    ExitedEventDispatcher.on('exited', onExited);
   });
   onUnmounted(() => {
     LaunchEventDispatcher.off('launch', onLaunch);
     OutputEventDispatcher.off('output', onOutput);
     CompileEventDispatcher.off('compile', onCompile);
     ConnectEventDispatcher.off('connect', onConnect);
+    ExitedEventDispatcher.off('exited', onExited);
   });
 
   // 监控输出
   const onOutput = (data: OutputEvent) => {
-    console.log(data);
     if (outputs.value.length > 0 && outputs.value[outputs.value.length - 1].event == 'output') {
       let oldOutput = outputs.value[outputs.value.length - 1].message;
       outputs.value[outputs.value.length - 1] = {
@@ -108,11 +116,16 @@
         title: '调试启动失败',
         message: '加载用户程序失败',
       });
+    } else {
+      outputs.value.push({
+        type: 'success',
+        event: 'launch',
+        message: '调试开始',
+      });
     }
   };
 
   const onCompile = (data: CompileEvent) => {
-    console.log(data);
     if (data.success != true) {
       outputs.value.push({
         type: 'error',
@@ -121,6 +134,17 @@
         message: data.message,
       });
     }
+  };
+
+  const onExited = (data: ExitedEvent) => {
+    let message = `exit code ${data.exitCode}.`;
+    if (data.message != '') {
+      message = `${data.message}\n${message}`;
+    }
+    outputs.value.push({
+      event: 'exited',
+      message: message,
+    });
   };
 
   // 启动一个新的调试管道时候清除原来的input和output
@@ -166,27 +190,35 @@
     padding: 5px;
     box-sizing: border-box;
     position: absolute;
+
     .scrollbar {
       position: relative;
       width: 100%;
       height: 100%;
+
       .content {
         position: relative;
+
         .input {
           width: 100%;
           position: relative;
           display: flex;
+
           .left {
             width: 35px;
             padding: 10px 0px;
           }
+
           .right {
             width: calc(100% - 35px);
+
             .input-div {
               padding: 10px 10px;
+
               .sent-input {
                 margin: 4px 0px;
               }
+
               .current-input {
                 overflow-x: hidden;
                 overflow-y: visible;
@@ -195,18 +227,23 @@
             }
           }
         }
+
         .output {
           position: relative;
           width: 100%;
           display: flex;
+
           .left {
             width: 35px;
             padding: 10px 0px;
           }
+
           .right {
             width: calc(100% - 35px);
+
             .output-div {
               padding: 10px 10px;
+
               .output {
                 margin: 4px 0px;
               }

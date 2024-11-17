@@ -1,26 +1,30 @@
 import { defineStore } from 'pinia';
 
-type VisualizeState = {
+type VisualState = {
   // 可视化是否开启
   action: boolean;
   // 可视化描述的json结构
   descriptionJson: string;
   // 可视化描述
-  description: VisualizeDescription | undefined;
+  description: VisualDescription | undefined;
 };
 
-const useVisualizeStore = defineStore('visual', {
-  state: (): VisualizeState => ({
+const useVisualStore = defineStore('visual', {
+  state: (): VisualState => ({
     action: false,
     descriptionJson: '',
     description: null,
   }),
 });
 
-export default useVisualizeStore;
+export default useVisualStore;
 
 // 可视化描述类型
-export type VisualizeDescription = ArrayDescription | BinaryTreeDescription | any;
+export type VisualDescription =
+  | ArrayDescription
+  | BinaryTreeDescription
+  | LinkListDescription
+  | any;
 
 // 数组可视化描述
 export type ArrayDescription = {
@@ -49,4 +53,15 @@ export type GraphDescription = {
   // 数据域
   data: string;
   nexts: string[];
+};
+
+// 链表的可视化描述
+export type LinkListDescription = {
+  type: 'linkList';
+  // 链表节点
+  linkNode: string;
+  // 数据域
+  data: string;
+  next: string;
+  pre?: string;
 };

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-  import './layouter/indented-tree.ts';
+  import './layouter/link-list.ts';
   import './layouter/graph.ts';
   import './layouter/array.ts';
   import './layouter/binary-tree.ts';

@@ -1,10 +1,10 @@
-import { VariableVisualizeData } from '@/api/visual/type';
-import { reqVariableVisualize } from '@/api/visual';
+import { VariableVisualData } from '@/api/visual/type';
+import { reqVariableVisual } from '@/api/visual';
 import { ArrayData, ArrayNode } from '@/components/visual/type/array';
 import { ElMessage } from 'element-plus';
 import { ArrayDescription } from '@/store/modules/visual';
 
-const reqArrayVisualizeData = async (
+const reqArrayVisualData = async (
   debugID: string,
   description: ArrayDescription,
 ): Promise<ArrayData> => {
@@ -16,7 +16,7 @@ const reqArrayVisualizeData = async (
       pointVars: description.pointNames,
     },
   };
-  let result = await reqVariableVisualize(req);
+  let result = await reqVariableVisual(req);
   if (result.code != 200) {
     ElMessage({
       showClose: true,
@@ -29,12 +29,12 @@ const reqArrayVisualizeData = async (
     };
   }
   // 将后端返回的可视化数据转成av需要的可视化数据
-  return convertArrayVisualizeData(description, result.data);
+  return convertArrayVisualData(description, result.data);
 };
 
-const convertArrayVisualizeData = (
+const convertArrayVisualData = (
   _description: ArrayDescription,
-  data: VariableVisualizeData,
+  data: VariableVisualData,
 ): ArrayData => {
   // 将第一个struct[0]作为数组的数据
   let struct = data.structs[0];
@@ -67,4 +67,4 @@ const convertArrayVisualizeData = (
 };
 
 // 请求数组可视化数据
-export default reqArrayVisualizeData;
+export default reqArrayVisualData;

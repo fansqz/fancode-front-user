@@ -1,8 +1,9 @@
 import { WatchStopHandle, onBeforeUnmount, onMounted, watch } from 'vue';
 import { editor } from 'monaco-editor';
+
 import useDebugStore from '@/store/modules/debug';
 import useCodingStore from '@/store/modules/coding';
-import { initTheme, changeTheme } from '../theme';
+import { initWorker, initTheme, changeTheme, wire } from '../themes';
 import debounce from 'lodash.debounce';
 import { EditorInstance, VsCode } from '../types';
 import editUtils from '../utils/editUtils';
@@ -15,9 +16,9 @@ import { setBreakPoint } from '../utils/breakpoint';
  * @param { VsCode } params
  */
 export const useVsCode = (vscode: VsCode) => {
-  console.log('初始化 useVsCode');
   const debugStore = useDebugStore();
   const codingStore = useCodingStore();
+  initWorker();
   return new Promise((resolve) => {
     let { target, onContentChanged, onEditorBlur, onCtrlS, onUpdateBP } = vscode;
 
@@ -36,12 +37,15 @@ export const useVsCode = (vscode: VsCode) => {
       editorInstance = editor.create(
         target.value,
         getConfigs({
-          language: codingStore.language,
           value: codingStore.code,
           readOnly: false,
           theme: codingStore.theme,
+          language: codingStore.language,
         }),
       );
+
+      // 设置语言
+      wire(codingStore.language, editorInstance);
 
       // 监控value的变化
       stopValueWatch = watch(
@@ -60,7 +64,9 @@ export const useVsCode = (vscode: VsCode) => {
         async (val) => {
           const model = editorInstance.getModel();
           if (model) {
+            //设置语言
             editor.setModelLanguage(model, val);
+            wire(val, editorInstance);
           }
         },
       );

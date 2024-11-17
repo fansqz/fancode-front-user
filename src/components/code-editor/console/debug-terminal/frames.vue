@@ -42,7 +42,6 @@
     let result = await reqGetStackTrace(id.value);
     if (result.code == 200) {
       stackFrames.value = result.data;
-      console.log(stackFrames);
       defaultActive.value = stackFrames.value[0].id;
       emit('selectFrame', stackFrames.value[0].id);
     }

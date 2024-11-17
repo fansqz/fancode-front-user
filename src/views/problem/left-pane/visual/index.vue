@@ -14,18 +14,18 @@
 
 <script setup lang="ts">
   import useDebugStore from '@/store/modules/debug';
-  import useVisualizeStore from '@/store/modules/visual';
+  import useVisualStore from '@/store/modules/visual';
   import { DebugEventDispatcher } from '@/api/debug/debug-event-dispatcher';
   import { onMounted, onUnmounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { DebugEvent } from '@/api/debug/event';
   import Visaul from '@/components/visual/index.vue';
   import VisaulTemplate from './template.vue';
-  import { reqVisualizeData } from './utils/index.ts';
+  import { reqVisualData } from './utils/index.ts';
   import { Sources } from 'structv2';
 
   const debugStore = useDebugStore();
-  const visualStore = useVisualizeStore();
+  const visualStore = useVisualStore();
   const { id } = storeToRefs(debugStore);
   const { action, description } = storeToRefs(visualStore);
   const sources = ref<Sources>();
@@ -46,7 +46,7 @@
   const onStopped = async (_data: DebugEvent) => {
     // 如果开启可视化
     if (action.value) {
-      let visualData = await reqVisualizeData(id.value, description.value);
+      let visualData = await reqVisualData(id.value, description.value);
       sources.value = {
         visaulData: visualData,
       };

@@ -1,6 +1,6 @@
 import useDebugStore from '@/store/modules/debug';
 import { storeToRefs } from 'pinia';
-import { reqCloseDebugSession } from '@/api/debug/index.ts';
+import { reqTerminate } from '@/api/debug/index.ts';
 import {
   ConnectEventDispatcher,
   StoppedEventDispatcher,
@@ -50,10 +50,8 @@ export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
     if (data.event == 'exited') {
       ExitedEventDispatcher.dispatch('exited', data);
       DebugEventDispatcher.dispatch('exited', data);
-      isDebug.value = false;
       // 程序执行结束也关闭调试session
-      reqCloseDebugSession(id.value);
-      debugStore.lineNum = 0;
+      reqTerminate(id.value);
     }
     if (data.event == 'output') {
       OutputEventDispatcher.dispatch('output', data);
@@ -62,6 +60,12 @@ export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
     if (data.event == 'compile') {
       CompileEventDispatcher.dispatch('compile', data);
       DebugEventDispatcher.dispatch('compile', data);
+    }
+    if (data.event == 'terminated') {
+      isDebug.value = false;
+      debugStore.lineNum = 0;
+      // 关闭sse
+      eventSource.close();
     }
   };
 };
