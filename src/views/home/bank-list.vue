@@ -11,7 +11,7 @@
           <el-image :src="item.icon" class="bank-icon" />
           <div class="bank-message">
             <p class="bank-name">{{ item.name }}</p>
-            <p class="bank-description">介绍：{{ item.description }}</p>
+            <p class="bank-description">{{ item.description }}</p>
           </div>
         </div>
       </div>
@@ -53,6 +53,8 @@
 
 <style scoped lang="scss">
   .container {
+    height: 100%;
+    width: 100%;
     .bank-list {
       display: flex;
       justify-content: space-between;
@@ -73,15 +75,17 @@
         .bank-icon {
           position: absolute;
           border-radius: 5px;
-          height: 70px;
-          width: 70px;
-          left: 5px;
+          height: 80px;
+          width: 80px;
         }
         .bank-message {
           position: absolute;
-          height: 70px;
-          width: 130px;
+          height: 80px;
+          width: 140px;
           left: 80px;
+          padding: 10px 20px 10px;
+          background-color: rgb(90, 180, 253);
+          box-sizing: border-box;
           .bank-name {
             margin: 5px 0px;
             text-align: left;
@@ -90,6 +94,7 @@
             font-weight: bold;
           }
           .bank-description {
+            width: 110px;
             text-align: left;
             font-size: small;
             font-weight: normal;
