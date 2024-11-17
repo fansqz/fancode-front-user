@@ -1,4 +1,4 @@
-import { editor, Range } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor, Range } from 'monaco-editor';
 import throttle from 'lodash.throttle';
 import { ElMessageBox } from 'element-plus';
 import type { onUpdateBP, EditorInstance } from '../types';

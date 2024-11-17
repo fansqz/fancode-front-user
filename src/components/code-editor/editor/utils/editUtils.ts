@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-import { KeyCode, KeyMod } from 'monaco-editor/esm/vs/editor/editor.api';
+import { KeyCode, KeyMod } from 'monaco-editor';
 import { EditorInstance } from '../types';
 
 /**

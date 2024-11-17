@@ -1,9 +1,9 @@
 import { WatchStopHandle, onBeforeUnmount, onMounted, watch } from 'vue';
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor } from 'monaco-editor';
 
 import useDebugStore from '@/store/modules/debug';
 import useCodingStore from '@/store/modules/coding';
-import { initTheme, changeTheme, wire } from '../themes';
+import { initWorker, initTheme, changeTheme, wire } from '../themes';
 import debounce from 'lodash.debounce';
 import { EditorInstance, VsCode } from '../types';
 import editUtils from '../utils/editUtils';
@@ -18,6 +18,7 @@ import { setBreakPoint } from '../utils/breakpoint';
 export const useVsCode = (vscode: VsCode) => {
   const debugStore = useDebugStore();
   const codingStore = useCodingStore();
+  initWorker();
   return new Promise((resolve) => {
     let { target, onContentChanged, onEditorBlur, onCtrlS, onUpdateBP } = vscode;
 

@@ -1,4 +1,4 @@
-import { editor, Range } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor, Range } from 'monaco-editor';
 
 import { Model } from '../types';
 

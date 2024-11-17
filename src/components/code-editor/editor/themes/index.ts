@@ -2,7 +2,30 @@ import { EditorInstance } from '../types';
 import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
 import { scopeNameMap, tmGrammarJsonMap, codeThemeList } from './config';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import * as monaco from 'monaco-editor';
+
+let hasGetAllWorkUrl = false
+
+export const initWorker = () => {
+  window.MonacoEnvironment = {
+    getWorkerUrl: function (moduleId, label) {
+        hasGetAllWorkUrl = true
+        if (label === 'json') {
+            return './monaco/json.worker.bundle.js'
+        }
+        if (label === 'css' || label === 'scss' || label === 'less') {
+            return './monaco/css.worker.bundle.js'
+        }
+        if (label === 'html' || label === 'handlebars' || label === 'razor') {
+            return './monaco/html.worker.bundle.js'
+        }
+        if (label === 'typescript' || label === 'javascript') {
+            return './monaco/ts.worker.bundle.js'
+        }
+        return './monaco/editor.worker.bundle.js'
+    },
+}
+}
 
 /**
  * https://www.cnblogs.com/wanglinmantan/p/15345204.html
@@ -38,10 +61,19 @@ export const wire = async (languageId, editor) => {
       };
     },
   });
-  // 注册语言
-  monaco.languages.register({ id: languageId });
-
-  await wireTmGrammars(monaco, registry, grammars, editor);
+  // 循环检测
+  let loop = () => {
+    if (hasGetAllWorkUrl) {
+        Promise.resolve().then(async () => {
+            await wireTmGrammars(monaco, registry, grammars, editor)
+        })
+    } else {
+        setTimeout(() => {
+            loop()
+        }, 100)
+    }
+  }
+  loop()
 };
 
 /**

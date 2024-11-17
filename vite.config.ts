@@ -4,7 +4,6 @@ import path from 'path';
 
 // 引入svg需要用的插件
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 export default defineConfig(() => {
   return {
@@ -14,9 +13,6 @@ export default defineConfig(() => {
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
         symbolId: 'icon-[dir]-[name]',
-      }),
-      monacoEditorPlugin({
-        languageWorkers: [],
       }),
     ],
     resolve: {
