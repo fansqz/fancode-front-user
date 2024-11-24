@@ -5,9 +5,10 @@ export type LinkListData = {
 
 export type LinkListNode = {
   id: string;
+  root?: boolean;
   external?: string[];
   // 数据
   data?: string;
   next: string;
-  pre?: string;
+  prev?: string;
 };

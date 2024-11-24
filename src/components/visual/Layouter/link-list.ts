@@ -1,4 +1,4 @@
-import { SV } from 'structv2';
+import { SV, Group, SVNode, LayoutOptions } from 'structv2';
 import G6 from '@antv/g6';
 
 // 链表
@@ -42,7 +42,7 @@ SV.registerLayout('linkList', {
             },
           },
         },
-        pre: {
+        prev: {
           type: 'line',
           sourceAnchor: 7,
           targetAnchor: 2,
@@ -75,8 +75,8 @@ SV.registerLayout('linkList', {
         },
       },
       layout: {
-        xInterval: 50,
-        yInterval: 50,
+        xInterval: 80,
+        yInterval: 80,
       },
     };
   },
@@ -86,25 +86,49 @@ SV.registerLayout('linkList', {
    * @param node
    * @param parent
    */
-  layoutItem(node, prev, layoutOptions) {
+  layoutItem(node, layoutOptions) {
     if (!node) {
       return null;
     }
 
-    let width = node.get('size')[0];
+    let bound = node.getBound(),
+      width = bound.width,
+      group = new Group(node),
+      nextGroup = null,
+      nextBound = null
 
-    if (prev) {
-      node.set('y', prev.get('y'));
-      node.set('x', prev.get('x') + layoutOptions.xInterval + width);
+    if (node.visited) {
+      return null;
     }
+
+    node.visited = true;
 
     if (node.next) {
-      this.layoutItem(node.next, node, layoutOptions);
+      nextGroup = this.layoutItem(node.next, layoutOptions);
+      nextBound = nextGroup.getBound();
+      node.set('x', nextBound.x - layoutOptions.xInterval - width);
+      group.add(nextGroup);
     }
+
+    return group
   },
 
-  layout(elements, layoutOptions) {
-    let root = elements[0];
-    this.layoutItem(root, null, layoutOptions);
+  layout(elements: SVNode[], layoutOptions: LayoutOptions) {
+    let groups = [];
+    // 解决多棵树相交问题
+    for (let element of elements) {
+      if (element.root) {
+        let group = this.layoutItem(element, layoutOptions);
+        groups.push(group);
+      }
+    }
+    // 避免多个链表相交
+    for (let i = 0; i < groups.length - 1; i++) {
+      let bound1 = groups[i].getBound();
+      let bound2 = groups[i + 1].getBound();
+      let move = Math.abs(bound2.y - layoutOptions.yInterval - bound1.y - bound1.height);
+      console.log(groups[i + 1]);
+      groups[i + 1].translate(0, move + 20);
+    }
   },
 });
