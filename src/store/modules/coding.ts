@@ -14,7 +14,7 @@ const useCodingStore = defineStore('coding', {
     // 判断当前标签页编程题目的语言类型
     language: 'go',
     // 可选的语言
-    languages: ['c'],
+    languages: ['go'],
 
     // 输入框数据
     input: '',

@@ -9,8 +9,8 @@ const reqLinkListVisualData = async (
   description: LinkListDescription,
 ): Promise<LinkListData> => {
   let points = [description.next];
-  if (description.pre) {
-    points.push(description.pre);
+  if (description.prev) {
+    points.push(description.prev);
   }
   // 请求可视化数据
   let req = {
@@ -43,6 +43,8 @@ const convertLinkListVisualData = (
 ): LinkListData => {
   let nodes: LinkListNode[] = [];
 
+  let nextSet = new Set();
+
   // 转换节点数据
   for (let i = 0; i < data.nodes.length; i++) {
     let node = data.nodes[i];
@@ -56,14 +58,29 @@ const convertLinkListVisualData = (
         // 设置next指针
         if (p.name == description.next) {
           lnode.next = p.value;
+          nextSet.add(lnode.next);
         }
         // 设置pre指针
-        if (p.name == description.pre) {
-          lnode.pre = p.value;
+        if (p.name == description.prev) {
+          lnode.prev = p.value;
         }
       }
     }
     nodes.push(lnode);
+  }
+
+  let hasRoot = false;
+  // 寻找根节点，无任何next指向的节点为根节点
+  for (let i = 0; i < nodes.length; i++) {
+    if (!nextSet.has(nodes[i].id)) {
+      nodes[i].root = true;
+      hasRoot = true;
+    }
+  }
+
+  // 如果没有root，则第一个节点为root
+  if (!hasRoot) {
+    nodes[0].root = true;
   }
 
   // 设置变量数据
@@ -80,6 +97,7 @@ const convertLinkListVisualData = (
       }
     }
   }
+  console.log(nodes);
   return {
     data: nodes,
     layouter: 'linkList',

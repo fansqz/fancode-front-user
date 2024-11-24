@@ -10,7 +10,7 @@ SV.registerLayout('binaryTree', {
           size: [60, 30],
           label: '[data]',
           style: {
-            fill: '#b83b5e',
+            fill: '#7edafb',
             stroke: '#333',
             cursor: 'pointer',
           },

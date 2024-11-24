@@ -1,69 +1,70 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" :rules="rules" :model="loginForm" ref="loginElFrom">
-      <div class="title">
-        <h1>Fancode</h1>
-      </div>
-      <!--密码登录-->
-      <el-form-item prop="account" v-if="loginForm.loginType == 'password'">
-        <el-input :prefix-icon="User" placeholder="邮箱/用户id" v-model="loginForm.account" />
-      </el-form-item>
-      <el-form-item prop="password" v-if="loginForm.loginType == 'password'">
-        <el-input
-          :prefix-icon="Lock"
-          placeholder="密码"
-          type="password"
-          show-password="true"
-          v-model="loginForm.password"
-        />
-      </el-form-item>
-      <!--邮箱登录-->
-      <el-form-item prop="email" v-if="loginForm.loginType == 'email'">
-        <el-input :prefix-icon="Message" placeholder="邮箱" v-model="loginForm.email" />
-      </el-form-item>
-      <el-form-item prop="code" v-if="loginForm.loginType == 'email'">
-        <el-input placeholder="验证码" v-model="loginForm.code">
-          <template #suffix>
-            <el-button link type="primary" @click="sendEmailCode"> 发送验证码 </el-button>
-          </template>
-        </el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          class="login-button"
-          type="primary"
-          @click="login"
-          :loading="loading"
-          size="default"
-        >
-          登录
-        </el-button>
-      </el-form-item>
-      <el-from-item class="small-text">
-        <div
-          class="login-type"
-          @mouseover="loginTypeTextStyle = 'color:blue'"
-          @mouseleave="loginTypeTextStyle = 'color:black'"
-          @click="switchLoginType"
-          :style="loginTypeTextStyle"
-        >
-          <div v-if="loginForm.loginType == 'email'"> 账号密码登录 </div>
-          <div v-if="loginForm.loginType == 'password'"> 邮箱验证登录 </div>
-        </div>
-        <div
-          class="go-register"
-          @mouseover="goRegisterTextStyle = 'color:blue'"
-          @mouseleave="goRegisterTextStyle = 'color:black'"
-          @click="changeRoute('register')"
-          :style="goRegisterTextStyle"
-          >点击注册
-        </div>
-      </el-from-item>
-    </el-form>
+    <el-card class="card">
+      <el-form class="login-form" :rules="rules" :model="loginForm" ref="loginElFrom">
+        <Logo class="logo"></Logo>
+        <!--密码登录-->
+        <el-form-item prop="account" v-if="loginForm.loginType == 'password'">
+          <el-input :prefix-icon="User" placeholder="邮箱/用户id" v-model="loginForm.account" />
+        </el-form-item>
+        <el-form-item prop="password" v-if="loginForm.loginType == 'password'">
+          <el-input
+            :prefix-icon="Lock"
+            placeholder="密码"
+            type="password"
+            show-password="true"
+            v-model="loginForm.password"
+          />
+        </el-form-item>
+        <!--邮箱登录-->
+        <el-form-item prop="email" v-if="loginForm.loginType == 'email'">
+          <el-input :prefix-icon="Message" placeholder="邮箱" v-model="loginForm.email" />
+        </el-form-item>
+        <el-form-item prop="code" v-if="loginForm.loginType == 'email'">
+          <el-input placeholder="验证码" v-model="loginForm.code">
+            <template #suffix>
+              <el-button link type="primary" @click="sendEmailCode"> 发送验证码 </el-button>
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            class="login-button"
+            type="primary"
+            @click="login"
+            :loading="loading"
+            size="default"
+          >
+            登录
+          </el-button>
+        </el-form-item>
+        <el-from-item class="small-text">
+          <div
+            class="login-type"
+            @mouseover="loginTypeTextStyle = 'color:blue'"
+            @mouseleave="loginTypeTextStyle = 'color:black'"
+            @click="switchLoginType"
+            :style="loginTypeTextStyle"
+          >
+            <div v-if="loginForm.loginType == 'email'"> 账号密码登录 </div>
+            <div v-if="loginForm.loginType == 'password'"> 邮箱验证登录 </div>
+          </div>
+          <div
+            class="go-register"
+            @mouseover="goRegisterTextStyle = 'color:blue'"
+            @mouseleave="goRegisterTextStyle = 'color:black'"
+            @click="changeRoute('register')"
+            :style="goRegisterTextStyle"
+            >点击注册
+          </div>
+        </el-from-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
+  import Logo from '@/components/logo/index.vue';
   import { User, Lock, Message } from '@element-plus/icons-vue';
   import { reactive, ref } from 'vue';
   import useUserStore from '@/store/modules/user';
@@ -179,46 +180,37 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(#f9f9fa, #f9fdf7);
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    .login-form {
-      width: 250px;
-      height: 280px;
+    .card {
+      padding: 0%;
       margin-top: calc(50vh - 240px); /* 调整偏移量 */
-      background-color: #ffffff;
-      border: 1px solid $base-border-color;
-      box-shadow: 12px 12px 2px 1px rgba(37, 218, 121, 0.2);
-      padding: 20px 35px;
-      .title {
-        height: 60px;
-        padding: 0% 15%;
-        h1 {
-          color: #6bac61;
-          font-size: 30px;
-          font-weight: 1000;
-          font-family: Microsoft JhengHei;
-          text-align: center;
-          word-break: break-word;
-          white-space: pre-line;
+      .login-form {
+        width: 250px;
+        height: 280px;
+        margin: 10px;
+        background-color: #ffffff;
+        text-align: center;
+        .logo {
+          height: 50px;
         }
-      }
-      .small-text {
-        .login-type {
-          float: left;
-          font-size: small;
-          cursor: pointer;
+        .small-text {
+          .login-type {
+            float: left;
+            font-size: small;
+            cursor: pointer;
+          }
+          .go-register {
+            float: right;
+            font-size: small;
+            cursor: pointer;
+          }
         }
-        .go-register {
-          float: right;
-          font-size: small;
-          cursor: pointer;
-        }
-      }
 
-      .login-button {
-        width: 100%;
+        .login-button {
+          width: 100%;
+        }
       }
     }
   }

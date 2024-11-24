@@ -63,5 +63,5 @@ export type LinkListDescription = {
   // 数据域
   data: string;
   next: string;
-  pre?: string;
+  prev?: string;
 };

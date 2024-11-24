@@ -1,7 +1,12 @@
 <template>
   <el-card class="card">
     <div class="user-message">
-      <el-image :src="accountInfo.avatar" class="avatar" />
+      <el-avatar
+        v-if="accountInfo.avatar != ''"
+        :src="accountInfo.avatar"
+        class="avatar"
+      ></el-avatar>
+      <el-avatar v-if="accountInfo.avatar == ''" class="avatar">S</el-avatar>
       <div class="base-info">
         <div class="base-info-item1">
           {{ accountInfo.username }}
@@ -38,9 +43,11 @@
     let result = await reqAccountInfo();
     if (result.code == 200) {
       let data = result.data;
-      let result2 = await reqGetURL(data.avatar);
-      if (result2.code == 200) {
-        accountInfo.avatar = result2.data;
+      if (data.avatar != '') {
+        let result2 = await reqGetURL(data.avatar);
+        if (result2.code == 200) {
+          accountInfo.avatar = result2.data;
+        }
       }
       accountInfo.sex = data.sex;
       accountInfo.loginName = data.loginName;
