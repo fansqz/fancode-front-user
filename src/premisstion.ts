@@ -15,7 +15,7 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
   if (to.meta.title) {
     document.title = setting.title + '-' + to.meta.title;
   } else {
-    document.title = setting.title
+    document.title = setting.title;
   }
   // 进度条
   nprogress.start();
