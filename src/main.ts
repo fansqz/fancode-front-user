@@ -45,7 +45,7 @@ const app = createApp(App);
 // 初始化编辑器
 const initCodeEditor = async (_app) => {
   // 需要加载onigasm.wasm文件
-  await loadWASM(`./src/assets/onigasm/onigasm.wasm`);
+  await loadWASM(`/publish/onigasm/onigasm.wasm`);
 };
 
 // 初始化markdown编辑器

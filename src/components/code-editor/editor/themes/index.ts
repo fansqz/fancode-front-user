@@ -11,18 +11,18 @@ export const initWorker = () => {
     getWorkerUrl: function (moduleId, label) {
       hasGetAllWorkUrl = true;
       if (label === 'json') {
-        return './monaco/json.worker.bundle.js';
+        return '/publish/monaco/json.worker.bundle.js';
       }
       if (label === 'css' || label === 'scss' || label === 'less') {
-        return './monaco/css.worker.bundle.js';
+        return '/publish/monaco/css.worker.bundle.js';
       }
       if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        return './monaco/html.worker.bundle.js';
+        return '/publish/monaco/html.worker.bundle.js';
       }
       if (label === 'typescript' || label === 'javascript') {
-        return './monaco/ts.worker.bundle.js';
+        return '/publish/monaco/ts.worker.bundle.js';
       }
-      return './monaco/editor.worker.bundle.js';
+      return '/publish/monaco/editor.worker.bundle.js';
     },
   };
 };
@@ -34,7 +34,7 @@ export const initWorker = () => {
 export const initTheme = async () => {
   // 加载主题
   for (let theme of codeThemeList.values()) {
-    let themeData = await (await fetch(`./src/assets/themes/${theme}.json`)).json();
+    let themeData = await (await fetch(`/publish/themes/${theme}.json`)).json();
     monaco.editor.defineTheme(theme, themeData);
   }
 };
@@ -57,7 +57,7 @@ export const wire = async (languageId, editor) => {
       console.log(scopeName);
       return {
         format: 'json',
-        content: await (await fetch(`./src/assets/grammars/${jsonMap}`)).text(),
+        content: await (await fetch(`/publish/grammars/${jsonMap}`)).text(),
       };
     },
   });
