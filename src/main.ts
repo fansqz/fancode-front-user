@@ -72,5 +72,5 @@ app.use(pinia);
 app.config.globalProperties.$echarts = echarts;
 app.mount('#app');
 
-await initCodeEditor(app);
+initCodeEditor(app);
 initMarkdowmEditor(app);
