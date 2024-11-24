@@ -1,7 +1,5 @@
 <template>
-  <div class="logo">
-    <img src="@/assets/images/logo.png" />
-  </div>
+  <img class="logo" src="@/assets/images/logo.png" />
 </template>
 
 <script setup lang="ts"></script>
@@ -10,8 +8,7 @@
   .logo {
     img {
       position: relative;
-      width: 100px;
-      height: 40px;
+      object-fit: contain;
       top: 15%;
       left: 8%;
     }

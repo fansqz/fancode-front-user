@@ -32,9 +32,11 @@ const useUserStore = defineStore('User', {
       if (result.code == 200) {
         this.avatar = result.data.avatar;
         // 读取头像
-        let result2 = await reqGetURL(this.avatar);
-        if (result2.code == 200) {
-          this.avatar = result2.data;
+        if (this.avatar != '') {
+          let result2 = await reqGetURL(this.avatar);
+          if (result2.code == 200) {
+            this.avatar = result2.data;
+          }
         }
         this.username = result.data.username;
         this.email = result.data.email;

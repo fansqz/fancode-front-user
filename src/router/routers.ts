@@ -1,5 +1,7 @@
+import { RouteRecordRaw } from 'vue-router';
+
 // 常量路由
-export const constantRoute = [
+export const constantRoute: Readonly<RouteRecordRaw[]> = [
   {
     path: '/404',
     component: () => import('@/views/404/index.vue'),

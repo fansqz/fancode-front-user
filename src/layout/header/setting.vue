@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
-    <el-image v-if="getAvatar() != ''" :src="getAvatar()" class="avatar" />
-    <img v-if="getAvatar() == ''" src="@/assets/avatar/avatar.png" class="avatar" />
+    <el-avatar v-if="getAvatar() != ''" :src="getAvatar()" class="avatar" />
+    <el-avatar v-if="getAvatar() == ''" class="avatar">s</el-avatar>
     <el-dropdown class="user_dropdown">
       <span class="el-dropdown-link">
         {{ getUsername() }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
@@ -59,7 +59,7 @@
     justify-content: end;
     flex-direction: row;
     .avatar {
-      margin-right: 20px;
+      margin-right: 10px;
       width: 24px;
       height: 24px;
       border-radius: 50%;

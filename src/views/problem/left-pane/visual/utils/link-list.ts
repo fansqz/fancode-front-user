@@ -82,7 +82,6 @@ const convertLinkListVisualData = (
   if (!hasRoot) {
     nodes[0].root = true;
   }
-  
 
   // 设置变量数据
   for (let i = 0; i < data.points.length; i++) {

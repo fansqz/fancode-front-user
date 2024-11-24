@@ -18,6 +18,10 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
   // 判断用户是否登录
   const token = userStore.token;
 
+  if (to.path == '/register') {
+    next();
+    return;
+  }
   // 如果是login
   if (to.path == '/login') {
     if (token) {

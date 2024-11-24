@@ -11,7 +11,9 @@
             :http-request="uploadAvatar"
             :before-upload="beforeUpload"
           >
-            <el-image v-if="account.avatarURL" :src="account.avatarURL" class="avatar" />
+            <el-image v-if="account.avatarURL" :src="account.avatarURL" class="avatar"
+              >点击上传</el-image
+            >
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
         </el-form-item>
@@ -22,7 +24,6 @@
           <el-radio-group v-model="account.sex">
             <el-radio border :label="2">女</el-radio>
             <el-radio border :label="1">男</el-radio>
-            <el-radio border :label="0">未设置</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="出生日期" label-width="100px">
@@ -65,8 +66,10 @@
       if (result.code == 200) {
         account.avatar = result.data.avatar;
         let result2 = await reqGetURL(result.data.avatar);
-        if (result2.code == 200) {
-          account.avatarURL = result2.data;
+        if (account.avatar != '') {
+          if (result2.code == 200) {
+            account.avatarURL = result2.data;
+          }
         }
         account.username = result.data.username;
         account.introduction = result.data.introduction;

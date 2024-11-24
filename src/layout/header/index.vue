@@ -2,6 +2,7 @@
   <div class="header">
     <div class="header_left">
       <Logo class="logo"></Logo>
+      <div class="empty" />
       <div
         :class="{ nav_item: true, active_item: isActiveNavItem('home') }"
         @click="changeRoute('home')"
@@ -22,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-  import Logo from './logo.vue';
+  import Logo from '@/components/logo/index.vue';
   import Setting from './setting.vue';
   import { useRouter, useRoute } from 'vue-router';
   let $router = useRouter();
@@ -55,8 +56,12 @@
       left: 0%;
       display: flex;
       .logo {
-        width: 200px;
-        height: $base-header-height;
+        margin: 0px 20px;
+        height: $base-header-height - 20px;
+        padding: 10px;
+      }
+      .empty {
+        width: 20px;
       }
       .nav_item {
         width: 35px;

@@ -95,7 +95,7 @@ SV.registerLayout('linkList', {
       width = bound.width,
       group = new Group(node),
       nextGroup = null,
-      nextBound = null
+      nextBound = null;
 
     if (node.visited) {
       return null;
@@ -110,7 +110,7 @@ SV.registerLayout('linkList', {
       group.add(nextGroup);
     }
 
-    return group
+    return group;
   },
 
   layout(elements: SVNode[], layoutOptions: LayoutOptions) {
