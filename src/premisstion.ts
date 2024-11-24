@@ -12,7 +12,11 @@ const userStore = useUserStore(pinia);
 // 全局前置守卫
 router.beforeEach(async (to: any, _from: any, next: any) => {
   // 顶部标题
-  document.title = setting.title + '-' + to.meta.title;
+  if (to.meta.title) {
+    document.title = setting.title + '-' + to.meta.title;
+  } else {
+    document.title = setting.title
+  }
   // 进度条
   nprogress.start();
   // 判断用户是否登录

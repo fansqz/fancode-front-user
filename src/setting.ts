@@ -1,3 +1,3 @@
 export default {
-  title: 'Fancode编程',
+  title: 'ShowMeCode',
 };
