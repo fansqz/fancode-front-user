@@ -125,6 +125,12 @@
         message: result.message,
         type: 'success',
       });
+    } else {
+      ElMessage({
+        showClose: true,
+        message: result.message,
+        type: 'warning',
+      });
     }
   };
 
