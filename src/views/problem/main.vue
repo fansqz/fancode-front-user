@@ -1,6 +1,10 @@
 <template>
-  <splitpanes class="default-theme main" @resized="resizeVisualPane" 
-  :dbl-click-splitter="false" :push-other-panes="false">
+  <splitpanes
+    class="default-theme main"
+    @resized="resizeVisualPane"
+    :dbl-click-splitter="false"
+    :push-other-panes="false"
+  >
     <!--题目展示-->
     <pane @resized="resizeVisualPane">
       <LeftPane ref="leftPane" class="left-pane" :content="problemDescriptionContent" />

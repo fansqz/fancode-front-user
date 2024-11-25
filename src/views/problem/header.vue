@@ -57,13 +57,13 @@
         align-items: center;
         cursor: pointer;
         color: rgb(0, 0, 0);
-        user-select:none;
+        user-select: none;
       }
       .problem-name {
         display: flex;
         justify-content: center;
         align-items: center;
-        user-select:none;
+        user-select: none;
       }
     }
     .header-right {
