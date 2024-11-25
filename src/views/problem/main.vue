@@ -1,5 +1,10 @@
 <template>
-  <splitpanes class="default-theme main" @resized="resizeVisualPane">
+  <splitpanes
+    class="default-theme main"
+    @resized="resizeVisualPane"
+    :dbl-click-splitter="false"
+    :push-other-panes="false"
+  >
     <!--题目展示-->
     <pane @resized="resizeVisualPane">
       <LeftPane ref="leftPane" class="left-pane" :content="problemDescriptionContent" />
@@ -7,7 +12,7 @@
 
     <!--coding-->
     <pane>
-      <splitpanes horizontal>
+      <splitpanes horizontal :dbl-click-splitter="false" :push-other-panes="false">
         <pane size="70">
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
