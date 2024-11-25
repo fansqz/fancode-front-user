@@ -92,11 +92,11 @@
   let rules = {
     account: [
       { required: true, message: '用户id或邮箱不能为空', trigger: 'change' },
-      { required: true, min: 5, max: 20, message: '用户id或邮箱过长或过短' },
+      { required: true, min: 3, max: 50, message: '用户id或邮箱过长或过短' },
     ],
     password: [
       { required: true, message: '密码不能为空', trigger: 'change' },
-      { required: true, min: 6, max: 20, message: '密码长度需6-20位' },
+      { required: true, min: 6, max: 30, message: '密码长度需6-30位' },
     ],
     email: [{ required: true, message: '邮箱不能为空', trigger: 'change' }],
     code: [
