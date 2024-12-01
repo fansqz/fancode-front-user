@@ -9,23 +9,38 @@ import useUserStore from './store/modules/user';
 import pinia from './store';
 const userStore = useUserStore(pinia);
 
+// 允许不使用登陆态访问的路径
+const allowPaths = ['/register', '/login', '/coding', '/home'];
+
 // 全局前置守卫
 router.beforeEach(async (to: any, _from: any, next: any) => {
-  // 顶部标题
-  if (to.meta.title) {
-    document.title = setting.title + '-' + to.meta.title;
-  } else {
-    document.title = setting.title;
-  }
+  setTitle(to);
   // 进度条
   nprogress.start();
-  // 判断用户是否登录
-  const token = userStore.token;
 
-  if (to.path == '/register') {
+  // 获取用户名称，如果获取不到用户名称则进行获取
+  const username = userStore.username;
+  if (username) {
     next();
     return;
   }
+  // 校验token是否正确
+  const token = userStore.token;
+  if (token) {
+    try {
+      await userStore.userInfo();
+      next({ ...to, replace: true });
+      return;
+    } catch (error) {
+      userStore.userLogout();
+    }
+  }
+
+  if (checkIsAllow(to.path)) {
+    next();
+    return;
+  }
+
   // 如果是login
   if (to.path == '/login') {
     if (token) {
@@ -36,30 +51,32 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
     return;
   }
 
-  // 没有token则路由到login
+  // 其余路径没有登录态，路由到login页
   if (!token) {
     next({ path: '/login', query: { redirect: to.path } });
     return;
   }
-
-  // 获取用户名称，如果获取不到用户名称则进行获取
-  const username = userStore.username;
-  if (!username) {
-    try {
-      await userStore.userInfo();
-      // 等到用户信息加载完毕，异步路由注册以后再放行
-      next({ ...to, replace: true });
-    } catch (error) {
-      // 意味着token过期
-      userStore.userLogout();
-      next({ path: '/login', query: { redirect: to.path } });
-    }
-    return;
-  }
-  next();
 });
 
 // 全局后置守卫
 router.afterEach(() => {
   nprogress.done();
 });
+
+const setTitle = (to) => {
+  // 顶部标题
+  if (to.meta.title) {
+    document.title = setting.title + '-' + to.meta.title;
+  } else {
+    document.title = setting.title;
+  }
+};
+
+const checkIsAllow = (path: string): boolean => {
+  for (let item of allowPaths) {
+    if (item == path) {
+      return true;
+    }
+  }
+  return false;
+};

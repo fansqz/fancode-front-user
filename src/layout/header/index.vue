@@ -4,20 +4,27 @@
       <Logo class="logo"></Logo>
       <div class="empty" />
       <div
+        :class="{ nav_item: true, active_item: isActiveNavItem('coding') }"
+        @click="changeRoute('coding')"
+      >
+        编程
+      </div>
+      <div
         :class="{ nav_item: true, active_item: isActiveNavItem('home') }"
         @click="changeRoute('home')"
       >
         题库
       </div>
-      <div
-        :class="{ nav_item: true, active_item: isActiveNavItem('contest') }"
-        @click="changeRoute('contest')"
-      >
-        竞赛
-      </div>
     </div>
     <div class="header_right">
-      <Setting></Setting>
+      <Setting class="setting" v-show="isLogged()"></Setting>
+      <div class="login_button" v-show="!isLogged()">
+        <div class="login_content">
+          <el-button class="button" type="primary" @click="getoLogin()" link>登陆</el-button>
+          <el-text>/</el-text>
+          <el-button class="button" type="primary" @click="getoRegister()" link>注册</el-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +33,8 @@
   import Logo from '@/components/logo/index.vue';
   import Setting from './setting.vue';
   import { useRouter, useRoute } from 'vue-router';
+  import useUserStore from '@/store/modules/user';
+  let userStore = useUserStore();
   let $router = useRouter();
   let $route = useRoute();
 
@@ -37,6 +46,18 @@
   };
   const isActiveNavItem = (routeName: string) => {
     return $route.name === routeName;
+  };
+
+  const isLogged = (): boolean => {
+    return !!userStore.token;
+  };
+
+  const getoLogin = () => {
+    $router.push({ name: 'login' });
+  };
+
+  const getoRegister = () => {
+    $router.push({ name: 'register' });
   };
 </script>
 
@@ -52,7 +73,7 @@
     .header_left {
       position: absolute;
       height: 100%;
-      width: 70%;
+      width: 50%;
       left: 0%;
       display: flex;
       .logo {
@@ -82,9 +103,32 @@
     }
     .header_right {
       position: absolute;
+      display: flex;
+      flex-direction: row-reverse;
       height: 100%;
-      width: 30%;
+      width: 50%;
       right: 0%;
+      .login_button {
+        position: relative;
+        height: 100%;
+        width: 200px;
+        .login_content {
+          position: absolute;
+          height: 100%;
+          width: 200px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .button {
+            margin: 10px;
+          }
+        }
+      }
+      .setting {
+        height: 100%;
+        width: 120px;
+        margin-right: 30px;
+      }
     }
   }
 </style>

@@ -11,17 +11,29 @@ const request = axios.create({
 
 // 添加请求和响应拦截器
 request.interceptors.request.use((config) => {
+  // 设置token
   const userStore = useUserStore();
   config.headers.token = userStore.token;
+  config.headers.visitorUid = generateVisitorId();
   // 返回配置对象
   return config;
 });
 
+// 获取访客ID
+function generateVisitorId(): string {
+  let visitorId = localStorage.getItem('visitor-id');
+  if (visitorId) {
+    return visitorId;
+  }
+  visitorId =
+    Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  localStorage.setItem('visitor-id', visitorId);
+  return visitorId;
+}
+
 // 配置响应拦截器
 request.interceptors.response.use(
   (response) => {
-    // 成功回调
-
     // 简化数据
     return response.data;
   },

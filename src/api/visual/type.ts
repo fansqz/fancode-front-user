@@ -105,3 +105,7 @@ export type VisualDescriptionTemplate = {
   name: string;
   template: string;
 };
+
+export type VisaulDocumentResponse = BaseResponse & {
+  data: string;
+};

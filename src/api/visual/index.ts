@@ -10,24 +10,26 @@ import {
   SaveVisualSettingResponse,
   GetVisualSettingRequest,
   GetVisualSettingResponse,
+  VisaulDocumentResponse,
 } from './type';
 
 enum API {
   VisaulURL = '/visual/debug',
   TemplateURL = '/visual/template',
-  Setting = '/visual/setting',
+  SettingURL = '/visual/setting',
+  DocumentURL = '/visual/document',
 }
 
 export const reqSaveVisualSetting = (
   data: SaveVisualSettingRequest,
 ): Promise<SaveVisualSettingResponse> => {
-  return request.post(`${API.Setting}/save`, data);
+  return request.post(`${API.SettingURL}/save`, data);
 };
 
 export const reqGetVisualSetting = (
   data: GetVisualSettingRequest,
 ): Promise<GetVisualSettingResponse> => {
-  return request.get(`${API.Setting}/${data.problemID}/${data.language}`);
+  return request.get(`${API.SettingURL}/${data.problemID}/${data.language}`);
 };
 
 export const reqStructVisual = (data: StructVisualRequest): Promise<StructVisualResponse> => {
@@ -46,4 +48,8 @@ export const reqDescriptionTemplate = (
   type: string,
 ): Promise<VisualDescriptionTemplateResponse> => {
   return request.get(`${API.TemplateURL}/${type}`);
+};
+
+export const reqVisaulDocument = (): Promise<VisaulDocumentResponse> => {
+  return request.get(`${API.DocumentURL}`);
 };

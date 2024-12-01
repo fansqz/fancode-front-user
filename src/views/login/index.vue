@@ -38,26 +38,41 @@
             登录
           </el-button>
         </el-form-item>
-        <el-from-item class="small-text">
-          <div
-            class="login-type"
-            @mouseover="loginTypeTextStyle = 'color:blue'"
-            @mouseleave="loginTypeTextStyle = 'color:black'"
-            @click="switchLoginType"
-            :style="loginTypeTextStyle"
-          >
-            <div v-if="loginForm.loginType == 'email'"> 账号密码登录 </div>
-            <div v-if="loginForm.loginType == 'password'"> 邮箱验证登录 </div>
-          </div>
-          <div
-            class="go-register"
-            @mouseover="goRegisterTextStyle = 'color:blue'"
-            @mouseleave="goRegisterTextStyle = 'color:black'"
-            @click="changeRoute('register')"
-            :style="goRegisterTextStyle"
-            >点击注册
+        <el-from-item>
+          <div class="small-text">
+            <div
+              class="login-type"
+              @mouseover="loginTypeTextStyle = 'color:blue'"
+              @mouseleave="loginTypeTextStyle = 'color:black'"
+              @click="switchLoginType"
+              :style="loginTypeTextStyle"
+            >
+              <div v-if="loginForm.loginType == 'email'"> 账号密码登录 </div>
+              <div v-if="loginForm.loginType == 'password'"> 邮箱验证登录 </div>
+            </div>
+            <div
+              class="go-register"
+              @mouseover="goRegisterTextStyle = 'color:blue'"
+              @mouseleave="goRegisterTextStyle = 'color:black'"
+              @click="changeRoute('register')"
+              :style="goRegisterTextStyle"
+              >点击注册
+            </div>
           </div>
         </el-from-item>
+        <el-form-item>
+          <div class="visitor">
+            不想登陆？
+            <div
+              class="go-visitor"
+              @mouseover="visitorTextStyle = 'color:blue'"
+              @mouseleave="visitorTextStyle = 'color:#9aa0a6;'"
+              @click="changeRoute('coding')"
+              :style="visitorTextStyle"
+              >游客模式进入
+            </div>
+          </div>
+        </el-form-item>
       </el-form>
     </el-card>
   </div>
@@ -88,6 +103,7 @@
   // 登录类型，默认邮箱登录
   let loginTypeTextStyle = ref();
   let goRegisterTextStyle = ref();
+  let visitorTextStyle = ref();
 
   let rules = {
     account: [
@@ -202,6 +218,8 @@
           height: 50px;
         }
         .small-text {
+          height: 32px;
+          width: 250px;
           .login-type {
             float: left;
             font-size: small;
@@ -210,6 +228,19 @@
           .go-register {
             float: right;
             font-size: small;
+            cursor: pointer;
+          }
+        }
+        .visitor {
+          margin-top: 10px;
+          height: 32px;
+          width: 250px;
+          font-size: small;
+          color: #9aa0a6;
+          .go-visitor {
+            display: inline;
+            font-size: small;
+            color: #9aa0a6;
             cursor: pointer;
           }
         }

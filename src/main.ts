@@ -19,26 +19,17 @@ import pinia from '@/store';
 import './premisstion';
 // 全局样式
 import '@/styles/index.scss';
-// markdown
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import VueMarkdownEditor from '@kangc/v-md-editor';
-import '@kangc/v-md-editor/lib/style/base-editor.css';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import VMdPreview from '@kangc/v-md-editor/lib/preview';
-import '@kangc/v-md-editor/lib/style/preview.css';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
-import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
-// Prism 代码高亮
-import Prism from 'prismjs';
-import 'prismjs/components/prism-json';
 import Particles from 'particles.vue3';
 // 热力图
 import * as echarts from 'echarts';
 import { loadWASM } from 'onigasm';
+
+// markdowm
+import VMdPreview from '@kangc/v-md-editor/lib/preview';
+import '@kangc/v-md-editor/lib/style/preview.css';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import Prism from 'prismjs';
 
 const app = createApp(App);
 
@@ -50,15 +41,11 @@ const initCodeEditor = async (_app) => {
 
 // 初始化markdown编辑器
 const initMarkdowmEditor = (app) => {
-  VueMarkdownEditor.use(vuepressTheme, {
-    Prism,
-  });
   VMdPreview.use(vuepressTheme, {
     Prism,
   });
   // Prism 代码高亮
   app.use(Particles);
-  app.use(VueMarkdownEditor);
   app.use(VMdPreview);
 };
 

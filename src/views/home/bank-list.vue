@@ -6,7 +6,7 @@
           v-for="(item, index) in bankList"
           :key="index"
           @click="handlerBankView(item.id)"
-          class="bank-item"
+          :class="isLogged() ? 'bank-item' : 'bank-item not-click'"
         >
           <el-image :src="item.icon" class="bank-icon" />
           <div class="bank-message">
@@ -24,10 +24,16 @@
   import { reqAllBankList } from '@/api/bank';
   import { useRouter } from 'vue-router';
   import { reqGetURL } from '@/api/common';
+  import useUserStore from '@/store/modules/user';
+
+  let userStore = useUserStore();
   let $router = useRouter();
 
   let bankList = ref<any[]>([]);
   const handlerBankView = (bankID: string) => {
+    if (!isLogged()) {
+      return;
+    }
     $router.push({
       name: 'bank',
       params: {
@@ -35,6 +41,12 @@
       },
     });
   };
+
+  // 用户是否登陆
+  const isLogged = (): boolean => {
+    return !!userStore.token;
+  };
+
   onMounted(async () => {
     let result = await reqAllBankList();
     if (result.code == 200) {
@@ -101,6 +113,9 @@
             color: $base-small-font-color;
           }
         }
+      }
+      .not-click {
+        cursor: not-allowed;
       }
     }
   }

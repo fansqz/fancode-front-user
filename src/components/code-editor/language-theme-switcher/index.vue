@@ -9,7 +9,9 @@
         size="small"
         @change="languageChange"
       >
-        <el-option v-for="item in languages" :key="item" :label="item" :value="item" />
+        <el-option v-for="item in languages" :key="item" :value="item"
+          ><div class="language-item">{{ item }}</div></el-option
+        >
       </el-select>
     </div>
     <div class="right">
@@ -41,7 +43,7 @@
 
   // 重新加载代码
   const reloadCode = async () => {
-    let result = await reqProblemTemplateCode(problemId.value, language.value);
+    let result = await reqProblemTemplateCode(language.value);
     if (result.code == 200) {
       code.value = result.data;
       editorUpdateCode.value++;
@@ -73,6 +75,9 @@
         width: 150px;
         margin-left: 30px;
         margin-right: 7px;
+        .language-item {
+          user-select: none;
+        }
       }
     }
     .right {
