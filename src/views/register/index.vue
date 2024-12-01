@@ -108,7 +108,7 @@
       ElMessage({
         showClose: true,
         message: result.message,
-        type: 'error',
+        type: 'warning',
       });
     }
   };

@@ -11,7 +11,7 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
     path: '/',
     component: () => import('@/layout/index.vue'),
     name: 'root',
-    redirect: '/home',
+    redirect: '/coding',
     children: [
       {
         // home
@@ -20,16 +20,16 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         component: () => import('@/views/home/index.vue'),
       },
       {
+        // coding
+        path: '/coding',
+        name: 'coding',
+        component: () => import('@/views/coding/index.vue'),
+      },
+      {
         // 题库
         path: '/bank/:bankID',
         name: 'bank',
         component: () => import('@/views/bank/index.vue'),
-      },
-      {
-        // 竞赛
-        path: '/contest',
-        name: 'contest',
-        component: () => import('@/views/contest/index.vue'),
       },
       // 登录
       {

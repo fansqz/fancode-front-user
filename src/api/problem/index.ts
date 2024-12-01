@@ -30,11 +30,8 @@ export const reqProblem = (problemNumber: string): Promise<ProblemResponse> => {
 };
 
 // 获取题目的模板代码
-export const reqProblemTemplateCode = (
-  problemID: number,
-  language: string,
-): Promise<ProblemTemplateCodeResponse> => {
-  return request.get(API.UserCodeURL + `/template/${problemID}/${language}`);
+export const reqProblemTemplateCode = (language: string): Promise<ProblemTemplateCodeResponse> => {
+  return request.get(API.UserCodeURL + `/template/${language}`);
 };
 
 // 保存用户代码

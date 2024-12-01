@@ -6,9 +6,9 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="input">输入用例</el-menu-item>
-      <el-menu-item index="output">输出</el-menu-item>
-      <el-menu-item index="terminal">调试终端</el-menu-item>
+      <el-menu-item v-if="userInput" index="input">输入用例</el-menu-item>
+      <el-menu-item v-if="userOutput" index="output">输出</el-menu-item>
+      <el-menu-item v-if="terminal" index="terminal">调试终端</el-menu-item>
     </el-menu>
     <div class="input-div" v-show="activeIndex == 'input'">
       <Input />
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref, watch } from 'vue';
+  import { onMounted, onUnmounted, ref, watch, toRefs } from 'vue';
   import Output from './output.vue';
   import Input from './input.vue';
   import DebugTerminal from './debug-terminal/index.vue';
@@ -31,8 +31,26 @@
   import { storeToRefs } from 'pinia';
   import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher';
 
+  let props = defineProps<{
+    userInput: boolean;
+    userOutput: boolean;
+    terminal: boolean;
+  }>();
+
+  let { userInput, userOutput, terminal } = toRefs(props);
+
   // 用于控制当前是输入界面还是输出界面
-  const activeIndex = ref('input');
+  const activeIndex = ref();
+  if (terminal.value) {
+    activeIndex.value = 'terminal';
+  }
+  if (userOutput.value) {
+    activeIndex.value = 'output';
+  }
+  if (userInput.value) {
+    activeIndex.value = 'input';
+  }
+
   const codingStore = useCodingStore();
   const { output } = storeToRefs(codingStore);
   const handleSelect = (key: string) => {
@@ -69,6 +87,7 @@
     flex-flow: column;
     position: absolute;
     .select-menu {
+      user-select: none;
       height: 30px;
     }
     .input-div {

@@ -16,7 +16,23 @@
           </el-table-column>
           <el-table-column label="题目名称" align="center">
             <template v-slot="{ row }">
-              <TextButton @click="gotoProblem(row.number)" :text="row.name" />
+              <el-popover
+                placement="bottom"
+                :auto-close="1500"
+                :disabled="isLogged()"
+                trigger="click"
+              >
+                <template #reference>
+                  <TextButton
+                    :class="isLogged() ? 'text-button' : 'not-text-button'"
+                    @click="gotoProblem(row.number)"
+                    :text="row.name"
+                  />
+                </template>
+                <el-button class="button" type="primary" size="small" @click="getoLogin" link>
+                  尚未登陆，请点击登陆
+                </el-button>
+              </el-popover>
             </template>
           </el-table-column>
           <el-table-column label="难度" width="100px" align="center">
@@ -47,8 +63,11 @@
   import BankList from './bank-list.vue';
   import { ref, onMounted } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
+  import useUserStore from '@/store/modules/user';
+
   const $route = useRoute();
   const $router = useRouter();
+  let userStore = useUserStore();
 
   // 分页
   let pageNo = ref<number>(1);
@@ -87,7 +106,14 @@
   };
 
   const gotoProblem = (problemNumber: string) => {
+    if (!isLogged()) {
+      return;
+    }
     changeRoute('problem', { problemNumber: problemNumber });
+  };
+
+  const getoLogin = () => {
+    $router.push({ name: 'login', query: { redirect: $route.path } });
   };
 
   const changeRoute = (routeName: string, params = {}) => {
@@ -95,6 +121,11 @@
       return;
     }
     $router.push({ name: routeName, params: params });
+  };
+
+  // 用户是否登陆
+  const isLogged = (): boolean => {
+    return !!userStore.token;
   };
 </script>
 
@@ -115,6 +146,9 @@
     .problem-list {
       height: auto;
       width: 1000px;
+      .not-text-button {
+        cursor: not-allowed;
+      }
       .success-icon {
         color: $sucess-color;
       }
