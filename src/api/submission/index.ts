@@ -1,9 +1,11 @@
 import request from '@/utils/request';
+import { toFormData } from '@/utils/format';
 
 enum API {
   ActiveYearURL = '/submission/active/year',
   ActiveMapURL = '/submission/active/map',
   SubmissionURL = '/submission/list',
+  AddRemarkURL = '/submission/add/remark',
 }
 
 // 获取用户提交列表
@@ -21,4 +23,20 @@ export const reqActivityYear = (): Promise<ActivityYearResponse> => {
 // 获取用户活动图
 export const reqActivityMap = (year: string): Promise<any> => {
   return request.get(API.ActiveMapURL + `/${year}`);
+};
+
+// 给提交添加备注
+export const reqAddRemark = (id: number, remark: string): Promise<any> => {
+  return request.post(
+    API.AddRemarkURL,
+    toFormData({
+      id: id,
+      remark: remark,
+    }),
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
 };

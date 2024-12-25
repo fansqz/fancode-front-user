@@ -39,6 +39,7 @@
     "monaco-editor-textmate": "^4.0.0",
     "monaco-editor-vue": "^1.0.10",
     "monaco-textmate": "^3.0.1",
+    "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "onigasm": "^2.2.5",
     "particles.vue3": "^2.12.0",

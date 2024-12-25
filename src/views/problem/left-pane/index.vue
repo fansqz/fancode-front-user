@@ -9,18 +9,26 @@
     >
       <el-menu-item index="0">题目描述</el-menu-item>
       <el-menu-item index="1">可视化</el-menu-item>
+      <el-menu-item index="2">提交记录</el-menu-item>
     </el-menu>
     <div class="main" ref="main">
       <ProblemDescription v-if="activeIndex == '0'" :content="content" />
       <StructVisual ref="structVisual" v-if="activeIndex == '1'" />
+      <Submission :problemID="problemId" :codeTheme="theme" v-if="activeIndex == '2'" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, watchEffect } from 'vue';
+  import { storeToRefs } from 'pinia';
   import ProblemDescription from '@/components/code-visual/document/index.vue';
   import StructVisual from './visual.vue';
+  import Submission from './submission.vue';
+  import useCodingStore from '@/store/modules/coding';
+  const codingStore = useCodingStore();
+  let { problemId, theme } = storeToRefs(codingStore);
+
   let props = defineProps(['content']);
   let content = ref(props.content);
   const structVisual = ref<InstanceType<typeof StructVisual> | null>();
