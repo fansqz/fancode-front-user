@@ -37,7 +37,7 @@
                 <el-button
                   class="iconfont icon-edit edit"
                   v-if="!row.remarkEdit"
-                  @click="startRemarkEdit(row)"
+                  @click.stop="startRemarkEdit(row)"
                   size="small"
                   link
                 />
@@ -59,31 +59,23 @@
   </el-scrollbar>
 
   <!--代码展示-->
-  <el-card v-show="codeVisible" class="code-show">
-    <template #header class="header">
-      <div class="card-header">
-        <el-text>{{
-          currentSubmission.remark == '' ? '未命名' : currentSubmission.remark
-        }}</el-text>
-        <el-button class="iconfont icon-close code-view-close" @click="closeCodeShow()" link />
-      </div>
-    </template>
-    <div ref="editorEl" class="editor" />
-  </el-card>
+  <CodeShow class="code-show" :code="currentSubmission.code" :language="currentSubmission.language" :remark="currentSubmission.remark"
+  v-show="codeVisible"
+  @close="closeCodeShow()" v-click-outside/>
 </template>
 
 <script setup lang="ts">
   import { reqSubmissionList, reqAddRemark } from '@/api/submission';
-  import { ref, onMounted, onBeforeUnmount, reactive, toRefs, watch } from 'vue';
+  import { ref, onMounted, reactive, toRefs } from 'vue';
   import { languages } from '@/enum/languages.ts';
-  import { editor } from 'monaco-editor';
-  import { wire } from '@/components/code-editor/editor/themes';
+  import CodeShow from './code-show.vue';
+  
   let props = defineProps<{
     problemID: number;
-    codeTheme: string;
   }>();
 
-  let { problemID, codeTheme } = toRefs(props);
+  let { problemID } = toRefs(props);
+
   let languageColorMap = new Map<string, string>([
     [languages.GO, 'primary'],
     [languages.C, 'success'],
@@ -91,6 +83,7 @@
   ]);
 
   let codeVisible = ref(false);
+  let codeShowed = ref(false);
   let currentSubmission = reactive({
     code: '',
     language: 'go',
@@ -111,7 +104,6 @@
     }
   };
 
-  const editorEl = ref<HTMLElement>();
 
   const getSubmissionList = async () => {
     let result = await reqSubmissionList({
@@ -125,68 +117,11 @@
     }
   };
 
-  let editorInstance: editor.IStandaloneCodeEditor;
 
   onMounted(() => {
     getSubmissionList();
-
-    // 创建editor实例
-    editorInstance = editor.create(editorEl.value, {
-      language: currentSubmission.language,
-      value: currentSubmission.code,
-      readOnly: true,
-      minimap: {
-        enabled: false,
-      },
-      automaticLayout: true,
-    });
-    wire(currentSubmission.language, editorInstance);
-
-    watch(
-      () => currentSubmission.language,
-      async (val) => {
-        const model = editorInstance.getModel();
-        if (model) {
-          //设置语言
-          editor.setModelLanguage(model, val);
-          wire(val, editorInstance);
-        }
-      },
-    );
-
-    watch(
-      () => currentSubmission.language,
-      async (val) => {
-        const model = editorInstance.getModel();
-        if (model) {
-          //设置语言
-          editor.setModelLanguage(model, val);
-          wire(val, editorInstance);
-        }
-      },
-    );
-
-    watch(
-      () => currentSubmission.code,
-      () => {
-        editorInstance?.setValue(currentSubmission.code);
-      },
-    );
-
-    watch(
-      () => codeTheme.value,
-      (theme) => {
-        editorInstance.updateOptions({ theme });
-      },
-    );
   });
 
-  // 在组件即将卸载前执行，做些销毁动作
-  onBeforeUnmount(() => {
-    let model = editorInstance.getModel();
-    model?.dispose();
-    editorInstance?.dispose();
-  });
 
   const getTypeByLanaguage = (language: string) => {
     if (!languageColorMap.has(language)) {
@@ -228,10 +163,37 @@
     currentSubmission.language = row.language;
     currentSubmission.remark = row.remark;
     codeVisible.value = true;
+    setTimeout(() => {
+      codeShowed.value = true;
+    }, 250); 
   };
 
   const closeCodeShow = () => {
     codeVisible.value = false;
+    codeShowed.value = false;
+  };
+
+  
+  // 自定义指令，用于处理点击外部区域的事件
+  const vClickOutside = {
+    beforeMount(el) {
+      // 在元素上绑定一个事件监听器
+      el.clickOutsideEvent = function (event) {
+        if (!codeShowed.value) {
+          return;
+        }
+        // 判断点击事件是否发生在元素外部
+        if (!(el === event.target || el.contains(event.target))) {
+          closeCodeShow();
+        }
+      };
+      // 在全局添加点击事件监听器
+      document.addEventListener("click", el.clickOutsideEvent);
+    },
+    unmounted(el) {
+      // 在组件销毁前，移除事件监听器以避免内存泄漏
+      document.removeEventListener("click", el.clickOutsideEvent);
+    },
   };
 </script>
 
@@ -262,18 +224,5 @@
     z-index: 99999;
     top: calc(40% - 250px);
     left: calc(50% - 300px);
-    height: 500px;
-    width: 600px;
-    .editor {
-      height: 400px;
-      width: 100%;
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      .code-view-close {
-        margin-right: 0px;
-      }
-    }
   }
 </style>

@@ -1,6 +1,6 @@
 import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
-import { BinaryTreeData, BinaryTreeNode } from '@/components/visual/visaul/type/binary-tree';
+import { BinaryTreeData, BinaryTreeNode } from '@/components/code-visual/visual/type/binary-tree';
 import { ElMessage } from 'element-plus';
 import { BinaryTreeDescription } from '@/store/modules/visual';
 
