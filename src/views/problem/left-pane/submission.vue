@@ -59,9 +59,15 @@
   </el-scrollbar>
 
   <!--代码展示-->
-  <CodeShow class="code-show" :code="currentSubmission.code" :language="currentSubmission.language" :remark="currentSubmission.remark"
-  v-show="codeVisible"
-  @close="closeCodeShow()" v-click-outside/>
+  <CodeShow
+    class="code-show"
+    :code="currentSubmission.code"
+    :language="currentSubmission.language"
+    :remark="currentSubmission.remark"
+    v-show="codeVisible"
+    @close="closeCodeShow()"
+    v-click-outside
+  />
 </template>
 
 <script setup lang="ts">
@@ -69,7 +75,7 @@
   import { ref, onMounted, reactive, toRefs } from 'vue';
   import { languages } from '@/enum/languages.ts';
   import CodeShow from './code-show.vue';
-  
+
   let props = defineProps<{
     problemID: number;
   }>();
@@ -104,7 +110,6 @@
     }
   };
 
-
   const getSubmissionList = async () => {
     let result = await reqSubmissionList({
       page: pageNo.value,
@@ -117,11 +122,9 @@
     }
   };
 
-
   onMounted(() => {
     getSubmissionList();
   });
-
 
   const getTypeByLanaguage = (language: string) => {
     if (!languageColorMap.has(language)) {
@@ -165,7 +168,7 @@
     codeVisible.value = true;
     setTimeout(() => {
       codeShowed.value = true;
-    }, 250); 
+    }, 250);
   };
 
   const closeCodeShow = () => {
@@ -173,7 +176,6 @@
     codeShowed.value = false;
   };
 
-  
   // 自定义指令，用于处理点击外部区域的事件
   const vClickOutside = {
     beforeMount(el) {
@@ -188,11 +190,11 @@
         }
       };
       // 在全局添加点击事件监听器
-      document.addEventListener("click", el.clickOutsideEvent);
+      document.addEventListener('click', el.clickOutsideEvent);
     },
     unmounted(el) {
       // 在组件销毁前，移除事件监听器以避免内存泄漏
-      document.removeEventListener("click", el.clickOutsideEvent);
+      document.removeEventListener('click', el.clickOutsideEvent);
     },
   };
 </script>

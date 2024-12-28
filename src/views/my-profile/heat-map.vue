@@ -76,53 +76,53 @@
   const setOption = () => {
     const myChart = proxy.$echarts.init(heatMap.value);
     myChart.setOption({
-        visualMap: {
-            show: false,
-            min: 0,
-            max: 20,
-            type: 'piecewise',
-            orient: 'horizontal',
-            inRange: {
-                // 使用蓝色色调，从浅蓝色到深蓝色过渡
-                color: ['#9be9a8', '#40c463', '#30a14e', '#30a14e']
-            }
+      visualMap: {
+        show: false,
+        min: 0,
+        max: 20,
+        type: 'piecewise',
+        orient: 'horizontal',
+        inRange: {
+          // 使用蓝色色调，从浅蓝色到深蓝色过渡
+          color: ['#9be9a8', '#40c463', '#30a14e', '#30a14e'],
         },
-        tooltip: {},
-        calendar: {
-          left: '50',
-            itemStyle: {
-                // 调整单元颜色，更柔和的颜色和更明显的边框，增大圆角
-                color: '#ebedf0',
-                borderWidth: 2, // 增加边框宽度
-                borderColor: '#ffffff', // 修改边框颜色
-            },
-            cellSize: 11,  // 增大单元大小，可根据实际情况调整
-            range: range,
-            splitLine: {
-              show: false,
-            },
-            dayLabel: {
-                firstDay: 7,
-                nameMap: 'ZH',
-            },
-            monthLabel: {
-                show: true,
-                nameMap: 'ZH',
-            },
-            yearLabel: {
-                show: false
-            },
-            silent: {
-                show: false
-            }
+      },
+      tooltip: {},
+      calendar: {
+        left: '50',
+        top: '40',
+        itemStyle: {
+          // 调整单元颜色，更柔和的颜色和更明显的边框，增大圆角
+          color: '#ebedf0',
+          borderWidth: 2, // 增加边框宽度
+          borderColor: '#ffffff', // 修改边框颜色
         },
-        series: {
-            type: 'heatmap',
-            coordinateSystem: 'calendar',
-            data: data
-        }
+        cellSize: 11, // 增大单元大小，可根据实际情况调整
+        range: range,
+        splitLine: {
+          show: false,
+        },
+        dayLabel: {
+          show: false,
+        },
+        monthLabel: {
+          show: true,
+          nameMap: 'ZH',
+        },
+        yearLabel: {
+          show: false,
+        },
+        silent: {
+          show: false,
+        },
+      },
+      series: {
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data: data,
+      },
     });
-};
+  };
 
   const getActivityYear = async () => {
     let result = await reqActivityYear();
@@ -145,14 +145,14 @@
     border-radius: 5px;
     margin-top: 20px;
     .heat-map-container {
-      height: 180px;
+      height: 150px;
       display: flex;
       .heat-map {
         width: 650px;
-        height: 180px;
+        height: 150px;
       }
       .select-year {
-        height: 180px;
+        height: 150px;
         display: flex;
         align-items: center;
         .select-year-scroll {

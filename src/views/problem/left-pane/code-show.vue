@@ -28,7 +28,6 @@
   let editorInstance: editor.IStandaloneCodeEditor;
 
   onMounted(() => {
-
     // 创建editor实例
     editorInstance = editor.create(editorEl.value, {
       language: language.value,
@@ -68,9 +67,8 @@
   });
 
   const close = () => {
-    emit("close");
+    emit('close');
   };
-
 </script>
 
 <style scoped lang="scss">

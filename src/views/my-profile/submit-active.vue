@@ -9,24 +9,19 @@
       </el-table-column>
       <el-table-column label="语言" width="80px" align="center">
         <template v-slot="{ row }">
-          <el-tag
-            :key="row.language"
-            :type="getTypeByLanaguage(row.language)"
-            effect="light"
-            round
-          >
+          <el-tag :key="row.language" :type="getTypeByLanaguage(row.language)" effect="light" round>
             {{ row.language }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="提交状态" align="center">
         <template v-slot="{ row }">
-              <el-text v-if="row.status == 200" type="success">通过</el-text>
-              <el-text v-if="row.status == 202" type="danger">答案错误</el-text>
-              <el-text v-if="row.status == 203" type="danger">运行超时</el-text>
-              <el-text v-if="row.status == 204" type="danger">编译出错</el-text>
-              <el-text v-if="row.status == 205" type="danger">运行出错</el-text>
-            </template>
+          <el-text v-if="row.status == 200" type="success">通过</el-text>
+          <el-text v-if="row.status == 202" type="danger">答案错误</el-text>
+          <el-text v-if="row.status == 203" type="danger">运行超时</el-text>
+          <el-text v-if="row.status == 204" type="danger">编译出错</el-text>
+          <el-text v-if="row.status == 205" type="danger">运行出错</el-text>
+        </template>
       </el-table-column>
     </el-table>
     <!--分页器组件-->
