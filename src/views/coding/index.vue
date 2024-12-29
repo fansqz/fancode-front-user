@@ -16,7 +16,7 @@
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
-          <Editor class="editor" />
+          <Editor class="editor" @onChangeValue="handleCodeChange"/>
         </pane>
         <pane size="30">
           <!--控制台-->
@@ -68,6 +68,11 @@
     }
   };
   load();
+
+  const handleCodeChange = (value: string, _type: string) => {
+    code.value = value;
+    localStorage.setItem('code', value)
+  };
 
   /**
    * 当拉伸/缩放可视化面板时调用
