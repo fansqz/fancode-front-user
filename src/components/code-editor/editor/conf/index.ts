@@ -65,6 +65,10 @@ export const getConfigs = (configs: Configs) =>
       snippetsPreventQuickSuggestions: false,
     },
 
+    minimap: {
+      enabled: false,
+    },
+
     // 扩展传入的配置对象，覆盖默认设置
     ...configs,
   };

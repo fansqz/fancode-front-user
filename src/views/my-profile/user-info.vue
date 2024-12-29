@@ -12,8 +12,7 @@
           {{ accountInfo.username }}
         </div>
         <div class="base-info-item"> 性别：{{ accountInfo.sex == '1' ? '男' : '女' }} </div>
-        <div class="base-info-item"> 诞生于：{{ accountInfo.birthDay }} </div>
-        <div class="base-info-item"> 码龄：{{ accountInfo.codingAge }} </div>
+        <div class="base-info-item"> 生日：{{ accountInfo.birthDay }} </div>
         <div class="login-name"> 用户id: {{ accountInfo.loginName }} </div>
       </div>
     </div>
@@ -68,32 +67,30 @@
   .card {
     width: 800px;
     .user-message {
-      height: 120px;
+      height: 110px;
       box-sizing: border-box;
       border-radius: 5px;
       position: relative;
-      padding: 10px;
       .avatar {
         position: absolute;
-        left: 20px;
+        left: 50px;
         height: 110px;
         width: 110px;
         box-sizing: border-box;
         border: 1px solid $base-border-color;
       }
-
       .base-info {
         position: absolute;
-        left: 150px;
-        height: 120px;
-        width: 120px;
+        left: 180px;
+        height: 110px;
+        width: 500px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         box-sizing: border-box;
 
         .base-info-item1 {
-          font-size: x-large;
+          font-size: xx-large;
           font-weight: 900;
           margin-top: 5px;
         }
@@ -105,6 +102,7 @@
 
         .login-name {
           font-size: small;
+          margin-top: 6px;
           color: rgb(104, 101, 101);
         }
       }

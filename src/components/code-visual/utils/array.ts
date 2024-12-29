@@ -1,6 +1,6 @@
 import { VariableVisualData } from '@/api/visual/type';
 import { reqVariableVisual } from '@/api/visual';
-import { ArrayData, ArrayNode } from '@/components/visual/visaul/type/array';
+import { ArrayData, ArrayNode } from '@/components/code-visual/visual/type/array';
 import { ElMessage } from 'element-plus';
 import { ArrayDescription } from '@/store/modules/visual';
 

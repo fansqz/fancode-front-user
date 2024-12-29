@@ -8,8 +8,8 @@
             v-for="item in activityYears"
             type="info"
             :key="item"
-            class="scrollbar-demo-item"
-            :class="{ 'scrollbar-demo-item-active': item == activityYear }"
+            class="scrollbar-item"
+            :class="{ 'scrollbar-item-active': item == activityYear }"
             @click="updateHeatMap(item)"
           >
             {{ item == '0' ? '至今' : item }}
@@ -30,7 +30,7 @@
     proxy = currentInstance.proxy;
   }
   let heatMap = ref(null);
-  let range: string[] = [];
+  let range;
   let data: any[] = [];
   let activityYears = ref<string[]>([]);
   let activityYear = ref('0');
@@ -55,54 +55,55 @@
       });
       data = newData;
     }
-    // 读取年份范围
     range = [];
+    // 读取年份范围
     if (year == '0') {
       let currentDate = new Date();
       let end = currentDate.toISOString().slice(0, 10);
       let currentYear = currentDate.getFullYear(); // 获取当前年份
       let previousYearDate = new Date(
         currentYear - 1,
-        currentDate.getMonth() + 1,
-        currentDate.getDate() + 1,
+        currentDate.getMonth(),
+        currentDate.getDate(),
       );
       let start = previousYearDate.toISOString().slice(0, 10);
       range.push(start);
       range.push(end);
     } else {
-      range.push(`${year}-1-1`);
-      range.push(`${year}-12-31`);
+      range = year;
     }
   };
-
   const setOption = () => {
     const myChart = proxy.$echarts.init(heatMap.value);
     myChart.setOption({
-      tooltip: {
-        formatter: function (params: any) {
-          return params.value[0] + ' : ' + params.value[1];
-        },
-      },
       visualMap: {
         show: false,
         min: 0,
         max: 20,
+        type: 'piecewise',
+        orient: 'horizontal',
         inRange: {
-          color: ['#c6e48b', '#7bc96f', '#239a3b', '#196127', '#196127'],
+          // 使用蓝色色调，从浅蓝色到深蓝色过渡
+          color: ['#9be9a8', '#40c463', '#30a14e', '#30a14e'],
         },
       },
+      tooltip: {},
       calendar: {
+        left: '50',
+        top: '40',
         itemStyle: {
-          color: '#cccccc',
-          borderWidth: 2,
-          borderColor: '#ffffff',
+          // 调整单元颜色，更柔和的颜色和更明显的边框，增大圆角
+          color: '#ebedf0',
+          borderWidth: 2, // 增加边框宽度
+          borderColor: '#ffffff', // 修改边框颜色
         },
-        cellSize: ['auto', 13],
+        cellSize: 11, // 增大单元大小，可根据实际情况调整
         range: range,
-        splitLine: true,
+        splitLine: {
+          show: false,
+        },
         dayLabel: {
-          firstDay: 7,
-          nameMap: 'ZH',
+          show: false,
         },
         monthLabel: {
           show: true,
@@ -127,6 +128,7 @@
     let result = await reqActivityYear();
     if (result.code == 200) {
       activityYears.value = result.data;
+      activityYears.value.sort((a, b) => Number(b) - Number(a));
       activityYears.value.unshift('0');
     }
   };
@@ -143,20 +145,19 @@
     border-radius: 5px;
     margin-top: 20px;
     .heat-map-container {
-      height: 180px;
+      height: 150px;
       display: flex;
       .heat-map {
-        width: 600px;
-        height: 180px;
+        width: 650px;
+        height: 150px;
       }
       .select-year {
-        margin-left: 20px;
-        height: 180px;
+        height: 150px;
         display: flex;
         align-items: center;
         .select-year-scroll {
           height: 100px;
-          .scrollbar-demo-item {
+          .scrollbar-item {
             width: 90px;
             height: 25px;
             display: flex;
@@ -167,7 +168,7 @@
             background-color: rgba(212, 241, 221, 0.2);
             cursor: pointer;
           }
-          .scrollbar-demo-item-active {
+          .scrollbar-item-active {
             background-color: rgba(98, 124, 107, 0.2);
           }
         }

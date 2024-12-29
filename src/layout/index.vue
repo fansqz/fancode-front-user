@@ -9,11 +9,15 @@
     <div class="layout-main">
       <router-view />
     </div>
+
+    <!--浮动窗口-->
+    <Feedback />
   </div>
 </template>
 
 <script setup lang="ts">
   import Header from './header/index.vue';
+  import Feedback from './feedback/index.vue';
 </script>
 
 <scoped scoped lang="scss">

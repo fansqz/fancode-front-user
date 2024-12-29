@@ -1,4 +1,6 @@
-type SubmissionListRequest = PageQuery & {};
+type SubmissionListRequest = PageQuery & {
+  problemID?: number;
+};
 
 type Submission = {
   id: number;

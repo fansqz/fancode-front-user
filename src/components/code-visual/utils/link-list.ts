@@ -1,6 +1,6 @@
 import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
-import { LinkListData, LinkListNode } from '@/components/visual/visaul/type/link-list';
+import { LinkListData, LinkListNode } from '@/components/code-visual/visual/type/link-list';
 import { ElMessage } from 'element-plus';
 import { LinkListDescription } from '@/store/modules/visual';
 
