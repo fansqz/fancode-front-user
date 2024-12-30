@@ -1,17 +1,28 @@
 import { defineStore } from 'pinia';
+import { descriptions } from '@/enum/description.ts';
 
 type VisualState = {
   // 可视化是否开启
   action: boolean;
-  // 可视化描述的json结构
+
   descriptionJson: string;
+  description: VisualDescription | null;
   // 可视化描述
-  description: VisualDescription | undefined;
+  descriptionType: descriptions;
+  arrayDescription?: ArrayDescription;
+  binaryTreeDescription?: BinaryTreeDescription;
+  linkListDescription?: LinkListDescription;
+  graphDescription?: GraphDescription;
 };
 
 const useVisualStore = defineStore('visual', {
   state: (): VisualState => ({
     action: false,
+    descriptionType: descriptions.Array,
+    arrayDescription: {
+      arrayName: "arr",
+      pointNames: ["point1", "point2"],
+    },
     descriptionJson: '',
     description: null,
   }),
@@ -28,14 +39,12 @@ export type VisualDescription =
 
 // 数组可视化描述
 export type ArrayDescription = {
-  type: 'array';
   arrayName: string;
   pointNames: string[];
 };
 
 // 二叉树可视化描述
 export type BinaryTreeDescription = {
-  type: 'binaryTree';
   // 二叉树节点结构体名称
   treeNode: string;
   // 数据域
@@ -47,7 +56,6 @@ export type BinaryTreeDescription = {
 
 // 图的可视化描述
 export type GraphDescription = {
-  type: 'graph';
   // 二叉树节点结构体名称
   graphNode: string;
   // 数据域
@@ -57,7 +65,6 @@ export type GraphDescription = {
 
 // 链表的可视化描述
 export type LinkListDescription = {
-  type: 'linkList';
   // 链表节点
   linkNode: string;
   // 数据域
