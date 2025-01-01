@@ -17,18 +17,25 @@
   import { onMounted, ref, watch } from 'vue';
   import { descriptions } from '@/enum/description';
   import { toRefs } from 'vue';
+  import { GraphDescription } from '../type';
 
   const visualStore = useVisualStore();
   if (!visualStore.descriptionMap.has(descriptions.Graph)) {
-    visualStore.descriptionMap.set(descriptions.Graph, {
-      graphNode: 'GraphNode',
-      // 数据域
-      data: 'Val',
-      nexts: ['Point1', 'Point2'],
-    });
+    if (localStorage.getItem('graphDescription')) {
+      let graphDescription: GraphDescription = JSON.parse(localStorage.getItem('graphDescription'));
+      visualStore.descriptionMap.set(descriptions.Graph, graphDescription);
+    } else {
+      visualStore.descriptionMap.set(descriptions.Graph, {
+        graphNode: 'GraphNode',
+        // 数据域
+        data: 'Val',
+        nexts: ['Point1', 'Point2'],
+      });
+    }
   }
 
-  const { graphNode, data, nexts } = toRefs(visualStore.descriptionMap.get(descriptions.Graph));
+  const graphDescription = visualStore.descriptionMap.get(descriptions.Graph);
+  const { graphNode, data, nexts } = toRefs(graphDescription);
 
   const pointNamesStr = ref('');
 
@@ -57,9 +64,19 @@
     },
   );
 
+  watch(
+    () => graphDescription,
+    () => {
+      let json = JSON.stringify(graphDescription);
+      localStorage.setItem('graphDescription', json);
+    },
+    {
+      deep: true,
+    },
+  );
+
   onMounted(() => {
     pointNamesStr.value = nexts.value.join(',');
-    console.log(pointNamesStr.value);
   });
 </script>
 

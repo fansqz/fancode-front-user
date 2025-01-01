@@ -31,20 +31,39 @@
 
 <script setup lang="ts">
   import useVisualStore from '@/store/modules/visual.ts';
-  import { toRefs } from 'vue';
+  import { toRefs, watch } from 'vue';
   import { descriptions } from '@/enum/description';
+  import { BinaryTreeDescription } from '../type';
 
   const visualStore = useVisualStore();
   if (!visualStore.descriptionMap.has(descriptions.BinaryTree)) {
-    visualStore.descriptionMap.set(descriptions.BinaryTree, {
-      treeNode: 'TreeNode',
-      data: 'Val',
-      left: 'Left',
-      right: 'Right',
-    });
+    if (localStorage.getItem('binaryTreeDescription')) {
+      let binaryTreeDescription: BinaryTreeDescription = JSON.parse(
+        localStorage.getItem('binaryTreeDescription'),
+      );
+      visualStore.descriptionMap.set(descriptions.BinaryTree, binaryTreeDescription);
+    } else {
+      visualStore.descriptionMap.set(descriptions.BinaryTree, {
+        treeNode: 'TreeNode',
+        data: 'Val',
+        left: 'Left',
+        right: 'Right',
+      });
+    }
   }
-  const { treeNode, data, left, right } = toRefs(
-    visualStore.descriptionMap.get(descriptions.BinaryTree),
+
+  const binaryTreeDescription = visualStore.descriptionMap.get(descriptions.BinaryTree);
+  const { treeNode, data, left, right } = toRefs(binaryTreeDescription);
+
+  watch(
+    () => binaryTreeDescription,
+    () => {
+      let json = JSON.stringify(binaryTreeDescription);
+      localStorage.setItem('binaryTreeDescription', json);
+    },
+    {
+      deep: true,
+    },
   );
 </script>
 

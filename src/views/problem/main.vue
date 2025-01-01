@@ -54,9 +54,7 @@
   });
   let problemDescriptionContent = ref('');
   let codingStore = useCodingStore();
-  let visualStore = useVisualStore();
   let { code, languages, language, editorUpdateCode, problemId } = storeToRefs(codingStore);
-  let { descriptionJson } = storeToRefs(visualStore);
   const leftPane = ref<InstanceType<typeof LeftPane> | null>();
 
   const load = async () => {
@@ -75,7 +73,6 @@
       language.value = result2.data.language;
       code.value = result2.data.code;
       editorUpdateCode.value++;
-      descriptionJson.value = result2.data.visualSetting;
     }
   };
   load();
@@ -86,7 +83,6 @@
       problemID: problem.id,
       language: language.value,
       code: value,
-      visualSetting: descriptionJson.value,
     };
     reqSaveUserCode(req);
   };

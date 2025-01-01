@@ -14,16 +14,25 @@
   import { onMounted, ref, watch } from 'vue';
   import { descriptions } from '@/enum/description';
   import { toRefs } from 'vue';
+  import { ArrayDescription } from '../type.ts';
 
   const visualStore = useVisualStore();
   if (!visualStore.descriptionMap.has(descriptions.Array)) {
-    visualStore.descriptionMap.set(descriptions.Array, {
-      arrayName: 'Arr',
-      pointNames: ['Point1', 'Point2'],
-    });
+    // 先读取本地
+    if (localStorage.getItem('arrayDescription')) {
+      let json = localStorage.getItem('arrayDescription');
+      let arrayDescription: ArrayDescription = JSON.parse(json);
+      visualStore.descriptionMap.set(descriptions.Array, arrayDescription);
+    } else {
+      visualStore.descriptionMap.set(descriptions.Array, {
+        arrayName: 'Arr',
+        pointNames: ['Point1', 'Point2'],
+      });
+    }
   }
 
-  const { arrayName, pointNames } = toRefs(visualStore.descriptionMap.get(descriptions.Array));
+  const arrayDescription = visualStore.descriptionMap.get(descriptions.Array);
+  const { arrayName, pointNames } = toRefs(arrayDescription);
 
   const pointNamesStr = ref('');
 
@@ -52,9 +61,19 @@
     },
   );
 
+  watch(
+    () => arrayDescription,
+    () => {
+      let json = JSON.stringify(arrayDescription);
+      localStorage.setItem('arrayDescription', json);
+    },
+    {
+      deep: true,
+    },
+  );
+
   onMounted(() => {
     pointNamesStr.value = pointNames.value.join(',');
-    console.log(pointNamesStr.value);
   });
 </script>
 

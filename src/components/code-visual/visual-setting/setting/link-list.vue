@@ -32,22 +32,40 @@
 <script setup lang="ts">
   import useVisualStore from '@/store/modules/visual.ts';
   import { descriptions } from '@/enum/description';
-  import { toRefs } from 'vue';
+  import { toRefs, watch } from 'vue';
+  import { LinkListDescription } from '../type';
 
   const visualStore = useVisualStore();
   if (!visualStore.descriptionMap.has(descriptions.LinkList)) {
-    visualStore.descriptionMap.set(descriptions.LinkList, {
-      // 链表节点
-      linkNode: 'LinkNode',
-      // 数据域
-      data: 'Val',
-      next: 'Next',
-      prev: 'Prev',
-    });
+    if (localStorage.getItem('linkListDescription')) {
+      let linkListDescription: LinkListDescription = JSON.parse(
+        localStorage.getItem('linkListDescription'),
+      );
+      visualStore.descriptionMap.set(descriptions.LinkList, linkListDescription);
+    } else {
+      visualStore.descriptionMap.set(descriptions.LinkList, {
+        // 链表节点
+        linkNode: 'LinkNode',
+        // 数据域
+        data: 'Val',
+        next: 'Next',
+        prev: 'Prev',
+      });
+    }
   }
 
-  const { linkNode, data, next, prev } = toRefs(
-    visualStore.descriptionMap.get(descriptions.LinkList),
+  const linkListDescription = visualStore.descriptionMap.get(descriptions.LinkList);
+  const { linkNode, data, next, prev } = toRefs(linkListDescription);
+
+  watch(
+    () => linkListDescription,
+    () => {
+      let json = JSON.stringify(linkListDescription);
+      localStorage.setItem('linkListDescription', json);
+    },
+    {
+      deep: true,
+    },
   );
 </script>
 

@@ -3,27 +3,6 @@ export type VisualType = string;
 export const ArrayType: VisualType = 'array';
 export const BinaryTreeType: VisualType = 'binaryTree';
 
-// 读取可视化设置
-export type GetVisualSettingRequest = {
-  problemID: number;
-  language: string;
-};
-
-export type GetVisualSettingResponse = BaseResponse & {
-  data: string;
-};
-
-// 保存可视化设置
-export type SaveVisualSettingRequest = {
-  problemID: number;
-  language: string;
-  visualDescription: string;
-};
-
-export type SaveVisualSettingResponse = BaseResponse & {
-  data: string;
-};
-
 // 结构体导向可视化请求
 export type StructVisualRequest = {
   debugID: string;
@@ -86,24 +65,6 @@ export type VisualVariable = {
   name: string;
   type: string;
   value: string;
-};
-
-// 可视化模板响应
-export type VisualDescriptionTemplateResponse = BaseResponse & {
-  data: VisualDescriptionTemplate;
-};
-
-// 可视化模板列表响应
-export type VisualDescriptionTemplateListResponse = BaseResponse & {
-  data: VisualDescriptionTemplate[];
-};
-
-export type VisualDescriptionTemplate = {
-  id: number;
-  order: number;
-  type: string;
-  name: string;
-  template: string;
 };
 
 export type VisaulDocumentResponse = BaseResponse & {

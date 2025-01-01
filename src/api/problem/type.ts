@@ -63,7 +63,6 @@ export type SaveUserCodeRequest = {
   problemID: number;
   language: string;
   code: string;
-  visualSetting: string;
 };
 
 export type SaveUserCodeResponse = BaseResponse & {

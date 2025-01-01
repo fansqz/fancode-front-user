@@ -6,8 +6,6 @@ type VisualState = {
   // 可视化是否开启
   action: boolean;
 
-  descriptionJson: string;
-  description: VisualDescription | null;
   // 可视化描述类型
   descriptionType: descriptions;
   descriptionMap: Map<descriptions, VisualDescription>;
@@ -18,8 +16,6 @@ const useVisualStore = defineStore('visual', {
     action: false,
     descriptionType: descriptions.Array,
     descriptionMap: new Map(),
-    descriptionJson: '',
-    description: null,
   }),
 });
 
