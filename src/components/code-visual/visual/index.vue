@@ -25,7 +25,6 @@
     watch(
       () => sources.value,
       () => {
-        console.log(sources.value);
         updateVisualView(sources.value);
       },
     );
@@ -88,7 +87,7 @@
    * 调整可视化视图尺寸
    */
   const resizeVisualView = (width: number, height: number) => {
-    if (container) {
+    if (cur) {
       cur.resize(width, height);
     }
   };

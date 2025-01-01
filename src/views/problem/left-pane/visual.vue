@@ -27,7 +27,7 @@
   const debugStore = useDebugStore();
   const visualStore = useVisualStore();
   const { id } = storeToRefs(debugStore);
-  const { action, description } = storeToRefs(visualStore);
+  const { action, descriptionType, descriptionMap } = storeToRefs(visualStore);
   const sources = ref<Sources>();
   const visual = ref<InstanceType<typeof Visaul> | null>();
   const visualTemplate = ref<HTMLElement>();
@@ -46,11 +46,11 @@
   const onStopped = async (_data: DebugEvent) => {
     // 如果开启可视化
     if (action.value) {
-      let visualData = await reqVisualData(id.value, description.value);
+      console.log(descriptionMap)
+      let visualData = await reqVisualData(id.value, descriptionType.value, descriptionMap.value.get(descriptionType.value));
       sources.value = {
         visaulData: visualData,
       };
-      console.log(sources.value);
     }
   };
 

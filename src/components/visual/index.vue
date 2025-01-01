@@ -88,7 +88,7 @@
    * 调整可视化视图尺寸
    */
   const resizeVisualView = (width: number, height: number) => {
-    if (container) {
+    if (cur) {
       cur.resize(width, height);
     }
   };
@@ -144,3 +144,4 @@
     }
   }
 </style>
+./layouter/Array.ts
