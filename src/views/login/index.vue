@@ -23,7 +23,15 @@
         <el-form-item prop="code" v-if="loginForm.loginType == 'email'">
           <el-input placeholder="验证码" v-model="loginForm.code">
             <template #suffix>
-              <el-button link type="primary" @click="sendEmailCode"> 发送验证码 </el-button>
+              <el-button
+                v-if="!downTimeState.countDownIng"
+                link
+                type="primary"
+                @click="sendEmailCode"
+              >
+                发送验证码
+              </el-button>
+              <span v-if="downTimeState.countDownIng">{{ downTimeState.countDownTime }}s</span>
             </template>
           </el-input>
         </el-form-item>
@@ -81,7 +89,7 @@
 <script setup lang="ts">
   import Logo from '@/components/logo/index.vue';
   import { User, Lock, Message } from '@element-plus/icons-vue';
-  import { reactive, ref } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
   import useUserStore from '@/store/modules/user';
   import { useRouter, useRoute } from 'vue-router';
   import { ElNotification, ElMessage } from 'element-plus';
@@ -104,6 +112,13 @@
   let loginTypeTextStyle = ref();
   let goRegisterTextStyle = ref();
   let visitorTextStyle = ref();
+  // 是否在验证码倒计时中
+  const downTimeState = reactive({
+    // 倒计时
+    countDownTime: 60,
+    timer: null,
+    countDownIng: false,
+  });
 
   let rules = {
     account: [
@@ -141,6 +156,7 @@
         message: result.message,
         type: 'success',
       });
+      countDown();
     } else {
       ElMessage({
         showClose: true,
@@ -188,12 +204,43 @@
     }
   };
 
+  const countDown = () => {
+    let startTime = parseInt(localStorage.getItem('loginStartTimeLogin'));
+    let nowTime = new Date().getTime();
+    if (startTime) {
+      let surplus = 60 - Math.round((nowTime - startTime) / 1000);
+      downTimeState.countDownTime = surplus <= 0 ? 0 : surplus;
+    } else {
+      downTimeState.countDownTime = 60;
+      localStorage.setItem('loginStartTimeLogin', nowTime.toString());
+    }
+
+    downTimeState.timer = setInterval(() => {
+      downTimeState.countDownTime--;
+      downTimeState.countDownIng = true;
+      if (downTimeState.countDownTime <= 0) {
+        localStorage.removeItem('loginStartTimeLogin');
+        clearInterval(downTimeState.timer);
+        downTimeState.countDownTime = 60;
+        downTimeState.countDownIng = false;
+      }
+    }, 1000);
+  };
+
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
       return;
     }
     $router.push({ name: routeName, params });
   };
+
+  onMounted(() => {
+    let sendEndTime = localStorage.getItem('loginStartTimeLogin');
+    if (sendEndTime) {
+      downTimeState.countDownIng = true;
+      countDown();
+    }
+  });
 </script>
 
 <style scoped lang="scss">

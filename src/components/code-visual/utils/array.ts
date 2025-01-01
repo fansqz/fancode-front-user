@@ -2,7 +2,7 @@ import { VariableVisualData } from '@/api/visual/type';
 import { reqVariableVisual } from '@/api/visual';
 import { ArrayData, ArrayNode } from '@/components/code-visual/visual/type/array';
 import { ElMessage } from 'element-plus';
-import { ArrayDescription } from '@/store/modules/visual';
+import { ArrayDescription } from '@/components/code-visual/visual-setting/type.ts';
 
 const reqArrayVisualData = async (
   debugID: string,

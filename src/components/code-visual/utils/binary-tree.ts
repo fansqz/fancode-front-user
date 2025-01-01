@@ -2,7 +2,7 @@ import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
 import { BinaryTreeData, BinaryTreeNode } from '@/components/code-visual/visual/type/binary-tree';
 import { ElMessage } from 'element-plus';
-import { BinaryTreeDescription } from '@/store/modules/visual';
+import { BinaryTreeDescription } from '@/components/code-visual/visual-setting/type.ts';
 
 const reqBinaryTreeVisualData = async (
   debugID: string,

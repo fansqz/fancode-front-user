@@ -42,7 +42,6 @@
   import { reqProblem, reqUserCodeByProblemID, reqSaveUserCode } from '@/api/problem';
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';
-  import useVisualStore from '@/store/modules/visual.ts';
 
   const props = defineProps(['problemNumber']);
   let problem = reactive({
@@ -54,9 +53,7 @@
   });
   let problemDescriptionContent = ref('');
   let codingStore = useCodingStore();
-  let visualStore = useVisualStore();
   let { code, languages, language, editorUpdateCode, problemId } = storeToRefs(codingStore);
-  let { descriptionJson } = storeToRefs(visualStore);
   const leftPane = ref<InstanceType<typeof LeftPane> | null>();
 
   const load = async () => {
@@ -75,7 +72,6 @@
       language.value = result2.data.language;
       code.value = result2.data.code;
       editorUpdateCode.value++;
-      descriptionJson.value = result2.data.visualSetting;
     }
   };
   load();
@@ -86,7 +82,6 @@
       problemID: problem.id,
       language: language.value,
       code: value,
-      visualSetting: descriptionJson.value,
     };
     reqSaveUserCode(req);
   };
