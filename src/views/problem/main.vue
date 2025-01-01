@@ -42,7 +42,6 @@
   import { reqProblem, reqUserCodeByProblemID, reqSaveUserCode } from '@/api/problem';
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';
-  import useVisualStore from '@/store/modules/visual.ts';
 
   const props = defineProps(['problemNumber']);
   let problem = reactive({
