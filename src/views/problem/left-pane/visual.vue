@@ -46,8 +46,12 @@
   const onStopped = async (_data: DebugEvent) => {
     // 如果开启可视化
     if (action.value) {
-      console.log(descriptionMap)
-      let visualData = await reqVisualData(id.value, descriptionType.value, descriptionMap.value.get(descriptionType.value));
+      console.log(descriptionMap);
+      let visualData = await reqVisualData(
+        id.value,
+        descriptionType.value,
+        descriptionMap.value.get(descriptionType.value),
+      );
       sources.value = {
         visaulData: visualData,
       };
