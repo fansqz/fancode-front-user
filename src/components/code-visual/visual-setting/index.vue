@@ -9,7 +9,15 @@
         highlight-current-row
         @current-change="handleCurrentChange"
       >
-        <el-table-column property="name" class="item" />
+        <el-table-column>
+          <template v-slot="{ row }">
+            <div class="item">
+              <i v-if="row.type == descriptionType" class="selected-icon iconfont icon-Other-10" />
+              <i v-if="row.type != descriptionType" class="selected-icon iconfont icon-Other-11" />
+              {{ row.name }}
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="setting">
         <ArraySetting v-if="descriptionType == descriptions.Array" />
@@ -80,8 +88,13 @@
         margin-right: 10px;
         height: 150px;
         .item {
-          height: 25px;
-          margin: 10px;
+          display: flex;
+          .selected-icon {
+            position: relative;
+            font-size: 15px !important;
+            margin: auto 2px;
+            color: rgb(90, 180, 253);
+          }
         }
       }
       .setting {
