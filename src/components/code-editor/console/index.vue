@@ -17,7 +17,7 @@
       <Output />
     </div>
     <div class="terminal-div" v-show="activeIndex == 'terminal'">
-      <DebugTerminal />
+      <DebugTerminal :debugButton="debugButton" />
     </div>
   </div>
 </template>
@@ -35,9 +35,10 @@
     userInput: boolean;
     userOutput: boolean;
     terminal: boolean;
+    debugButton: boolean;
   }>();
 
-  let { userInput, userOutput, terminal } = toRefs(props);
+  let { userInput, userOutput, terminal, debugButton } = toRefs(props);
 
   // 用于控制当前是输入界面还是输出界面
   const activeIndex = ref();

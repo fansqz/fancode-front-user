@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-  import DebugButton from './debug-button.vue';
+  import DebugButton from '../console/debug-button/debug-button.vue';
   import ExecuteButton from './execute-button.vue';
   import SubmitButton from './submit-button.vue';
 </script>
