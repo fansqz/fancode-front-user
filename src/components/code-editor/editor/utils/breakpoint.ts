@@ -1,7 +1,7 @@
 import { editor, Range } from 'monaco-editor';
 import throttle from 'lodash.throttle';
 import { ElMessageBox } from 'element-plus';
-import type { onUpdateBP, EditorInstance, Model } from '../types';
+import type { onUpdateBP, EditorInstance } from '../types';
 import {
   checkBreakPoints,
   existBreakPoint,
@@ -13,8 +13,11 @@ import {
 
 // 获取所有断点
 export function getAllBreakpoint(editorInstance: EditorInstance): number[] {
+  if (!editorInstance) {
+    return [];
+  }
   let model = editorInstance.getModel();
-  const allDecorations = model.getAllDecorations();
+  const allDecorations = model?.getAllDecorations();
   return getBreakPointLineNumber(allDecorations).slice().sort();
 }
 

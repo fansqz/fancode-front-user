@@ -1,6 +1,6 @@
 <template>
   <div ref="container" class="container">
-    <div class="visual-container">
+    <div class="visual-container" ref="visualContainer">
       <Visaul ref="visual" class="visaul" :action="action" :sources="sources" />
     </div>
     <el-collapse ref="visualTemplate" accordion class="visual-description-collapse">
@@ -26,30 +26,29 @@
 
   const debugStore = useDebugStore();
   const visualStore = useVisualStore();
-  const { id } = storeToRefs(debugStore);
-  const { action, descriptionType, descriptionMap } = storeToRefs(visualStore);
+  const { id, isDebug } = storeToRefs(debugStore);
+  const { action, descriptionType } = storeToRefs(visualStore);
   const sources = ref<Sources>();
   const visual = ref<InstanceType<typeof Visaul> | null>();
   const visualTemplate = ref<HTMLElement>();
   const container = ref<HTMLElement>();
+  const visualContainer = ref();
 
-  onMounted(() => {
-    // 注册一些事件
-    DebugEventDispatcher.on('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
-  });
-  onUnmounted(() => {
-    DebugEventDispatcher.off('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
-  });
+  // 重新设置visual的大小
+  const resizeVisualView = (width: number, height: number) => {
+    visual.value?.resizeVisualView(width, height);
+  };
 
   const onStopped = async (_data: DebugEvent) => {
+    if (!isDebug.value) {
+      return;
+    }
     // 如果开启可视化
     if (action.value) {
       let visualData = await reqVisualData(
         id.value,
         descriptionType.value,
-        descriptionMap.value.get(descriptionType.value),
+        visualStore.getDescription(descriptionType.value),
       );
       sources.value = {
         visaulData: visualData,
@@ -62,13 +61,18 @@
     sources.value = null;
   };
 
-  // 重新设置visual的大小
-  const resizeVisualView = (width: number, height: number) => {
-    visual.value?.resizeVisualView(width, height);
-  };
-
   defineExpose({
     resizeVisualView,
+  });
+
+  onMounted(() => {
+    // 注册一些事件
+    DebugEventDispatcher.on('stopped', onStopped);
+    DebugEventDispatcher.on('launch', onLaunch);
+  });
+  onUnmounted(() => {
+    DebugEventDispatcher.off('stopped', onStopped);
+    DebugEventDispatcher.on('launch', onLaunch);
   });
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="console">
-    <el-scrollbar class="scrollbar">
-      <div class="content">
+    <el-scrollbar class="scrollbar" ref="scrollbarRef">
+      <div class="content" ref="innerRef">
         <div class="input">
           <div class="left">
             <el-text>输入:</el-text>
@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted } from 'vue';
+  import { onMounted, onUnmounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
   import { reqSendToConsole } from '@/api/debug';
@@ -73,39 +73,25 @@
 
   const debugStore = useDebugStore();
   let { id, outputs, sentInputs, currentInput, isDebug } = storeToRefs(debugStore);
-
-  onMounted(() => {
-    // 注册一些事件
-    LaunchEventDispatcher.on('launch', onLaunch);
-    OutputEventDispatcher.on('output', onOutput);
-    CompileEventDispatcher.on('compile', onCompile);
-    ConnectEventDispatcher.on('connect', onConnect);
-    ExitedEventDispatcher.on('exited', onExited);
-  });
-  onUnmounted(() => {
-    LaunchEventDispatcher.off('launch', onLaunch);
-    OutputEventDispatcher.off('output', onOutput);
-    CompileEventDispatcher.off('compile', onCompile);
-    ConnectEventDispatcher.off('connect', onConnect);
-    ExitedEventDispatcher.off('exited', onExited);
-  });
+  const scrollbarRef = ref();
+  const innerRef = ref();
 
   // 监控输出
   const onOutput = (data: OutputEvent) => {
-    if (outputs.value.length > 0 && outputs.value[outputs.value.length - 1].event == 'output') {
-      let oldOutput = outputs.value[outputs.value.length - 1].message;
-      outputs.value[outputs.value.length - 1] = {
-        ...outputs.value[outputs.value.length - 1],
-        message: oldOutput + data.output,
-      };
-    } else {
-      outputs.value.push({
-        type: 'success',
-        event: 'output',
-        title: '',
-        message: data.output,
-      });
-    }
+    outputs.value.push({
+      type: 'success',
+      event: 'output',
+      title: '',
+      message: data.output,
+    });
+    setTimeout(() => {
+      updateScrollToBottom();
+    }, 50);
+  };
+
+  // 滚动条滚动到底部
+  const updateScrollToBottom = () => {
+    scrollbarRef.value!.setScrollTop(innerRef.value!.clientHeight);
   };
 
   const onLaunch = (data: LaunchEvent) => {
@@ -182,6 +168,22 @@
       currentInput.value += '\n';
     }
   };
+
+  onMounted(() => {
+    // 注册一些事件
+    LaunchEventDispatcher.on('launch', onLaunch);
+    OutputEventDispatcher.on('output', onOutput);
+    CompileEventDispatcher.on('compile', onCompile);
+    ConnectEventDispatcher.on('connect', onConnect);
+    ExitedEventDispatcher.on('exited', onExited);
+  });
+  onUnmounted(() => {
+    LaunchEventDispatcher.off('launch', onLaunch);
+    OutputEventDispatcher.off('output', onOutput);
+    CompileEventDispatcher.off('compile', onCompile);
+    ConnectEventDispatcher.off('connect', onConnect);
+    ExitedEventDispatcher.off('exited', onExited);
+  });
 </script>
 <style lang="scss" scoped>
   .console {

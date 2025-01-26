@@ -2,6 +2,7 @@
   <div class="debug_terminal">
     <splitpanes>
       <pane size="25%">
+        <!--栈帧列表-->
         <div class="left">
           <div class="frames_title">
             <el-text class="frames_text">frames</el-text>
@@ -29,7 +30,6 @@
             </el-scrollbar>
           </div>
           <div class="debug-buttons">
-            <DebugButton v-if="debugButton" class="debug-btn" />
             <StepOrContinueButton type="continue" class="debug-btn" />
             <StepOrContinueButton type="step-over" class="debug-btn" />
             <StepOrContinueButton type="step-in" class="debug-btn" />
@@ -46,17 +46,10 @@
   import Console from './console.vue';
   import Variables from './variables.vue';
   import Frames from './frames.vue';
-  import DebugButton from '../debug-button/debug-button.vue';
   import StepOrContinueButton from '../debug-button/debug-button-step-continue.vue';
   import TerminateButton from '../debug-button/debug-button-terminate.vue';
-  import { ref, toRefs } from 'vue';
+  import { ref } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
-
-  let props = defineProps<{
-    debugButton: boolean;
-  }>();
-
-  let { debugButton } = toRefs(props);
 
   const activeIndex = ref('console');
   const frameId = ref('');

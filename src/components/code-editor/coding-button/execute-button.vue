@@ -1,5 +1,5 @@
 <template>
-  <el-button class="button-submit" type="" @click="execute">执行</el-button>
+  <el-button class="button-submit" type="primary" @click="execute">执行</el-button>
 </template>
 
 <script setup lang="ts">

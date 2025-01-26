@@ -124,6 +124,9 @@ export const useVsCode = (vscode: VsCode) => {
       watch(
         () => debugStore.breakpoints,
         () => {
+          if (!editorInstance) {
+            return;
+          }
           let bps = getAllBreakpoint(editorInstance);
           let bps2 = debugStore.breakpoints.slice().sort();
           if (!isEqual(bps, bps2)) {
@@ -150,6 +153,17 @@ export const useVsCode = (vscode: VsCode) => {
         debounce(async () => {
           // 使用防抖，在不输入内容的时候进行保存
           onContentChanged?.(editorInstance.getValue());
+          // 更新断点
+          let bps = getAllBreakpoint(editorInstance);
+          let bps2 = debugStore.breakpoints;
+          for (let breakpoint of bps2) {
+            if (!bps.includes(breakpoint)) {
+              vscode.onUpdateBP(bps, breakpoint, 'del');
+            }
+          }
+          if (!isEqual(bps, bps2)) {
+            initBP(editorInstance, debugStore.breakpoints);
+          }
         }, 600),
       );
 

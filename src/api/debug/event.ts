@@ -87,5 +87,6 @@ export type DebugEvent =
   | LaunchEvent
   | ContinuedEvent
   | ExitedEvent
+  | TerminatedEvent
   | OutputEvent
   | CompileEvent;

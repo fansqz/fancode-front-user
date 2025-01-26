@@ -1,7 +1,6 @@
 import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
 import { LinkListData, LinkListNode } from '@/components/code-visual/visual/type/link-list';
-import { ElMessage } from 'element-plus';
 import { LinkListDescription } from '@/components/code-visual/visual-setting/type.ts';
 
 const reqLinkListVisualData = async (
@@ -23,11 +22,7 @@ const reqLinkListVisualData = async (
   };
   let result = await reqStructVisual(req);
   if (result.code != 200) {
-    ElMessage({
-      showClose: true,
-      message: result.message,
-      type: 'error',
-    });
+    console.log(result.message);
     return {
       data: [],
       layouter: 'linkList',

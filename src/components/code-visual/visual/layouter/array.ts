@@ -21,6 +21,19 @@ SV.registerLayout('array', {
             fill: '#95e1d3',
           },
         },
+        virtual: {
+          type: 'array-node',
+          label: '[data]',
+          size: [60, 30],
+          labelOptions: {
+            style: { fontSize: 20 },
+          },
+          style: {
+            stroke: '#333',
+            lineDash: [3, 5], // 虚线
+            fill: 'transparent',
+          },
+        },
       },
       marker: {
         headExternal: {

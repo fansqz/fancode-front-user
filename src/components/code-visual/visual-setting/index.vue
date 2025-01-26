@@ -26,7 +26,7 @@
         <Graph v-if="descriptionType == descriptions.Graph" />
       </div>
       <div class="option">
-        <el-switch v-model="action" @change="handlerVisualAction" />
+        <el-switch v-model="action" />
       </div>
     </div>
   </div>
@@ -69,10 +69,6 @@
   // 选择了其他可视化模板
   const handleCurrentChange = async (val) => {
     descriptionType.value = val.type;
-  };
-
-  const handlerVisualAction = () => {
-    action.value = true;
   };
 </script>
 

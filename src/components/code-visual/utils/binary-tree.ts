@@ -1,7 +1,6 @@
 import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
 import { BinaryTreeData, BinaryTreeNode } from '@/components/code-visual/visual/type/binary-tree';
-import { ElMessage } from 'element-plus';
 import { BinaryTreeDescription } from '@/components/code-visual/visual-setting/type.ts';
 
 const reqBinaryTreeVisualData = async (
@@ -19,11 +18,7 @@ const reqBinaryTreeVisualData = async (
   };
   let result = await reqStructVisual(req);
   if (result.code != 200) {
-    ElMessage({
-      showClose: true,
-      message: result.message,
-      type: 'error',
-    });
+    console.log(result.message);
     return {
       data: [],
       layouter: 'binaryTree',

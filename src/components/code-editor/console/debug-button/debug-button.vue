@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-  import { ElMessage } from 'element-plus';
   import useCodingStore from '@/store/modules/coding';
   import {
     reqCreateDebugSession,
@@ -38,11 +37,7 @@
     if (isDebug.value) {
       let result = await reqTerminate(id.value);
       if (result.code != 200) {
-        ElMessage({
-          showClose: true,
-          message: result.message,
-          type: 'error',
-        });
+        console.log(result.message);
       }
       return;
     }
@@ -66,20 +61,11 @@
       setTimeout(async () => {
         let result2 = await reqStart(startReq);
         if (result2.code != 200) {
-          ElMessage({
-            showClose: true,
-            message: result.message,
-            type: 'error',
-          });
+          console.log(result.message);
         }
       }, 1000);
     } else {
       loading.value = false;
-      ElMessage({
-        showClose: true,
-        message: result.message,
-        type: 'error',
-      });
     }
   };
 

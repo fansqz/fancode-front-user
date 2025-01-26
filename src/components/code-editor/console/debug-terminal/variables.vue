@@ -12,10 +12,11 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { ref, watch, onMounted, onUnmounted } from 'vue';
   import useDebugStore from '@/store/modules/debug';
   import { storeToRefs } from 'pinia';
   import { reqGetFrameVariables, reqGetVariables } from '@/api/debug';
+  import { TerminatedEventDispatcher } from '@/api/debug/debug-event-dispatcher';
 
   const debugStore = useDebugStore();
   const { id, isDebug } = storeToRefs(debugStore);
@@ -41,6 +42,10 @@
   };
 
   const getVariablesByFrameId = async (frameId: string, resolve: any) => {
+    if (!isDebug.value) {
+      // 调试结束
+      return;
+    }
     let result = await reqGetFrameVariables(id.value, frameId);
     if (result.code == 200) {
       let variables = result.data;
@@ -62,7 +67,10 @@
   };
 
   const getVariables = async (reference: string, resolve: any) => {
-    console.log(reference);
+    if (!isDebug.value) {
+      // 调试结束
+      return;
+    }
     let result = await reqGetVariables(id.value, reference);
     if (result.code == 200) {
       let variables = result.data;
@@ -83,6 +91,11 @@
     }
   };
 
+  const onExited = () => {
+    // 程序退出所有信息
+    treeData.value = [];
+  };
+
   // 主动更新
   const updateVariables = (frameId: string) => {
     getVariablesByFrameId(frameId, (tree: any) => {
@@ -90,28 +103,36 @@
     });
   };
 
-  // 监控栈帧变化，如果变化则重新加载数据
-  watch(
-    () => props.frameId,
-    () => {
-      updateVariables(props.frameId);
-    },
-  );
-
-  // 重新编译也需要进行更新
-  watch(
-    () => isDebug.value,
-    () => {
-      if (isDebug.value) {
-        if (props['frameId'] != '') {
-          updateVariables(props['frameId']);
-        }
-      }
-    },
-  );
-
   defineExpose({
     updateVariables,
+  });
+
+  onMounted(() => {
+    // 注册一些事件
+    TerminatedEventDispatcher.on('terminated', onExited);
+
+    // 监控栈帧变化，如果变化则重新加载数据
+    watch(
+      () => props.frameId,
+      () => {
+        updateVariables(props.frameId);
+      },
+    );
+
+    // 重新编译也需要进行更新
+    watch(
+      () => isDebug.value,
+      () => {
+        if (isDebug.value) {
+          if (props['frameId'] != '') {
+            updateVariables(props['frameId']);
+          }
+        }
+      },
+    );
+  });
+  onUnmounted(() => {
+    TerminatedEventDispatcher.off('terminated', onExited);
   });
 </script>
 

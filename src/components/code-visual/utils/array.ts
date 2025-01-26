@@ -1,7 +1,6 @@
-import { VariableVisualData } from '@/api/visual/type';
+import { VariableVisualData, VisualVariable } from '@/api/visual/type';
 import { reqVariableVisual } from '@/api/visual';
 import { ArrayData, ArrayNode } from '@/components/code-visual/visual/type/array';
-import { ElMessage } from 'element-plus';
 import { ArrayDescription } from '@/components/code-visual/visual-setting/type.ts';
 
 const reqArrayVisualData = async (
@@ -18,11 +17,6 @@ const reqArrayVisualData = async (
   };
   let result = await reqVariableVisual(req);
   if (result.code != 200) {
-    ElMessage({
-      showClose: true,
-      message: result.message,
-      type: 'error',
-    });
     return {
       data: [],
       layouter: 'array',
@@ -51,15 +45,58 @@ const convertArrayVisualData = (
     }
     nodes.push(node);
   }
+
+  let virtualNodePoints: VisualVariable[] = [];
+
   // 设置指针
   for (let i = 0; i < data.points.length; i++) {
     let index = data.points[i].value;
+    if (nodes.length <= Number(index)) {
+      virtualNodePoints.push(data.points[i]);
+      continue;
+    }
     if (nodes[index].external != undefined) {
       nodes[index].external.push(data.points[i].name);
     } else {
       nodes[index].external = [data.points[i].name];
     }
   }
+
+  // 设置虚拟节点
+  const maxPoint = virtualNodePoints.reduce((max, point) => {
+    if (Number(point.value) > max) {
+      return Number(point.value);
+    }
+    return max;
+  }, 0);
+  let count = 0;
+  for (let i = nodes.length; i <= maxPoint; i++) {
+    nodes.push({
+      id: `[${String(i + 1)}]`,
+      index: `[${String(i + 1)}]`,
+      data: '',
+      type: 'virtual',
+    });
+    // 只支持5个虚拟节点
+    count++;
+    if (count > 5) {
+      break;
+    }
+  }
+
+  // 设置虚拟节点的外部指针
+  for (let i = 0; i < virtualNodePoints.length; i++) {
+    let index = virtualNodePoints[i].value;
+    if (nodes.length <= Number(index)) {
+      continue;
+    }
+    if (nodes[index].external != undefined) {
+      nodes[index].external.push(virtualNodePoints[i].name);
+    } else {
+      nodes[index].external = [virtualNodePoints[i].name];
+    }
+  }
+
   return {
     data: nodes,
     layouter: 'array',

@@ -20,13 +20,9 @@
         </pane>
         <pane size="30">
           <!--控制台-->
-          <Console
-            :userInput="false"
-            :userOutput="false"
-            :terminal="true"
-            :debugButton="true"
-            class="console"
-          />
+          <Console :userInput="false" :userOutput="false" :terminal="true" class="console" />
+          <!--coding-button-bar-->
+          <CodeButtonBar :debug="true" :execute="true" :submit="false" class="code-button-bar" />
         </pane>
       </splitpanes>
     </pane>
@@ -41,6 +37,7 @@
   import Editor from '@/components/code-editor/editor/index.vue';
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from '@/components/code-editor/console/index.vue';
+  import CodeButtonBar from '@/components/code-editor/coding-button/index.vue';
   import { reqProblemTemplateCode } from '@/api/problem';
   import { reqVisaulDocument } from '@/api/visual';
   import { storeToRefs } from 'pinia';
@@ -116,7 +113,11 @@
     }
     .console {
       position: relative;
-      height: 100%;
+      height: calc(100% - 40px);
+    }
+    .code-button-bar {
+      position: relative;
+      height: calc(40px);
     }
     .code-button-bar {
       position: relative;

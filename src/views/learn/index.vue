@@ -10,6 +10,7 @@
       node-key="id"
       class="directory-tree"
       indent="8"
+      @node-click="clickEditorVisualDocument"
     >
       <template #default="scope">
         <div class="tree_item">
@@ -41,6 +42,10 @@
     if (result.code == 200) {
       data.value = result.data;
     }
+  };
+
+  const clickEditorVisualDocument = (node: any) => {
+    id.value = node.id;
   };
 
   onMounted(async () => {

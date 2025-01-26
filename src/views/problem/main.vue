@@ -21,15 +21,9 @@
         </pane>
         <pane size="30">
           <!--控制台-->
-          <Console
-            class="console"
-            :userInput="true"
-            :userOutput="true"
-            :terminal="true"
-            :debugButton="false"
-          />
+          <Console class="console" :userInput="true" :userOutput="true" :terminal="true" />
           <!--coding-button-bar-->
-          <CodeButtonBar class="code-button-bar" />
+          <CodeButtonBar :debug="true" :execute="true" :submit="true" class="code-button-bar" />
         </pane>
       </splitpanes>
     </pane>

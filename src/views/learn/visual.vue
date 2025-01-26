@@ -26,34 +26,32 @@
 
   const debugStore = useDebugStore();
   const visualStore = useVisualStore();
-  const { id } = storeToRefs(debugStore);
+  const { id, isDebug, stopped } = storeToRefs(debugStore);
   const { action, descriptionType } = storeToRefs(visualStore);
   const sources = ref<Sources>();
   const visual = ref<InstanceType<typeof Visaul> | null>();
   const visualTemplate = ref<HTMLElement>();
   const container = ref<HTMLElement>();
 
-  onMounted(() => {
-    // 注册一些事件
-    DebugEventDispatcher.on('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
-  });
-  onUnmounted(() => {
-    DebugEventDispatcher.off('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
-  });
+  const getVisualData = async () => {
+    if (!isDebug.value) {
+      return;
+    }
+    let visualData = await reqVisualData(
+      id.value,
+      descriptionType.value,
+      visualStore.getDescription(descriptionType.value),
+    );
+    // 设置可视化数据
+    sources.value = {
+      visaulData: visualData,
+    };
+  };
 
   const onStopped = async (_data: DebugEvent) => {
     // 如果开启可视化
     if (action.value) {
-      let visualData = await reqVisualData(
-        id.value,
-        descriptionType.value,
-        visualStore.getDescription(descriptionType.value),
-      );
-      sources.value = {
-        visaulData: visualData,
-      };
+      getVisualData();
     }
   };
 
@@ -69,6 +67,19 @@
 
   defineExpose({
     resizeVisualView,
+  });
+
+  onMounted(() => {
+    // 注册一些事件
+    DebugEventDispatcher.on('stopped', onStopped);
+    DebugEventDispatcher.on('launch', onLaunch);
+    if (isDebug.value && stopped.value && action.value) {
+      getVisualData();
+    }
+  });
+  onUnmounted(() => {
+    DebugEventDispatcher.off('stopped', onStopped);
+    DebugEventDispatcher.on('launch', onLaunch);
   });
 </script>
 

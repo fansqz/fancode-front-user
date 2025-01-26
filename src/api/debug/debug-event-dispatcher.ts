@@ -8,6 +8,7 @@ import {
   OutputEvent,
   CompileEvent,
   DebugEvent,
+  TerminatedEvent,
 } from '@/api/debug/event';
 
 // 设置不同的事件分发器
@@ -20,6 +21,8 @@ export const LaunchEventDispatcher = new EventDispatcher<LaunchEvent>();
 export const ContinuedDispatcher = new EventDispatcher<ContinuedEvent>();
 
 export const ExitedEventDispatcher = new EventDispatcher<ExitedEvent>();
+
+export const TerminatedEventDispatcher = new EventDispatcher<TerminatedEvent>();
 
 export const OutputEventDispatcher = new EventDispatcher<OutputEvent>();
 
