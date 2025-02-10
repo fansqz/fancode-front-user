@@ -136,6 +136,9 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       function isEqual(arr1: any[], arr2: any[]) {
+        if (!arr1 || !arr2) {
+          return arr1 == arr2;
+        }
         if (arr1.length !== arr2.length) {
           return false;
         }

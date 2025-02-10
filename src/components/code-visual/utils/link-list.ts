@@ -36,6 +36,12 @@ const convertLinkListVisualData = (
   description: LinkListDescription,
   data: StructVisualData,
 ): LinkListData => {
+  if (data.nodes.length == 0) {
+    return {
+      data: [],
+      layouter: 'linkList',
+    };
+  }
   let nodes: LinkListNode[] = [];
 
   let nextSet = new Set();

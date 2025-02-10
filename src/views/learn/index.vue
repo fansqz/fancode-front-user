@@ -77,4 +77,11 @@
       width: calc(100% - 200px);
     }
   }
+  ::v-deep .el-tree-node__content {
+    height: 40px;
+    .el-text {
+      font-size: medium;
+      font-weight: bold;
+    }
+  }
 </style>

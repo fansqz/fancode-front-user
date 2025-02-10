@@ -10,7 +10,7 @@ import pinia from './store';
 const userStore = useUserStore(pinia);
 
 // 允许不使用登陆态访问的路径
-const allowPaths = ['/register', '/login', '/coding', '/home'];
+const allowPaths = ['/register', '/login', '/coding', '/home', '/learn'];
 
 // 全局前置守卫
 router.beforeEach(async (to: any, _from: any, next: any) => {

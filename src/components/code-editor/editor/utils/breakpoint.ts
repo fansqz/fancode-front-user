@@ -17,7 +17,10 @@ export function getAllBreakpoint(editorInstance: EditorInstance): number[] {
     return [];
   }
   let model = editorInstance.getModel();
-  const allDecorations = model?.getAllDecorations();
+  if (!model) {
+    return;
+  }
+  const allDecorations = model.getAllDecorations();
   return getBreakPointLineNumber(allDecorations).slice().sort();
 }
 
