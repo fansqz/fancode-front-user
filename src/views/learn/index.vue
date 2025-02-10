@@ -9,7 +9,7 @@
       default-expand-all
       node-key="id"
       class="directory-tree"
-      indent="8"
+      indent="15"
       @node-click="clickEditorVisualDocument"
     >
       <template #default="scope">
