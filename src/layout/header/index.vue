@@ -10,6 +10,12 @@
         编程
       </div>
       <div
+        :class="{ nav_item: true, active_item: isActiveNavItem('learn') }"
+        @click="changeRoute('learn')"
+      >
+        学习
+      </div>
+      <div
         :class="{ nav_item: true, active_item: isActiveNavItem('home') }"
         @click="changeRoute('home')"
       >
@@ -85,7 +91,7 @@
         width: 20px;
       }
       .nav_item {
-        width: 35px;
+        width: 50px;
         height: $base-header-height;
         display: flex;
         justify-content: center;

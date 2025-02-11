@@ -7,6 +7,7 @@ import {
   LaunchEventDispatcher,
   ContinuedDispatcher,
   ExitedEventDispatcher,
+  TerminatedEventDispatcher,
   OutputEventDispatcher,
   CompileEventDispatcher,
   DebugEventDispatcher,
@@ -62,6 +63,8 @@ export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
       DebugEventDispatcher.dispatch('compile', data);
     }
     if (data.event == 'terminated') {
+      CompileEventDispatcher.dispatch('terminated', data);
+      TerminatedEventDispatcher.dispatch('terminated', data);
       isDebug.value = false;
       debugStore.lineNum = 0;
       // 关闭sse

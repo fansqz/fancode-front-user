@@ -2,6 +2,7 @@
   <div class="debug_terminal">
     <splitpanes>
       <pane size="25%">
+        <!--栈帧列表-->
         <div class="left">
           <div class="frames_title">
             <el-text class="frames_text">frames</el-text>

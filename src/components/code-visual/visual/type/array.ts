@@ -5,8 +5,10 @@ export type ArrayData = {
 };
 
 export type ArrayNode = {
+  type?: 'default' | 'virtual';
   id: string;
   headExternal?: string;
+  // 外部指针
   external?: string | string[];
   // 标题，可以理解为数组的索引
   index?: string;

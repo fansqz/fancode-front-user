@@ -3,26 +3,26 @@
     <el-row>
       <el-col :span="24">
         <el-form-item label="链表节点">
-          <el-input v-model="linkNode" />
+          <el-input v-model="linkListDescription.linkNode" />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
         <el-form-item label="节点值">
-          <el-input v-model="data" />
+          <el-input v-model="linkListDescription.data" />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="12">
         <el-form-item label="prev指针">
-          <el-input v-model="prev" />
+          <el-input v-model="linkListDescription.prev" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item label="next指针">
-          <el-input v-model="next" />
+          <el-input v-model="linkListDescription.next" />
         </el-form-item>
       </el-col>
     </el-row>
@@ -31,42 +31,10 @@
 
 <script setup lang="ts">
   import useVisualStore from '@/store/modules/visual.ts';
-  import { descriptions } from '@/enum/description';
-  import { toRefs, watch } from 'vue';
-  import { LinkListDescription } from '../type';
+  import { storeToRefs } from 'pinia';
 
   const visualStore = useVisualStore();
-  if (!visualStore.descriptionMap.has(descriptions.LinkList)) {
-    if (localStorage.getItem('linkListDescription')) {
-      let linkListDescription: LinkListDescription = JSON.parse(
-        localStorage.getItem('linkListDescription'),
-      );
-      visualStore.descriptionMap.set(descriptions.LinkList, linkListDescription);
-    } else {
-      visualStore.descriptionMap.set(descriptions.LinkList, {
-        // 链表节点
-        linkNode: 'LinkNode',
-        // 数据域
-        data: 'Val',
-        next: 'Next',
-        prev: 'Prev',
-      });
-    }
-  }
-
-  const linkListDescription = visualStore.descriptionMap.get(descriptions.LinkList);
-  const { linkNode, data, next, prev } = toRefs(linkListDescription);
-
-  watch(
-    () => linkListDescription,
-    () => {
-      let json = JSON.stringify(linkListDescription);
-      localStorage.setItem('linkListDescription', json);
-    },
-    {
-      deep: true,
-    },
-  );
+  const { linkListDescription } = storeToRefs(visualStore);
 </script>
 
 <style lang="scss" scoped>

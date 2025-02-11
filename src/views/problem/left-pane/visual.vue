@@ -26,8 +26,8 @@
 
   const debugStore = useDebugStore();
   const visualStore = useVisualStore();
-  const { id } = storeToRefs(debugStore);
-  const { action, descriptionType, descriptionMap } = storeToRefs(visualStore);
+  const { id, isDebug } = storeToRefs(debugStore);
+  const { action, descriptionType } = storeToRefs(visualStore);
   const sources = ref<Sources>();
   const visual = ref<InstanceType<typeof Visaul> | null>();
   const visualTemplate = ref<HTMLElement>();
@@ -44,13 +44,15 @@
   });
 
   const onStopped = async (_data: DebugEvent) => {
+    if (!isDebug.value) {
+      return;
+    }
     // 如果开启可视化
     if (action.value) {
-      console.log(descriptionMap);
       let visualData = await reqVisualData(
         id.value,
         descriptionType.value,
-        descriptionMap.value.get(descriptionType.value),
+        visualStore.getDescription(descriptionType.value),
       );
       sources.value = {
         visaulData: visualData,

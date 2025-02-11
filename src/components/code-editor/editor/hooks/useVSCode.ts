@@ -8,7 +8,7 @@ import debounce from 'lodash.debounce';
 import { EditorInstance, VsCode } from '../types';
 import editUtils from '../utils/editUtils';
 import { debug, cancelHighlightLine, highlightLine, scrollIntoView } from '../utils/debugUtils';
-import { setBreakPoint } from '../utils/breakpoint';
+import { setBreakPoint, initBP, getAllBreakpoint } from '../utils/breakpoint';
 
 // TODO: 调试时修改代码改变高亮行，输入改变时更新断点
 /**
@@ -47,14 +47,16 @@ export const useVsCode = (vscode: VsCode) => {
       // 设置语言
       wire(codingStore.language, editorInstance);
 
+      // 初始化断点
+      initBP(editorInstance, debugStore.breakpoints);
+
       // 监控value的变化
       stopValueWatch = watch(
-        () => codingStore.editorUpdateCode,
+        () => codingStore.code,
         () => {
-          if (codingStore.editorUpdateCode > 0) {
+          if (codingStore.code != editorInstance.getValue()) {
             editorInstance?.setValue(codingStore.code);
           }
-          codingStore.editorUpdateCode = 0;
         },
       );
 
@@ -118,6 +120,31 @@ export const useVsCode = (vscode: VsCode) => {
         { deep: true },
       );
 
+      // 监控断点变化
+      watch(
+        () => debugStore.breakpoints,
+        () => {
+          if (!editorInstance) {
+            return;
+          }
+          let bps = getAllBreakpoint(editorInstance);
+          let bps2 = debugStore.breakpoints.slice().sort();
+          if (!isEqual(bps, bps2)) {
+            initBP(editorInstance, debugStore.breakpoints);
+          }
+        },
+      );
+
+      function isEqual(arr1: any[], arr2: any[]) {
+        if (!arr1 || !arr2) {
+          return arr1 == arr2;
+        }
+        if (arr1.length !== arr2.length) {
+          return false;
+        }
+        return !arr1.some((item) => !arr2.includes(item));
+      }
+
       // 监控断点情况
       setBreakPoint(editorInstance, onUpdateBP);
 
@@ -129,6 +156,17 @@ export const useVsCode = (vscode: VsCode) => {
         debounce(async () => {
           // 使用防抖，在不输入内容的时候进行保存
           onContentChanged?.(editorInstance.getValue());
+          // 更新断点
+          let bps = getAllBreakpoint(editorInstance);
+          let bps2 = debugStore.breakpoints;
+          for (let breakpoint of bps2) {
+            if (!bps.includes(breakpoint)) {
+              vscode.onUpdateBP(bps, breakpoint, 'del');
+            }
+          }
+          if (!isEqual(bps, bps2)) {
+            initBP(editorInstance, debugStore.breakpoints);
+          }
         }, 600),
       );
 

@@ -1,7 +1,6 @@
 import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
 import { GraphData, GraphNode } from '@/components/code-visual/visual/type/graph';
-import { ElMessage } from 'element-plus';
 import { GraphDescription } from '@/components/code-visual/visual-setting/type.ts';
 
 const reqGraphVisualData = async (
@@ -19,11 +18,7 @@ const reqGraphVisualData = async (
   };
   let result = await reqStructVisual(req);
   if (result.code != 200) {
-    ElMessage({
-      showClose: true,
-      message: result.message,
-      type: 'error',
-    });
+    console.log(result.message);
     return {
       data: [],
       layouter: 'graph',

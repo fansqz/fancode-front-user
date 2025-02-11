@@ -11,6 +11,19 @@ import {
   removeTDecorations,
 } from './breakPointUtils';
 
+// 获取所有断点
+export function getAllBreakpoint(editorInstance: EditorInstance): number[] {
+  if (!editorInstance) {
+    return [];
+  }
+  let model = editorInstance.getModel();
+  if (!model) {
+    return;
+  }
+  const allDecorations = model.getAllDecorations();
+  return getBreakPointLineNumber(allDecorations).slice().sort();
+}
+
 export function setBreakPoint(editorInstance: EditorInstance, onUpdateBP?: onUpdateBP) {
   let model = editorInstance.getModel();
   removeTDecorations(model);
@@ -130,3 +143,33 @@ export function updateBreakPoint(editorInstance: EditorInstance) {
   const breakpoints = getBreakPointLineNumber(decorations);
   return breakpoints;
 }
+
+/**
+ * 初始化断点
+ * @param model 要初始化的model
+ * @param range 断点数组
+ */
+export const initBP = (editorInstance: EditorInstance, bp?: number[]) => {
+  const model = editorInstance.getModel();
+  if (!model) {
+    return [];
+  }
+  if (bp) {
+    // 个人理解是第一个参数传之前的断点identifier，用来删除，第二个参数用来创建断点
+    model.deltaDecorations(
+      [],
+      bp.map((lineNum) => {
+        return {
+          range: new Range(lineNum, 1, lineNum, 1),
+          options: {
+            isWholeLine: true,
+            // className: "content", // 设置行的背景颜色（自己设置css，给类名）
+            glyphMarginClassName: 'breakpoint active',
+            stickiness: editor.TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges,
+            glyphMarginHoverMessage: { value: '断点' },
+          },
+        };
+      }),
+    );
+  }
+};

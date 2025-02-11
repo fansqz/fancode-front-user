@@ -2,13 +2,7 @@
   <div class="menu">
     <div class="left">
       <!--语言选择-->
-      <el-select
-        class="language-select"
-        v-model="language"
-        placeholder="Select"
-        size="small"
-        @change="languageChange"
-      >
+      <el-select class="language-select" v-model="language" placeholder="Select" size="small">
         <el-option v-for="item in languages" :key="item" :value="item"
           ><div class="language-item">{{ item }}</div></el-option
         >
@@ -28,34 +22,19 @@
   import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { getAllTheme } from '../editor/themes';
-  import { reqProblemTemplateCode, reqUserCode } from '@/api/problem';
+  import { reqProblemTemplateCode } from '@/api/problem';
   import useCodingStore from '@/store/modules/coding';
   let codingStore = useCodingStore();
 
   // 主题列表
   let themeList = ref(getAllTheme());
-  let { theme, code, editorUpdateCode, language, languages, problemId } = storeToRefs(codingStore);
+  let { theme, code, language, languages } = storeToRefs(codingStore);
   theme.value = themeList.value[0];
-
-  const languageChange = () => {
-    getUserCode();
-  };
-
   // 重新加载代码
   const reloadCode = async () => {
     let result = await reqProblemTemplateCode(language.value);
     if (result.code == 200) {
       code.value = result.data;
-      editorUpdateCode.value++;
-    }
-  };
-
-  // 读取用户代码
-  const getUserCode = async () => {
-    let result = await reqUserCode(problemId.value, language.value);
-    if (result.code == 200) {
-      code.value = result.data;
-      editorUpdateCode.value++;
     }
   };
 </script>

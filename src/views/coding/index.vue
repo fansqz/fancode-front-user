@@ -22,7 +22,7 @@
           <!--控制台-->
           <Console :userInput="false" :userOutput="false" :terminal="true" class="console" />
           <!--coding-button-bar-->
-          <CodeButtonBar class="code-button-bar" />
+          <CodeButtonBar :debug="true" :execute="true" :submit="false" class="code-button-bar" />
         </pane>
       </splitpanes>
     </pane>
@@ -42,15 +42,19 @@
   import { reqVisaulDocument } from '@/api/visual';
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';
+  import useDebugStore from '@/store/modules/debug';
 
   let document = ref('');
   let codingStore = useCodingStore();
-  let { code, languages, language, editorUpdateCode } = storeToRefs(codingStore);
+  let debugStore = useDebugStore();
+  let { code, languages, language } = storeToRefs(codingStore);
+  let { breakpoints } = storeToRefs(debugStore);
   const leftPane = ref<InstanceType<typeof LeftPane> | null>();
 
   const load = async () => {
     languages.value = ['go'];
     language.value = 'go';
+    // 设置代码
     let userCode = localStorage.getItem('code');
     if (userCode) {
       code.value = userCode;
@@ -58,9 +62,11 @@
       let result = await reqProblemTemplateCode('go');
       if (result.code == 200) {
         code.value = result.data;
-        editorUpdateCode.value++;
       }
     }
+    // 设置断点
+    breakpoints.value = [];
+
     // 读取文本
     let result = await reqVisaulDocument();
     if (result.code == 200) {
@@ -108,6 +114,10 @@
     .console {
       position: relative;
       height: calc(100% - 40px);
+    }
+    .code-button-bar {
+      position: relative;
+      height: calc(40px);
     }
     .code-button-bar {
       position: relative;

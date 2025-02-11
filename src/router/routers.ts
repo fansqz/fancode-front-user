@@ -26,6 +26,12 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         component: () => import('@/views/coding/index.vue'),
       },
       {
+        // 学习
+        path: '/learn',
+        name: 'learn',
+        component: () => import('@/views/learn/index.vue'),
+      },
+      {
         // 题库
         path: '/bank/:bankID',
         name: 'bank',

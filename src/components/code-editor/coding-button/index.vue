@@ -1,19 +1,25 @@
 <template>
   <ul class="horizontal-list">
     <li class="li">
-      <DebugButton />
+      <DebugButton v-if="debug" />
     </li>
     <li class="li">
-      <ExecuteButton />
+      <ExecuteButton v-if="execute" />
     </li>
     <li class="li">
-      <SubmitButton />
+      <SubmitButton v-if="submit" />
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
-  import DebugButton from './debug-button.vue';
+  defineProps<{
+    debug: boolean;
+    execute: boolean;
+    submit: boolean;
+  }>();
+
+  import DebugButton from '../console/debug-button/debug-button.vue';
   import ExecuteButton from './execute-button.vue';
   import SubmitButton from './submit-button.vue';
 </script>
@@ -25,13 +31,13 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 15px;
     background-color: $base-header-background;
     box-sizing: border-box;
+    padding: 0px;
     border-top: 1px solid $base-border-color;
     .li {
       position: relative; /*设置层级需定位 */
-      margin: 10px;
+      margin-right: 10px;
       display: flex;
       justify-content: center;
       align-items: center;

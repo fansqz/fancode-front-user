@@ -1,10 +1,10 @@
 <template>
   <el-form status-icon label-width="auto" class="arrayDescription" size="small">
     <el-form-item label="图节点">
-      <el-input v-model="graphNode" />
+      <el-input v-model="graphDescription.graphNode" />
     </el-form-item>
     <el-form-item label="节点值">
-      <el-input v-model="data" />
+      <el-input v-model="graphDescription.data" />
     </el-form-item>
     <el-form-item label="next指针">
       <el-input v-model="pointNamesStr" />
@@ -15,27 +15,10 @@
 <script setup lang="ts">
   import useVisualStore from '@/store/modules/visual.ts';
   import { onMounted, ref, watch } from 'vue';
-  import { descriptions } from '@/enum/description';
-  import { toRefs } from 'vue';
-  import { GraphDescription } from '../type';
+  import { storeToRefs } from 'pinia';
 
   const visualStore = useVisualStore();
-  if (!visualStore.descriptionMap.has(descriptions.Graph)) {
-    if (localStorage.getItem('graphDescription')) {
-      let graphDescription: GraphDescription = JSON.parse(localStorage.getItem('graphDescription'));
-      visualStore.descriptionMap.set(descriptions.Graph, graphDescription);
-    } else {
-      visualStore.descriptionMap.set(descriptions.Graph, {
-        graphNode: 'GraphNode',
-        // 数据域
-        data: 'Val',
-        nexts: ['Point1', 'Point2'],
-      });
-    }
-  }
-
-  const graphDescription = visualStore.descriptionMap.get(descriptions.Graph);
-  const { graphNode, data, nexts } = toRefs(graphDescription);
+  const { graphDescription } = storeToRefs(visualStore);
 
   const pointNamesStr = ref('');
 
@@ -45,12 +28,12 @@
       let arr: string[] = val.split(',').map((item) => {
         return item.trim();
       });
-      nexts.value = arr;
+      graphDescription.value.nexts = arr;
     },
   );
 
   watch(
-    () => nexts.value,
+    () => graphDescription.value.nexts,
     (val) => {
       let arr: string[] = pointNamesStr.value.split(',').map((item) => {
         return item.trim();
@@ -64,19 +47,8 @@
     },
   );
 
-  watch(
-    () => graphDescription,
-    () => {
-      let json = JSON.stringify(graphDescription);
-      localStorage.setItem('graphDescription', json);
-    },
-    {
-      deep: true,
-    },
-  );
-
   onMounted(() => {
-    pointNamesStr.value = nexts.value.join(',');
+    pointNamesStr.value = graphDescription.value.nexts.join(',');
   });
 </script>
 

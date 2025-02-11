@@ -4,6 +4,9 @@ import G6 from '@antv/g6';
 // 链表
 SV.registerLayout('linkList', {
   sourcesPreprocess(sources) {
+    if (sources.length == 0) {
+      return sources;
+    }
     let root = sources[0];
 
     if (root.external) {
@@ -98,7 +101,7 @@ SV.registerLayout('linkList', {
       nextBound = null;
 
     if (node.visited) {
-      return null;
+      return group;
     }
 
     node.visited = true;
@@ -114,6 +117,9 @@ SV.registerLayout('linkList', {
   },
 
   layout(elements: SVNode[], layoutOptions: LayoutOptions) {
+    if (elements.length == 0) {
+      return;
+    }
     let groups = [];
     // 解决多棵树相交问题
     for (let element of elements) {
@@ -127,7 +133,6 @@ SV.registerLayout('linkList', {
       let bound1 = groups[i].getBound();
       let bound2 = groups[i + 1].getBound();
       let move = Math.abs(bound2.y - layoutOptions.yInterval - bound1.y - bound1.height);
-      console.log(groups[i + 1]);
       groups[i + 1].translate(0, move + 20);
     }
   },
