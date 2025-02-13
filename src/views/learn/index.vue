@@ -68,6 +68,13 @@
       width: 200px;
       border-right: 1px solid $base-border-color;
       box-sizing: border-box;
+      ::v-deep .el-tree-node__content {
+        height: 40px;
+        .el-text {
+          font-size: medium;
+          font-weight: bold;
+        }
+      }
     }
     .document-learn {
       position: absolute;
@@ -75,13 +82,6 @@
       top: 0px;
       height: 100%;
       width: calc(100% - 200px);
-    }
-  }
-  ::v-deep .el-tree-node__content {
-    height: 40px;
-    .el-text {
-      font-size: medium;
-      font-weight: bold;
     }
   }
 </style>
