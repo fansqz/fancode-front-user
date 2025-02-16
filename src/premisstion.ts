@@ -18,36 +18,21 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
   // 进度条
   nprogress.start();
 
-  // 获取用户名称，如果获取不到用户名称则进行获取
-  const username = userStore.username;
-  if (username) {
-    next();
-    return;
-  }
-  // 校验token是否正确
+  // 校验token是否正确，如果正确则继续访问
   const token = userStore.token;
   if (token) {
     try {
       await userStore.userInfo();
-      next({ ...to, replace: true });
+      next();
       return;
     } catch (error) {
       userStore.userLogout();
     }
   }
 
+  // 校验是否在允许路径
   if (checkIsAllow(to.path)) {
     next();
-    return;
-  }
-
-  // 如果是login
-  if (to.path == '/login') {
-    if (token) {
-      next({ path: '/' });
-    } else {
-      next();
-    }
     return;
   }
 

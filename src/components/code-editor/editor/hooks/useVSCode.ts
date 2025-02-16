@@ -160,7 +160,7 @@ export const useVsCode = (vscode: VsCode) => {
           let bps = getAllBreakpoint(editorInstance);
           let bps2 = debugStore.breakpoints;
           for (let breakpoint of bps2) {
-            if (!bps.includes(breakpoint)) {
+            if (!bps || !bps.includes(breakpoint)) {
               vscode.onUpdateBP(bps, breakpoint, 'del');
             }
           }
