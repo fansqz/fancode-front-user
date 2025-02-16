@@ -20,8 +20,6 @@ const useUserStore = defineStore('User', {
       const result = await reqLogin(data);
       if (result.code == 200) {
         this.token = result.data;
-        // 本地存一份
-        localStorage.setItem('TOKEN', result.data);
         return 'ok';
       } else {
         return Promise.reject(new Error(result.message));
@@ -30,10 +28,10 @@ const useUserStore = defineStore('User', {
     async userInfo() {
       let result = await reqAccountInfo();
       if (result.code == 200) {
-        this.avatar = result.data.avatar;
+        let avatarPath = result.data.avatar;
         // 读取头像
-        if (this.avatar != '') {
-          let result2 = await reqGetURL(this.avatar);
+        if (avatarPath != '') {
+          let result2 = await reqGetURL(avatarPath);
           if (result2.code == 200) {
             this.avatar = result2.data;
           }
@@ -53,9 +51,9 @@ const useUserStore = defineStore('User', {
       this.phone = '';
       this.loginName = '';
       this.avatar = '';
-      localStorage.removeItem('TOKEN');
     },
   },
+  persist: true,
 });
 
 export default useUserStore;

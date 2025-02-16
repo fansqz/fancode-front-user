@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import useUserStore from '@/store/modules/user';
+import router from '@/router'; // 请根据实际路径调整
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_SERVE + import.meta.env.VITE_APP_BASE_API,
@@ -34,17 +35,25 @@ function generateVisitorId(): string {
 // 配置响应拦截器
 request.interceptors.response.use(
   (response) => {
+    let userStore = useUserStore();
+    // 如果response中携带token，则更新token
+    let token = response.headers['token'];
+    if (token) {
+      userStore.token = token;
+    }
     // 简化数据
     return response.data;
   },
   (error) => {
+    let userStore = useUserStore();
     // 处理网络错误
     let message = '';
     const status = error.response.status;
     switch (status) {
       case 401:
-        message = 'token过期';
-        break;
+        userStore.userLogout();
+        router?.push('/login');
+        return Promise.reject(error);
       case 403:
         message = '无权访问';
         break;
