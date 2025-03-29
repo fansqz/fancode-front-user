@@ -3,7 +3,7 @@
     tag="i"
     text
     :class="{
-      'iconfont icon-caozuo-tiaoshi ing': debugStore.isDebugging() == true,
+      'iconfont icon-caozuo-tiaoshi ing': isDebugging,
       'iconfont icon-caozuo-tiaoshi not-ing': debugStore.isDebugging() == false,
       'debug-button': true,
     }"
@@ -29,6 +29,10 @@
   const codingStore = useCodingStore();
   const debugStore = useDebugStore();
   const { language, code } = storeToRefs(codingStore);
+  // 标识的是否在调试中
+  // 为什么不使用debugStore.isDebugging()，因为在执行（非调试）的方法中debugStore.isDebugging()也为true
+  // 只有通过调试按钮以后isDebugging设置为true，才表示调试中
+  let isDebugging = false;
   let { status, id } = storeToRefs(debugStore);
   let loading = ref(false);
 
@@ -72,7 +76,10 @@
     (val) => {
       if (val == 'compiled' || val == 'terminated') {
         // 编译成功说明可以开始调试
-        loading.value = false;
+        if (loading.value == true) {
+          loading.value = false;
+          isDebugging = true;
+        }
       }
     },
   );

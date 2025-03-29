@@ -9,7 +9,7 @@
         </span>
         <template #dropdown v-if="isLogged()">
           <el-dropdown-menu>
-            <el-dropdown-item @click="changeRoute('myprofile')">个人中心</el-dropdown-item>
+            <!-- <el-dropdown-item @click="changeRoute('myprofile')">个人中心</el-dropdown-item> -->
             <el-dropdown-item @click="changeRoute('accountSetting')">信息修改</el-dropdown-item>
             <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
