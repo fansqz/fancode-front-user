@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 type Status = 'init' | 'compiled' | 'running' | 'stopped' | 'terminated';
 
 // 扩展 state 以类型化各个属性，特别是breakpoints.
-interface DebugState {
+type DebugState = {
   id: string;
   status: Status;
   breakpoints: number[];
@@ -12,7 +12,7 @@ interface DebugState {
   currentInput: string;
   outputs: any[];
   currentErrorLocation: number[];
-}
+};
 
 // 使用 Pinia 创建一个状态存储
 const useDebugStore = defineStore('debug', {

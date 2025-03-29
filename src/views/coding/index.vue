@@ -43,18 +43,18 @@
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';
   import useDebugStore from '@/store/modules/debug';
+  import { languageConstants, supportedLanguages } from '@/constants/languages.ts';
 
   let document = ref('');
   let codingStore = useCodingStore();
   let debugStore = useDebugStore();
-  let { code, languages, language } = storeToRefs(codingStore);
+  let { code, language, languages } = storeToRefs(codingStore);
   let { breakpoints } = storeToRefs(debugStore);
   const leftPane = ref<InstanceType<typeof LeftPane> | null>();
+  language.value = languageConstants.GO;
+  languages.value = supportedLanguages;
 
   const load = async () => {
-    languages.value = ['go', 'java', 'c'];
-    language.value = 'go';
-
     // 读取代码
     await getCode();
     // 设置断点

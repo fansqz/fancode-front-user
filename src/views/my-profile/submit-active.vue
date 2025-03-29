@@ -42,12 +42,12 @@
 <script setup lang="ts">
   import { reqSubmissionList } from '@/api/submission';
   import { ref, onMounted } from 'vue';
-  import { languages } from '@/enum/languages.ts';
+  import { languageConstants } from '@/constants/languages.ts';
 
   let languageColorMap = new Map<string, string>([
-    [languages.GO, 'primary'],
-    [languages.C, 'success'],
-    [languages.Java, 'warnning'],
+    [languageConstants.GO, 'primary'],
+    [languageConstants.C, 'success'],
+    [languageConstants.Java, 'warnning'],
   ]);
 
   // 分页
