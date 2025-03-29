@@ -7,7 +7,7 @@
           <div class="frames_title">
             <el-text class="frames_text">frames</el-text>
           </div>
-          <Frames class="frames" @selectFrame="handleSelectFrame" />
+          <Frames class="frames" />
         </div>
       </pane>
       <pane size="75%">
@@ -26,7 +26,7 @@
           </div>
           <div class="variables" v-show="activeIndex == 'variables'">
             <el-scrollbar class="scrollbar">
-              <Variables ref="variablesRef" :frameId="frameId" />
+              <Variables />
             </el-scrollbar>
           </div>
           <div class="debug-buttons">
@@ -52,18 +52,9 @@
   import { Splitpanes, Pane } from 'splitpanes';
 
   const activeIndex = ref('console');
-  const frameId = ref('');
-  const variablesRef = ref();
 
   const handleSelect = (key: string) => {
     activeIndex.value = key;
-  };
-
-  // 处理选择栈帧事件
-  const handleSelectFrame = (id: string) => {
-    frameId.value = id;
-    // 强制更新树的数据
-    variablesRef.value.updateVariables(id);
   };
 </script>
 

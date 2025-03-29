@@ -22,21 +22,21 @@
   import { storeToRefs } from 'pinia';
 
   const debugStore = useDebugStore();
-  let { isDebug } = storeToRefs(debugStore);
+  let { status } = storeToRefs(debugStore);
 
   // 判断按钮是出于可执行还是不可执行状态
   let able = ref(false);
   watch(
-    () => isDebug.value,
+    () => status.value,
     () => {
-      able.value = isDebug.value;
+      // 调试期间不能点击
+      able.value = debugStore.isDebugging();
     },
   );
 
   let buttonShow = ref(false);
   const terminateDebug = async () => {
     if (!able.value) {
-      // 按钮处于不可点击状态
       return;
     }
     await reqTerminate(debugStore.id);

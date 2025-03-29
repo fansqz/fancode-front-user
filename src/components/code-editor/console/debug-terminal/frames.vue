@@ -1,84 +1,105 @@
 <template>
-  <div class="frames">
-    <el-menu
-      v-show="stackFrames.length != 0"
-      :default-active="defaultActive"
-      @select="handleSelect"
-    >
-      <el-menu-item class="frames-menu-item" v-for="item in stackFrames" :index="item.id">
-        {{ item.name }}
-      </el-menu-item>
-    </el-menu>
-    <div v-show="stackFrames.length == 0" class="no_data_show">
+  <div class="container">
+    <!-- 自定义菜单 -->
+    <div v-show="stackFrames.length != 0" class="custom-menu">
+      <el-scrollbar class="scrollbar">
+        <div
+          v-for="(item, index) in stackFrames"
+          :key="index"
+          :class="{ 'menu-item': true, active: index === parseInt(defaultActive) }"
+          @click="handleSelect(index.toString())"
+        >
+          <el-text class="menu-item-text">{{ item.name }}</el-text>
+        </div>
+      </el-scrollbar>
+    </div>
+    <div v-show="stackFrames.length == 0" class="no-data-show">
       <el-text class="text">not data</el-text>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref } from 'vue';
-  import {
-    StoppedEventDispatcher,
-    TerminatedEventDispatcher,
-  } from '@/api/debug/debug-event-dispatcher';
+  import { onMounted, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { reqGetStackTrace } from '@/api/debug';
   import useDebugStore from '@/store/modules/debug';
 
   const debugStore = useDebugStore();
-  let { id, isDebug } = storeToRefs(debugStore);
+  let { id, status, currentFrameID, lineNum } = storeToRefs(debugStore);
   const emit = defineEmits(['selectFrame']);
-  const defaultActive = ref('');
+  const defaultActive = ref('0');
   // 栈帧
   const stackFrames = ref<any[]>([]);
 
-  const onStopped = async () => {
-    if (!isDebug.value) {
-      // 调试结束
-      return;
-    }
-    // 程序暂停时需要更新栈帧
-    let result = await reqGetStackTrace(id.value);
-    if (result.code == 200) {
-      stackFrames.value = result.data;
-      defaultActive.value = stackFrames.value[0].id;
-      emit('selectFrame', stackFrames.value[0].id);
-    }
-  };
-
-  const onExited = () => {
-    // 程序退出清空栈帧
-    stackFrames.value = [];
-  };
-
   const handleSelect = (key: string) => {
     // 点击某个栈帧，则回调selectFrame
-    emit('selectFrame', key);
+    defaultActive.value = key;
+    let frame = stackFrames.value[parseInt(key)];
+    currentFrameID.value = frame.id;
+    lineNum.value = frame.line;
   };
 
   onMounted(() => {
-    // 注册一些事件
-    StoppedEventDispatcher.on('stopped', onStopped);
-    TerminatedEventDispatcher.on('terminated', onExited);
-  });
-  onUnmounted(() => {
-    StoppedEventDispatcher.off('stopped', onStopped);
-    TerminatedEventDispatcher.off('terminated', onExited);
+    watch(
+      () => status.value,
+      async (val) => {
+        if (val == 'stopped') {
+          // 程序暂停时需要更新栈帧
+          let result = await reqGetStackTrace(id.value);
+          if (result.code == 200) {
+            stackFrames.value = result.data;
+            handleSelect('0');
+          }
+        } else {
+          stackFrames.value = [];
+          // 设置为-1，清空变量列表
+          currentFrameID.value = -1;
+        }
+      },
+    );
   });
 </script>
 
 <style lang="scss" scoped>
-  .frames {
+  .container {
     height: 100%;
     width: 100%;
     display: flex;
     flex-flow: column;
     position: relative;
-    .frames-menu-item {
+    margin: 0px;
+    padding: 0px;
+    .custom-menu {
+      height: 100%;
       width: 100%;
-      height: 25px;
+      position: absolute;
+      .scrollbar {
+        height: 100%;
+        width: 100%;
+        .menu-item {
+          height: 25px;
+          padding-left: 15px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          &:hover {
+            background-color: #e8f0fe;
+          }
+          &.active {
+            background-color: #d2e3fc;
+            color: #1967d2;
+            font-weight: 500;
+          }
+          .menu-item-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
     }
-    .no_data_show {
+    .no-data-show {
       height: 100%;
       width: 100%;
       display: flex;

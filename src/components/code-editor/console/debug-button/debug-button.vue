@@ -3,8 +3,8 @@
     tag="i"
     text
     :class="{
-      'iconfont icon-caozuo-tiaoshi ing': isDebug == true,
-      'iconfont icon-caozuo-tiaoshi not-ing': isDebug == false,
+      'iconfont icon-caozuo-tiaoshi ing': debugStore.isDebugging() == true,
+      'iconfont icon-caozuo-tiaoshi not-ing': debugStore.isDebugging() == false,
       'debug-button': true,
     }"
     :loading="loading"
@@ -23,29 +23,30 @@
   import { storeToRefs } from 'pinia';
   import useDebugStore from '@/store/modules/debug';
   import { listenDebugEvent } from '@/api/debug/debug-event-listen.ts';
-  import { ref, onMounted, onUnmounted } from 'vue';
-  import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher';
+  import { ref } from 'vue';
+  import { watch } from 'vue';
 
   const codingStore = useCodingStore();
   const debugStore = useDebugStore();
   const { language, code } = storeToRefs(codingStore);
-  let { isDebug, id } = storeToRefs(debugStore);
+  let { status, id } = storeToRefs(debugStore);
   let loading = ref(false);
 
   const startDebug = async () => {
     // 调试状态，那么关闭调试
-    if (isDebug.value) {
+    if (debugStore.isDebugging()) {
       let result = await reqTerminate(id.value);
       if (result.code != 200) {
-        console.log(result.message);
+        status.value = 'terminated';
       }
       return;
     }
     loading.value = true;
     // 非调试状态，启动调试
-    let result = await reqCreateDebugSession(language.value);
+    let result = await reqCreateDebugSession();
     if (result.code == 200) {
       // 开启loading
+      status.value = 'init';
       loading.value = true;
       id.value = result.data;
       // 启动监控管道
@@ -59,26 +60,22 @@
         breakpoints: debugStore.breakpoints,
       };
       setTimeout(async () => {
-        let result2 = await reqStart(startReq);
-        if (result2.code != 200) {
-          console.log(result.message);
-        }
+        await reqStart(startReq);
       }, 1000);
     } else {
-      loading.value = false;
+      loading.value = true;
     }
   };
 
-  const onCompile = () => {
-    loading.value = false;
-  };
-
-  onMounted(() => {
-    CompileEventDispatcher.on('compile', onCompile);
-  });
-  onUnmounted(() => {
-    CompileEventDispatcher.off('compile', onCompile);
-  });
+  watch(
+    () => status.value,
+    (val) => {
+      if (val == 'compiled' || val == 'terminated') {
+        // 编译成功说明可以开始调试
+        loading.value = false;
+      }
+    },
+  );
 </script>
 
 <style scoped lang="scss">

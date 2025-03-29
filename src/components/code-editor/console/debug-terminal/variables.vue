@@ -19,7 +19,7 @@
   import { TerminatedEventDispatcher } from '@/api/debug/debug-event-dispatcher';
 
   const debugStore = useDebugStore();
-  const { id, isDebug } = storeToRefs(debugStore);
+  const { id, status, currentFrameID } = storeToRefs(debugStore);
   const treeData = ref([]); // 树的数据源
   const props = defineProps(['frameId']);
   const treeRef = ref();
@@ -41,11 +41,7 @@
     }
   };
 
-  const getVariablesByFrameId = async (frameId: string, resolve: any) => {
-    if (!isDebug.value) {
-      // 调试结束
-      return;
-    }
+  const getVariablesByFrameId = async (frameId: number, resolve: any) => {
     let result = await reqGetFrameVariables(id.value, frameId);
     if (result.code == 200) {
       let variables = result.data;
@@ -55,7 +51,7 @@
           name: `${variables[i].name}(${variables[i].type})`,
           reference: variables[i].reference,
           children: [],
-          isLeaf: variables[i].reference == '' || variables[i].reference == '0',
+          isLeaf: variables[i].reference == 0,
         };
         if (variables[i].value != '') {
           treeNode.name = `${treeNode.name}:${variables[i].value}`;
@@ -66,11 +62,7 @@
     }
   };
 
-  const getVariables = async (reference: string, resolve: any) => {
-    if (!isDebug.value) {
-      // 调试结束
-      return;
-    }
+  const getVariables = async (reference: number, resolve: any) => {
     let result = await reqGetVariables(id.value, reference);
     if (result.code == 200) {
       let variables = result.data;
@@ -80,7 +72,7 @@
           name: `${variables[i].name}(${variables[i].type})`,
           reference: variables[i].reference,
           children: [],
-          isLeaf: variables[i].reference == '' || variables[i].reference == '0',
+          isLeaf: variables[i].reference == 0,
         };
         if (variables[i].value != '') {
           treeNode.name = `${treeNode.name}:${variables[i].value}`;
@@ -97,7 +89,7 @@
   };
 
   // 主动更新
-  const updateVariables = (frameId: string) => {
+  const updateVariables = (frameId: number) => {
     getVariablesByFrameId(frameId, (tree: any) => {
       treeData.value = tree;
     });
@@ -108,25 +100,16 @@
   });
 
   onMounted(() => {
-    // 注册一些事件
-    TerminatedEventDispatcher.on('terminated', onExited);
-
     // 监控栈帧变化，如果变化则重新加载数据
     watch(
-      () => props.frameId,
+      () => currentFrameID.value,
       () => {
-        updateVariables(props.frameId);
-      },
-    );
-
-    // 重新编译也需要进行更新
-    watch(
-      () => isDebug.value,
-      () => {
-        if (isDebug.value) {
-          if (props['frameId'] != '') {
-            updateVariables(props['frameId']);
-          }
+        if (currentFrameID.value == -1) {
+          treeData.value = [];
+          return;
+        }
+        if (status.value == 'stopped') {
+          updateVariables(currentFrameID.value);
         }
       },
     );

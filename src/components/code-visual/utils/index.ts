@@ -11,7 +11,6 @@ export const reqVisualData = async (
   type: descriptions,
   description: VisualDescription,
 ): Promise<Source> => {
-  console.log(description);
   if (type == descriptions.Array) {
     return reqArrayVisualData(debugID, description);
   } else if (type == descriptions.BinaryTree) {

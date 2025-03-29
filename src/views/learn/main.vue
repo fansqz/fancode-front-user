@@ -32,7 +32,7 @@
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
-          <Editor class="editor" @onChangeValue="handleCodeChange" @onUpdateBP="" />
+          <Editor class="editor" />
         </pane>
         <pane size="30">
           <!--控制台-->
@@ -81,7 +81,7 @@
   let { code, languages, language } = storeToRefs(codingStore);
   let { id, content, codeList } = storeToRefs(visualDocumentStore);
   let { action, descriptionType } = storeToRefs(visualStore);
-  let { isDebug, breakpoints } = storeToRefs(debugStore);
+  let { breakpoints } = storeToRefs(debugStore);
 
   let firstVisual = true;
 
@@ -123,10 +123,6 @@
         breakpoints.value = firstCode.breakpoints;
       }
     }
-  };
-
-  const handleCodeChange = (value: string, _type: string) => {
-    code.value = value;
   };
 
   const handleLanguageChange = () => {
@@ -178,7 +174,7 @@
       () => id.value,
       () => {
         // 切换文档，如果在调试中，那么停止调试
-        if (isDebug.value) {
+        if (debugStore.isDebugging()) {
           reqTerminate(debugStore.id);
         }
         // 文档发生改变

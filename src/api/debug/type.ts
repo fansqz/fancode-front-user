@@ -22,15 +22,23 @@ type StepOverResponse = BaseResponse & {};
 
 type ContinueResponse = BaseResponse & {};
 
-type AddBreakpointResponse = BaseResponse & {};
+type SetBreakpointResponse = BaseResponse & {
+  data: Breakpoint[];
+};
 
 type RemoveBreakpointResponse = BaseResponse & {};
 
 type TerminatedResponse = BaseResponse & {};
 
+// 断点
+type Breakpoint = {
+  verified: boolean;
+  message: string;
+  line: number;
+};
 // 栈帧
 type StackFrame = {
-  id: string; // 栈帧id
+  id: number; // 栈帧id
   name: string; // 函数名称
   path: string; // 文件路径
   line: number;
@@ -45,7 +53,9 @@ type Variable = {
   name: string;
   type: string;
   value: string;
-  reference: string; //变量引用
+  reference: number; //变量引用
+  namedVariables: number; // 元素数量（结构体）
+  indexedVariables: number; // 元素数量（数据结构）
 };
 
 type GetFrameVariablesResponse = BaseResponse & {

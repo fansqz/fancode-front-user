@@ -15,18 +15,17 @@
 <script setup lang="ts">
   import useDebugStore from '@/store/modules/debug';
   import useVisualStore from '@/store/modules/visual';
-  import { DebugEventDispatcher } from '@/api/debug/debug-event-dispatcher';
-  import { onMounted, onUnmounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { DebugEvent } from '@/api/debug/event';
   import Visaul from '@/components/code-visual/visual/index.vue';
   import VisaulTemplate from '@/components/code-visual/visual-setting/index.vue';
   import { reqVisualData } from '@/components/code-visual/utils/index.ts';
   import { Sources } from 'structv2';
+  import { watch } from 'vue';
 
   const debugStore = useDebugStore();
   const visualStore = useVisualStore();
-  const { id, isDebug } = storeToRefs(debugStore);
+  const { id, status } = storeToRefs(debugStore);
   const { action, descriptionType } = storeToRefs(visualStore);
   const sources = ref<Sources>();
   const visual = ref<InstanceType<typeof Visaul> | null>();
@@ -39,11 +38,10 @@
     visual.value?.resizeVisualView(width, height);
   };
 
-  const onStopped = async (_data: DebugEvent) => {
-    if (!isDebug.value) {
+  const getVisualData = async () => {
+    if (status.value != 'stopped') {
       return;
     }
-    // 如果开启可视化
     if (action.value) {
       let visualData = await reqVisualData(
         id.value,
@@ -56,23 +54,22 @@
     }
   };
 
-  const onLaunch = async (_data: DebugEvent) => {
-    // 调试开始前清理可视化数据
-    sources.value = null;
-  };
-
   defineExpose({
     resizeVisualView,
   });
 
   onMounted(() => {
-    // 注册一些事件
-    DebugEventDispatcher.on('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
-  });
-  onUnmounted(() => {
-    DebugEventDispatcher.off('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
+    watch(
+      () => status.value,
+      () => {
+        if (status.value == 'stopped') {
+          getVisualData();
+        }
+        if (status.value == 'terminated') {
+          sources.value = null;
+        }
+      },
+    );
   });
 </script>
 

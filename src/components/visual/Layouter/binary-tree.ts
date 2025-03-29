@@ -148,7 +148,6 @@ SV.registerLayout('binaryTree', {
       let bound1 = groups[i].getBound();
       let bound2 = groups[i + 1].getBound();
       let move = Math.abs(bound2.x - layoutOptions.xInterval - bound1.x - bound1.width);
-      console.log(groups[i + 1]);
       groups[i + 1].translate(move, 0);
     }
   },
