@@ -73,7 +73,7 @@
 <script setup lang="ts">
   import { reqSubmissionList, reqAddRemark } from '@/api/submission';
   import { ref, onMounted, reactive, toRefs } from 'vue';
-  import { languages } from '@/enum/languages.ts';
+  import { languageConstants } from '@/constants/languages.ts';
   import CodeShow from './code-show.vue';
 
   let props = defineProps<{
@@ -83,16 +83,16 @@
   let { problemID } = toRefs(props);
 
   let languageColorMap = new Map<string, string>([
-    [languages.GO, 'primary'],
-    [languages.C, 'success'],
-    [languages.Java, 'info'],
+    [languageConstants.GO, 'primary'],
+    [languageConstants.C, 'success'],
+    [languageConstants.Java, 'info'],
   ]);
 
   let codeVisible = ref(false);
   let codeShowed = ref(false);
   let currentSubmission = reactive({
     code: '',
-    language: 'go',
+    language: languageConstants.GO,
     remark: '',
   });
 

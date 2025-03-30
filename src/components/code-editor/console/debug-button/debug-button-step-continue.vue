@@ -31,28 +31,16 @@
   }>();
   let { type } = toRefs(props);
   const debugStore = useDebugStore();
-  let { stopped, isDebug } = storeToRefs(debugStore);
+  let { status } = storeToRefs(debugStore);
   // 添加点击间隔的状态和时间常量
   const clickInterval = 100;
   let lastClicked = 0;
   // 判断按钮是出于可执行还是不可执行状态
   let able = ref(false);
   watch(
-    () => isDebug.value,
+    () => status.value,
     () => {
-      if (isDebug.value == false) {
-        able.value = false;
-      }
-    },
-  );
-  watch(
-    () => stopped.value,
-    () => {
-      if (stopped.value == true) {
-        able.value = true;
-      } else {
-        able.value = false;
-      }
+      able.value = status.value == 'stopped';
     },
   );
   const handleStep = async () => {

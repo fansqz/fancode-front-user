@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { descriptions } from '@/enum/description.ts';
+import { descriptions } from '@/constants/description.ts';
 import {
   ArrayDescription,
   BinaryTreeDescription,

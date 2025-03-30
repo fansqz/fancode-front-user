@@ -18,7 +18,6 @@ const reqBinaryTreeVisualData = async (
   };
   let result = await reqStructVisual(req);
   if (result.code != 200) {
-    console.log(result.message);
     return {
       data: [],
       layouter: 'binaryTree',

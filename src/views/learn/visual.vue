@@ -15,10 +15,8 @@
 <script setup lang="ts">
   import useDebugStore from '@/store/modules/debug';
   import useVisualStore from '@/store/modules/visual';
-  import { DebugEventDispatcher } from '@/api/debug/debug-event-dispatcher';
-  import { onMounted, onUnmounted, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { DebugEvent } from '@/api/debug/event';
   import Visaul from '@/components/code-visual/visual/index.vue';
   import VisaulTemplate from '@/components/code-visual/visual-setting/index.vue';
   import { reqVisualData } from '@/components/code-visual/utils/index.ts';
@@ -26,7 +24,7 @@
 
   const debugStore = useDebugStore();
   const visualStore = useVisualStore();
-  const { id, isDebug, stopped } = storeToRefs(debugStore);
+  const { id, status } = storeToRefs(debugStore);
   const { action, descriptionType } = storeToRefs(visualStore);
   const sources = ref<Sources>();
   const visual = ref<InstanceType<typeof Visaul> | null>();
@@ -34,7 +32,7 @@
   const container = ref<HTMLElement>();
 
   const getVisualData = async () => {
-    if (!isDebug.value) {
+    if (status.value != 'stopped') {
       return;
     }
     let visualData = await reqVisualData(
@@ -48,18 +46,6 @@
     };
   };
 
-  const onStopped = async (_data: DebugEvent) => {
-    // 如果开启可视化
-    if (action.value) {
-      getVisualData();
-    }
-  };
-
-  const onLaunch = async (_data: DebugEvent) => {
-    // 调试开始前清理可视化数据
-    sources.value = null;
-  };
-
   // 重新设置visual的大小
   const resizeVisualView = (width: number, height: number) => {
     visual.value?.resizeVisualView(width, height);
@@ -71,15 +57,17 @@
 
   onMounted(() => {
     // 注册一些事件
-    DebugEventDispatcher.on('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
-    if (isDebug.value && stopped.value && action.value) {
-      getVisualData();
-    }
-  });
-  onUnmounted(() => {
-    DebugEventDispatcher.off('stopped', onStopped);
-    DebugEventDispatcher.on('launch', onLaunch);
+    watch(
+      () => status.value,
+      (val) => {
+        if (val == 'stopped') {
+          getVisualData();
+        }
+        if (val == 'terminated') {
+          sources.value = null;
+        }
+      },
+    );
   });
 </script>
 

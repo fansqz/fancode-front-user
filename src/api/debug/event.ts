@@ -19,7 +19,7 @@ export type StoppedReasonType = string;
 export const BreakpointStopped: StoppedReasonType = 'breakpoint';
 export const StepStopped: StoppedReasonType = 'step';
 
-export type ConnectEvent = {};
+export type ConnectedEvent = {};
 
 // 事件类型，通过sse连接异步的方式返回给前端
 // CompileEvent 编译事件
@@ -82,7 +82,7 @@ export type TerminatedEvent = {
 };
 
 export type DebugEvent =
-  | ConnectEvent
+  | ConnectedEvent
   | StoppedEvent
   | LaunchEvent
   | ContinuedEvent

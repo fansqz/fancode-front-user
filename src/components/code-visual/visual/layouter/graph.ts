@@ -57,7 +57,6 @@ SV.registerLayout('graph', {
       let [x, y] = Vector.rotation(-intervalAngle * i, [0, -radius]);
       nodes[i].set('x', x);
       nodes[i].set('y', y);
-      console.log('x' + x, 'y' + y);
     }
   },
 });

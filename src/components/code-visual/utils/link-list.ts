@@ -98,7 +98,6 @@ const convertLinkListVisualData = (
       }
     }
   }
-  console.log(nodes);
   return {
     data: nodes,
     layouter: 'linkList',

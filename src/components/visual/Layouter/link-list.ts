@@ -127,7 +127,6 @@ SV.registerLayout('linkList', {
       let bound1 = groups[i].getBound();
       let bound2 = groups[i + 1].getBound();
       let move = Math.abs(bound2.y - layoutOptions.yInterval - bound1.y - bound1.height);
-      console.log(groups[i + 1]);
       groups[i + 1].translate(0, move + 20);
     }
   },

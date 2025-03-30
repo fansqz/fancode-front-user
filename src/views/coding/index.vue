@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
   import 'splitpanes/dist/splitpanes.css';
   import LeftPane from './left-pane/index.vue';
@@ -43,27 +43,20 @@
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';
   import useDebugStore from '@/store/modules/debug';
+  import { languageConstants, supportedLanguages } from '@/constants/languages.ts';
 
   let document = ref('');
   let codingStore = useCodingStore();
   let debugStore = useDebugStore();
-  let { code, languages, language } = storeToRefs(codingStore);
+  let { code, language, languages } = storeToRefs(codingStore);
   let { breakpoints } = storeToRefs(debugStore);
   const leftPane = ref<InstanceType<typeof LeftPane> | null>();
+  language.value = languageConstants.GO;
+  languages.value = supportedLanguages;
 
   const load = async () => {
-    languages.value = ['go'];
-    language.value = 'go';
-    // 设置代码
-    let userCode = localStorage.getItem('code');
-    if (userCode) {
-      code.value = userCode;
-    } else {
-      let result = await reqProblemTemplateCode('go');
-      if (result.code == 200) {
-        code.value = result.data;
-      }
-    }
+    // 读取代码
+    await getCode();
     // 设置断点
     breakpoints.value = [];
 
@@ -73,11 +66,31 @@
       document.value = result.data;
     }
   };
-  load();
+
+  const getCode = async () => {
+    // 设置代码
+    let userCode = localStorage.getItem('code-' + language.value);
+    if (userCode) {
+      code.value = userCode;
+    } else {
+      let result = await reqProblemTemplateCode(language.value);
+      if (result.code == 200) {
+        code.value = result.data;
+      }
+    }
+  };
+
+  const saveCode = (code) => {
+    localStorage.setItem('code-' + language.value, code);
+  };
 
   const handleCodeChange = (value: string, _type: string) => {
-    code.value = value;
-    localStorage.setItem('code', value);
+    saveCode(value);
+  };
+
+  const handleLanguageChange = () => {
+    // 切换语言，则切换代码内容
+    getCode();
   };
 
   /**
@@ -87,6 +100,16 @@
   const resizeVisualPane = () => {
     leftPane.value.resizeVisualView();
   };
+
+  onMounted(() => {
+    load();
+    watch(
+      () => language.value,
+      () => {
+        handleLanguageChange();
+      },
+    );
+  });
 </script>
 
 <style scoped lang="scss">

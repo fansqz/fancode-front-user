@@ -37,7 +37,7 @@
   import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { ElTable } from 'element-plus';
-  import { descriptions } from '@/enum/description.ts';
+  import { descriptions } from '@/constants/description.ts';
   import ArraySetting from './setting/array.vue';
   import BinaryTreeSetting from './setting/binary-tree.vue';
   import LinkList from './setting/link-list.vue';

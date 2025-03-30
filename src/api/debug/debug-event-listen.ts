@@ -1,12 +1,9 @@
 import useDebugStore from '@/store/modules/debug';
 import { storeToRefs } from 'pinia';
-import { reqTerminate } from '@/api/debug/index.ts';
 import {
-  ConnectEventDispatcher,
+  ConnectedEventDispatcher,
   StoppedEventDispatcher,
-  LaunchEventDispatcher,
-  ContinuedDispatcher,
-  ExitedEventDispatcher,
+  ContinuedEventDispatcher,
   TerminatedEventDispatcher,
   OutputEventDispatcher,
   CompileEventDispatcher,
@@ -15,7 +12,7 @@ import {
 
 const debugStore = useDebugStore();
 
-let { id, isDebug, stopped } = storeToRefs(debugStore);
+let { id } = storeToRefs(debugStore);
 
 export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
   eventSource.onmessage = function (event) {
@@ -23,36 +20,18 @@ export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
       return;
     }
     if (event.data == 'connect success') {
-      ConnectEventDispatcher.dispatch('connect', data);
-      DebugEventDispatcher.dispatch('connect', data);
+      ConnectedEventDispatcher.dispatch('connected', data);
+      DebugEventDispatcher.dispatch('connected', data);
       return;
     }
     var data = JSON.parse(event.data);
     if (data.event == 'stopped') {
       StoppedEventDispatcher.dispatch('stopped', data);
       DebugEventDispatcher.dispatch('stopped', data);
-      debugStore.lineNum = data.line;
-      stopped.value = true;
-    }
-    // 程序启动成功
-    if (data.event == 'launch') {
-      LaunchEventDispatcher.dispatch('launch', data);
-      DebugEventDispatcher.dispatch('launch', data);
-      if (data.success == true) {
-        isDebug.value = true;
-        stopped.value = false;
-      }
     }
     if (data.event == 'continued') {
-      ContinuedDispatcher.dispatch('continued', data);
+      ContinuedEventDispatcher.dispatch('continued', data);
       DebugEventDispatcher.dispatch('continued', data);
-      stopped.value = false;
-    }
-    if (data.event == 'exited') {
-      ExitedEventDispatcher.dispatch('exited', data);
-      DebugEventDispatcher.dispatch('exited', data);
-      // 程序执行结束也关闭调试session
-      reqTerminate(id.value);
     }
     if (data.event == 'output') {
       OutputEventDispatcher.dispatch('output', data);
@@ -65,8 +44,6 @@ export const listenDebugEvent = (debugId: string, eventSource: EventSource) => {
     if (data.event == 'terminated') {
       CompileEventDispatcher.dispatch('terminated', data);
       TerminatedEventDispatcher.dispatch('terminated', data);
-      isDebug.value = false;
-      debugStore.lineNum = 0;
       // 关闭sse
       eventSource.close();
     }

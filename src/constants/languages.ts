@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-export enum languages {
+export enum languageConstants {
   GO = 'go',
   C = 'c',
   CPP = 'cpp',
@@ -7,3 +7,5 @@ export enum languages {
   Java = 'java',
   JavaScript = 'javascript',
 }
+
+export const supportedLanguages: languageConstants[] = [languageConstants.C, languageConstants.GO];

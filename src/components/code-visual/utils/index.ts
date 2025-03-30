@@ -1,5 +1,5 @@
 import { VisualDescription } from '@/components/code-visual/visual-setting/type.ts';
-import { descriptions } from '@/enum/description';
+import { descriptions } from '@/constants/description';
 import { Source } from 'structv2';
 import reqArrayVisualData from './array';
 import reqBinaryTreeVisualData from './binary-tree';
@@ -11,7 +11,6 @@ export const reqVisualData = async (
   type: descriptions,
   description: VisualDescription,
 ): Promise<Source> => {
-  console.log(description);
   if (type == descriptions.Array) {
     return reqArrayVisualData(debugID, description);
   } else if (type == descriptions.BinaryTree) {

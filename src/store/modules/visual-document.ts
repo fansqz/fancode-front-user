@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { VisualSetting } from '@/api/visual-document/type.ts';
+import { languageConstants } from '@/constants/languages.ts';
 
 type VisualDocumentState = {
   id: number;
@@ -17,7 +18,7 @@ const useVisualDocumentStore = defineStore('visual-document', {
 
 export type VisualDocumentCode = {
   code: string;
-  language: string;
+  language: languageConstants;
   breakpoints: number[];
   visualSetting: VisualSetting;
 };

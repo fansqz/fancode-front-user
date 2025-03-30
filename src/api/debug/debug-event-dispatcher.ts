@@ -1,6 +1,6 @@
 import { EventDispatcher } from '@/utils/event-dispatcher';
 import {
-  ConnectEvent,
+  ConnectedEvent,
   StoppedEvent,
   LaunchEvent,
   ContinuedEvent,
@@ -12,13 +12,13 @@ import {
 } from '@/api/debug/event';
 
 // 设置不同的事件分发器
-export const ConnectEventDispatcher = new EventDispatcher<ConnectEvent>();
+export const ConnectedEventDispatcher = new EventDispatcher<ConnectedEvent>();
 
 export const StoppedEventDispatcher = new EventDispatcher<StoppedEvent>();
 
 export const LaunchEventDispatcher = new EventDispatcher<LaunchEvent>();
 
-export const ContinuedDispatcher = new EventDispatcher<ContinuedEvent>();
+export const ContinuedEventDispatcher = new EventDispatcher<ContinuedEvent>();
 
 export const ExitedEventDispatcher = new EventDispatcher<ExitedEvent>();
 

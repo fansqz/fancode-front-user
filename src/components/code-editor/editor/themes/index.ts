@@ -54,7 +54,6 @@ export const wire = async (languageId, editor) => {
   const registry = new Registry({
     getGrammarDefinition: async (scopeName: string, _dependentScope: string) => {
       let jsonMap = tmGrammarJsonMap[scopeName];
-      console.log(scopeName);
       return {
         format: 'json',
         content: await (await fetch(`/grammars/${jsonMap}`)).text(),

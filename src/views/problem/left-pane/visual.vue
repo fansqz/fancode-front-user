@@ -26,7 +26,7 @@
 
   const debugStore = useDebugStore();
   const visualStore = useVisualStore();
-  const { id, isDebug } = storeToRefs(debugStore);
+  const { id } = storeToRefs(debugStore);
   const { action, descriptionType } = storeToRefs(visualStore);
   const sources = ref<Sources>();
   const visual = ref<InstanceType<typeof Visaul> | null>();
@@ -44,7 +44,7 @@
   });
 
   const onStopped = async (_data: DebugEvent) => {
-    if (!isDebug.value) {
+    if (debugStore.isDebugging()) {
       return;
     }
     // 如果开启可视化
