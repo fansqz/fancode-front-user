@@ -15,12 +15,12 @@
       >
         学习
       </div>
-      <div
+      <!-- <div
         :class="{ nav_item: true, active_item: isActiveNavItem('home') }"
         @click="changeRoute('home')"
       >
         题库
-      </div>
+      </div> -->
     </div>
     <div class="header_right">
       <Setting class="setting" v-show="isLogged()"></Setting>
