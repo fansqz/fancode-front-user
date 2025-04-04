@@ -7,19 +7,24 @@
         :class="{ nav_item: true, active_item: isActiveNavItem('coding') }"
         @click="changeRoute('coding')"
       >
-        编程
+        <el-text size="large">编程</el-text>
       </div>
-      <div
-        :class="{ nav_item: true, active_item: isActiveNavItem('learn') }"
-        @click="changeRoute('learn')"
-      >
-        学习
-      </div>
-      <div
-        :class="{ nav_item: true, active_item: isActiveNavItem('home') }"
-        @click="changeRoute('home')"
-      >
-        题库
+      <div :class="{ learn: true, nav_item: true, active_item: isActiveNavItem('learn') }">
+        <el-dropdown @command="handleSelectBank">
+          <span>
+            <el-text size="large">学习</el-text>
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item v-for="item in visualDocumentBanks" :command="item.id">{{
+                item.name
+              }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
     <div class="header_right">
@@ -40,9 +45,13 @@
   import Setting from './setting.vue';
   import { useRouter, useRoute } from 'vue-router';
   import useUserStore from '@/store/modules/user';
+  import { onMounted } from 'vue';
+  import { ref } from 'vue';
+  import { reqAllVisualDocumentBank } from '@/api/visual-document-bank/index.ts';
   let userStore = useUserStore();
   let $router = useRouter();
   let $route = useRoute();
+  const visualDocumentBanks = ref([]);
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
@@ -65,6 +74,22 @@
   const getoRegister = () => {
     $router.push({ name: 'register' });
   };
+
+  const handleSelectBank = (bankID: number) => {
+    $router.push({
+      name: 'learn',
+      params: {
+        bankID: bankID,
+      },
+    });
+  };
+
+  onMounted(async () => {
+    let result = await reqAllVisualDocumentBank();
+    if (result.code == 200) {
+      visualDocumentBanks.value = result.data;
+    }
+  });
 </script>
 
 <style scoped lang="scss">
@@ -91,19 +116,17 @@
         width: 20px;
       }
       .nav_item {
-        width: 50px;
+        width: 60px;
+        min-width: 60px;
         height: $base-header-height;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
         margin: 0px 10px;
-        color: #999999;
       }
       .active_item {
         box-sizing: border-box;
-        font-weight: 500;
-        color: #333333;
         border-bottom: 3px solid #333333;
       }
     }

@@ -38,59 +38,80 @@
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue';
   import Console from '@/components/code-editor/console/index.vue';
   import CodeButtonBar from '@/components/code-editor/coding-button/index.vue';
-  import { reqProblemTemplateCode } from '@/api/problem';
-  import { reqVisaulDocument } from '@/api/visual';
   import { storeToRefs } from 'pinia';
   import useCodingStore from '@/store/modules/coding.ts';
   import useDebugStore from '@/store/modules/debug';
+  import useVisualStore from '@/store/modules/visual';
   import { languageConstants, supportedLanguages } from '@/constants/languages.ts';
+  import { descriptions } from '@/constants/description.ts';
+  import { VisualSetting } from '@/api/visual-document/type.ts';
 
   let document = ref('');
   let codingStore = useCodingStore();
   let debugStore = useDebugStore();
+  let visualStore = useVisualStore();
   let { code, language, languages } = storeToRefs(codingStore);
   let { breakpoints } = storeToRefs(debugStore);
+  type configType = {
+    code: string;
+    language: languageConstants;
+    breakpoints: number[];
+    visualSetting: VisualSetting;
+  };
+  let config: configType = {
+    code: '',
+    language: languageConstants.C,
+    breakpoints: [],
+    visualSetting: {
+      type: descriptions.Array,
+      description: {},
+    },
+  };
   const leftPane = ref<InstanceType<typeof LeftPane> | null>();
   language.value = languageConstants.GO;
   languages.value = supportedLanguages;
 
-  const load = async () => {
-    // 读取代码
-    await getCode();
-    // 设置断点
-    breakpoints.value = [];
-
-    // 读取文本
-    let result = await reqVisaulDocument();
-    if (result.code == 200) {
-      document.value = result.data;
-    }
-  };
-
-  const getCode = async () => {
+  const loadCode = async () => {
     // 设置代码
-    let userCode = localStorage.getItem('code-' + language.value);
-    if (userCode) {
-      code.value = userCode;
-    } else {
-      let result = await reqProblemTemplateCode(language.value);
-      if (result.code == 200) {
-        code.value = result.data;
-      }
+    let codeConfigJson = localStorage.getItem('code-' + language.value);
+    let parseSuccess = false;
+    // 读取本地文件
+    if (codeConfigJson) {
+      try {
+        config = JSON.parse(codeConfigJson);
+        console.log(config);
+        parseSuccess = true;
+      } catch (error) {}
     }
+    // 读取配置
+    if (!parseSuccess) {
+      let codeConfigsJson = await (await fetch(`/document/visual-learn-config.json`)).text();
+      let codeConfigs: configType[] = JSON.parse(codeConfigsJson);
+      for (let codeConfig of codeConfigs) {
+        if (codeConfig.language == language.value) {
+          config = codeConfig;
+        }
+      }
+      config.code = await (await fetch(`/document/visual-learn-code.${language.value}`)).text();
+    }
+    // 配置
+    code.value = config.code;
+    breakpoints.value = config.breakpoints;
+    visualStore.setDescription(config.visualSetting.type, config.visualSetting.description);
+    document.value = await (await fetch(`/document/visual-learn-document.md`)).text();
   };
 
-  const saveCode = (code) => {
-    localStorage.setItem('code-' + language.value, code);
+  const saveCode = () => {
+    localStorage.setItem('code-' + config.language, JSON.stringify(config));
   };
 
-  const handleCodeChange = (value: string, _type: string) => {
-    saveCode(value);
+  const handleCodeChange = (_value: string, _type: string) => {
+    saveCode();
   };
 
   const handleLanguageChange = () => {
     // 切换语言，则切换代码内容
-    getCode();
+    loadCode();
   };
 
   /**
@@ -101,8 +122,8 @@
     leftPane.value.resizeVisualView();
   };
 
-  onMounted(() => {
-    load();
+  onMounted(async () => {
+    await loadCode();
     watch(
       () => language.value,
       () => {

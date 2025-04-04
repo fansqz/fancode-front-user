@@ -14,12 +14,12 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
     redirect: '/coding',
     children: [
       // 取消题目读取
-      // {
-      //   // home
-      //   path: '/home',
-      //   name: 'home',
-      //   component: () => import('@/views/home/index.vue'),
-      // },
+      {
+        // home
+        path: '/home',
+        name: 'home',
+        component: () => import('@/views/home/index.vue'),
+      },
       {
         // coding
         path: '/coding',
@@ -28,16 +28,16 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
       },
       {
         // 学习
-        path: '/learn',
+        path: '/learn/:bankID',
         name: 'learn',
         component: () => import('@/views/learn/index.vue'),
       },
-      // {
-      //   // 题库
-      //   path: '/bank/:bankID',
-      //   name: 'bank',
-      //   component: () => import('@/views/bank/index.vue'),
-      // },
+      {
+        // 题库
+        path: '/bank/:bankID',
+        name: 'bank',
+        component: () => import('@/views/bank/index.vue'),
+      },
       // 登录
       {
         path: '/login',
@@ -51,11 +51,11 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         component: () => import('@/views/register/index.vue'),
       },
       // 个人中心
-      // {
-      //   path: '/myprofile',
-      //   name: 'myprofile',
-      //   component: () => import('@/views/my-profile/index.vue'),
-      // },
+      {
+        path: '/myprofile',
+        name: 'myprofile',
+        component: () => import('@/views/my-profile/index.vue'),
+      },
       // 账号设置
       {
         path: '/account/setting',

@@ -59,7 +59,7 @@ const setTitle = (to) => {
 
 const checkIsAllow = (path: string): boolean => {
   for (let item of allowPaths) {
-    if (item == path) {
+    if (path.startsWith(item)) {
       return true;
     }
   }

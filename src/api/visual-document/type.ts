@@ -1,5 +1,6 @@
 import { descriptions } from '@/constants/description.ts';
 import { VisualDescription } from '@/components/code-visual/visual-setting/type.ts';
+import { languageConstants } from '@/constants/languages.ts';
 
 export type VisualDocumentDirectoryResponse = BaseResponse & {
   data: VisualDocumentDirectory[];
@@ -31,7 +32,7 @@ export type VisualDocument = {
 
 export type VisualDocumentCode = {
   code: string;
-  language: string;
+  language: languageConstants;
   breakpoints: number[];
   visualSetting: string;
 };
