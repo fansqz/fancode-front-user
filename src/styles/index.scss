@@ -18,3 +18,8 @@
   background-color: #c1c1c1;
   border-radius: 10px;
 }
+
+// elementui下拉框黑框去除
+.el-tooltip__trigger:focus-visible {
+  outline: unset;
+} 
