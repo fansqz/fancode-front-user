@@ -42,7 +42,14 @@ const initCodeEditor = async (_app) => {
 // 初始化markdown编辑器
 const initMarkdowmEditor = (app) => {
   VMdPreview.use(vuepressTheme, {
-    c,
+    Prism,
+  });
+  VMdPreview.xss.extend({
+    // 扩展白名单
+    whiteList: {
+      iframe: ['src', 'width', 'height', 'frameborder', 'allowfullscreen'],
+      source: [],
+    },
   });
   // Prism 代码高亮
   app.use(Particles);
