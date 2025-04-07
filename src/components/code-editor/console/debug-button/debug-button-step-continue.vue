@@ -4,7 +4,7 @@
     @mouseover="mouseover"
     @mouseout="mouseout"
   >
-    <i
+    <el-button
       :class="{
         iconfont: true,
         'icon-continue1': type == 'continue',
@@ -16,7 +16,8 @@
         unable: !able,
       }"
       @click="handleStep"
-    ></i>
+      link
+    ></el-button>
   </div>
 </template>
 

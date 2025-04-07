@@ -4,14 +4,15 @@
     @mouseover="mouseover"
     @mouseout="mouseout"
   >
-    <i
+    <el-button
       :class="{
         'iconfont icon-indeterminate': true,
         able: able,
         unable: !able,
       }"
       @click="terminateDebug"
-    ></i>
+      link
+    ></el-button>
   </div>
 </template>
 
