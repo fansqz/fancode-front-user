@@ -15,7 +15,7 @@
   import { ref, defineProps, onMounted, onBeforeUnmount } from 'vue';
 
   // 图标的高度和宽度
-  const width = 30;
+  const width = 20;
   const height = 50;
 
   // 屏幕高度和宽度
@@ -23,7 +23,7 @@
   let windowHeight = window.innerHeight;
 
   const right = ref(windowWidth - width - 10); // 初始距右边距离
-  const bottom = ref(66); // 初始距底部距离
+  const bottom = ref(300); // 初始距底部距离
 
   const isDragging = ref(false);
   let offsetX, offsetY, moved;
