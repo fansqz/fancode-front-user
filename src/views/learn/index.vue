@@ -55,34 +55,45 @@
   };
 
   let bankID = convertToNumber($route.params.bankID);
+  let documentID = convertToNumber($route.query.documentID);
   let bank = ref({
     name: '',
   });
+
   const getDirectory = async () => {
     let result = await reqVisualDocumentDirectory(bankID);
-    if (result.code == 200) {
+    if (result.code === 200) {
       data.value = result.data;
     }
   };
 
   const getBank = async () => {
     let result = await reqVisualDocumentBank(bankID);
-    if (result.code == 200) {
+    if (result.code === 200) {
       bank.value = result.data;
     }
   };
 
   const clickEditorVisualDocument = (node: any) => {
     id.value = node.id;
+    // 将documentID转换为字符串
+    const newQuery: Record<string, string> = {
+      documentID: id.value.toString(),
+    };
+    const newUrl = `${$route.path}?${new URLSearchParams(newQuery).toString()}`;
+    history.replaceState(null, '', newUrl);
   };
 
   onMounted(async () => {
     await getBank();
     await getDirectory();
-    id.value = data.value[0].id;
+    if (documentID !== 0) {
+      id.value = documentID;
+    } else {
+      id.value = data.value[0].id;
+    }
   });
 </script>
-
 <style scoped lang="scss">
   .container {
     position: relative;
