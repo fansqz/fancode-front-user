@@ -93,7 +93,7 @@
     bankID = convertToNumber($route.params.bankID);
     let documentID = convertToNumber($route.query.documentID);
     getBank(bankID);
-    getDirectory(bankID);
+    await getDirectory(bankID);
     if (documentID != 0) {
       id.value = documentID;
     } else {
@@ -101,20 +101,21 @@
     }
   };
 
+  watch(
+    () => $route.params,
+    () => {
+      load();
+    },
+  );
+  watch(
+    () => $route.query,
+    () => {
+      load();
+    },
+  );
+
   onMounted(async () => {
     load();
-    watch(
-      () => $route.params,
-      () => {
-        load();
-      },
-    );
-    watch(
-      () => $route.query,
-      () => {
-        load();
-      },
-    );
   });
 </script>
 <style scoped lang="scss">
