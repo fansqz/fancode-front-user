@@ -98,6 +98,9 @@
       width: 100%;
       height: auto;
       flex: 1;
+      background-image: radial-gradient(circle, rgba(107, 102, 102, 0.5) 1px, transparent 1px);
+      background-size: 25px 25px;
+      background-color: #f9f9f9;
     }
   }
 </style>
