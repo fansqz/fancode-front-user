@@ -25,6 +25,7 @@
   import { listenDebugEvent } from '@/api/debug/debug-event-listen.ts';
   import { ref } from 'vue';
   import { watch } from 'vue';
+  import { onUnmounted } from 'vue';
 
   const codingStore = useCodingStore();
   const debugStore = useDebugStore();
@@ -39,10 +40,7 @@
   const startDebug = async () => {
     // 调试状态，那么关闭调试
     if (debugStore.isDebugging()) {
-      let result = await reqTerminate(id.value);
-      if (result.code != 200) {
-        status.value = 'terminated';
-      }
+      terminal();
       return;
     }
     loading.value = true;
@@ -71,6 +69,14 @@
     }
   };
 
+  const terminal = async () => {
+    let result = await reqTerminate(id.value);
+    if (result.code != 200) {
+      status.value = 'terminated';
+    }
+    return;
+  };
+
   watch(
     () => status.value,
     (val) => {
@@ -83,6 +89,13 @@
       }
     },
   );
+
+  onUnmounted(async () => {
+    if (debugStore.isDebugging()) {
+      await terminal();
+      return;
+    }
+  });
 </script>
 
 <style scoped lang="scss">
