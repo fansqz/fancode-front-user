@@ -5,7 +5,7 @@
     :dbl-click-splitter="false"
     :push-other-panes="false"
   >
-    <pane @resized="resizeVisualPane">
+    <pane>
       <LeftPane ref="leftPane" class="left-pane" :content="document" />
     </pane>
 

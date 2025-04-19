@@ -1,6 +1,8 @@
 // 一些基本样式
-$base-border-color: #e7e7e7;
-$base-background-color: rgb(217, 218, 216);
+$base-border-color: var(--el-border-color);
+$base-background-color: #ffffff;
+$base-header-background: #ffffff;
+
 // 基本颜色
 $base-blue-color: rgb(90, 180, 253);
 
@@ -9,7 +11,6 @@ $base-title-font-color:  #3a3a3a;
 $base-small-font-color:  #4d4d4d;
 
 // layout相关设置
-$base-header-background: #ffffff;
 $base-header-height: 50px;
 
 

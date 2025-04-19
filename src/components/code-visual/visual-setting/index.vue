@@ -1,34 +1,45 @@
 <template>
   <div class="visual-description">
-    <div class="visual-description-input">
-      <el-table
-        size="small"
-        ref="singleTableRef"
-        class="templateSelect"
-        :data="descriptionTypeList"
-        highlight-current-row
-        @current-change="handleCurrentChange"
-      >
-        <el-table-column>
-          <template v-slot="{ row }">
-            <div class="item">
-              <i v-if="row.type == descriptionType" class="selected-icon iconfont icon-Other-10" />
-              <i v-if="row.type != descriptionType" class="selected-icon iconfont icon-Other-11" />
-              {{ row.name }}
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="setting">
-        <ArraySetting v-if="descriptionType == descriptions.Array" />
-        <BinaryTreeSetting v-if="descriptionType == descriptions.BinaryTree" />
-        <LinkList v-if="descriptionType == descriptions.LinkList" />
-        <Graph v-if="descriptionType == descriptions.Graph" />
-      </div>
-      <div class="option">
-        <el-switch v-model="action" />
-      </div>
-    </div>
+    <el-container>
+      <el-header class="title">
+        <el-text>可视化定义</el-text>
+      </el-header>
+      <el-main class="main">
+        <el-table
+          size="small"
+          ref="singleTableRef"
+          class="template-select"
+          :data="descriptionTypeList"
+          highlight-current-row
+          @current-change="handleCurrentChange"
+        >
+          <el-table-column>
+            <template v-slot="{ row }">
+              <div class="item">
+                <i
+                  v-if="row.type == descriptionType"
+                  class="selected-icon iconfont icon-Other-10"
+                />
+                <i
+                  v-if="row.type != descriptionType"
+                  class="selected-icon iconfont icon-Other-11"
+                />
+                {{ row.name }}
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="setting">
+          <ArraySetting v-if="descriptionType == descriptions.Array" />
+          <BinaryTreeSetting v-if="descriptionType == descriptions.BinaryTree" />
+          <LinkList v-if="descriptionType == descriptions.LinkList" />
+          <Graph v-if="descriptionType == descriptions.Graph" />
+        </div>
+        <div class="option">
+          <el-switch v-model="action" />
+        </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -74,11 +85,18 @@
 
 <style lang="scss" scoped>
   .visual-description {
-    .visual-description-input {
+    background-color: $base-background-color;
+    .title {
+      height: 30px;
+      border-bottom: 1px solid var(--el-border-color);
+    }
+    .main {
       box-sizing: border-box;
       width: 100%;
+      height: 100%;
       display: flex;
-      .templateSelect {
+      padding: 0px;
+      .template-select {
         width: 20%;
         margin-left: 20px;
         margin-right: 10px;
@@ -96,6 +114,7 @@
       .setting {
         width: calc(80% - 100px);
         height: 150px;
+        border-left: 1px solid $base-border-color;
       }
       .option {
         width: 40px;
