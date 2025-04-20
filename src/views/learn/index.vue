@@ -101,18 +101,9 @@
     }
   };
 
-  watch(
-    () => $route.params,
-    () => {
-      load();
-    },
-  );
-  watch(
-    () => $route.query,
-    () => {
-      load();
-    },
-  );
+  watch([() => $route.params, () => $route.query], () => {
+    load();
+  });
 
   onMounted(async () => {
     load();
