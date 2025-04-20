@@ -45,7 +45,7 @@ const useUserStore = defineStore('User', {
       }
     },
     userLogout() {
-      this.token = '';
+      localStorage.removeItem('TOKEN');
       this.username = '';
       this.email = '';
       this.phone = '';

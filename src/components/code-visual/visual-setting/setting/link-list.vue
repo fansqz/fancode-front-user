@@ -41,7 +41,6 @@
   .arrayDescription {
     height: 100%;
     width: 100%;
-    border: 1px solid #eeeeee;
     box-sizing: border-box;
     padding: 20px;
   }

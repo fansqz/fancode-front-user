@@ -100,7 +100,7 @@
     height: $base-header-height;
     background-color: $base-header-background;
     box-sizing: border-box;
-    border-bottom: 1px solid $base-border-color;
+    border-bottom: 1px solid var(--el-border-color);
     .header_left {
       position: absolute;
       height: 100%;

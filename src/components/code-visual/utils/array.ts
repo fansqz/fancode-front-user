@@ -51,7 +51,7 @@ const convertArrayVisualData = (
   // 设置指针
   for (let i = 0; i < data.points.length; i++) {
     let index = data.points[i].value;
-    if (nodes.length <= Number(index)) {
+    if (nodes.length <= Number(index) || Number(index) < 0) {
       virtualNodePoints.push(data.points[i]);
       continue;
     }
@@ -87,7 +87,7 @@ const convertArrayVisualData = (
   // 设置虚拟节点的外部指针
   for (let i = 0; i < virtualNodePoints.length; i++) {
     let index = virtualNodePoints[i].value;
-    if (nodes.length <= Number(index)) {
+    if (nodes.length <= Number(index) || Number(index) < 0) {
       continue;
     }
     if (nodes[index].external != undefined) {

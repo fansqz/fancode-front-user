@@ -6,13 +6,13 @@
     <el-tree
       :data="data"
       :props="props"
-      highlight-current="true"
+      :highlight-current="true"
       :current-node-key="id"
       :expand-on-click-node="false"
       default-expand-all
       node-key="id"
       class="directory-tree"
-      indent="15"
+      :indent="15"
       @node-click="clickEditorVisualDocument"
     >
       <template #default="scope">
@@ -29,12 +29,13 @@
   import { reqVisualDocumentDirectory } from '@/api/visual-document/index.ts';
   import { VisualDocumentDirectory } from '@/api/visual-document/type.ts';
   import { reqVisualDocumentBank } from '@/api/visual-document-bank/index.ts';
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import VisualDocumentLearn from './main.vue';
   import useVisualDocument from '@/store/modules/visual-document';
   import { storeToRefs } from 'pinia';
-  import { useRoute } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
 
+  let $router = useRouter();
   const $route = useRoute();
   let visualDocumentStore = useVisualDocument();
   let { id } = storeToRefs(visualDocumentStore);
@@ -45,6 +46,9 @@
   };
 
   const convertToNumber = (input: string | string[]): number => {
+    if (input == undefined) {
+      return 0;
+    }
     let value: string;
     if (Array.isArray(input)) {
       value = input[0];
@@ -54,35 +58,66 @@
     return Number(value);
   };
 
-  let bankID = convertToNumber($route.params.bankID);
+  let bankID: number;
   let bank = ref({
     name: '',
   });
-  const getDirectory = async () => {
+
+  const getDirectory = async (bankID: number) => {
     let result = await reqVisualDocumentDirectory(bankID);
-    if (result.code == 200) {
+    if (result.code === 200) {
       data.value = result.data;
     }
   };
 
-  const getBank = async () => {
+  const getBank = async (bankID: number) => {
     let result = await reqVisualDocumentBank(bankID);
-    if (result.code == 200) {
+    if (result.code === 200) {
       bank.value = result.data;
     }
   };
 
   const clickEditorVisualDocument = (node: any) => {
-    id.value = node.id;
+    $router.push({
+      name: 'learn',
+      params: {
+        bankID: bankID,
+      },
+      query: {
+        documentID: node.id,
+      },
+    });
   };
 
+  const load = async () => {
+    bankID = convertToNumber($route.params.bankID);
+    let documentID = convertToNumber($route.query.documentID);
+    getBank(bankID);
+    await getDirectory(bankID);
+    if (documentID != 0) {
+      id.value = documentID;
+    } else {
+      id.value = data.value[0].id;
+    }
+  };
+
+  watch(
+    () => $route.params,
+    () => {
+      load();
+    },
+  );
+  watch(
+    () => $route.query,
+    () => {
+      load();
+    },
+  );
+
   onMounted(async () => {
-    await getBank();
-    await getDirectory();
-    id.value = data.value[0].id;
+    load();
   });
 </script>
-
 <style scoped lang="scss">
   .container {
     position: relative;

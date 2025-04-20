@@ -38,7 +38,7 @@
 
   // 重新设置visual的大小
   const resizeVisualView = () => {
-    structVisual.value?.resizeVisualView(main.value.offsetWidth, main.value.offsetHeight);
+    structVisual.value?.resizeVisualView();
   };
 
   defineExpose({
