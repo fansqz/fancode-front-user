@@ -63,7 +63,6 @@
   import useDebugStore from '@/store/modules/debug';
   import { DebugEventDispatcher } from '@/api/debug/debug-event-dispatcher';
   import { reqVisualData } from '@/components/code-visual/utils/index.ts';
-  import { reqTerminate } from '@/api/debug/index.ts';
 
   const main = ref<HTMLElement>();
 
@@ -169,15 +168,9 @@
 
   onMounted(() => {
     load();
-
     watch(
       () => id.value,
       () => {
-        // 切换文档，如果在调试中，那么停止调试
-        if (debugStore.isDebugging()) {
-          reqTerminate(debugStore.id);
-        }
-        // 文档发生改变
         load();
       },
     );

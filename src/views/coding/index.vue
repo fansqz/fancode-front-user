@@ -79,7 +79,6 @@
     if (codeConfigJson) {
       try {
         config = JSON.parse(codeConfigJson);
-        console.log(config);
         parseSuccess = true;
       } catch (error) {}
     }
@@ -122,14 +121,15 @@
     leftPane.value.resizeVisualView();
   };
 
+  watch(
+    () => language.value,
+    () => {
+      handleLanguageChange();
+    },
+  );
+
   onMounted(async () => {
     await loadCode();
-    watch(
-      () => language.value,
-      () => {
-        handleLanguageChange();
-      },
-    );
   });
 </script>
 

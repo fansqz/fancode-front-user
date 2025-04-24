@@ -101,12 +101,11 @@
     }
   };
 
-  watch([() => $route.params, () => $route.query], () => {
-    load();
-  });
-
   onMounted(async () => {
     load();
+    watch([() => $route.params, () => $route.query], () => {
+      load();
+    });
   });
 </script>
 <style scoped lang="scss">

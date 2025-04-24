@@ -51,7 +51,8 @@
             stackFrames.value = result.data;
             handleSelect('0');
           }
-        } else {
+        }
+        if (val == 'terminated' || val == 'init' || val == 'compiled') {
           stackFrames.value = [];
           // 设置为-1，清空变量列表
           currentFrameID.value = -1;
