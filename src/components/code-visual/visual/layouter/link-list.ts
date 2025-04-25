@@ -97,7 +97,6 @@ SV.registerLayout('linkList', {
     let bound = node.getBound(),
       width = bound.width,
       group = new Group(node),
-      nextGroup = null,
       nextBound = null;
 
     if (node.visited) {
