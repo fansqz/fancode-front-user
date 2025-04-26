@@ -3,24 +3,24 @@
     <div class="bank-name">
       <el-text class="bank-name">{{ bank.name }}</el-text>
     </div>
-    <el-tree
-      :data="data"
-      :props="props"
-      :highlight-current="true"
-      :current-node-key="id"
-      :expand-on-click-node="false"
-      default-expand-all
-      node-key="id"
-      class="directory-tree"
-      :indent="15"
-      @node-click="clickEditorVisualDocument"
-    >
-      <template #default="scope">
-        <div class="tree_item">
-          <el-text>{{ scope.node.label }}</el-text>
-        </div>
-      </template>
-    </el-tree>
+    <el-scrollbar class="directory-tree">
+      <el-tree
+        :data="data"
+        :props="props"
+        :highlight-current="true"
+        :current-node-key="id"
+        :expand-on-click-node="false"
+        node-key="id"
+        :indent="15"
+        @node-click="clickEditorVisualDocument"
+      >
+        <template #default="scope">
+          <div class="tree_item">
+            <el-text>{{ scope.node.label }}</el-text>
+          </div>
+        </template>
+      </el-tree>
+    </el-scrollbar>
     <VisualDocumentLearn class="document-learn" />
   </div>
 </template>
