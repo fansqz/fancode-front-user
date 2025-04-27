@@ -45,6 +45,7 @@
       () => status.value,
       async (val) => {
         if (val == 'stopped') {
+          currentFrameID.value = -1;
           // 程序暂停时需要更新栈帧
           let result = await reqGetStackTrace(id.value);
           if (result.code == 200) {
