@@ -36,7 +36,7 @@ export const unregisterAllProvider = () => {
  */
 export const registerProvider = (language) => {
   const monacoProvider = monaco.languages.registerCompletionItemProvider(language, {
-    provideCompletionItems: function (model, position, _context, token) {
+    provideCompletionItems: function (model, position, _context, _token) {
       // 获取整个编辑器的内容
       const content = model.getValue();
       // 过滤掉字符串内容
