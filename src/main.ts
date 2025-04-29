@@ -22,7 +22,6 @@ import '@/styles/index.scss';
 import Particles from 'particles.vue3';
 // 热力图
 import * as echarts from 'echarts';
-import { loadWASM } from 'onigasm';
 
 // markdowm
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
@@ -32,12 +31,6 @@ import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
 import Prism from 'prismjs';
 
 const app = createApp(App);
-
-// 初始化编辑器
-const initCodeEditor = async (_app) => {
-  // 需要加载onigasm.wasm文件
-  await loadWASM(`/onigasm/onigasm.wasm`);
-};
 
 // 初始化markdown编辑器
 const initMarkdowmEditor = (app) => {
@@ -66,5 +59,4 @@ app.use(pinia);
 app.config.globalProperties.$echarts = echarts;
 app.mount('#app');
 
-initCodeEditor(app);
 initMarkdowmEditor(app);

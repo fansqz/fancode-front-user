@@ -3,28 +3,19 @@ import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
 import { scopeNameMap, tmGrammarJsonMap, codeThemeList } from './config';
 import * as monaco from 'monaco-editor';
+import { loadWASM } from 'onigasm';
 
 let hasGetAllWorkUrl = false;
 
-export const initWorker = () => {
-  window.MonacoEnvironment = {
-    getWorkerUrl: function (moduleId, label) {
+export const initWorker = async () => {
+  await loadWASM(`/onigasm/onigasm.wasm`);
+  const originalGetWorkerUrl = window.MonacoEnvironment.getWorkerUrl;
+  window.MonacoEnvironment.getWorkerUrl = new Proxy(originalGetWorkerUrl, {
+    apply(target, thisArg, args) {
       hasGetAllWorkUrl = true;
-      if (label === 'json') {
-        return '/monaco/json.worker.bundle.js';
-      }
-      if (label === 'css' || label === 'scss' || label === 'less') {
-        return '/monaco/css.worker.bundle.js';
-      }
-      if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        return '/monaco/html.worker.bundle.js';
-      }
-      if (label === 'typescript' || label === 'javascript') {
-        return '/monaco/ts.worker.bundle.js';
-      }
-      return '/monaco/editor.worker.bundle.js';
+      return target.apply(thisArg, args);
     },
-  };
+  });
 };
 
 /**

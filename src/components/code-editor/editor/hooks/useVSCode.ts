@@ -9,6 +9,7 @@ import { EditorInstance, VsCode } from '../types';
 import editUtils from '../utils/editUtils';
 import { debug, cancelHighlightLine, highlightLine, scrollIntoView } from '../utils/debugUtils';
 import { setBreakPoint, initBP, getAllBreakpoint } from '../utils/breakpoint';
+import { registerAllProvider, unregisterAllProvider } from '../provider/index.ts';
 
 // TODO: 调试时修改代码改变高亮行，输入改变时更新断点
 /**
@@ -24,6 +25,7 @@ export const useVsCode = (vscode: VsCode) => {
 
     let stopValueWatch: WatchStopHandle;
     let editorInstance: EditorInstance;
+
     onMounted(async () => {
       if (!target.value) {
         throw new TypeError('target值必须是一个正确的vue ref');
@@ -32,6 +34,9 @@ export const useVsCode = (vscode: VsCode) => {
       await initTheme();
 
       const { getConfigs } = await import('../conf');
+
+      // 注册代码提示
+      registerAllProvider();
 
       // 创建editor实例
       editorInstance = editor.create(
@@ -185,6 +190,8 @@ export const useVsCode = (vscode: VsCode) => {
       let model = editorInstance.getModel();
       model?.dispose();
       editorInstance?.dispose();
+      // 解注册代码提示
+      unregisterAllProvider();
       console.log('离开咯', editorInstance);
     });
   });
