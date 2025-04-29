@@ -10,18 +10,9 @@ const tokenize = (content) => {
   return content.split(/[\s.,;:\(\)\[\]\{\}"'?!]+/).filter((word) => word.length > 0);
 };
 
-// 检查分词是否在字符串内部
-const isInsideString = (content, word) => {
-  let inString = false;
-  for (let i = 0; i < content.length; i++) {
-    if (content[i] === '"' || content[i] === "'" || content[i] === '`') {
-      inString = !inString;
-    }
-    if (inString && content.includes(word)) {
-      return true;
-    }
-  }
-  return false;
+// 使用正则表达式过滤掉字符串内容
+const filterStrings = (content) => {
+  return content.replace(/(['"`]).*?\1/g, '').trim();
 };
 
 export const registerAllProvider = () => {
@@ -45,15 +36,13 @@ export const unregisterAllProvider = () => {
  */
 export const registerProvider = (language) => {
   const monacoProvider = monaco.languages.registerCompletionItemProvider(language, {
-    provideCompletionItems: function (model, position, _context, _token) {
+    provideCompletionItems: function (model, position, _context, token) {
       // 获取整个编辑器的内容
       const content = model.getValue();
-      // 对上下文进行分词
-      const contextWords = tokenize(content);
-      // 过滤掉字符串里面的值
-      const filteredContextWords = contextWords.filter((word) => {
-        return !isInsideString(content, word);
-      });
+      // 过滤掉字符串内容
+      const filteredContent = filterStrings(content);
+      // 对过滤后的上下文进行分词
+      const contextWords = tokenize(filteredContent);
 
       // 通过下标来获取当前光标后一个内容，即为刚输入的内容
       const word = model.getWordUntilPosition(position);
@@ -63,6 +52,10 @@ export const registerProvider = (language) => {
         startColumn: word.startColumn,
         endColumn: word.endColumn,
       };
+
+      // 过滤掉当前输入的 token
+      console.log(word);
+      const filteredContextWords = contextWords.filter((w) => w !== word.word);
 
       // 获取当前语言的关键字
       const languageKeywords = getLanguageKeywords(language);
@@ -85,34 +78,29 @@ export const registerProvider = (language) => {
       }));
 
       // 过滤掉上下文中与 Go 语言关键字重叠的部分
-      const goKeywords = getLanguageKeywords('go');
+      const goKeywords = getLanguageKeywords(language);
       const filteredContextWordsAfterGoKeywords = filteredContextWords.filter((word) => {
         return !goKeywords.includes(word);
       });
 
       // 过滤掉上下文中与基本数据类型重叠的部分
+      const baseDataTypes = getLanguageBaseDataTypes(language);
       const filteredContextWordsAfterDataType = filteredContextWordsAfterGoKeywords.filter(
         (word) => {
-          const baseDataTypes = getLanguageBaseDataTypes(language);
           return !baseDataTypes.includes(word);
         },
       );
 
-      // 对上下文分词和语言代码提示进行去重
-      const uniqueContextWords = [...new Set(filteredContextWordsAfterDataType)];
-      const combinedSuggestions = keywordSuggestions.concat(dataTypeSuggestions);
-      const uniqueSuggestions = combinedSuggestions.filter((suggestion) => {
-        return !uniqueContextWords.includes(suggestion.label);
-      });
-
-      const contextSuggestions = uniqueContextWords.map((word) => ({
+      const contextSuggestions = filteredContextWordsAfterDataType.map((word) => ({
         label: word as string,
         kind: monaco.languages.CompletionItemKind.Text,
         insertText: word as string,
         range: range,
       }));
 
-      const newSuggestions = contextSuggestions.concat(uniqueSuggestions);
+      const newSuggestions = contextSuggestions
+        .concat(keywordSuggestions)
+        .concat(dataTypeSuggestions);
 
       return {
         suggestions: newSuggestions,
