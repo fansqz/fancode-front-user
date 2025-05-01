@@ -1,18 +1,33 @@
 import * as monaco from 'monaco-editor';
-import { supportedLanguages } from '@/constants/languages.ts';
+import { supportedLanguages, languageConstants } from '@/constants/languages.ts';
 import { getLanguageKeywords, getLanguageBaseDataTypes } from './language-keyword.ts';
 
 let languageProvider = [];
 
 // 封装分词逻辑
 const tokenize = (content) => {
-  // 考虑更多的分隔符，如标点符号等
-  return content.split(/[\s.,;:\(\)\[\]\{\}"'?!]+/).filter((word) => word.length > 0);
+  // 考虑更多的分隔符，包括标点符号和常见运算符
+  return content.split(/[\s.,;:\(\)\[\]\{\}"'?!+\-*/%=&|^<>~]+/).filter((word) => word.length > 0);
 };
 
 // 使用正则表达式过滤掉字符串内容
 const filterStrings = (content) => {
   return content.replace(/(['"`]).*?\1/g, '').trim();
+};
+
+// 过滤注释
+const filterComments = (content, language) => {
+  switch (language) {
+    case languageConstants.C:
+    case languageConstants.GO:
+      // 过滤单行注释和多行注释
+      return content.replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '');
+    case languageConstants.Python:
+      // 过滤单行注释
+      return content.replace(/#.*$/gm, '');
+    default:
+      return content;
+  }
 };
 
 export const registerAllProvider = () => {
@@ -39,8 +54,10 @@ export const registerProvider = (language) => {
     provideCompletionItems: function (model, position, _context, _token) {
       // 获取整个编辑器的内容
       const content = model.getValue();
+      // 过滤掉注释
+      const contentWithoutComments = filterComments(content, language);
       // 过滤掉字符串内容
-      const filteredContent = filterStrings(content);
+      const filteredContent = filterStrings(contentWithoutComments);
       // 对过滤后的上下文进行分词
       const contextWords = tokenize(filteredContent);
 
@@ -54,7 +71,6 @@ export const registerProvider = (language) => {
       };
 
       // 过滤掉当前输入的 token
-      console.log(word);
       const filteredContextWords = contextWords.filter((w) => w !== word.word);
 
       // 获取当前语言的关键字
@@ -98,9 +114,18 @@ export const registerProvider = (language) => {
         range: range,
       }));
 
-      const newSuggestions = contextSuggestions
+      // 去重逻辑
+      const allSuggestions = contextSuggestions
         .concat(keywordSuggestions)
         .concat(dataTypeSuggestions);
+      const uniqueLabels = new Set();
+      const newSuggestions = allSuggestions.filter((suggestion) => {
+        if (uniqueLabels.has(suggestion.label)) {
+          return false;
+        }
+        uniqueLabels.add(suggestion.label);
+        return true;
+      });
 
       return {
         suggestions: newSuggestions,
