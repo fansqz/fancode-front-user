@@ -67,6 +67,7 @@
   });
 
   onMounted(() => {
+    action.value = true;
     watch(
       () => status.value,
       () => {

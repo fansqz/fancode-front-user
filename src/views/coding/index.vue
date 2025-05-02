@@ -97,7 +97,7 @@
     code.value = config.code;
     breakpoints.value = config.breakpoints;
     visualStore.setDescription(config.visualSetting.type, config.visualSetting.description);
-    document.value = await (await fetch(`/document/visual-learn-document.md`)).text();
+    document.value = await (await fetch(`/document/visual-learn-document_2.md`)).text();
   };
 
   const saveCode = () => {

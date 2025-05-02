@@ -24,11 +24,13 @@ int main() {
 
 ![Description](https://fan-code-image-1308043430.cos.ap-guangzhou.myqcloud.com/problem/file/9c7df3fd-113b-11f0-8df6-00155d03b0f2.image.png)
 
+打开可视化开关
+![Description](https://fan-code-image-1308043430.cos.ap-guangzhou.myqcloud.com/problem/file/dda9b38b-2779-11f0-901a-00163e06661f.image.png)
+添加断点
+![Description](https://fan-code-image-1308043430.cos.ap-guangzhou.myqcloud.com/problem/file/fe0ce02b-2779-11f0-901a-00163e06661f.image.png)
+开始调试！！！
+![Description](https://fan-code-image-1308043430.cos.ap-guangzhou.myqcloud.com/problem/file/2559c1e4-277a-11f0-901a-00163e06661f.image.png)
 
-添加断点，并开始调试！！！
-
-
-![Description](https://fan-code-image-1308043430.cos.ap-guangzhou.myqcloud.com/problem/file/daad60ba-113b-11f0-8df6-00155d03b0f2.image.png)
 
 &nbsp;
 
