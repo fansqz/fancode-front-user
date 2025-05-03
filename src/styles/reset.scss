@@ -107,7 +107,6 @@ body {
   line-height: 1;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   width: 100%;
-  overflow-x: hidden;
   box-sizing: border-box;
 }
 
@@ -150,8 +149,11 @@ table {
   clear: both;
 }
 
-/*容器*/
-.container {
-  margin: 10px auto 0px;
-  width: 95%;
+
+/* 禁用移动端缩放 */
+html {
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  text-size-adjust: none;
 }
