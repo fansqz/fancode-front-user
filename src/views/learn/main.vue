@@ -113,6 +113,7 @@
         // 设置第一个语言
         language.value = languages.value[0];
         // 设置代码
+        console.log("sdf")
         code.value = firstCode.code;
         // 设置可视化
         action.value = true;
@@ -129,6 +130,7 @@
     for (let visualCode of codeList.value) {
       if (visualCode.language == language.value) {
         action.value = true;
+        console.log("sdfe2")
         code.value = visualCode.code;
         descriptionType.value = visualCode.visualSetting.type;
         visualStore.setDescription(descriptionType.value, visualCode.visualSetting.description);

@@ -95,6 +95,7 @@
   const getUserCode = async () => {
     let result = await reqUserCode(problemId.value, language.value);
     if (result.code == 200) {
+      console.log("sdfe")
       code.value = result.data;
     }
   };

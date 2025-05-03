@@ -94,6 +94,7 @@
       config.code = await (await fetch(`/document/visual-learn-code.${language.value}`)).text();
     }
     // 配置
+    console.log('codesdf-' + config.code);
     code.value = config.code;
     breakpoints.value = config.breakpoints;
     visualStore.setDescription(config.visualSetting.type, config.visualSetting.description);

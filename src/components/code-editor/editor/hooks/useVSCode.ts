@@ -24,7 +24,13 @@ export const useVsCode = (vscode: VsCode) => {
     let { target, onContentChanged, onEditorBlur, onCtrlS, onUpdateBP } = vscode;
 
     let stopValueWatch: WatchStopHandle;
+    let stopLanguageWatch: WatchStopHandle;
+    let stopThemeWatch: WatchStopHandle;
+    let stopLineNumWatch: WatchStopHandle;
+    let stopErrorLocationWatch: WatchStopHandle;
+    let stopBreakpointsWatch: WatchStopHandle;
     let editorInstance: EditorInstance;
+    let isUnmounted = false;
 
     onMounted(async () => {
       if (!target.value) {
@@ -66,7 +72,7 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       // 监控语言变化
-      watch(
+      stopLanguageWatch = watch(
         () => codingStore.language,
         async (val) => {
           const model = editorInstance.getModel();
@@ -79,7 +85,7 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       // 监控主题变化
-      watch(
+      stopThemeWatch = watch(
         () => codingStore.theme,
         async (val) => {
           changeTheme(val, editorInstance);
@@ -87,7 +93,7 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       // 调试
-      watch(
+      stopLineNumWatch = watch(
         () => debugStore.lineNum,
         async (val, oldVal) => {
           const model = editorInstance.getModel();
@@ -97,7 +103,7 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       // 错误定位
-      watch(
+      stopErrorLocationWatch = watch(
         () => debugStore.currentErrorLocation,
         async (val: number[]) => {
           // 设置高亮行
@@ -126,16 +132,19 @@ export const useVsCode = (vscode: VsCode) => {
       );
 
       // 监控断点变化
-      watch(
+      stopBreakpointsWatch = watch(
         () => debugStore.breakpoints,
         () => {
           if (!editorInstance) {
             return;
           }
           let bps = getAllBreakpoint(editorInstance);
-          let bps2 = debugStore.breakpoints.slice().sort();
-          if (!isEqual(bps, bps2)) {
-            initBP(editorInstance, debugStore.breakpoints);
+          let bps2 = debugStore.breakpoints;
+          if (bps2 && bps2.length > 0) {
+            bps2 = bps2.slice().sort();
+            if (!isEqual(bps, bps2)) {
+              initBP(editorInstance, debugStore.breakpoints);
+            }
           }
         },
       );
@@ -159,18 +168,21 @@ export const useVsCode = (vscode: VsCode) => {
       // 监控内容修改，执行回调
       editorInstance.onDidChangeModelContent(
         debounce(async () => {
+          if (isUnmounted) return;
           // 使用防抖，在不输入内容的时候进行保存
           onContentChanged?.(editorInstance.getValue());
           // 更新断点
           let bps = getAllBreakpoint(editorInstance);
           let bps2 = debugStore.breakpoints;
-          for (let breakpoint of bps2) {
-            if (!bps || !bps.includes(breakpoint)) {
-              vscode.onUpdateBP(bps, breakpoint, 'del');
+          if (bps2 && bps2.length > 0) {
+            for (let breakpoint of bps2) {
+              if (!bps || !bps.includes(breakpoint)) {
+                vscode.onUpdateBP(bps, breakpoint, 'del');
+              }
             }
-          }
-          if (!isEqual(bps, bps2)) {
-            initBP(editorInstance, debugStore.breakpoints);
+            if (!isEqual(bps, bps2)) {
+              initBP(editorInstance, debugStore.breakpoints);
+            }
           }
         }, 600),
       );
@@ -186,7 +198,13 @@ export const useVsCode = (vscode: VsCode) => {
 
     // 在组件即将卸载前执行，做些销毁动作
     onBeforeUnmount(() => {
-      stopValueWatch();
+      isUnmounted = true;
+      stopValueWatch && stopValueWatch();
+      stopLanguageWatch && stopLanguageWatch();
+      stopThemeWatch && stopThemeWatch();
+      stopLineNumWatch && stopLineNumWatch();
+      stopErrorLocationWatch && stopErrorLocationWatch();
+      stopBreakpointsWatch && stopBreakpointsWatch();
       let model = editorInstance.getModel();
       model?.dispose();
       editorInstance?.dispose();
