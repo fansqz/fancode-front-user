@@ -1,5 +1,12 @@
 :deep(.debug-line) {
-  background-color: #ebb563;
+  background: linear-gradient(90deg, rgba(255, 138, 128, 0.18) 0%, rgba(255, 183, 131, 0.10) 100%);
+  border: 1px solid #ff7043;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px 0 rgba(255, 112, 67, 0.10), 0 1.5px 0 0 rgba(255,255,255,0.10) inset;
+  position: relative;
+  z-index: 2;
+  transition: background 0.3s, box-shadow 0.3s;
+  overflow: hidden;
 }
 :deep(.debug-icon) {
   &::before {
