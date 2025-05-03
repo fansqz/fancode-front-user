@@ -98,6 +98,15 @@ const convertLinkListVisualData = (
       }
     }
   }
+
+  // 对节点按ID进行排序
+  nodes.sort((a, b) => {
+    // 将ID转换为数字进行比较
+    const idA = parseInt(a.id);
+    const idB = parseInt(b.id);
+    return idA - idB;
+  });
+
   return {
     data: nodes,
     layouter: 'linkList',
