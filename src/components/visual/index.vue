@@ -1,6 +1,10 @@
 <template>
   <div class="visual_contaner">
     <div class="visaul" id="visaul" @wheel="handleScroll"> </div>
+    <div class="zoom-controls">
+      <button class="zoom-btn" @click="resizeZoom(1)">+</button>
+      <button class="zoom-btn" @click="resizeZoom(-1)">-</button>
+    </div>
   </div>
 </template>
 
@@ -141,6 +145,39 @@
     .option {
       position: absolute;
       bottom: 100px;
+    }
+    .zoom-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 1000;
+      
+      .zoom-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+        background: white;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background: #f5f5f5;
+          transform: scale(1.05);
+        }
+        
+        &:active {
+          transform: scale(0.95);
+        }
+      }
     }
   }
 </style>
