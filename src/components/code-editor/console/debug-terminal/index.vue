@@ -5,7 +5,7 @@
         <!--栈帧列表-->
         <div class="left">
           <div class="frames_title">
-            <el-text class="frames_text">frames</el-text>
+            <el-text class="frames_text">栈帧</el-text>
           </div>
           <Frames class="frames" />
         </div>
@@ -18,8 +18,8 @@
             mode="horizontal"
             @select="handleSelect"
           >
-            <el-menu-item index="console">console</el-menu-item>
-            <el-menu-item index="variables">variables</el-menu-item>
+            <el-menu-item index="console">控制台</el-menu-item>
+            <el-menu-item index="variables">变量</el-menu-item>
           </el-menu>
           <div class="console" v-show="activeIndex == 'console'">
             <Console />
