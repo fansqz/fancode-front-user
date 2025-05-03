@@ -129,12 +129,12 @@ const showcaseItems = ref([
   {
     title: '可视化学习体验',
     description: '通过直观的图形界面，轻松理解复杂的数据结构概念',
-    image: '/src/assets/images/showcase-visualization.png'
+    image: '/images/showcase-visualization.png'
   },
   {
     title: '实时代码调试',
     description: '在线编写和调试代码，即时查看运行结果和数据结构变化',
-    image: '/src/assets/images/showcase-debug.png'
+    image: '/images/showcase-debug.png'
   }
 ]);
 
