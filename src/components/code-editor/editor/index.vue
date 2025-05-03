@@ -137,7 +137,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import './style/break-point.scss';
+  @import './style/breakpoint.scss';
   @import './style/debug.scss';
   .editor {
     position: absolute;
