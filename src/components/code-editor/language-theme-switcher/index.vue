@@ -34,7 +34,7 @@
   const reloadCode = async () => {
     let result = await reqProblemTemplateCode(language.value);
     if (result.code == 200) {
-      console.log("sdf234e")
+      console.log('sdf234e');
       code.value = result.data;
     }
   };

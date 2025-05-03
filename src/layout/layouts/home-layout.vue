@@ -10,27 +10,27 @@
 </template>
 
 <script setup lang="ts">
-import Header from '../header/index.vue';
+  import Header from '../header/index.vue';
 </script>
 
 <style scoped lang="scss">
-.home-layout {
-  width: 100vw;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+  .home-layout {
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-.home-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  background: transparent;
-}
+  .home-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: transparent;
+  }
 
-.home-content {
-  width: 100%;
-  min-height: 100vh;
-}
-</style> 
+  .home-content {
+    width: 100%;
+    min-height: 100vh;
+  }
+</style>

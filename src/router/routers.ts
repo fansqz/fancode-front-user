@@ -67,8 +67,8 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         path: '',
         name: 'home-content',
         component: () => import('@/views/home/index.vue'),
-      }
-    ]
+      },
+    ],
   },
   {
     // 题目

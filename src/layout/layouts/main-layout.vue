@@ -21,13 +21,13 @@
 </script>
 
 <style scoped lang="scss">
-.layout-container {
-  width: 100vw;
-  .layout-main {
-    position: relative;
-    top: $base-header-height;
-    width: 100%;
-    box-sizing: border-box;
+  .layout-container {
+    width: 100vw;
+    .layout-main {
+      position: relative;
+      top: $base-header-height;
+      width: 100%;
+      box-sizing: border-box;
+    }
   }
-}
 </style>

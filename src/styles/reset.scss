@@ -148,12 +148,3 @@ table {
   visibility: hidden;
   clear: both;
 }
-
-
-/* 禁用移动端缩放 */
-html {
-  -webkit-text-size-adjust: none;
-  -moz-text-size-adjust: none;
-  -ms-text-size-adjust: none;
-  text-size-adjust: none;
-}

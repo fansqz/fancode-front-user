@@ -2,14 +2,20 @@
   <div class="visual_contaner">
     <div class="visaul" id="visaul" @wheel="handleScroll"> </div>
     <div class="zoom-controls">
-      <button class="zoom-btn" 
-        @mousedown="startContinuousZoom(1)" 
-        @mouseup="stopContinuousZoom" 
-        @mouseleave="stopContinuousZoom">+</button>
-      <button class="zoom-btn" 
-        @mousedown="startContinuousZoom(-1)" 
-        @mouseup="stopContinuousZoom" 
-        @mouseleave="stopContinuousZoom">-</button>
+      <button
+        class="zoom-btn"
+        @mousedown="startContinuousZoom(1)"
+        @mouseup="stopContinuousZoom"
+        @mouseleave="stopContinuousZoom"
+        >+</button
+      >
+      <button
+        class="zoom-btn"
+        @mousedown="startContinuousZoom(-1)"
+        @mouseup="stopContinuousZoom"
+        @mouseleave="stopContinuousZoom"
+        >-</button
+      >
     </div>
   </div>
 </template>
@@ -136,7 +142,7 @@
   const startContinuousZoom = (increment: number) => {
     // 立即执行一次缩放
     resizeZoom(increment);
-    
+
     // 设置定时器持续缩放
     zoomTimer = window.setInterval(() => {
       resizeZoom(increment);
@@ -178,7 +184,7 @@
       flex-direction: column;
       gap: 8px;
       z-index: 1000;
-      
+
       .zoom-btn {
         width: 32px;
         height: 32px;
@@ -215,8 +221,12 @@
           border-radius: 8px;
           padding: 1px;
           background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
         }
