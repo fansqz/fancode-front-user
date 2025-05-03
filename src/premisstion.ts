@@ -13,7 +13,6 @@ const allowPaths = ['/register', '/login', '/coding', '/home', '/learn'];
 
 // 全局前置守卫
 router.beforeEach(async (to: any, _from: any, next: any) => {
-  setTitle(to);
   // 进度条
   nprogress.start();
 
