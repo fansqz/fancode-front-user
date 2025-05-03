@@ -1,6 +1,5 @@
 // 路由鉴权
 import router from '@/router';
-import setting from './setting';
 // 进度条
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -47,15 +46,6 @@ router.beforeEach(async (to: any, _from: any, next: any) => {
 router.afterEach(() => {
   nprogress.done();
 });
-
-const setTitle = (to) => {
-  // 顶部标题
-  if (to.meta.title) {
-    document.title = setting.title + '-' + to.meta.title;
-  } else {
-    document.title = setting.title;
-  }
-};
 
 const checkIsAllow = (path: string): boolean => {
   for (let item of allowPaths) {
