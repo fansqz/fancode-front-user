@@ -6,11 +6,8 @@
 
 <style scoped lang="scss">
   .logo {
-    img {
-      position: relative;
-      object-fit: contain;
-      top: 15%;
-      left: 8%;
-    }
+    height: 100%;
+    width: auto;
+    object-fit: contain;
   }
 </style>

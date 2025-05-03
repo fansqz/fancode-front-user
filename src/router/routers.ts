@@ -9,16 +9,15 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
   },
   {
     path: '/',
-    component: () => import('@/layout/index.vue'),
+    component: () => import('@/layout/layouts/main-layout.vue'),
     name: 'root',
-    redirect: '/coding',
+    redirect: '/home',
     children: [
-      // 取消题目读取
       {
-        // home
-        path: '/home',
-        name: 'home',
-        component: () => import('@/views/home/index.vue'),
+        // bank
+        path: '/bank',
+        name: 'bank',
+        component: () => import('@/views/bank/index.vue'),
       },
       {
         // coding
@@ -31,12 +30,6 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         path: '/learn/:bankID',
         name: 'learn',
         component: () => import('@/views/learn/index.vue'),
-      },
-      {
-        // 题库
-        path: '/bank/:bankID',
-        name: 'bank',
-        component: () => import('@/views/bank/index.vue'),
       },
       // 登录
       {
@@ -63,6 +56,19 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         component: () => import('@/views/account-setting/index.vue'),
       },
     ],
+  },
+  {
+    // home page with its own layout
+    path: '/home',
+    name: 'home',
+    component: () => import('@/layout/layouts/home-layout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'home-content',
+        component: () => import('@/views/home/index.vue'),
+      }
+    ]
   },
   {
     // 题目

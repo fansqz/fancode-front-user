@@ -193,7 +193,7 @@
     position: absolute;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - $base-header-height);
     display: flex;
     justify-content: center;
     align-items: flex-start;

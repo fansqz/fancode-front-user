@@ -107,10 +107,12 @@
       width: 50%;
       left: 0%;
       display: flex;
+      align-items: center;
       .logo {
         margin: 0px 20px;
-        height: $base-header-height - 20px;
-        padding: 10px;
+        height: $base-header-height - 15px;
+        display: flex;
+        align-items: center;
       }
       .empty {
         width: 20px;

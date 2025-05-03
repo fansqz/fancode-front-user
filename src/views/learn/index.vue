@@ -111,7 +111,7 @@
 <style scoped lang="scss">
   .container {
     position: relative;
-    height: 100%;
+    height: calc(100vh - $base-header-height);
     width: 100%;
     margin: 0px;
     .bank-name {
