@@ -1,7 +1,7 @@
 <template>
   <div class="debug_terminal">
-    <splitpanes>
-      <pane size="25%">
+    <splitpanes class="default-theme" :dbl-click-splitter="false" :push-other-panes="false">
+      <pane size="30">
         <!--栈帧列表-->
         <div class="left">
           <div class="frames_title">
@@ -10,7 +10,7 @@
           <Frames class="frames" />
         </div>
       </pane>
-      <pane size="75%">
+      <pane size="70">
         <div class="right">
           <el-menu
             :default-active="activeIndex"
@@ -50,6 +50,7 @@
   import TerminateButton from '../debug-button/debug-button-terminate.vue';
   import { ref } from 'vue';
   import { Splitpanes, Pane } from 'splitpanes';
+  import 'splitpanes/dist/splitpanes.css';
 
   const activeIndex = ref('console');
 
