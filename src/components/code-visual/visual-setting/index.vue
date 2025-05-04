@@ -2,7 +2,7 @@
   <div class="visual-description">
     <el-container>
       <el-header class="title">
-        <el-text>可视化定义</el-text>
+        <el-text>可视化设置</el-text>
       </el-header>
       <el-main class="main">
         <el-table

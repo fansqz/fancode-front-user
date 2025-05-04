@@ -83,6 +83,7 @@
   .console {
     height: 100%;
     width: 100%;
+    min-width: 450px;
     display: flex;
     flex-flow: column;
     position: absolute;
