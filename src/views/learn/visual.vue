@@ -1,20 +1,10 @@
 <template>
-  <splitpanes
-    class="default-theme container"
-    horizontal
-    :dbl-click-splitter="false"
-    :push-other-panes="false"
-    @resized="resizeVisualView"
-  >
-    <pane size="68">
+  <div class="container">
       <div class="visual-container" ref="visualContainer">
         <Visaul ref="visual" class="visaul" :action="action" :sources="sources" />
       </div>
-    </pane>
-    <pane size="32">
-      <VisaulTemplate class="visual-description" />
-    </pane>
-  </splitpanes>
+      <VisaulTemplate/>
+  </div> 
 </template>
 
 <script setup lang="ts">
@@ -93,11 +83,6 @@
       background-image: radial-gradient(circle, rgba(107, 102, 102, 0.5) 1px, transparent 1px);
       background-size: 25px 25px;
       background-color: #f9f9f9;
-    }
-    .visual-description {
-      position: relative;
-      width: 100%;
-      height: 100%;
     }
   }
 </style>

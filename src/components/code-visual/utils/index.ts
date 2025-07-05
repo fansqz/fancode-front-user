@@ -1,4 +1,4 @@
-import { VisualDescription } from '@/components/code-visual/visual-setting/type.ts';
+import { VisualDescription } from '@/api/visual/type';
 import { descriptions } from '@/constants/description';
 import { Source } from 'structv2';
 import reqArrayVisualData from './array';

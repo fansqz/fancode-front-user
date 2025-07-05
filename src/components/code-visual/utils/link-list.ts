@@ -1,7 +1,7 @@
 import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
 import { LinkListData, LinkListNode } from '@/components/code-visual/visual/type/link-list';
-import { LinkListDescription } from '@/components/code-visual/visual-setting/type.ts';
+import { LinkListDescription } from '@/api/visual/type';
 
 const reqLinkListVisualData = async (
   debugID: string,

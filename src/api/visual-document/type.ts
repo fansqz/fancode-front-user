@@ -1,5 +1,5 @@
 import { descriptions } from '@/constants/description.ts';
-import { VisualDescription } from '@/components/code-visual/visual-setting/type.ts';
+import { VisualDescription } from '@/api/visual/type';
 import { languageConstants } from '@/constants/languages.ts';
 
 export type VisualDocumentDirectoryResponse = BaseResponse & {

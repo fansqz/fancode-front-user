@@ -1,7 +1,7 @@
 import { StructVisualData } from '@/api/visual/type';
 import { reqStructVisual } from '@/api/visual';
 import { GraphData, GraphNode } from '@/components/code-visual/visual/type/graph';
-import { GraphDescription } from '@/components/code-visual/visual-setting/type.ts';
+import { GraphDescription } from '@/api/visual/type';
 
 const reqGraphVisualData = async (
   debugID: string,

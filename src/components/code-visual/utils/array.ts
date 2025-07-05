@@ -1,7 +1,7 @@
 import { VariableVisualData, VisualVariable } from '@/api/visual/type';
 import { reqVariableVisual } from '@/api/visual';
 import { ArrayData, ArrayNode } from '@/components/code-visual/visual/type/array';
-import { ArrayDescription } from '@/components/code-visual/visual-setting/type.ts';
+import { ArrayDescription } from '@/api/visual/type';
 
 const reqArrayVisualData = async (
   debugID: string,

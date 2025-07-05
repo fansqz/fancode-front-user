@@ -6,12 +6,13 @@ import {
   GraphDescription,
   LinkListDescription,
   VisualDescription,
-} from '@/components/code-visual/visual-setting/type.ts';
+} from '@/api/visual/type';
 
 type VisualState = {
   // 可视化是否开启
   action: boolean;
-
+  // 是否ai自动识别可视化
+  isAIEnabled: boolean;
   // 可视化描述类型
   descriptionType: descriptions;
   // 可视化
@@ -23,7 +24,10 @@ type VisualState = {
 
 const useVisualStore = defineStore('visual', {
   state: (): VisualState => ({
+    // 可视化是否开启
     action: false,
+    // 是否ai自动识别可视化
+    isAIEnabled: true,
     descriptionType: descriptions.Array,
     arrayDescription: {
       arrayName: 'Arr',

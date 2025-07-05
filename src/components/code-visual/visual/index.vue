@@ -178,7 +178,7 @@
     }
     .zoom-controls {
       position: absolute;
-      bottom: 20px;
+      bottom: 300px;
       right: 20px;
       display: flex;
       flex-direction: column;

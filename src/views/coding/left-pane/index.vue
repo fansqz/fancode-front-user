@@ -7,11 +7,9 @@
       :ellipsis="false"
       @select="handleSelect"
     >
-      <el-menu-item index="0">配置说明</el-menu-item>
       <el-menu-item index="1">可视化</el-menu-item>
     </el-menu>
     <div class="main" ref="main">
-      <Document v-if="activeIndex == '0'" :content="content" />
       <StructVisual ref="structVisual" v-if="activeIndex == '1'" />
     </div>
   </div>
@@ -25,7 +23,7 @@
   let content = ref(props.content);
   const structVisual = ref<InstanceType<typeof StructVisual> | null>();
   const main = ref<HTMLElement>();
-  const activeIndex = ref('0');
+  const activeIndex = ref('1');
   const handleSelect = (key: string) => {
     activeIndex.value = key;
   };
@@ -34,15 +32,6 @@
     if (props.content != undefined) {
       content.value = props.content;
     }
-  });
-
-  // 重新设置visual的大小
-  const resizeVisualView = () => {
-    structVisual.value?.resizeVisualView();
-  };
-
-  defineExpose({
-    resizeVisualView,
   });
 </script>
 

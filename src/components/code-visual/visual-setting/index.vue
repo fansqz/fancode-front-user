@@ -1,129 +1,170 @@
 <template>
-  <div class="visual-description">
-    <el-container>
-      <el-header class="title">
-        <el-text>可视化设置</el-text>
-      </el-header>
-      <el-main class="main">
-        <el-table
-          size="small"
-          ref="singleTableRef"
-          class="template-select"
-          :data="descriptionTypeList"
-          highlight-current-row
-          @current-change="handleCurrentChange"
-        >
-          <el-table-column>
-            <template v-slot="{ row }">
-              <div class="item">
-                <i
-                  v-if="row.type == descriptionType"
-                  class="selected-icon iconfont icon-Other-10"
-                />
-                <i
-                  v-if="row.type != descriptionType"
-                  class="selected-icon iconfont icon-Other-11"
-                />
-                {{ row.name }}
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="setting">
-          <ArraySetting v-if="descriptionType == descriptions.Array" />
-          <BinaryTreeSetting v-if="descriptionType == descriptions.BinaryTree" />
-          <LinkList v-if="descriptionType == descriptions.LinkList" />
-          <Graph v-if="descriptionType == descriptions.Graph" />
+  <el-collapse v-model="activeNames" class="visual-description-collapse">
+    <el-collapse-item name="1">
+      <template #title>
+        <div class="title-container" @click.stop>
+          <el-text class="title">可视化配置</el-text>
+          <div class="controls">
+            <div class="control-group">
+              <el-text class="control-label">可视化</el-text>
+              <el-switch 
+                v-model="action" 
+                size="small"
+                active-color="#409eff"
+                inactive-color="#dcdfe6"
+              />
+            </div>
+            <div class="divider"></div>
+            <div class="mode-switch">
+              <el-button 
+                :type="!isAIEnabled ? 'primary' : 'default'"
+                size="small"
+                @click.stop="toggleCustom"
+                class="mode-btn"
+              >
+                <el-icon><Edit /></el-icon>
+                编辑
+              </el-button>
+              <el-button 
+                :type="isAIEnabled ? 'primary' : 'default'"
+                size="small"
+                @click.stop="toggleAI"
+                class="mode-btn"
+              >
+                <el-icon><Star /></el-icon>
+                AI识别
+              </el-button>
+            </div>
+          </div>
         </div>
-        <div class="option">
-          <el-switch v-model="action" />
-        </div>
-      </el-main>
-    </el-container>
-  </div>
+      </template>
+      <div class="visual-description" :class="{ 'disabled-input': isAIEnabled }">
+        <VisaulTemplate />
+      </div>
+    </el-collapse-item>
+  </el-collapse>
 </template>
 
 <script setup lang="ts">
-  import useVisualStore from '@/store/modules/visual.ts';
+  import useVisualStore from '@/store/modules/visual';
   import { ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { ElTable } from 'element-plus';
-  import { descriptions } from '@/constants/description.ts';
-  import ArraySetting from './setting/array.vue';
-  import BinaryTreeSetting from './setting/binary-tree.vue';
-  import LinkList from './setting/link-list.vue';
-  import Graph from './setting/graph.vue';
+  import Visaul from '@/components/code-visual/visual/index.vue';
+  import VisaulTemplate from './setting/index.vue';
+  import { watch } from 'vue';
+  import { Edit, Star } from '@element-plus/icons-vue';
 
   const visualStore = useVisualStore();
-  const { action, descriptionType } = storeToRefs(visualStore);
+  const { action, descriptionType, isAIEnabled } = storeToRefs(visualStore);
+  const activeNames = ref<string[]>([]);
 
-  const singleTableRef = ref<InstanceType<typeof ElTable>>();
-  const descriptionTypeList = ref([
-    {
-      name: '一维数组',
-      type: descriptions.Array,
-    },
-    {
-      name: '二叉树',
-      type: descriptions.BinaryTree,
-    },
-    {
-      name: '链表',
-      type: descriptions.LinkList,
-    },
-    {
-      name: '图',
-      type: descriptions.Graph,
-    },
-  ]);
 
-  // 选择了其他可视化模板
-  const handleCurrentChange = async (val) => {
-    descriptionType.value = val.type;
+  // 开启自定义编辑
+  const toggleCustom = () => {
+    isAIEnabled.value = false;
+    activeNames.value = ['1'];
   };
+
+  // 切换AI可视化
+  const toggleAI = () => {
+    isAIEnabled.value = true;
+    activeNames.value = [];
+  };
+
 </script>
 
+
 <style lang="scss" scoped>
-  .visual-description {
-    background-color: $base-background-color;
-    .title {
-      height: 30px;
-      border-bottom: 1px solid var(--el-border-color);
-    }
-    .main {
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
+  .visual-description-collapse {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: auto;
+    .title-container {
       display: flex;
-      padding: 0px;
-      .template-select {
-        width: 20%;
-        margin-left: 20px;
-        margin-right: 10px;
-        height: 150px;
-        .item {
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 20px;
+      
+      .title {
+        margin: 0;
+      }
+      
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        .control-group {
           display: flex;
-          .selected-icon {
-            position: relative;
-            font-size: 15px !important;
-            margin: auto 2px;
-            color: rgb(90, 180, 253);
+          align-items: center;
+          gap: 6px;
+          
+          .control-label {
+            font-size: 12px;
+            color: #606266;
+            font-weight: 500;
+          }
+        }
+        
+        .divider {
+          width: 1px;
+          height: 16px;
+          background-color: #e4e7ed;
+        }
+        
+        .mode-switch {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          background-color: #f5f7fa;
+          border-radius: 6px;
+          padding: 2px;
+          
+          .mode-btn {
+            border-radius: 4px;
+            border: none;
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            
+            &:hover {
+              transform: translateY(-1px);
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            
+            .el-icon {
+              margin-right: 4px;
+              font-size: 12px;
+            }
           }
         }
       }
-      .setting {
-        width: calc(80% - 100px);
-        height: 150px;
-        border-left: 1px solid $base-border-color;
-      }
-      .option {
-        width: 40px;
-        height: 150px;
-        margin-right: 20px;
-        margin-left: 10px;
-        display: flex;
-        flex-flow: column;
+    }
+    .visual-description {
+      height: 30%;
+      
+      &.disabled-input {
+        pointer-events: none;
+        opacity: 0.6;
+        
+        :deep(input),
+        :deep(textarea),
+        :deep(select),
+        :deep(button:not(.ai-control-button)) {
+          pointer-events: none;
+          user-select: none;
+        }
+        
+        :deep(.el-input__inner),
+        :deep(.el-textarea__inner) {
+          background-color: #f5f5f5;
+          color: #999;
+          cursor: not-allowed;
+        }
       }
     }
-  }
+  } 
 </style>

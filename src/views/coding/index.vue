@@ -56,16 +56,11 @@
     code: string;
     language: languageConstants;
     breakpoints: number[];
-    visualSetting: VisualSetting;
   };
   let config: configType = {
     code: '',
     language: languageConstants.C,
     breakpoints: [],
-    visualSetting: {
-      type: descriptions.Array,
-      description: {},
-    },
   };
   const leftPane = ref<InstanceType<typeof LeftPane> | null>();
   language.value = languageConstants.GO;
@@ -96,7 +91,6 @@
     // 配置
     code.value = config.code;
     breakpoints.value = config.breakpoints;
-    visualStore.setDescription(config.visualSetting.type, config.visualSetting.description);
     document.value = await (await fetch(`/document/visual-learn-document_2.md`)).text();
   };
 
