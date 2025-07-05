@@ -94,9 +94,7 @@
       let list: any[] = [];
       for (let i = 0; i < result.data.codeList.length; i++) {
         const codeItem = result.data.codeList[i];
-        // 反序列化 setting 属性
         list.push({
-          visualSetting: JSON.parse(codeItem.visualSetting),
           code: codeItem.code,
           language: codeItem.language,
           breakpoints: codeItem.breakpoints,
@@ -113,12 +111,7 @@
         // 设置第一个语言
         language.value = languages.value[0];
         // 设置代码
-        console.log('sdf');
         code.value = firstCode.code;
-        // 设置可视化
-        action.value = true;
-        descriptionType.value = firstCode.visualSetting.type;
-        visualStore.setDescription(descriptionType.value, firstCode.visualSetting.description);
         // 设置断点
         breakpoints.value = firstCode.breakpoints;
       }

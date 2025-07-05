@@ -34,7 +34,6 @@ export type VisualDocumentCode = {
   code: string;
   language: languageConstants;
   breakpoints: number[];
-  visualSetting: string;
 };
 
 export type VisualSetting = {
