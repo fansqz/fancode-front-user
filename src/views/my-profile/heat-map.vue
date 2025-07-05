@@ -21,60 +21,60 @@
 </template>
 
 <script setup lang="ts">
-  import { getCurrentInstance, onMounted, ref } from 'vue';
-  import { reqActivityMap, reqActivityYear } from '@/api/submission';
+  import { getCurrentInstance, onMounted, ref } from 'vue'
+  import { reqActivityMap, reqActivityYear } from '@/api/submission'
 
-  let currentInstance = getCurrentInstance();
-  let proxy: any;
+  let currentInstance = getCurrentInstance()
+  let proxy: any
   if (currentInstance != null) {
-    proxy = currentInstance.proxy;
+    proxy = currentInstance.proxy
   }
-  let heatMap = ref(null);
-  let range;
-  let data: any[] = [];
-  let activityYears = ref<string[]>([]);
-  let activityYear = ref('0');
+  let heatMap = ref(null)
+  let range
+  let data: any[] = []
+  let activityYears = ref<string[]>([])
+  let activityYear = ref('0')
 
   const updateHeatMap = async (year: string) => {
-    activityYear.value = year;
-    await getVirtualData(year);
-    setOption();
-  };
+    activityYear.value = year
+    await getVirtualData(year)
+    setOption()
+  }
 
   const getVirtualData = async (year: string) => {
     // 读取data
-    let result = await reqActivityMap(year);
+    let result = await reqActivityMap(year)
     if (result.code == 200) {
-      let data2 = result.data;
-      let newData: any[] = [];
+      let data2 = result.data
+      let newData: any[] = []
       data2.forEach((item: any) => {
-        let newItem = [];
-        newItem.push(item.date);
-        newItem.push(item.count);
-        newData.push(newItem);
-      });
-      data = newData;
+        let newItem = []
+        newItem.push(item.date)
+        newItem.push(item.count)
+        newData.push(newItem)
+      })
+      data = newData
     }
-    range = [];
+    range = []
     // 读取年份范围
     if (year == '0') {
-      let currentDate = new Date();
-      let end = currentDate.toISOString().slice(0, 10);
-      let currentYear = currentDate.getFullYear(); // 获取当前年份
+      let currentDate = new Date()
+      let end = currentDate.toISOString().slice(0, 10)
+      let currentYear = currentDate.getFullYear() // 获取当前年份
       let previousYearDate = new Date(
         currentYear - 1,
         currentDate.getMonth(),
         currentDate.getDate(),
-      );
-      let start = previousYearDate.toISOString().slice(0, 10);
-      range.push(start);
-      range.push(end);
+      )
+      let start = previousYearDate.toISOString().slice(0, 10)
+      range.push(start)
+      range.push(end)
     } else {
-      range = year;
+      range = year
     }
-  };
+  }
   const setOption = () => {
-    const myChart = proxy.$echarts.init(heatMap.value);
+    const myChart = proxy.$echarts.init(heatMap.value)
     myChart.setOption({
       visualMap: {
         show: false,
@@ -121,55 +121,61 @@
         coordinateSystem: 'calendar',
         data: data,
       },
-    });
-  };
+    })
+  }
 
   const getActivityYear = async () => {
-    let result = await reqActivityYear();
+    let result = await reqActivityYear()
     if (result.code == 200) {
-      activityYears.value = result.data;
-      activityYears.value.sort((a, b) => Number(b) - Number(a));
-      activityYears.value.unshift('0');
+      activityYears.value = result.data
+      activityYears.value.sort((a, b) => Number(b) - Number(a))
+      activityYears.value.unshift('0')
     }
-  };
+  }
 
   onMounted(() => {
-    updateHeatMap('0');
-    getActivityYear();
-  });
+    updateHeatMap('0')
+    getActivityYear()
+  })
 </script>
 
 <style lang="scss" scoped>
   .card {
     width: 800px;
-    border-radius: 5px;
     margin-top: 20px;
+    border-radius: 5px;
+
     .heat-map-container {
-      height: 150px;
       display: flex;
+      height: 150px;
+
       .heat-map {
         width: 650px;
         height: 150px;
       }
+
       .select-year {
-        height: 150px;
         display: flex;
         align-items: center;
+        height: 150px;
+
         .select-year-scroll {
           height: 100px;
+
           .scrollbar-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 90px;
             height: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             color: #9da19e;
-            border-radius: 5px;
-            background-color: rgba(212, 241, 221, 0.2);
             cursor: pointer;
+            background-color: rgb(212 241 221 / 20%);
+            border-radius: 5px;
           }
+
           .scrollbar-item-active {
-            background-color: rgba(98, 124, 107, 0.2);
+            background-color: rgb(98 124 107 / 20%);
           }
         }
       }

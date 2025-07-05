@@ -1,5 +1,5 @@
-import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions, Vector } from 'structv2';
-import G6 from '@antv/g6';
+import G6 from '@antv/g6'
+import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions, Vector } from 'structv2'
 
 SV.registerLayout('graph', {
   defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
@@ -46,17 +46,17 @@ SV.registerLayout('graph', {
       behavior: {
         dragNode: true,
       },
-    };
+    }
   },
 
   layout(nodes: SVNode[], layoutOptions: LayoutOptions) {
-    let nodeLength = nodes.length;
-    let intervalAngle = (2 * Math.PI) / nodes.length;
-    let { radius } = layoutOptions;
+    const nodeLength = nodes.length
+    const intervalAngle = (2 * Math.PI) / nodes.length
+    const { radius } = layoutOptions
     for (let i = 0; i < nodeLength; i++) {
-      let [x, y] = Vector.rotation(-intervalAngle * i, [0, -radius]);
-      nodes[i].set('x', x);
-      nodes[i].set('y', y);
+      const [x, y] = Vector.rotation(-intervalAngle * i, [0, -radius])
+      nodes[i].set('x', x)
+      nodes[i].set('y', y)
     }
   },
-});
+})

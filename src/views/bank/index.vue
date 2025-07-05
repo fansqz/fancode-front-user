@@ -13,7 +13,7 @@
         </div>
 
         <div class="problem-list">
-          <el-table style="margin: 10px 0px" border :data="problemList">
+          <el-table style="margin: 10px 0" border :data="problemList">
             <el-table-column label="序号" width="80px" align="center" type="index" />
             <el-table-column label="状态" width="80px" align="center">
               <template v-slot="{ row }">
@@ -45,7 +45,7 @@
             :background="true"
             layout="prev, pager, next, jumper, ->,sizes, total"
             :total="total"
-            style="margin: 0px 3%"
+            style="margin: 0 3%"
           />
         </div>
       </div>
@@ -54,143 +54,154 @@
 </template>
 
 <script setup lang="ts">
-  import { reqProblemList } from '@/api/problem';
-  import { ProblemListRequest } from '@/api/problem/type';
-  import { reqBank } from '@/api/bank';
-  import { ref, reactive, onMounted } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import { reqGetURL } from '@/api/common';
+  import { reqProblemList } from '@/api/problem'
+  import { ProblemListRequest } from '@/api/problem/type'
+  import { reqBank } from '@/api/bank'
+  import { ref, reactive, onMounted } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { reqGetURL } from '@/api/common'
 
-  const $route = useRoute();
-  const $router = useRouter();
+  const $route = useRoute()
+  const $router = useRouter()
 
-  let bankID: number = +$route.params.bankID;
+  let bankID: number = +$route.params.bankID
   // 题库信息
   let problemBank = reactive({
     id: bankID,
     name: '',
     icon: '',
     description: '',
-  });
+  })
 
   // 搜索的参数
   let listQuery = reactive<ProblemListRequest>({
     page: 1,
     pageSize: 10,
     bankID: bankID,
-  });
-  let total = ref<number>(0);
-  let problemList = ref([]);
+  })
+  let total = ref<number>(0)
+  let problemList = ref([])
 
   const getProblemBank = async (bankID: number) => {
-    let result = await reqBank(bankID);
+    let result = await reqBank(bankID)
     if (result.code == 200) {
-      let data = result.data;
-      problemBank.name = data.name;
-      let result2 = await reqGetURL(data.icon);
+      let data = result.data
+      problemBank.name = data.name
+      let result2 = await reqGetURL(data.icon)
       if (result2.code == 200) {
-        problemBank.icon = result2.data;
+        problemBank.icon = result2.data
       }
-      problemBank.description = data.description;
+      problemBank.description = data.description
     }
-  };
+  }
 
   const getProblemList = async () => {
-    let result = await reqProblemList(listQuery);
+    let result = await reqProblemList(listQuery)
     if (result.code == 200) {
-      total.value = result.data.total;
-      problemList.value = result.data.list;
+      total.value = result.data.total
+      problemList.value = result.data.list
     }
-  };
+  }
 
   //组件挂载完毕以后获取数据
   onMounted(() => {
-    getProblemBank(problemBank.id);
-    getProblemList();
-  });
+    getProblemBank(problemBank.id)
+    getProblemList()
+  })
 
   //页码改变时触发
   const changePageNo = () => {
     // 页面变化时，页面归一
-    getProblemList();
-  };
+    getProblemList()
+  }
 
   const changePageSize = () => {
-    listQuery.page = 1;
-    getProblemList();
-  };
+    listQuery.page = 1
+    getProblemList()
+  }
 
   const gotoProblem = (problemNumber: string) => {
-    changeRoute('problem', { problemNumber: problemNumber });
-  };
+    changeRoute('problem', { problemNumber: problemNumber })
+  }
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
-      return;
+      return
     }
-    $router.push({ name: routeName, params: params });
-  };
+    $router.push({ name: routeName, params: params })
+  }
 </script>
 
 <style scoped lang="scss">
   .container {
     position: relative;
-    height: calc(100vh - $base-header-height);
-    width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0px;
+    width: 100%;
+    height: calc(100vh - $base-header-height);
+    margin: 0;
+
     .bank-card {
-      height: auto;
       width: 1000px;
+      height: auto;
+      margin: 20px;
+      overflow: hidden;
       border: 1px solid $base-border-color;
       border-radius: 5px;
-      box-shadow: 0px 0px 10px rgb(228, 227, 227);
-      overflow: hidden;
-      margin: 20px;
+      box-shadow: 0 0 10px rgb(228 227 227);
+
       .bank {
-        height: 150px;
-        display: flex;
         box-sizing: border-box;
+        display: flex;
+        height: 150px;
+
         .bank-icon {
-          height: 150px;
-          width: 149px;
           box-sizing: border-box;
+          width: 149px;
+          height: 150px;
           border-bottom: 1px solid $base-border-color;
+
           img {
             max-width: 100%;
             max-height: 100%;
           }
         }
+
         .bank-message {
+          box-sizing: border-box;
           width: calc(100% - 149px);
           height: 150;
-          background-color: $base-blue-color;
-          box-sizing: border-box;
           padding: 30px 60px;
+          background-color: $base-blue-color;
+
           .bank-name {
             font-size: 30px;
             font-weight: bold;
-            color: rgb(53, 54, 54);
+            color: rgb(53 54 54);
           }
+
           .bank-description {
+            margin: 10px 0;
             font-size: normal;
             font-weight: normal;
             color: $base-small-font-color;
-            margin: 10px 0px;
           }
         }
       }
+
       .problem-list {
         padding: 20px;
+
         .success-icon {
           color: $sucess-color;
         }
+
         .in-progress-icon {
           color: $warn-color;
         }
+
         .not-started-icon {
           color: $info-color;
         }

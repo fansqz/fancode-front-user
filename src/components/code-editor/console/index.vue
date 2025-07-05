@@ -23,106 +23,113 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref, watch, toRefs } from 'vue';
-  import Output from './output.vue';
-  import Input from './input.vue';
-  import DebugTerminal from './debug-terminal/index.vue';
-  import useCodingStore from '@/store/modules/coding';
-  import { storeToRefs } from 'pinia';
-  import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher';
+  import { onMounted, onUnmounted, ref, watch, toRefs } from 'vue'
+  import Output from './output.vue'
+  import Input from './input.vue'
+  import DebugTerminal from './debug-terminal/index.vue'
+  import useCodingStore from '@/store/modules/coding'
+  import { storeToRefs } from 'pinia'
+  import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher'
 
   let props = defineProps<{
-    userInput: boolean;
-    userOutput: boolean;
-    terminal: boolean;
-  }>();
+    userInput: boolean
+    userOutput: boolean
+    terminal: boolean
+  }>()
 
-  let { userInput, userOutput, terminal } = toRefs(props);
+  let { userInput, userOutput, terminal } = toRefs(props)
 
   // 用于控制当前是输入界面还是输出界面
-  const activeIndex = ref();
+  const activeIndex = ref()
   if (terminal.value) {
-    activeIndex.value = 'terminal';
+    activeIndex.value = 'terminal'
   }
   if (userOutput.value) {
-    activeIndex.value = 'output';
+    activeIndex.value = 'output'
   }
   if (userInput.value) {
-    activeIndex.value = 'input';
+    activeIndex.value = 'input'
   }
 
-  const codingStore = useCodingStore();
-  const { output } = storeToRefs(codingStore);
+  const codingStore = useCodingStore()
+  const { output } = storeToRefs(codingStore)
   const handleSelect = (key: string) => {
-    activeIndex.value = key;
-  };
+    activeIndex.value = key
+  }
   watch(
     () => output,
     () => {
-      activeIndex.value = 'output';
+      activeIndex.value = 'output'
     },
     {
       deep: true,
     },
-  );
+  )
   // 监控调试事件
   onMounted(() => {
-    CompileEventDispatcher.on('compile', onCompile);
-  });
+    CompileEventDispatcher.on('compile', onCompile)
+  })
   onUnmounted(() => {
-    CompileEventDispatcher.off('compile', onCompile);
-  });
+    CompileEventDispatcher.off('compile', onCompile)
+  })
 
   const onCompile = () => {
     // 监控调试开始事件，设置当前终端为“调试终端”
-    activeIndex.value = 'terminal';
-  };
+    activeIndex.value = 'terminal'
+  }
 </script>
 
 <style scoped lang="scss">
   .console {
-    height: 100%;
-    width: 100%;
-    min-width: 450px;
+    position: absolute;
     display: flex;
     flex-flow: column;
-    position: absolute;
+    width: 100%;
+    min-width: 450px;
+    height: 100%;
+
     .select-menu {
-      user-select: none;
       height: 30px;
+      user-select: none;
     }
+
     .input-div {
       flex: 1;
-      background-color: rgb(255, 255, 255);
       padding: 15px;
+      background-color: rgb(255 255 255);
     }
+
     .output-div {
       flex: 1;
-      background-color: rgb(255, 255, 255);
       padding: 15px;
+      background-color: rgb(255 255 255);
     }
+
     .terminal-div {
       position: relative;
       flex: 1;
       height: calc(100% - 30%);
-      background-color: rgb(255, 255, 255);
+      background-color: rgb(255 255 255);
     }
+
     .option-bottom {
-      height: 50px;
-      width: 100%;
       box-sizing: border-box;
-      border-top: 1px solid $base-border-color;
-      background-color: rgb(255, 255, 255);
       display: flex;
       flex-direction: row-reverse;
       align-items: center;
+      width: 100%;
+      height: 50px;
+      background-color: rgb(255 255 255);
+      border-top: 1px solid $base-border-color;
+
       .button-execute {
-        margin-left: 30px;
         margin-right: 10px;
+        margin-left: 30px;
       }
+
       .button-submit {
-        margin-left: 10px;
         margin-right: 30px;
+        margin-left: 10px;
       }
     }
   }

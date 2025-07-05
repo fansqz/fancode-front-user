@@ -1,4 +1,6 @@
-import request from '@/utils/request';
+import request from '@/utils/request'
+
+import { AllBankListResponse, BankResponse } from './type'
 
 enum API {
   AllBankURL = '/problemBank/all',
@@ -6,9 +8,9 @@ enum API {
 }
 
 export const reqAllBankList = (): Promise<AllBankListResponse> => {
-  return request.get(API.AllBankURL);
-};
+  return request.get(API.AllBankURL)
+}
 
 export const reqBank = (bankID: number): Promise<BankResponse> => {
-  return request.get(API.BankURL + `/${bankID}`);
-};
+  return request.get(API.BankURL + `/${bankID}`)
+}

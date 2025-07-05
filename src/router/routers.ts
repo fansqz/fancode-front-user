@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 // 常量路由
 export const constantRoute: Readonly<RouteRecordRaw[]> = [
@@ -76,7 +76,7 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
     name: 'problem',
     component: () => import('@/views/problem/index.vue'),
   },
-];
+]
 
 // 任意路由
 export const anyRoute = [
@@ -85,4 +85,4 @@ export const anyRoute = [
     redirect: '/404',
     name: 'Any',
   },
-];
+]

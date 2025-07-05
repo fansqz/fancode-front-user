@@ -1,12 +1,12 @@
 :deep(.breakpoint) {
+  left: 10px !important;
   box-sizing: border-box;
-  background: #cf2f20;
   width: 11px !important;
   height: 11px !important;
-  left: 10px !important;
   margin-top: 3px !important;
-  border-radius: 50%;
   cursor: pointer;
+  background: #cf2f20;
+  border-radius: 50%;
 
   &.active {
     opacity: 1 !important;
@@ -17,13 +17,13 @@
   }
 
   /** 扩大鼠标可点击区域 */
-  &:before {
-    content: "";
+  &::before {
     position: absolute;
     padding: 10px;
     padding-left: 20px;
-    cursor: pointer;
     overflow: hidden;
+    cursor: pointer;
+    content: "";
     background-color: transparent;
   }
 }

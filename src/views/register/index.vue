@@ -65,31 +65,31 @@
 </template>
 
 <script setup lang="ts">
-  import Logo from '@/components/logo/index.vue';
-  import { User, Message } from '@element-plus/icons-vue';
-  import { reactive, ref, onMounted } from 'vue';
-  import { useRouter, useRoute } from 'vue-router';
-  import { ElMessage } from 'element-plus';
-  import { reqSendCode, reqRegister } from '@/api/auth';
+  import Logo from '@/components/logo/index.vue'
+  import { User, Message } from '@element-plus/icons-vue'
+  import { reactive, ref, onMounted } from 'vue'
+  import { useRouter, useRoute } from 'vue-router'
+  import { ElMessage } from 'element-plus'
+  import { reqSendCode, reqRegister } from '@/api/auth'
 
-  let $router = useRouter();
-  let $route = useRoute();
+  let $router = useRouter()
+  let $route = useRoute()
   // 登录按钮是否加载
-  let loading = ref(false);
+  let loading = ref(false)
   let registerForm = reactive({
     username: '',
     email: '',
     password: '',
     code: '',
-  });
-  let goLoginTextStyle = ref();
+  })
+  let goLoginTextStyle = ref()
   // 是否在验证码倒计时中
   const downTimeState = reactive({
     // 倒计时
     countDownTime: 60,
     timer: null,
     countDownIng: false,
-  });
+  })
 
   let rules = {
     username: [
@@ -105,116 +105,121 @@
       { required: true, message: '验证码不能为空', trigger: 'change' },
       { required: true, min: 6, max: 6, message: '验证码需要6位' },
     ],
-  };
-  let registerElFrom = ref();
+  }
+  let registerElFrom = ref()
 
   const sendEmailCode = async () => {
     let result = await reqSendCode({
       email: registerForm.email,
       type: 'register',
-    });
+    })
     if (result.code == 200) {
       ElMessage({
         showClose: true,
         message: result.message,
         type: 'success',
-      });
-      countDown();
+      })
+      countDown()
     } else {
       ElMessage({
         showClose: true,
         message: result.message,
         type: 'warning',
-      });
+      })
     }
-  };
+  }
 
   const register = async () => {
     // 判断表单校验是否通过
     try {
-      await registerElFrom.value.validate();
-      loading.value = true;
-      let result = await reqRegister(registerForm);
+      await registerElFrom.value.validate()
+      loading.value = true
+      let result = await reqRegister(registerForm)
       // 判断是否有redirect参数
       if (result.code == 200) {
         ElMessage({
           type: 'success',
           message: '注册成功，请登录',
-        });
-        $router.push('login');
+        })
+        $router.push('login')
       }
-      loading.value = false;
+      loading.value = false
     } catch (error) {
-      loading.value = false;
+      loading.value = false
     }
-  };
+  }
 
   const countDown = () => {
-    let startTime = parseInt(localStorage.getItem('registerStartTimeLogin'));
-    let nowTime = new Date().getTime();
+    let startTime = parseInt(localStorage.getItem('registerStartTimeLogin'))
+    let nowTime = new Date().getTime()
     if (startTime) {
-      let surplus = 60 - Math.round((nowTime - startTime) / 1000);
-      downTimeState.countDownTime = surplus <= 0 ? 0 : surplus;
+      let surplus = 60 - Math.round((nowTime - startTime) / 1000)
+      downTimeState.countDownTime = surplus <= 0 ? 0 : surplus
     } else {
-      downTimeState.countDownTime = 60;
-      localStorage.setItem('registerStartTimeLogin', nowTime.toString());
+      downTimeState.countDownTime = 60
+      localStorage.setItem('registerStartTimeLogin', nowTime.toString())
     }
 
     downTimeState.timer = setInterval(() => {
-      downTimeState.countDownTime--;
-      downTimeState.countDownIng = true;
+      downTimeState.countDownTime--
+      downTimeState.countDownIng = true
       if (downTimeState.countDownTime <= 0) {
-        localStorage.removeItem('registerStartTimeLogin');
-        clearInterval(downTimeState.timer);
-        downTimeState.countDownTime = 60;
-        downTimeState.countDownIng = false;
+        localStorage.removeItem('registerStartTimeLogin')
+        clearInterval(downTimeState.timer)
+        downTimeState.countDownTime = 60
+        downTimeState.countDownIng = false
       }
-    }, 1000);
-  };
+    }, 1000)
+  }
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
-      return;
+      return
     }
-    $router.push({ name: routeName, params });
-  };
+    $router.push({ name: routeName, params })
+  }
 
   onMounted(() => {
-    let sendEndTime = localStorage.getItem('registerStartTimeLogin');
+    let sendEndTime = localStorage.getItem('registerStartTimeLogin')
     if (sendEndTime) {
-      downTimeState.countDownIng = true;
-      countDown();
+      downTimeState.countDownIng = true
+      countDown()
     }
-  });
+  })
 </script>
 
 <style scoped lang="scss">
   .register-container {
     position: absolute;
     top: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
     width: 100%;
     height: calc(100vh - $base-header-height);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+
     .card {
       margin-top: calc(50vh - 280px); /* 调整偏移量 */
       .register-form {
-        padding: 10px;
         width: 280px;
         height: 360px;
-        background-color: #ffffff;
+        padding: 10px;
         text-align: center;
+        background-color: #fff;
+
         .logo {
           height: 50px;
         }
+
         .go-login {
           font-size: small;
+
           .login-text {
             display: inline;
             cursor: pointer;
           }
         }
+
         .register-button {
           width: 100%;
         }

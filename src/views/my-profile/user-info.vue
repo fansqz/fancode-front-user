@@ -20,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive, onMounted } from 'vue';
-  import { ElMessage } from 'element-plus';
-  import { reqAccountInfo } from '@/api/account';
-  import { reqGetURL } from '@/api/common';
+  import { reactive, onMounted } from 'vue'
+  import { ElMessage } from 'element-plus'
+  import { reqAccountInfo } from '@/api/account'
+  import { reqGetURL } from '@/api/common'
   let accountInfo = reactive({
     avatar: '',
     sex: '',
@@ -32,78 +32,81 @@
     birthDay: '',
     introduction: '',
     codingAge: 0,
-  });
+  })
 
   onMounted(async () => {
-    getAccountInfo();
-  });
+    getAccountInfo()
+  })
 
   const getAccountInfo = async () => {
-    let result = await reqAccountInfo();
+    let result = await reqAccountInfo()
     if (result.code == 200) {
-      let data = result.data;
+      let data = result.data
       if (data.avatar != '') {
-        let result2 = await reqGetURL(data.avatar);
+        let result2 = await reqGetURL(data.avatar)
         if (result2.code == 200) {
-          accountInfo.avatar = result2.data;
+          accountInfo.avatar = result2.data
         }
       }
-      accountInfo.sex = data.sex;
-      accountInfo.loginName = data.loginName;
-      accountInfo.username = data.username;
-      accountInfo.birthDay = data.birthDay;
-      accountInfo.introduction = data.introduction;
-      accountInfo.codingAge = data.codingAge;
+      accountInfo.sex = data.sex
+      accountInfo.loginName = data.loginName
+      accountInfo.username = data.username
+      accountInfo.birthDay = data.birthDay
+      accountInfo.introduction = data.introduction
+      accountInfo.codingAge = data.codingAge
     } else {
       ElMessage({
         type: 'error',
         message: result.message,
-      });
+      })
     }
-  };
+  }
 </script>
 
 <style scoped lang="scss">
   .card {
     width: 800px;
+
     .user-message {
-      height: 110px;
-      box-sizing: border-box;
-      border-radius: 5px;
       position: relative;
+      box-sizing: border-box;
+      height: 110px;
+      border-radius: 5px;
+
       .avatar {
         position: absolute;
         left: 50px;
-        height: 110px;
-        width: 110px;
         box-sizing: border-box;
+        width: 110px;
+        height: 110px;
         border: 1px solid $base-border-color;
       }
+
       .base-info {
         position: absolute;
         left: 180px;
-        height: 110px;
-        width: 500px;
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        box-sizing: border-box;
+        width: 500px;
+        height: 110px;
 
         .base-info-item1 {
+          margin-top: 5px;
           font-size: xx-large;
           font-weight: 900;
-          margin-top: 5px;
         }
 
         .base-info-item {
-          font-size: small;
           margin-top: 6px;
+          font-size: small;
         }
 
         .login-name {
-          font-size: small;
           margin-top: 6px;
-          color: rgb(104, 101, 101);
+          font-size: small;
+          color: rgb(104 101 101);
         }
       }
     }

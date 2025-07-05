@@ -6,9 +6,9 @@
 
 <style lang="scss">
   #app {
+    position: relative;
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
   }
 </style>

@@ -1,5 +1,7 @@
-import request from '@/utils/request';
-import { toFormData } from '@/utils/format';
+import { toFormData } from '@/utils/format'
+import request from '@/utils/request'
+
+import { SubmitRequest, SubmitResponse, ExecuteRequest, ExecuteResponse } from './type'
 
 enum API {
   ExecuteURL = '/judge/execute',
@@ -13,8 +15,8 @@ export const reqSubmit = (req: SubmitRequest): Promise<SubmitResponse> => {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  });
-};
+  })
+}
 
 // reqExecute 执行用户程序
 export const reqExecute = (req: ExecuteRequest): Promise<ExecuteResponse> => {
@@ -22,5 +24,5 @@ export const reqExecute = (req: ExecuteRequest): Promise<ExecuteResponse> => {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  });
-};
+  })
+}

@@ -1,5 +1,6 @@
-import request from '@/utils/request';
-import { VisualDocumentDirectoryResponse, VisualDocumentResponse } from './type.ts';
+import request from '@/utils/request'
+
+import { VisualDocumentDirectoryResponse, VisualDocumentResponse } from './type.ts'
 
 enum API {
   //获取用户列表
@@ -12,10 +13,10 @@ enum API {
 export const reqVisualDocumentDirectory = (
   bankID: number,
 ): Promise<VisualDocumentDirectoryResponse> => {
-  return request.get(API.VISUAL_DOCUMENT_DIRECTORY_URL + '/' + bankID);
-};
+  return request.get(API.VISUAL_DOCUMENT_DIRECTORY_URL + '/' + bankID)
+}
 
 // 获取可视化文档
 export const reqVisualDocument = (id: number): Promise<VisualDocumentResponse> => {
-  return request.get(`${API.VISUAL_DOCUMENT_URL}/${id}`);
-};
+  return request.get(`${API.VISUAL_DOCUMENT_URL}/${id}`)
+}

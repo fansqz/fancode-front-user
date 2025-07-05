@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-  import Header from '../header/index.vue';
+  import Header from '../header/index.vue'
 </script>
 
 <style scoped lang="scss">
@@ -24,8 +24,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
     z-index: 100;
+    width: 100%;
     background: transparent;
   }
 

@@ -1,70 +1,72 @@
+import { BaseResponse, PageInfo } from '../type'
+
 export type ProblemListRequest = {
-  bankID?: number;
-  page?: number;
-  pageSize?: number;
-};
+  bankID?: number
+  page?: number
+  pageSize?: number
+}
 
 export type UserProblemForList = {
-  id: number;
-  name: string;
-  number: string;
-  description: string;
-  title: string;
-  difficulty: number;
-  status: number;
-};
+  id: number
+  name: string
+  number: string
+  description: string
+  title: string
+  difficulty: number
+  status: number
+}
 
 export type ProblemListPageInfo = PageInfo & {
-  list: UserProblemForList[];
-};
+  list: UserProblemForList[]
+}
 
 export type ProblemListResponse = BaseResponse & {
-  data: ProblemListPageInfo;
-};
+  data: ProblemListPageInfo
+}
 
 export type UserProblem = {
-  id: number;
-  bankID: number;
-  name: string;
-  number: string;
-  description: string;
-  title: string;
-  path: string;
-  difficulty: number;
-  languages: string;
-  enable: number;
-};
+  id: number
+  bankID: number
+  name: string
+  number: string
+  description: string
+  title: string
+  path: string
+  difficulty: number
+  languages: string
+  enable: number
+}
 
 export type ProblemResponse = BaseResponse & {
-  data: UserProblem;
-};
+  data: UserProblem
+}
 
 export type ProblemTemplateCodeResponse = BaseResponse & {
-  data: string;
-};
+  data: string
+}
 
 export type UserCodeResponse = BaseResponse & {
-  data: string;
-};
+  data: string
+}
 
 export type UserCode = {
-  id: number;
-  problemID: number;
-  language: string;
-  code: string;
-  visualSetting: string;
-};
+  id: number
+  problemID: number
+  language: string
+  code: string
+  visualSetting: string
+}
 
 export type ReqUserCodeByProblemIDResponse = BaseResponse & {
-  data: UserCode;
-};
+  data: UserCode
+}
 
 export type SaveUserCodeRequest = {
-  problemID: number;
-  language: string;
-  code: string;
-};
+  problemID: number
+  language: string
+  code: string
+}
 
 export type SaveUserCodeResponse = BaseResponse & {
-  data: string;
-};
+  data: string
+}

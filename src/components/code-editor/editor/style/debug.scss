@@ -1,19 +1,21 @@
 :deep(.debug-line) {
-  background: linear-gradient(90deg, rgba(255, 138, 128, 0.18) 0%, rgba(255, 183, 131, 0.10) 100%);
-  border: 1px solid #ff7043;
-  border-radius: 6px;
-  box-shadow: 0 4px 16px 0 rgba(255, 112, 67, 0.10), 0 1.5px 0 0 rgba(255,255,255,0.10) inset;
   position: relative;
   z-index: 2;
-  transition: background 0.3s, box-shadow 0.3s;
   overflow: hidden;
+  background: linear-gradient(90deg, rgb(255 138 128 / 18%) 0%, rgb(255 183 131 / 10%) 100%);
+  border: 1px solid #ff7043;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px 0 rgb(255 112 67 / 10%), 0 1.5px 0 0 rgb(255 255 255 / 10%) inset;
+  transition: background 0.3s, box-shadow 0.3s;
 }
+
 :deep(.debug-icon) {
   &::before {
-    content: "\e631";
     position: relative;
     padding-left: 15px;
+    content: "\e631";
   }
+
   /* 断点遇到调试的箭头就让箭头消失 */
   &.breakpoint {
     &::before {

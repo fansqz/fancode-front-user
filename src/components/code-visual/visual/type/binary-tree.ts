@@ -1,13 +1,13 @@
 export type BinaryTreeData = {
-  data: BinaryTreeNode[];
-  layouter: 'binaryTree';
-};
+  data: BinaryTreeNode[]
+  layouter: 'binaryTree'
+}
 
 export type BinaryTreeNode = {
-  id: string;
-  root?: boolean;
-  external?: string[];
+  id: string
+  root?: boolean
+  external?: string[]
   // 数据
-  data?: string;
-  child?: string[];
-};
+  data?: string
+  child?: string[]
+}

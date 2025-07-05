@@ -1,6 +1,6 @@
-import { editor, Range } from 'monaco-editor';
+import { editor, Range } from 'monaco-editor'
 
-import { Model } from '../types';
+import { Model } from '../types'
 
 /**
  * 判断是否存在断点
@@ -9,13 +9,13 @@ import { Model } from '../types';
  * @returns 存在或不存在
  */
 export const existBreakPoint = (decorations: editor.IModelDecoration[], transparent = false) => {
-  const str = transparent ? 'hide' : 'active';
+  const str = transparent ? 'hide' : 'active'
   // 判断这行有没有断点
-  return decorations.some((item) => item.options.glyphMarginClassName?.split(' ').includes(str));
-};
+  return decorations.some((item) => item.options.glyphMarginClassName?.split(' ').includes(str))
+}
 
 // TODO: 重构下，封装抽取这几个字符串，不好维护
-type getBreakPointsIdsOptions = 'all' | 'BP' | 'TBP';
+type getBreakPointsIdsOptions = 'all' | 'BP' | 'TBP'
 export const getBreakPointsIds = (
   decorations: editor.IModelDecoration[],
   options: getBreakPointsIdsOptions = 'all',
@@ -24,11 +24,11 @@ export const getBreakPointsIds = (
     BP: 'active',
     TBP: 'hide',
     all: 'breakpoint',
-  };
+  }
   return decorations
     .filter((item) => item.options.glyphMarginClassName?.split(' ').includes(map[options]))
-    .map((item) => item.id);
-};
+    .map((item) => item.id)
+}
 
 /**
  *
@@ -37,12 +37,12 @@ export const getBreakPointsIds = (
  */
 export const removeTDecorations = (model?: Model | null) => {
   if (!model) {
-    return;
+    return
   }
-  const allDecorations = model.getAllDecorations();
-  const TBPIds = getBreakPointsIds(allDecorations, 'TBP');
-  model.deltaDecorations(TBPIds, []);
-};
+  const allDecorations = model.getAllDecorations()
+  const TBPIds = getBreakPointsIds(allDecorations, 'TBP')
+  model.deltaDecorations(TBPIds, [])
+}
 
 /**
  *
@@ -58,10 +58,10 @@ export const checkBreakPoints = (lineStr: string) => {
     /.*\/\*.*\*\//, // 3."/* */"在同一行
     /^[\s(){}]*(\/\/|\/\*)/, // 4."//"或者"/*"之前全为空白符或者括号
     /\*\/[\s(){}]*$/, // 5."*/"之后全为空白符或者括号
-  ];
+  ]
   // every是一个false终止，some是一个true终止
-  return patterns.every((value) => !value.test(lineStr));
-};
+  return patterns.every((value) => !value.test(lineStr))
+}
 
 /**
  * 获取断点的选项（添加断点需要的数组）
@@ -78,8 +78,8 @@ export const getBreakPointOption = (lineNumber: number, mode: 'hide' | 'active' 
       stickiness: editor.TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges,
       glyphMarginHoverMessage: { value: '断点' },
     },
-  };
-};
+  }
+}
 
 /**
  *
@@ -90,4 +90,4 @@ export const getBreakPointLineNumber = (decorations: editor.IModelDeltaDecoratio
   decorations
     .filter((decoration) => decoration.options.glyphMarginClassName?.split(' ').includes('active'))
     // 这里startLineNumber和endLineNumber都是一样的，因为new Range(lineNumber, 1, lineNumber, 1)
-    .map((decoration) => decoration.range.startLineNumber);
+    .map((decoration) => decoration.range.startLineNumber)

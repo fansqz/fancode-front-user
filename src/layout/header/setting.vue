@@ -20,58 +20,61 @@
 </template>
 
 <script setup lang="ts">
-  import useUserStore from '@/store/modules/user';
-  import { useRouter, useRoute } from 'vue-router';
-  let userStore = useUserStore();
-  let $router = useRouter();
-  let $route = useRoute();
+  import useUserStore from '@/store/modules/user'
+  import { useRouter, useRoute } from 'vue-router'
+  let userStore = useUserStore()
+  let $router = useRouter()
+  let $route = useRoute()
 
   const getUsername = (): string => {
-    return userStore.token ? userStore.username : '未登录';
-  };
+    return userStore.token ? userStore.username : '未登录'
+  }
 
   const isLogged = (): boolean => {
-    return !!userStore.token;
-  };
+    return !!userStore.token
+  }
 
   const getAvatar = (): string => {
-    return userStore.token ? userStore.avatar : '';
-  };
+    return userStore.token ? userStore.avatar : ''
+  }
 
   const logout = () => {
-    userStore.userLogout();
-    $router.push({ path: '/login', query: { redirect: $route.path } });
-  };
+    userStore.userLogout()
+    $router.push({ path: '/login', query: { redirect: $route.path } })
+  }
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
-      return;
+      return
     }
-    $router.push({ name: routeName, params });
-  };
+    $router.push({ name: routeName, params })
+  }
 </script>
 
 <style scoped>
   .container {
     position: relative;
-    height: 100%;
     width: 100%;
-    margin: 0px;
+    height: 100%;
+    margin: 0;
+
     .setting {
-      margin-right: 30px;
       position: absolute;
       display: flex;
-      height: 100%;
-      width: 100%;
+      flex-direction: row;
       align-items: center;
       justify-content: end;
-      flex-direction: row;
+      width: 100%;
+      height: 100%;
+      margin-right: 30px;
+
       .avatar {
-        margin-right: 10px;
         width: 24px;
         height: 24px;
+        margin-right: 10px;
         border-radius: 50%;
       }
+
       .user_dropdown {
         cursor: pointer;
       }

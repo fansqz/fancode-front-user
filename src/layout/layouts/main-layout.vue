@@ -16,18 +16,19 @@
 </template>
 
 <script setup lang="ts">
-  import Header from '../header/index.vue';
-  import Feedback from '../feedback/index.vue';
+  import Header from '../header/index.vue'
+  import Feedback from '../feedback/index.vue'
 </script>
 
 <style scoped lang="scss">
   .layout-container {
     width: 100vw;
+
     .layout-main {
       position: relative;
       top: $base-header-height;
-      width: 100%;
       box-sizing: border-box;
+      width: 100%;
     }
   }
 </style>

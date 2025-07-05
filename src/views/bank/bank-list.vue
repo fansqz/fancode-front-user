@@ -20,100 +20,105 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
-  import { reqAllBankList } from '@/api/bank';
-  import { useRouter } from 'vue-router';
-  import { reqGetURL } from '@/api/common';
-  import useUserStore from '@/store/modules/user';
+  import { onMounted, ref } from 'vue'
+  import { reqAllBankList } from '@/api/bank'
+  import { useRouter } from 'vue-router'
+  import { reqGetURL } from '@/api/common'
+  import useUserStore from '@/store/modules/user'
 
-  let userStore = useUserStore();
-  let $router = useRouter();
+  let userStore = useUserStore()
+  let $router = useRouter()
 
-  let bankList = ref<any[]>([]);
+  let bankList = ref<any[]>([])
   const handlerBankView = (bankID: string) => {
     if (!isLogged()) {
-      return;
+      return
     }
     $router.push({
       name: 'bank',
       params: {
         bankID: bankID,
       },
-    });
-  };
+    })
+  }
 
   // 用户是否登陆
   const isLogged = (): boolean => {
-    return !!userStore.token;
-  };
+    return !!userStore.token
+  }
 
   onMounted(async () => {
-    let result = await reqAllBankList();
+    let result = await reqAllBankList()
     if (result.code == 200) {
-      let banks = result.data;
+      let banks = result.data
       // 设置头像
       for (let bank of banks) {
-        let result2 = await reqGetURL(bank.icon);
+        let result2 = await reqGetURL(bank.icon)
         if (result2.code == 200) {
-          bank.icon = result2.data;
+          bank.icon = result2.data
         }
       }
-      bankList.value = banks;
+      bankList.value = banks
     }
-  });
+  })
 </script>
 
 <style scoped lang="scss">
   .container {
-    height: 100%;
     width: 100%;
+    height: 100%;
+
     .bank-list {
       display: flex;
       justify-content: space-between;
+
       .bank-item {
         position: relative;
-        flex-shrink: 0;
         display: flex;
+        flex-shrink: 0;
         align-items: center;
         width: 220px;
         height: 80px;
-        border-radius: 5px;
-        border: 1px solid #eeeeee;
-        box-shadow: 0px 0px 10px rgb(228, 227, 227);
         overflow: hidden;
-
         cursor: pointer;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgb(228 227 227);
 
         .bank-icon {
           position: absolute;
-          border-radius: 5px;
-          height: 80px;
           width: 80px;
+          height: 80px;
+          border-radius: 5px;
         }
+
         .bank-message {
           position: absolute;
-          height: 80px;
-          width: 140px;
           left: 80px;
-          padding: 10px 20px 10px;
-          background-color: rgb(90, 180, 253);
           box-sizing: border-box;
+          width: 140px;
+          height: 80px;
+          padding: 10px 20px;
+          background-color: rgb(90 180 253);
+
           .bank-name {
-            margin: 5px 0px;
-            text-align: left;
-            color: $base-title-font-color;
+            margin: 5px 0;
             font-size: large;
             font-weight: bold;
+            color: $base-title-font-color;
+            text-align: left;
           }
+
           .bank-description {
             width: 110px;
-            text-align: left;
             font-size: small;
             font-weight: normal;
             color: $base-small-font-color;
+            text-align: left;
           }
         }
       }
+
       .not-click {
         cursor: not-allowed;
       }

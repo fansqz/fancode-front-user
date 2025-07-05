@@ -27,7 +27,7 @@ export const getLanguageKeywords = (language) => {
       'import',
       'return',
       'var',
-    ];
+    ]
   } else if (language === 'c') {
     return [
       'auto',
@@ -62,10 +62,10 @@ export const getLanguageKeywords = (language) => {
       'void',
       'volatile',
       'while',
-    ];
+    ]
   }
-  return [];
-};
+  return []
+}
 
 // 封装获取不同语言基本数据类型的逻辑
 export const getLanguageBaseDataTypes = (language) => {
@@ -89,7 +89,7 @@ export const getLanguageBaseDataTypes = (language) => {
       'string',
       'byte',
       'rune',
-    ];
+    ]
   } else if (language === 'c') {
     return [
       'char',
@@ -102,7 +102,7 @@ export const getLanguageBaseDataTypes = (language) => {
       'short',
       'long',
       'long long',
-    ];
+    ]
   }
-  return [];
-};
+  return []
+}

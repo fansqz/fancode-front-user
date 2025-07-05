@@ -1,9 +1,9 @@
-import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions } from 'structv2';
+import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions } from 'structv2'
 
 // 数组
 SV.registerLayout('array', {
   defineLeakRule(_models: SVNode[]): SVNode[] {
-    return [];
+    return []
   },
 
   defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
@@ -58,16 +58,16 @@ SV.registerLayout('array', {
       behavior: {
         dragNode: false,
       },
-    };
+    }
   },
 
   layout(nodes: SVNode[], _layoutOptions: LayoutOptions) {
-    let arr = nodes;
+    const arr = nodes
     for (let i = 0; i < arr.length; i++) {
-      let width = arr[i].get('size')[0];
+      const width = arr[i].get('size')[0]
       if (i > 0) {
-        arr[i].set('x', arr[i - 1].get('x') + width);
+        arr[i].set('x', arr[i - 1].get('x') + width)
       }
     }
   },
-});
+})

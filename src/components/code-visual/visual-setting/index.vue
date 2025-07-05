@@ -46,37 +46,38 @@
 </template>
 
 <script setup lang="ts">
-  import useVisualStore from '@/store/modules/visual';
-  import { ref } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import Visaul from '@/components/code-visual/visual/index.vue';
-  import VisaulTemplate from './setting/index.vue';
-  import { watch } from 'vue';
-  import { Edit, Star } from '@element-plus/icons-vue';
+  import useVisualStore from '@/store/modules/visual'
+  import { ref } from 'vue'
+  import { storeToRefs } from 'pinia'
+  import Visaul from '@/components/code-visual/visual/index.vue'
+  import VisaulTemplate from './setting/index.vue'
+  import { watch } from 'vue'
+  import { Edit, Star } from '@element-plus/icons-vue'
 
-  const visualStore = useVisualStore();
-  const { action, descriptionType, isAIEnabled } = storeToRefs(visualStore);
-  const activeNames = ref<string[]>([]);
+  const visualStore = useVisualStore()
+  const { action, descriptionType, isAIEnabled } = storeToRefs(visualStore)
+  const activeNames = ref<string[]>([])
 
   // 开启自定义编辑
   const toggleCustom = () => {
-    isAIEnabled.value = false;
-    activeNames.value = ['1'];
-  };
+    isAIEnabled.value = false
+    activeNames.value = ['1']
+  }
 
   // 切换AI可视化
   const toggleAI = () => {
-    isAIEnabled.value = true;
-    activeNames.value = [];
-  };
+    isAIEnabled.value = true
+    activeNames.value = []
+  }
 </script>
 
 <style lang="scss" scoped>
   .visual-description-collapse {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
     height: auto;
+
     .title-container {
       display: flex;
       align-items: center;
@@ -90,18 +91,18 @@
 
       .controls {
         display: flex;
-        align-items: center;
         gap: 12px;
+        align-items: center;
 
         .control-group {
           display: flex;
-          align-items: center;
           gap: 6px;
+          align-items: center;
 
           .control-label {
             font-size: 12px;
-            color: #606266;
             font-weight: 500;
+            color: #606266;
           }
         }
 
@@ -113,23 +114,23 @@
 
         .mode-switch {
           display: flex;
-          align-items: center;
           gap: 4px;
+          align-items: center;
+          padding: 2px;
           background-color: #f5f7fa;
           border-radius: 6px;
-          padding: 2px;
 
           .mode-btn {
-            border-radius: 4px;
-            border: none;
             height: 28px;
             padding: 0 12px;
             font-size: 12px;
+            border: none;
+            border-radius: 4px;
             transition: all 0.2s ease;
 
             &:hover {
+              box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
               transform: translateY(-1px);
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
 
             .el-icon {
@@ -140,6 +141,7 @@
         }
       }
     }
+
     .visual-description {
       height: 30%;
 
@@ -157,9 +159,9 @@
 
         :deep(.el-input__inner),
         :deep(.el-textarea__inner) {
-          background-color: #f5f5f5;
           color: #999;
           cursor: not-allowed;
+          background-color: #f5f5f5;
         }
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <el-card class="card">
-    <el-table style="margin: 10px 0px" border :data="submissionList">
+    <el-table style="margin: 10px 0" border :data="submissionList">
       <el-table-column label="序号" width="80px" align="center" type="index" />
       <el-table-column label="题目名称" width="200px" align="center">
         <template v-slot="{ row }">
@@ -34,68 +34,68 @@
       :background="true"
       layout="prev, pager, next, ->,sizes, total"
       :total="total"
-      style="margin: 0px 3%"
+      style="margin: 0 3%"
     />
   </el-card>
 </template>
 
 <script setup lang="ts">
-  import { reqSubmissionList } from '@/api/submission';
-  import { ref, onMounted } from 'vue';
-  import { languageConstants } from '@/constants/languages.ts';
+  import { reqSubmissionList } from '@/api/submission'
+  import { ref, onMounted } from 'vue'
+  import { languageConstants } from '@/constants/languages.ts'
 
   let languageColorMap = new Map<string, string>([
     [languageConstants.GO, 'primary'],
     [languageConstants.C, 'success'],
     [languageConstants.Java, 'warnning'],
-  ]);
+  ])
 
   // 分页
-  let pageNo = ref<number>(1);
+  let pageNo = ref<number>(1)
   // 每页展示多少条数据
-  let limit = ref<number>(5);
-  let total = ref<number>(0);
-  let submissionList = ref();
+  let limit = ref<number>(5)
+  let total = ref<number>(0)
+  let submissionList = ref()
 
   const getSubmissionList = async () => {
     let result = await reqSubmissionList({
       page: pageNo.value,
       pageSize: limit.value,
-    });
+    })
     if (result.code == 200) {
-      total.value = result.data.total;
-      submissionList.value = result.data.list;
+      total.value = result.data.total
+      submissionList.value = result.data.list
     }
-  };
+  }
 
   onMounted(() => {
-    getSubmissionList();
-  });
+    getSubmissionList()
+  })
 
   //页码改变时触发
   const changePageNo = () => {
     // 页面变化时，页面归一
-    getSubmissionList();
-  };
+    getSubmissionList()
+  }
 
   const changePageSize = () => {
-    pageNo.value = 1;
-    getSubmissionList();
-  };
+    pageNo.value = 1
+    getSubmissionList()
+  }
 
   const getTypeByLanaguage = (language: string) => {
     if (!languageColorMap.has(language)) {
-      return 'info';
+      return 'info'
     } else {
-      return languageColorMap.get(language);
+      return languageColorMap.get(language)
     }
-  };
+  }
 </script>
 
 <style scoped lang="scss">
   .card {
     width: 800px;
-    border-radius: 5px;
     margin-top: 20px;
+    border-radius: 5px;
   }
 </style>

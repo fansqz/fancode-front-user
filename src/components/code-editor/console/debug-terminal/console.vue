@@ -43,69 +43,69 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import useDebugStore from '@/store/modules/debug';
-  import { reqSendToConsole } from '@/api/debug';
-  import { ElMessage } from 'element-plus';
-  import { watch } from 'vue';
+  import { onMounted, ref } from 'vue'
+  import { storeToRefs } from 'pinia'
+  import useDebugStore from '@/store/modules/debug'
+  import { reqSendToConsole } from '@/api/debug'
+  import { ElMessage } from 'element-plus'
+  import { watch } from 'vue'
 
-  const debugStore = useDebugStore();
-  let { id, outputs, currentInput } = storeToRefs(debugStore);
-  const scrollbarRef = ref();
-  const innerRef = ref();
+  const debugStore = useDebugStore()
+  let { id, outputs, currentInput } = storeToRefs(debugStore)
+  const scrollbarRef = ref()
+  const innerRef = ref()
 
   // 滚动条滚动到底部
   const updateScrollToBottom = () => {
-    scrollbarRef.value!.setScrollTop(innerRef.value!.clientHeight);
-  };
+    scrollbarRef.value!.setScrollTop(innerRef.value!.clientHeight)
+  }
 
   let enterEvent = async (event: any) => {
     if (!event.ctrlKey) {
       // 取消
-      event.preventDefault();
+      event.preventDefault()
       if (!debugStore.isDebugging()) {
         ElMessage({
           showClose: true,
           message: '未开启调试，无法向程序发送输入',
           type: 'info',
-        });
-        return;
+        })
+        return
       }
       // 发送命令给gdb
-      let result = await reqSendToConsole(id.value, currentInput.value + '\n');
+      let result = await reqSendToConsole(id.value, currentInput.value + '\n')
       if (result.code != 200) {
         ElMessage({
           showClose: true,
           message: '发送失败',
           type: 'error',
-        });
+        })
       } else {
-        currentInput.value = '';
+        currentInput.value = ''
       }
     } else {
-      currentInput.value += '\n';
+      currentInput.value += '\n'
     }
-  };
+  }
 
   onMounted(() => {
     watch(
       () => outputs.value,
       () => {
         if (outputs.value.length != 0) {
-          updateScrollToBottom();
+          updateScrollToBottom()
         }
       },
-    );
-  });
+    )
+  })
 </script>
 <style lang="scss" scoped>
   .console {
+    position: absolute;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     padding: 5px;
-    box-sizing: border-box;
-    position: absolute;
 
     .scrollbar {
       position: relative;
@@ -116,29 +116,28 @@
         position: relative;
 
         .input {
-          width: 100%;
           position: relative;
           display: flex;
+          width: 100%;
 
           .left {
             width: 35px;
-            padding: 10px 0px;
+            padding: 10px 0;
           }
 
           .right {
             width: calc(100% - 35px);
 
             .input-div {
-              padding: 10px 10px;
+              padding: 10px;
 
               .sent-input {
-                margin: 4px 0px;
+                margin: 4px 0;
               }
 
               .current-input {
-                overflow-x: hidden;
-                overflow-y: visible;
-                border-color: rgba(82, 168, 236, 0.8);
+                overflow: hidden visible;
+                border-color: rgb(82 168 236 / 80%);
               }
             }
           }
@@ -146,22 +145,22 @@
 
         .output {
           position: relative;
-          width: 100%;
           display: flex;
+          width: 100%;
 
           .left {
             width: 35px;
-            padding: 10px 0px;
+            padding: 10px 0;
           }
 
           .right {
             width: calc(100% - 35px);
 
             .output-div {
-              padding: 10px 10px;
+              padding: 10px;
 
               .output {
-                margin: 4px 0px;
+                margin: 4px 0;
               }
             }
           }

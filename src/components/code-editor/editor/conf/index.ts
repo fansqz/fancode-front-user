@@ -1,6 +1,6 @@
-import { editor } from 'monaco-editor';
+import { editor } from 'monaco-editor'
 
-type Configs = editor.IStandaloneEditorConstructionOptions;
+type Configs = editor.IStandaloneEditorConstructionOptions
 
 export const getConfigs = (configs: Configs) =>
   <Configs>{
@@ -71,4 +71,4 @@ export const getConfigs = (configs: Configs) =>
 
     // 扩展传入的配置对象，覆盖默认设置
     ...configs,
-  };
+  }

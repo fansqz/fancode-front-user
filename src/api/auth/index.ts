@@ -1,5 +1,15 @@
-import request from '@/utils/request';
-import { toFormData } from 'axios';
+import { toFormData } from 'axios'
+
+import request from '@/utils/request'
+
+import {
+  LoginRequest,
+  LoginResponse,
+  SendCodeRequest,
+  SendCodeResponse,
+  RegisterRequest,
+  RegisterReponse,
+} from './type'
 
 enum API {
   LoginURL = '/auth/login',
@@ -14,8 +24,8 @@ export const reqLogin = (data: LoginRequest): Promise<LoginResponse> => {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  });
-};
+  })
+}
 
 // 发送验证码
 export const reqSendCode = (data: SendCodeRequest): Promise<SendCodeResponse> => {
@@ -23,8 +33,8 @@ export const reqSendCode = (data: SendCodeRequest): Promise<SendCodeResponse> =>
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  });
-};
+  })
+}
 
 // 注册
 export const reqRegister = (data: RegisterRequest): Promise<RegisterReponse> => {
@@ -32,5 +42,5 @@ export const reqRegister = (data: RegisterRequest): Promise<RegisterReponse> => 
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  });
-};
+  })
+}

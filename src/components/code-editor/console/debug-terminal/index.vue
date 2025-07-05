@@ -43,76 +43,85 @@
 </template>
 
 <script setup lang="ts">
-  import Console from './console.vue';
-  import Variables from './variables.vue';
-  import Frames from './frames.vue';
-  import StepOrContinueButton from '../debug-button/debug-button-step-continue.vue';
-  import TerminateButton from '../debug-button/debug-button-terminate.vue';
-  import { ref } from 'vue';
-  import { Splitpanes, Pane } from 'splitpanes';
-  import 'splitpanes/dist/splitpanes.css';
+  import Console from './console.vue'
+  import Variables from './variables.vue'
+  import Frames from './frames.vue'
+  import StepOrContinueButton from '../debug-button/debug-button-step-continue.vue'
+  import TerminateButton from '../debug-button/debug-button-terminate.vue'
+  import { ref } from 'vue'
+  import { Splitpanes, Pane } from 'splitpanes'
+  import 'splitpanes/dist/splitpanes.css'
 
-  const activeIndex = ref('console');
+  const activeIndex = ref('console')
 
   const handleSelect = (key: string) => {
-    activeIndex.value = key;
-  };
+    activeIndex.value = key
+  }
 </script>
 
 <style lang="scss" scoped>
   .debug_terminal {
-    height: 100%;
-    width: 100%;
+    position: absolute;
     display: flex;
     flex-flow: row nowrap;
-    position: absolute;
+    width: 100%;
+    height: 100%;
+
     .left {
-      height: 100%;
-      width: 100%;
       position: relative;
-      background-color: rgb(255, 255, 255);
+      width: 100%;
+      height: 100%;
+      background-color: rgb(255 255 255);
+
       .frames_title {
-        height: 25px;
-        width: 100%;
         box-sizing: border-box;
-        border-bottom: 1px solid $base-border-color;
         display: flex;
-        padding-left: 15px;
-      }
-      .frames {
-        height: calc(100% - 25px);
         width: 100%;
+        height: 25px;
+        padding-left: 15px;
+        border-bottom: 1px solid $base-border-color;
+      }
+
+      .frames {
+        width: 100%;
+        height: calc(100% - 25px);
       }
     }
+
     .right {
-      height: 100%;
-      width: 100%;
       position: relative;
-      background-color: rgb(255, 255, 255);
+      width: 100%;
+      height: 100%;
+      background-color: rgb(255 255 255);
+
       .select-menu {
+        width: 100%;
         height: 25px;
-        width: 100%;
       }
+
       .console {
-        height: calc(100% - 25px);
         width: 100%;
+        height: calc(100% - 25px);
       }
+
       .variables {
-        height: calc(100% - 25px);
         width: 100%;
+        height: calc(100% - 25px);
+
         .scrollbar {
-          height: 100%;
           width: 100%;
+          height: 100%;
         }
       }
+
       .debug-buttons {
-        z-index: 9999;
         position: absolute;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        top: 0px;
+        top: 0;
         right: 20px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
         width: 140px;
         height: 25px;
       }

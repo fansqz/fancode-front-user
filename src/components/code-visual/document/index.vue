@@ -7,23 +7,23 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue';
+  import { ref, watchEffect } from 'vue'
 
-  let props = defineProps(['content']);
-  let content = ref(props.content);
+  let props = defineProps(['content'])
+  let content = ref(props.content)
 
   watchEffect(() => {
     if (props.content != undefined) {
-      content.value = props.content;
+      content.value = props.content
     }
-  });
+  })
 </script>
 
 <style scoped lang="scss">
   .visaulDescription {
-    height: 100%;
     width: 100%;
-    background-color: rgb(255, 255, 255);
+    height: 100%;
+    background-color: rgb(255 255 255);
 
     /* 这里的样式只会应用于当前组件 */
   }

@@ -1,33 +1,35 @@
-type LoginPassportRequest = {
-  type: string;
-  account: string;
-  password: string;
-};
+import { BaseResponse } from '../type'
 
-type LoginEmaiCodeRequest = {
-  type: string;
-  email: string;
-  code: string;
-};
+export type LoginPassportRequest = {
+  type: string
+  account: string
+  password: string
+}
 
-type LoginRequest = LoginEmaiCodeRequest | LoginPassportRequest;
+export type LoginEmaiCodeRequest = {
+  type: string
+  email: string
+  code: string
+}
 
-type LoginResponse = BaseResponse & {
-  data: string;
-};
+export type LoginRequest = LoginEmaiCodeRequest | LoginPassportRequest
 
-type SendCodeRequest = {
-  email: string;
-  type: string;
-};
+export type LoginResponse = BaseResponse & {
+  data: string
+}
 
-type SendCodeResponse = BaseResponse & {};
+export type SendCodeRequest = {
+  email: string
+  type: string
+}
 
-type RegisterRequest = {
-  username: string;
-  email: string;
-  password: string;
-  code: string;
-};
+export type SendCodeResponse = BaseResponse & {}
 
-type RegisterReponse = BaseResponse & {};
+export type RegisterRequest = {
+  username: string
+  email: string
+  password: string
+  code: string
+}
+
+export type RegisterReponse = BaseResponse & {}

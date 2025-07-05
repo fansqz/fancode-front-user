@@ -26,5 +26,5 @@
       type: String,
       default: '16px',
     },
-  });
+  })
 </script>

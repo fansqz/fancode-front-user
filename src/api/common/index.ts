@@ -1,4 +1,6 @@
-import request from '@/utils/request';
+import request from '@/utils/request'
+
+import { URLResponse } from './type'
 
 enum API {
   GetURL = '/common/getURL',
@@ -9,5 +11,5 @@ export const reqGetURL = (path: string): Promise<URLResponse> => {
     params: {
       path: path,
     },
-  });
-};
+  })
+}

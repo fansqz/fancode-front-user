@@ -1,11 +1,12 @@
-import { defineStore } from 'pinia';
-import { languageConstants } from '@/constants/languages.ts';
+import { defineStore } from 'pinia'
+
+import { languageConstants } from '@/constants/languages.ts'
 
 type VisualDocumentState = {
-  id: number;
-  content: string;
-  codeList: VisualDocumentCode[];
-};
+  id: number
+  content: string
+  codeList: VisualDocumentCode[]
+}
 
 const useVisualDocumentStore = defineStore('visual-document', {
   state: (): VisualDocumentState => ({
@@ -13,12 +14,12 @@ const useVisualDocumentStore = defineStore('visual-document', {
     content: '',
     codeList: [],
   }),
-});
+})
 
 export type VisualDocumentCode = {
-  code: string;
-  language: languageConstants;
-  breakpoints: number[];
-};
+  code: string
+  language: languageConstants
+  breakpoints: number[]
+}
 
-export default useVisualDocumentStore;
+export default useVisualDocumentStore

@@ -11,23 +11,24 @@
 </template>
 
 <script setup lang="ts">
-  import HeatMap from './heat-map.vue';
-  import SubmiteActive from './submit-active.vue';
-  import UserInfo from './user-info.vue';
+  import HeatMap from './heat-map.vue'
+  import SubmiteActive from './submit-active.vue'
+  import UserInfo from './user-info.vue'
 </script>
 
 <style scoped lang="scss">
   .profile-container {
-    height: 100%;
     width: 100%;
+    height: 100%;
+
     .el-scrollbar {
       .content {
-        width: 100%;
-        padding: 20px 200px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
+        padding: 20px 200px;
       }
     }
   }

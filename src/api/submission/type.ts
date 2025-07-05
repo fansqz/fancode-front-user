@@ -1,32 +1,34 @@
-type SubmissionListRequest = PageQuery & {
-  problemID?: number;
-};
+import { BaseResponse, PageInfo, PageQuery } from '../type'
 
-type Submission = {
-  id: number;
-  problemName: string;
-  status: number;
-  errorMessage: string;
-  createdAt: string;
-};
+export type SubmissionListRequest = PageQuery & {
+  problemID?: number
+}
 
-type SubmissionListPageInfo = PageInfo & {
-  list: Submission[];
-};
+export type Submission = {
+  id: number
+  problemName: string
+  status: number
+  errorMessage: string
+  createdAt: string
+}
 
-type SubmissionListResponse = BaseResponse & {
-  data: SubmissionListPageInfo;
-};
+export type SubmissionListPageInfo = PageInfo & {
+  list: Submission[]
+}
 
-type ActivityYearResponse = BaseResponse & {
-  data: string[];
-};
+export type SubmissionListResponse = BaseResponse & {
+  data: SubmissionListPageInfo
+}
 
-type ActivityItem = {
-  date: string;
-  count: number;
-};
+export type ActivityYearResponse = BaseResponse & {
+  data: string[]
+}
 
-type ActivityMapResponse = BaseResponse & {
-  data: ActivityItem[] | null;
-};
+export type ActivityItem = {
+  date: string
+  count: number
+}
+
+export type ActivityMapResponse = BaseResponse & {
+  data: ActivityItem[] | null
+}

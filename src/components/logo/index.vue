@@ -6,8 +6,8 @@
 
 <style scoped lang="scss">
   .logo {
-    height: 100%;
     width: auto;
+    height: 100%;
     object-fit: contain;
   }
 </style>
