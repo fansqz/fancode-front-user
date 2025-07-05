@@ -1,6 +1,5 @@
 import { descriptions } from '@/constants/description.ts';
 
-
 // 结构体导向可视化请求
 export type StructVisualRequest = {
   debugID: string;

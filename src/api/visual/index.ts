@@ -5,7 +5,7 @@ import {
   StructVisualResponse,
   VariableVisualResponse,
   VisaulDocumentResponse,
-  VisualDescriptionResponse
+  VisualDescriptionResponse,
 } from './type';
 
 enum API {

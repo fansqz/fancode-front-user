@@ -7,8 +7,8 @@
           <div class="controls">
             <div class="control-group">
               <el-text class="control-label">可视化</el-text>
-              <el-switch 
-                v-model="action" 
+              <el-switch
+                v-model="action"
                 size="small"
                 active-color="#409eff"
                 inactive-color="#dcdfe6"
@@ -16,7 +16,7 @@
             </div>
             <div class="divider"></div>
             <div class="mode-switch">
-              <el-button 
+              <el-button
                 :type="!isAIEnabled ? 'primary' : 'default'"
                 size="small"
                 @click.stop="toggleCustom"
@@ -25,7 +25,7 @@
                 <el-icon><Edit /></el-icon>
                 编辑
               </el-button>
-              <el-button 
+              <el-button
                 :type="isAIEnabled ? 'primary' : 'default'"
                 size="small"
                 @click.stop="toggleAI"
@@ -58,7 +58,6 @@
   const { action, descriptionType, isAIEnabled } = storeToRefs(visualStore);
   const activeNames = ref<string[]>([]);
 
-
   // 开启自定义编辑
   const toggleCustom = () => {
     isAIEnabled.value = false;
@@ -70,9 +69,7 @@
     isAIEnabled.value = true;
     activeNames.value = [];
   };
-
 </script>
-
 
 <style lang="scss" scoped>
   .visual-description-collapse {
@@ -86,34 +83,34 @@
       justify-content: space-between;
       width: 100%;
       padding: 0 20px;
-      
+
       .title {
         margin: 0;
       }
-      
+
       .controls {
         display: flex;
         align-items: center;
         gap: 12px;
-        
+
         .control-group {
           display: flex;
           align-items: center;
           gap: 6px;
-          
+
           .control-label {
             font-size: 12px;
             color: #606266;
             font-weight: 500;
           }
         }
-        
+
         .divider {
           width: 1px;
           height: 16px;
           background-color: #e4e7ed;
         }
-        
+
         .mode-switch {
           display: flex;
           align-items: center;
@@ -121,7 +118,7 @@
           background-color: #f5f7fa;
           border-radius: 6px;
           padding: 2px;
-          
+
           .mode-btn {
             border-radius: 4px;
             border: none;
@@ -129,12 +126,12 @@
             padding: 0 12px;
             font-size: 12px;
             transition: all 0.2s ease;
-            
+
             &:hover {
               transform: translateY(-1px);
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-            
+
             .el-icon {
               margin-right: 4px;
               font-size: 12px;
@@ -145,11 +142,11 @@
     }
     .visual-description {
       height: 30%;
-      
+
       &.disabled-input {
         pointer-events: none;
         opacity: 0.6;
-        
+
         :deep(input),
         :deep(textarea),
         :deep(select),
@@ -157,7 +154,7 @@
           pointer-events: none;
           user-select: none;
         }
-        
+
         :deep(.el-input__inner),
         :deep(.el-textarea__inner) {
           background-color: #f5f5f5;
@@ -166,5 +163,5 @@
         }
       }
     }
-  } 
+  }
 </style>

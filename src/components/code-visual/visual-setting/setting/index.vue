@@ -12,14 +12,8 @@
         <el-table-column>
           <template v-slot="{ row }">
             <div class="item">
-              <i
-                v-if="row.type == descriptionType"
-                class="selected-icon iconfont icon-Other-10"
-              />
-              <i
-                v-if="row.type != descriptionType"
-                class="selected-icon iconfont icon-Other-11"
-              />
+              <i v-if="row.type == descriptionType" class="selected-icon iconfont icon-Other-10" />
+              <i v-if="row.type != descriptionType" class="selected-icon iconfont icon-Other-11" />
               {{ row.name }}
             </div>
           </template>
@@ -39,7 +33,7 @@
   import useVisualStore from '@/store/modules/visual.ts';
   import useDebugStore from '@/store/modules/debug';
   import { reqGetVisualDescription } from '@/api/visual';
-  import { onMounted,ref,watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
   import { ElTable } from 'element-plus';
   import { descriptions } from '@/constants/description.ts';
@@ -47,13 +41,11 @@
   import BinaryTreeSetting from './binary-tree.vue';
   import LinkList from './link-list.vue';
   import Graph from './graph.vue';
-  import {
-    CompileEventDispatcher
-  } from '@/api/debug/debug-event-dispatcher';
+  import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher';
 
   const visualStore = useVisualStore();
   const debugStore = useDebugStore();
-  
+
   const { isAIEnabled, descriptionType } = storeToRefs(visualStore);
 
   const singleTableRef = ref<InstanceType<typeof ElTable>>();
@@ -81,7 +73,6 @@
     descriptionType.value = val.type;
   };
 
-
   // 编译完成以后读取可视化描述
   const onCompiled = async (data: CompileEvent) => {
     if (data.success && isAIEnabled.value) {
@@ -99,7 +90,7 @@
     if (newVal) {
       console.log('isAIEnabled', newVal);
       // 如果isAIEnabled为true，并且正在调试中，则拉取ai配置数据
-      if (debugStore.isDebugging()){
+      if (debugStore.isDebugging()) {
         // 拉取ai配置数据
         let result = await reqGetVisualDescription(debugStore.id);
         if (result.code == 200) {

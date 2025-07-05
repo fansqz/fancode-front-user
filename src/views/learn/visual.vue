@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-      <div class="visual-container" ref="visualContainer">
-        <Visaul ref="visual" class="visaul" :action="action" :sources="sources" />
-      </div>
-      <VisaulTemplate/>
-  </div> 
+    <div class="visual-container" ref="visualContainer">
+      <Visaul ref="visual" class="visaul" :action="action" :sources="sources" />
+    </div>
+    <VisaulTemplate />
+  </div>
 </template>
 
 <script setup lang="ts">
