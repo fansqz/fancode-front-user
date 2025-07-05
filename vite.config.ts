@@ -11,9 +11,7 @@ export default defineConfig(() => {
   return {
     plugins: [
       vue(),
-      monacoEditorPlugin({
-        languages: ['css', 'html', 'javascript', 'less', 'pug', 'scss', 'typescript', 'coffee'],
-      }),
+      monacoEditorPlugin({}),
       // svg插件
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
@@ -31,9 +29,9 @@ export default defineConfig(() => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/styles/variable.scss";`
-        }
-      }
-    }
+          additionalData: `@import "@/styles/variable.scss";`,
+        },
+      },
+    },
   }
 })

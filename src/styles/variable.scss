@@ -1,10 +1,10 @@
 // 一些基本样式
 $base-border-color: var(--el-border-color);
-$base-background-color: #ffffff;
-$base-header-background: #ffffff;
+$base-background-color: #fff;
+$base-header-background: #fff;
 
 // 基本颜色
-$base-blue-color: rgb(90, 180, 253);
+$base-blue-color: rgb(90 180 253);
 
 // 字体
 $base-title-font-color:  #3a3a3a;
@@ -16,6 +16,6 @@ $base-header-height: 50px;
 
 
 // 状态颜色
-$sucess-color: rgb(5, 181, 93);
-$warn-color: rgb(255, 184, 0);
-$info-color: rgb(242, 243, 244);
+$sucess-color: rgb(5 181 93);
+$warn-color: rgb(255 184 0);
+$info-color: rgb(242 243 244);
