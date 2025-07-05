@@ -10,7 +10,6 @@ declare module '*.vue' {
 declare module 'particles.vue3'
 
 declare module 'splitpanes'
-declare module 'vue'
 
 // Pinia 类型声明
 declare module 'pinia'
@@ -26,7 +25,6 @@ declare module 'monaco-editor'
 declare module 'monaco-editor-textmate'
 declare module 'monaco-textmate'
 declare module 'onigasm'
-declare module 'structv2'
 
 declare module 'ace-builds/src-noconflict/*'
 declare module 'ace-builds/src-noconflict/mode-*'
