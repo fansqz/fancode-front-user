@@ -85,6 +85,8 @@
         {
           view: {
             groupPadding: 0,
+            fitCenter: true,
+            centerOffsetYPercent: -0.2,
           },
         },
         isForce,

@@ -109,7 +109,7 @@ importers:
         version: 3.2.0(vue@3.5.17(typescript@5.8.3))
       structv2:
         specifier: github:leaf-dawn/StructV2
-        version: git+https://git@github.com:leaf-dawn/StructV2.git#2b145299bdaa44d3817d727af78911b516ab79ae
+        version: git+https://git@github.com:leaf-dawn/StructV2.git#e942911845fea78c059400da36b548bb4dd74f13
       stylelint:
         specifier: ^15.10.2
         version: 15.11.0(typescript@5.8.3)
@@ -219,9 +219,6 @@ importers:
       husky:
         specifier: ^8.0.3
         version: 8.0.3
-      node:
-        specifier: link:@types\node
-        version: link:@types/node
       postcss-html:
         specifier: ^1.8.0
         version: 1.8.0
@@ -4008,9 +4005,9 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#2b145299bdaa44d3817d727af78911b516ab79ae:
-    resolution: {commit: 2b145299bdaa44d3817d727af78911b516ab79ae, repo: git@github.com:leaf-dawn/StructV2.git, type: git}
-    version: 0.0.10
+  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#e942911845fea78c059400da36b548bb4dd74f13:
+    resolution: {commit: e942911845fea78c059400da36b548bb4dd74f13, repo: git@github.com:leaf-dawn/StructV2.git, type: git}
+    version: 0.0.12
 
   style-search@0.1.0:
     resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==}
@@ -8933,7 +8930,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#2b145299bdaa44d3817d727af78911b516ab79ae:
+  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#e942911845fea78c059400da36b548bb4dd74f13:
     dependencies:
       '@antv/g6': 4.8.25
       merge: 2.1.1
