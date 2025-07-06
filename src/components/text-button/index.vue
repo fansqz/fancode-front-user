@@ -9,18 +9,18 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  defineProps(['text']);
-  const isHovered = ref(false);
+  import { ref } from 'vue'
+  defineProps(['text'])
+  const isHovered = ref(false)
 </script>
 
 <style scoped lang="scss">
   .button {
+    color: #333;
     cursor: pointer;
-    color: #333333;
   }
 
   .hovered {
-    color: #4499ee;
+    color: #49e;
   }
 </style>

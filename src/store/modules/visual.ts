@@ -1,29 +1,34 @@
-import { defineStore } from 'pinia';
-import { descriptions } from '@/constants/description.ts';
+import { defineStore } from 'pinia'
+
 import {
   ArrayDescription,
   BinaryTreeDescription,
   GraphDescription,
   LinkListDescription,
   VisualDescription,
-} from '@/components/code-visual/visual-setting/type.ts';
+} from '@/api/visual/type'
+import { descriptions } from '@/constants/description.ts'
 
 type VisualState = {
   // 可视化是否开启
-  action: boolean;
-
+  action: boolean
+  // 是否ai自动识别可视化
+  isAIEnabled: boolean
   // 可视化描述类型
-  descriptionType: descriptions;
+  descriptionType: descriptions
   // 可视化
-  arrayDescription: ArrayDescription;
-  binaryTreeDescription: BinaryTreeDescription;
-  linkListDescription: LinkListDescription;
-  graphDescription: GraphDescription;
-};
+  arrayDescription: ArrayDescription
+  binaryTreeDescription: BinaryTreeDescription
+  linkListDescription: LinkListDescription
+  graphDescription: GraphDescription
+}
 
 const useVisualStore = defineStore('visual', {
   state: (): VisualState => ({
+    // 可视化是否开启
     action: false,
+    // 是否ai自动识别可视化
+    isAIEnabled: true,
     descriptionType: descriptions.Array,
     arrayDescription: {
       arrayName: 'Arr',
@@ -54,32 +59,32 @@ const useVisualStore = defineStore('visual', {
     setDescription(desciptionType: descriptions, description: VisualDescription) {
       switch (desciptionType) {
         case descriptions.Array:
-          this.arrayDescription = description;
-          break;
+          this.arrayDescription = description
+          break
         case descriptions.BinaryTree:
-          this.binaryTreeDescription = description;
-          break;
+          this.binaryTreeDescription = description
+          break
         case descriptions.LinkList:
-          this.linkListDescription = description;
-          break;
+          this.linkListDescription = description
+          break
         case descriptions.Graph:
-          this.graphDescription = description;
-          break;
+          this.graphDescription = description
+          break
       }
     },
     getDescription(desciptionType: descriptions) {
       switch (desciptionType) {
         case descriptions.Array:
-          return this.arrayDescription;
+          return this.arrayDescription
         case descriptions.BinaryTree:
-          return this.binaryTreeDescription;
+          return this.binaryTreeDescription
         case descriptions.LinkList:
-          return this.linkListDescription;
+          return this.linkListDescription
         case descriptions.Graph:
-          return this.graphDescription;
+          return this.graphDescription
       }
     },
   },
-});
+})
 
-export default useVisualStore;
+export default useVisualStore

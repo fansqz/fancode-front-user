@@ -12,20 +12,20 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted, onBeforeUnmount, toRefs, watch } from 'vue';
-  import { editor } from 'monaco-editor';
-  import { wire } from '@/components/code-editor/editor/themes';
+  import { ref, onMounted, onBeforeUnmount, toRefs, watch } from 'vue'
+  import { editor } from 'monaco-editor'
+  import { wire } from '@/components/code-editor/editor/themes'
 
-  const emit = defineEmits(['close', 'click-outside']);
+  const emit = defineEmits(['close', 'click-outside'])
 
   let props = defineProps<{
-    code: string;
-    language: string;
-    remark: string;
-  }>();
-  let { code, language, remark } = toRefs(props);
-  const editorEl = ref<HTMLElement>();
-  let editorInstance: editor.IStandaloneCodeEditor;
+    code: string
+    language: string
+    remark: string
+  }>()
+  let { code, language, remark } = toRefs(props)
+  const editorEl = ref<HTMLElement>()
+  let editorInstance: editor.IStandaloneCodeEditor
 
   onMounted(() => {
     // 创建editor实例
@@ -37,53 +37,56 @@
         enabled: false,
       },
       automaticLayout: true,
-    });
-    wire(language.value, editorInstance);
+    })
+    wire(language.value, editorInstance)
 
     watch(
       () => language.value,
       async (val) => {
-        const model = editorInstance.getModel();
+        const model = editorInstance.getModel()
         if (model) {
           //设置语言
-          editor.setModelLanguage(model, val);
-          wire(val, editorInstance);
+          editor.setModelLanguage(model, val)
+          wire(val, editorInstance)
         }
       },
-    );
+    )
 
     watch(
       () => code.value,
       (val) => {
-        editorInstance?.setValue(val);
+        editorInstance?.setValue(val)
       },
-    );
-  });
+    )
+  })
 
   onBeforeUnmount(() => {
-    let model = editorInstance.getModel();
-    model?.dispose();
-    editorInstance?.dispose();
-  });
+    let model = editorInstance.getModel()
+    model?.dispose()
+    editorInstance?.dispose()
+  })
 
   const close = () => {
-    emit('close');
-  };
+    emit('close')
+  }
 </script>
 
 <style scoped lang="scss">
   .code-show {
-    height: 500px;
     width: 600px;
+    height: 500px;
+
     .editor {
-      height: 400px;
       width: 100%;
+      height: 400px;
     }
+
     .card-header {
       display: flex;
       justify-content: space-between;
+
       .code-view-close {
-        margin-right: 0px;
+        margin-right: 0;
       }
     }
   }

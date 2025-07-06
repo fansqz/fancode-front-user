@@ -71,110 +71,110 @@
 </template>
 
 <script setup lang="ts">
-  import { reqSubmissionList, reqAddRemark } from '@/api/submission';
-  import { ref, onMounted, reactive, toRefs } from 'vue';
-  import { languageConstants } from '@/constants/languages.ts';
-  import CodeShow from './code-show.vue';
+  import { reqSubmissionList, reqAddRemark } from '@/api/submission'
+  import { ref, onMounted, reactive, toRefs } from 'vue'
+  import { languageConstants } from '@/constants/languages.ts'
+  import CodeShow from './code-show.vue'
 
   let props = defineProps<{
-    problemID: number;
-  }>();
+    problemID: number
+  }>()
 
-  let { problemID } = toRefs(props);
+  let { problemID } = toRefs(props)
 
   let languageColorMap = new Map<string, string>([
     [languageConstants.GO, 'primary'],
     [languageConstants.C, 'success'],
     [languageConstants.Java, 'info'],
-  ]);
+  ])
 
-  let codeVisible = ref(false);
-  let codeShowed = ref(false);
+  let codeVisible = ref(false)
+  let codeShowed = ref(false)
   let currentSubmission = reactive({
     code: '',
     language: languageConstants.GO,
     remark: '',
-  });
+  })
 
   // 分页
-  let pageNo = ref<number>(1);
+  let pageNo = ref<number>(1)
   // 每页展示多少条数据
-  let limit = ref<number>(100);
-  let total = ref<number>(0);
-  let submissionList = ref();
+  let limit = ref<number>(100)
+  let total = ref<number>(0)
+  let submissionList = ref()
 
-  let remarkElMap: Map<number, HTMLElement> = new Map();
+  let remarkElMap: Map<number, HTMLElement> = new Map()
   const setItemRefs = (el: HTMLElement, id: number) => {
     if (el) {
-      remarkElMap.set(id, el);
+      remarkElMap.set(id, el)
     }
-  };
+  }
 
   const getSubmissionList = async () => {
     let result = await reqSubmissionList({
       page: pageNo.value,
       pageSize: limit.value,
       problemID: problemID.value,
-    });
+    })
     if (result.code == 200) {
-      total.value = result.data.total;
-      submissionList.value = result.data.list;
+      total.value = result.data.total
+      submissionList.value = result.data.list
     }
-  };
+  }
 
   onMounted(() => {
-    getSubmissionList();
-  });
+    getSubmissionList()
+  })
 
   const getTypeByLanaguage = (language: string) => {
     if (!languageColorMap.has(language)) {
-      return 'info';
+      return 'info'
     } else {
-      return languageColorMap.get(language);
+      return languageColorMap.get(language)
     }
-  };
+  }
 
   const formatTime = (time: number) => {
-    return `${Math.ceil(time / 1000000000)}s`;
-  };
+    return `${Math.ceil(time / 1000000000)}s`
+  }
 
   const startRemarkEdit = (row) => {
-    row.remarkInput = row.remark;
-    row.remarkEdit = true;
-    remarkElMap.get(row.id).focus();
+    row.remarkInput = row.remark
+    row.remarkEdit = true
+    remarkElMap.get(row.id).focus()
     submissionList.value.forEach((item) => {
       if (item.id != row.id) {
-        item.remarkEdit = false;
+        item.remarkEdit = false
       }
-    });
-  };
+    })
+  }
 
   const updateRemark = async (row) => {
-    row.remarkEdit = false;
-    let result = await reqAddRemark(row.id, row.remarkInput);
+    row.remarkEdit = false
+    let result = await reqAddRemark(row.id, row.remarkInput)
     if (result.code == 200) {
-      row.remark = row.remarkInput;
+      row.remark = row.remarkInput
     }
-  };
+  }
 
   const closeRemarkEdit = (row) => {
-    row.remarkEdit = false;
-  };
+    row.remarkEdit = false
+  }
 
   const showCode = (row) => {
-    currentSubmission.code = row.code;
-    currentSubmission.language = row.language;
-    currentSubmission.remark = row.remark;
-    codeVisible.value = true;
+    currentSubmission.code = row.code
+    currentSubmission.language = row.language
+    currentSubmission.remark = row.remark
+    codeVisible.value = true
     setTimeout(() => {
-      codeShowed.value = true;
-    }, 250);
-  };
+      codeShowed.value = true
+    }, 250)
+  }
 
   const closeCodeShow = () => {
-    codeVisible.value = false;
-    codeShowed.value = false;
-  };
+    codeVisible.value = false
+    codeShowed.value = false
+  }
 
   // 自定义指令，用于处理点击外部区域的事件
   const vClickOutside = {
@@ -182,38 +182,42 @@
       // 在元素上绑定一个事件监听器
       el.clickOutsideEvent = function (event) {
         if (!codeShowed.value) {
-          return;
+          return
         }
         // 判断点击事件是否发生在元素外部
         if (!(el === event.target || el.contains(event.target))) {
-          closeCodeShow();
+          closeCodeShow()
         }
-      };
+      }
       // 在全局添加点击事件监听器
-      document.addEventListener('click', el.clickOutsideEvent);
+      document.addEventListener('click', el.clickOutsideEvent)
     },
     unmounted(el) {
       // 在组件销毁前，移除事件监听器以避免内存泄漏
-      document.removeEventListener('click', el.clickOutsideEvent);
+      document.removeEventListener('click', el.clickOutsideEvent)
     },
-  };
+  }
 </script>
 
 <style scoped lang="scss">
   .scrollbar {
     background-color: $base-header-background;
+
     .submission {
-      padding: 0px;
-      margin: 0px;
       width: 100%;
       height: 100%;
+      padding: 0;
+      margin: 0;
       background-color: $base-header-background;
+
       .table {
         padding: 30px 60px;
+
         .remark-column {
           .remarkInput {
-            margin: auto 0px;
+            margin: auto 0;
           }
+
           .remark {
             padding: 2px;
           }
@@ -221,10 +225,11 @@
       }
     }
   }
+
   .code-show {
     position: absolute;
-    z-index: 99999;
     top: calc(40% - 250px);
     left: calc(50% - 300px);
+    z-index: 99999;
   }
 </style>

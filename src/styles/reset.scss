@@ -79,13 +79,13 @@ time,
 mark,
 audio,
 video {
-  margin: 0;
   padding: 0;
-  border: 0;
-  font-size: 100%;
+  margin: 0;
   font: inherit;
-  vertical-align: baseline;
+  font-size: 100%;
   text-decoration: none;
+  vertical-align: baseline;
+  border: 0;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -104,8 +104,16 @@ section {
 }
 
 body {
-  line-height: 1;
+  box-sizing: border-box;
+  width: 100%;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  line-height: 1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 ol,
@@ -118,31 +126,31 @@ q {
   quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
   content: '';
   content: none;
 }
 
 table {
-  border-collapse: collapse;
   border-spacing: 0;
+  border-collapse: collapse;
 }
 
 
-/*清除浮动*/
-.clearfix:before,
-.clearfix:after {
-  content: "";
+/* 清除浮动 */
+.clearfix::before,
+.clearfix::after {
   display: block;
-  visibility: hidden;
   clear: both;
+  visibility: hidden;
+  content: "";
 }
 
-/*容器*/
-.container {
-  margin: 10px auto 0px;
-  width: 95%;
+
+/* 禁用移动端缩放 */
+html {
+  text-size-adjust: none;
 }

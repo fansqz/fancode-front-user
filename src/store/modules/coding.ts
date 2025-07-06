@@ -1,39 +1,40 @@
-import { defineStore } from 'pinia';
-import { supportedLanguages, languageConstants } from '@/constants/languages.ts';
+import { defineStore } from 'pinia'
+
+import { supportedLanguages, languageConstants } from '@/constants/languages.ts'
 
 type CodingState = {
   // 编辑器代码
-  code: string;
+  code: string
   // 题目id
-  problemId: number;
+  problemId: number
   // 主题
-  theme: string;
+  theme: string
   // 判断当前标签页编程题目的语言类型
-  language: languageConstants;
+  language: languageConstants
   // 可选的语言
-  languages: languageConstants[];
+  languages: languageConstants[]
   // 输入框数据
-  input: string;
+  input: string
   // 输出数据
-  output: Output;
-};
+  output: Output
+}
 
 type Output = {
   // status为0就是正在加载中，status为1就是加载成功
-  status: number;
+  status: number
   // 异常信息
-  errorMessage: string;
+  errorMessage: string
   // 输出状态码
-  statusCode: number;
+  statusCode: number
   // 用例名称
-  caseName: string;
+  caseName: string
   // 用例数据
-  caseData: string;
+  caseData: string
   // 用户输出
-  userOutput: string;
+  userOutput: string
   // 预期输出
-  expectedOutput: string;
-};
+  expectedOutput: string
+}
 
 // 使用 Pinia 创建一个状态存储
 const useCodingStore = defineStore('coding', {
@@ -56,6 +57,6 @@ const useCodingStore = defineStore('coding', {
   }),
   actions: {},
   getters: {},
-});
+})
 
-export default useCodingStore;
+export default useCodingStore

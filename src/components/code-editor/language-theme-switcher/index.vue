@@ -19,49 +19,54 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import { getAllTheme } from '../editor/themes';
-  import { reqProblemTemplateCode } from '@/api/problem';
-  import useCodingStore from '@/store/modules/coding';
-  let codingStore = useCodingStore();
+  import { ref } from 'vue'
+  import { storeToRefs } from 'pinia'
+  import { getAllTheme } from '../editor/themes'
+  import { reqProblemTemplateCode } from '@/api/problem'
+  import useCodingStore from '@/store/modules/coding'
+  let codingStore = useCodingStore()
 
   // 主题列表
-  let themeList = ref(getAllTheme());
-  let { theme, code, language, languages } = storeToRefs(codingStore);
-  theme.value = themeList.value[0];
+  let themeList = ref(getAllTheme())
+  let { theme, code, language, languages } = storeToRefs(codingStore)
+  theme.value = themeList.value[0]
   // 重新加载代码
   const reloadCode = async () => {
-    let result = await reqProblemTemplateCode(language.value);
+    let result = await reqProblemTemplateCode(language.value)
     if (result.code == 200) {
-      code.value = result.data;
+      console.log('sdf234e')
+      code.value = result.data
     }
-  };
+  }
 </script>
 
 <style scoped lang="scss">
   .menu {
     .left {
       position: absolute;
-      height: 35px;
-      width: 100%;
-      background-color: $base-header-background;
       box-sizing: border-box;
-      border-bottom: 1px solid $base-border-color;
       display: flex;
       align-items: center;
+      width: 100%;
+      height: 35px;
+      background-color: $base-header-background;
+      border-bottom: 1px solid $base-border-color;
+
       .language-select {
         width: 150px;
-        margin-left: 30px;
         margin-right: 7px;
+        margin-left: 30px;
+
         .language-item {
           user-select: none;
         }
       }
     }
+
     .right {
       position: absolute;
       right: 10px;
+
       .theme-select {
         width: 120px;
       }

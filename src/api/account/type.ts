@@ -1,33 +1,35 @@
-type AccountInfo = {
-  avatar: string;
-  loginName: string;
-  username: string;
-  email: string;
-  phone: string;
-  introduction: string;
-  sex: string;
-  birthDay: string;
-  codingAge: number;
-};
+import { BaseResponse } from '../type'
 
-type AccountInfoResponse = BaseResponse & {
-  data: AccountInfo;
-};
+export type AccountInfo = {
+  avatar: string
+  loginName: string
+  username: string
+  email: string
+  phone: string
+  introduction: string
+  sex: string
+  birthDay: string
+  codingAge: number
+}
 
-type UpdateAccountRequest = {
-  avatar: string;
-  username: string;
-  introduction: string;
-  sex: string;
-  birthDay: string;
-};
+export type AccountInfoResponse = BaseResponse & {
+  data: AccountInfo
+}
 
-type UpdateAccountResponse = BaseResponse & {};
+export type UpdateAccountRequest = {
+  avatar: string
+  username: string
+  introduction: string
+  sex: string
+  birthDay: string
+}
 
-type UploadAvatarRequest = {
-  avatar: File;
-};
+export type UpdateAccountResponse = BaseResponse & {}
 
-type UploadAvatarResponse = BaseResponse & {
-  data: string;
-};
+export type UploadAvatarRequest = {
+  avatar: File
+}
+
+export type UploadAvatarResponse = BaseResponse & {
+  data: string
+}

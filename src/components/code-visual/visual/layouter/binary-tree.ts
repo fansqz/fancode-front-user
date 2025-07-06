@@ -1,5 +1,5 @@
-import { SV, SourceNode, LayoutGroupOptions, Group, SVNode, LayoutOptions } from 'structv2';
-import G6 from '@antv/g6';
+import G6 from '@antv/g6'
+import { SV, SourceNode, LayoutGroupOptions, Group, SVNode, LayoutOptions } from 'structv2'
 
 SV.registerLayout('binaryTree', {
   defineOptions(_sourceData: SourceNode[]): LayoutGroupOptions {
@@ -53,7 +53,7 @@ SV.registerLayout('binaryTree', {
         xInterval: 50,
         yInterval: 50,
       },
-    };
+    }
   },
 
   /**
@@ -62,93 +62,93 @@ SV.registerLayout('binaryTree', {
   layoutItem(node: SVNode, layoutOptions: LayoutOptions) {
     // 次双亲不进行布局
     if (!node) {
-      return null;
+      return null
     }
 
-    let bound = node.getBound(),
-      width = bound.width,
-      height = bound.height,
-      group = new Group(node),
-      leftGroup = null,
-      rightGroup = null,
-      leftBound = null,
-      rightBound = null;
+    const bound = node.getBound()
+    const width = bound.width
+    const height = bound.height
+    const group = new Group(node)
+    let leftGroup = null
+    let rightGroup = null
+    let leftBound = null
+    let rightBound = null
 
     if (node.visited) {
-      return null;
+      return null
     }
 
-    node.visited = true;
+    node.visited = true
 
     if (node.child && node.child[0]) {
-      leftGroup = this.layoutItem(node.child[0], layoutOptions);
+      leftGroup = this.layoutItem(node.child[0], layoutOptions)
     }
 
     if (node.child && node.child[1]) {
-      rightGroup = this.layoutItem(node.child[1], layoutOptions);
+      rightGroup = this.layoutItem(node.child[1], layoutOptions)
     }
 
     if (leftGroup) {
-      leftBound = leftGroup.getBound();
-      node.set('y', leftBound.y - layoutOptions.yInterval - height);
+      leftBound = leftGroup.getBound()
+      node.set('y', leftBound.y - layoutOptions.yInterval - height)
     }
 
     if (rightGroup) {
-      rightBound = rightGroup.getBound();
+      rightBound = rightGroup.getBound()
 
       if (leftGroup) {
-        rightGroup.translate(0, leftBound.y - rightBound.y);
+        rightGroup.translate(0, leftBound.y - rightBound.y)
       }
 
-      rightBound = rightGroup.getBound();
-      node.set('y', rightBound.y - layoutOptions.yInterval - height);
+      rightBound = rightGroup.getBound()
+      node.set('y', rightBound.y - layoutOptions.yInterval - height)
     }
 
     // 处理左右子树相交问题
     if (leftGroup && rightGroup) {
-      let move = Math.abs(rightBound.x - layoutOptions.xInterval - leftBound.x - leftBound.width);
+      const move = Math.abs(rightBound.x - layoutOptions.xInterval - leftBound.x - leftBound.width)
       if (move > 0) {
-        leftGroup.translate(-move / 2, 0);
-        rightGroup.translate(move / 2, 0);
+        leftGroup.translate(-move / 2, 0)
+        rightGroup.translate(move / 2, 0)
       }
     }
 
     if (leftGroup) {
-      leftBound = leftGroup.getBound();
-      node.set('x', leftBound.x + leftBound.width + layoutOptions.xInterval / 2 - width);
+      leftBound = leftGroup.getBound()
+      node.set('x', leftBound.x + leftBound.width + layoutOptions.xInterval / 2 - width)
     }
 
     if (rightGroup) {
-      rightBound = rightGroup.getBound();
-      node.set('x', rightBound.x - layoutOptions.xInterval / 2 - width);
+      rightBound = rightGroup.getBound()
+      node.set('x', rightBound.x - layoutOptions.xInterval / 2 - width)
     }
 
     if (leftGroup) {
-      group.add(leftGroup);
+      group.add(leftGroup)
     }
 
     if (rightGroup) {
-      group.add(rightGroup);
+      group.add(rightGroup)
     }
 
-    return group;
+    return group
   },
 
   layout(elements: SVNode[], layoutOptions: LayoutOptions) {
-    let groups = [];
+    const groups = []
     // 解决多棵树相交问题
-    for (let element of elements) {
+    for (const element of elements) {
       if (element.root) {
-        let group = this.layoutItem(element, layoutOptions);
-        groups.push(group);
+        const group = this.layoutItem(element, layoutOptions)
+        groups.push(group)
       }
     }
     // 避免多棵相交
     for (let i = 0; i < groups.length - 1; i++) {
-      let bound1 = groups[i].getBound();
-      let bound2 = groups[i + 1].getBound();
-      let move = Math.abs(bound2.x - layoutOptions.xInterval - bound1.x - bound1.width);
-      groups[i + 1].translate(move, 0);
+      const bound1 = groups[i].getBound()
+      const bound2 = groups[i + 1].getBound()
+      const move = Math.abs(bound2.x - layoutOptions.xInterval - bound1.x - bound1.width)
+      groups[i + 1].translate(move, 0)
     }
   },
-});
+})

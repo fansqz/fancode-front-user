@@ -87,38 +87,38 @@
 </template>
 
 <script setup lang="ts">
-  import Logo from '@/components/logo/index.vue';
-  import { User, Lock, Message } from '@element-plus/icons-vue';
-  import { onMounted, reactive, ref } from 'vue';
-  import useUserStore from '@/store/modules/user';
-  import { useRouter, useRoute } from 'vue-router';
-  import { ElNotification, ElMessage } from 'element-plus';
-  import { getDayPeriod } from '@/utils/time';
-  import { reqSendCode } from '@/api/auth';
+  import Logo from '@/components/logo/index.vue'
+  import { User, Lock, Message } from '@element-plus/icons-vue'
+  import { onMounted, reactive, ref } from 'vue'
+  import useUserStore from '@/store/modules/user'
+  import { useRouter, useRoute } from 'vue-router'
+  import { ElNotification, ElMessage } from 'element-plus'
+  import { getDayPeriod } from '@/utils/time'
+  import { reqSendCode } from '@/api/auth'
 
-  let useStore = useUserStore();
-  let $router = useRouter();
-  let $route = useRoute();
+  let useStore = useUserStore()
+  let $router = useRouter()
+  let $route = useRoute()
   // 登录按钮是否加载
-  let loading = ref(false);
+  let loading = ref(false)
   let loginForm = reactive({
     loginType: 'email',
     account: '',
     password: '',
     email: '',
     code: '',
-  });
+  })
   // 登录类型，默认邮箱登录
-  let loginTypeTextStyle = ref();
-  let goRegisterTextStyle = ref();
-  let visitorTextStyle = ref();
+  let loginTypeTextStyle = ref()
+  let goRegisterTextStyle = ref()
+  let visitorTextStyle = ref()
   // 是否在验证码倒计时中
   const downTimeState = reactive({
     // 倒计时
     countDownTime: 60,
     timer: null,
     countDownIng: false,
-  });
+  })
 
   let rules = {
     account: [
@@ -134,124 +134,125 @@
       { required: true, message: '验证码不能为空', trigger: 'change' },
       { required: true, min: 6, max: 6, message: '验证码需要6位' },
     ],
-  };
-  let loginElFrom = ref();
+  }
+  let loginElFrom = ref()
 
   const switchLoginType = () => {
     if (loginForm.loginType == 'password') {
-      loginForm.loginType = 'email';
+      loginForm.loginType = 'email'
     } else {
-      loginForm.loginType = 'password';
+      loginForm.loginType = 'password'
     }
-  };
+  }
 
   const sendEmailCode = async () => {
     let result = await reqSendCode({
       email: loginForm.email,
       type: 'login',
-    });
+    })
     if (result.code == 200) {
       ElMessage({
         showClose: true,
         message: result.message,
         type: 'success',
-      });
-      countDown();
+      })
+      countDown()
     } else {
       ElMessage({
         showClose: true,
         message: result.message,
         type: 'warning',
-      });
+      })
     }
-  };
+  }
 
   const login = async () => {
     // 判断表单校验是否通过
-    await loginElFrom.value.validate();
-    let data;
+    await loginElFrom.value.validate()
+    let data
     if (loginForm.loginType == 'password') {
       data = {
         type: loginForm.loginType,
         account: loginForm.account,
         password: loginForm.password,
-      };
+      }
     } else if (loginForm.loginType == 'email') {
       data = {
         type: loginForm.loginType,
         email: loginForm.email,
         code: loginForm.code,
-      };
+      }
     }
-    loading.value = true;
+    loading.value = true
     try {
-      await useStore.userLogin(data);
+      await useStore.userLogin(data)
       // 判断是否有redirect参数
-      let redirect: any = $route.query.redirect;
-      $router.push({ path: redirect || '/' });
+      let redirect: any = $route.query.redirect
+      $router.push({ path: redirect || '/' })
       ElNotification({
         type: 'success',
         message: '欢迎回来',
         title: `HI,${getDayPeriod()}好`,
-      });
-      loading.value = false;
+      })
+      loading.value = false
     } catch (error) {
-      loading.value = false;
+      loading.value = false
       ElNotification({
         type: 'error',
         message: (error as Error).message,
-      });
+      })
     }
-  };
+  }
 
   const countDown = () => {
-    let startTime = parseInt(localStorage.getItem('loginStartTimeLogin'));
-    let nowTime = new Date().getTime();
+    let startTime = parseInt(localStorage.getItem('loginStartTimeLogin'))
+    let nowTime = new Date().getTime()
     if (startTime) {
-      let surplus = 60 - Math.round((nowTime - startTime) / 1000);
-      downTimeState.countDownTime = surplus <= 0 ? 0 : surplus;
+      let surplus = 60 - Math.round((nowTime - startTime) / 1000)
+      downTimeState.countDownTime = surplus <= 0 ? 0 : surplus
     } else {
-      downTimeState.countDownTime = 60;
-      localStorage.setItem('loginStartTimeLogin', nowTime.toString());
+      downTimeState.countDownTime = 60
+      localStorage.setItem('loginStartTimeLogin', nowTime.toString())
     }
 
     downTimeState.timer = setInterval(() => {
-      downTimeState.countDownTime--;
-      downTimeState.countDownIng = true;
+      downTimeState.countDownTime--
+      downTimeState.countDownIng = true
       if (downTimeState.countDownTime <= 0) {
-        localStorage.removeItem('loginStartTimeLogin');
-        clearInterval(downTimeState.timer);
-        downTimeState.countDownTime = 60;
-        downTimeState.countDownIng = false;
+        localStorage.removeItem('loginStartTimeLogin')
+        clearInterval(downTimeState.timer)
+        downTimeState.countDownTime = 60
+        downTimeState.countDownIng = false
       }
-    }, 1000);
-  };
+    }, 1000)
+  }
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
-      return;
+      return
     }
-    $router.push({ name: routeName, params });
-  };
+    $router.push({ name: routeName, params })
+  }
 
   onMounted(() => {
-    let sendEndTime = localStorage.getItem('loginStartTimeLogin');
+    let sendEndTime = localStorage.getItem('loginStartTimeLogin')
     if (sendEndTime) {
-      downTimeState.countDownIng = true;
-      countDown();
+      downTimeState.countDownIng = true
+      countDown()
     }
-  });
+  })
 </script>
 
 <style scoped lang="scss">
   .login-container {
     position: absolute;
     top: 0;
-    width: 100%;
-    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - $base-header-height);
+
     .card {
       padding: 0%;
       margin-top: calc(50vh - 240px); /* 调整偏移量 */
@@ -259,31 +260,37 @@
         width: 250px;
         height: 280px;
         margin: 10px;
-        background-color: #ffffff;
         text-align: center;
+        background-color: #fff;
+
         .logo {
           height: 50px;
         }
+
         .small-text {
-          height: 32px;
           width: 250px;
+          height: 32px;
+
           .login-type {
             float: left;
             font-size: small;
             cursor: pointer;
           }
+
           .go-register {
             float: right;
             font-size: small;
             cursor: pointer;
           }
         }
+
         .visitor {
-          margin-top: 10px;
-          height: 32px;
           width: 250px;
+          height: 32px;
+          margin-top: 10px;
           font-size: small;
           color: #9aa0a6;
+
           .go-visitor {
             display: inline;
             font-size: small;

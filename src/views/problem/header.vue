@@ -20,19 +20,19 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  let $route = useRoute();
-  let $router = useRouter();
-  let returnTextStyle = ref();
-  defineProps(['problemName']);
+  import { ref } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  let $route = useRoute()
+  let $router = useRouter()
+  let returnTextStyle = ref()
+  defineProps(['problemName'])
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
-      return;
+      return
     }
-    $router.push({ name: routeName, params: params });
-  };
+    $router.push({ name: routeName, params: params })
+  }
 </script>
 
 <style scoped lang="scss">
@@ -43,34 +43,38 @@
     height: $base-header-height;
     background-color: $base-header-background;
     border-bottom: 1px solid $base-border-color;
+
     .header-left {
       position: absolute;
-      height: 100%;
-      width: 50%;
       left: 0%;
       display: flex;
+      width: 50%;
+      height: 100%;
+
       .return {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 80px;
         height: $base-header-height;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        color: rgb(0 0 0);
         cursor: pointer;
-        color: rgb(0, 0, 0);
         user-select: none;
       }
+
       .problem-name {
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         user-select: none;
       }
     }
+
     .header-right {
       position: absolute;
-      height: 100%;
-      width: 50%;
       right: 0%;
+      width: 50%;
+      height: 100%;
     }
   }
 </style>

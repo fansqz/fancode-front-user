@@ -1,28 +1,30 @@
-type ProblemBankForList = {
-  id: number;
-  icon: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  creatorName: string;
-  problemCount: number;
-};
+import { BaseResponse } from '../type'
 
-type AllBankListResponse = BaseResponse & {
-  data: ProblemBankForList[];
-};
+export type ProblemBankForList = {
+  id: number
+  icon: string
+  name: string
+  description: string
+  createdAt: string
+  updatedAt: string
+  creatorName: string
+  problemCount: number
+}
 
-type ProblemBankForGet = {
-  id: number;
-  name: string;
-  icon: string;
-  description: string;
-  creatorID: number;
-  createdAt: string;
-  updatedAt: string;
-};
+export type AllBankListResponse = BaseResponse & {
+  data: ProblemBankForList[]
+}
 
-type BankResponse = BaseResponse & {
-  data: ProblemBankForGet;
-};
+export type ProblemBankForGet = {
+  id: number
+  name: string
+  icon: string
+  description: string
+  creatorID: number
+  createdAt: string
+  updatedAt: string
+}
+
+export type BankResponse = BaseResponse & {
+  data: ProblemBankForGet
+}

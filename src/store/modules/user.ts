@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { defineStore } from 'pinia';
-import { reqLogin } from '@/api/auth';
-import { reqAccountInfo } from '@/api/account';
-import { reqGetURL } from '@/api/common';
+import { defineStore } from 'pinia'
+
+import { reqAccountInfo } from '@/api/account'
+import { reqLogin } from '@/api/auth'
+import { reqGetURL } from '@/api/common'
 
 const useUserStore = defineStore('User', {
   state: (): any => {
@@ -13,47 +14,47 @@ const useUserStore = defineStore('User', {
       phone: '',
       username: '',
       loginName: '',
-    };
+    }
   },
   actions: {
     async userLogin(data: any) {
-      const result = await reqLogin(data);
+      const result = await reqLogin(data)
       if (result.code == 200) {
-        this.token = result.data;
-        return 'ok';
+        this.token = result.data
+        return 'ok'
       } else {
-        return Promise.reject(new Error(result.message));
+        return Promise.reject(new Error(result.message))
       }
     },
     async userInfo() {
-      let result = await reqAccountInfo();
+      const result = await reqAccountInfo()
       if (result.code == 200) {
-        let avatarPath = result.data.avatar;
+        const avatarPath = result.data.avatar
         // 读取头像
         if (avatarPath != '') {
-          let result2 = await reqGetURL(avatarPath);
+          const result2 = await reqGetURL(avatarPath)
           if (result2.code == 200) {
-            this.avatar = result2.data;
+            this.avatar = result2.data
           }
         }
-        this.username = result.data.username;
-        this.email = result.data.email;
-        this.phone = result.data.phone;
-        this.loginName = result.data.loginName;
+        this.username = result.data.username
+        this.email = result.data.email
+        this.phone = result.data.phone
+        this.loginName = result.data.loginName
       } else {
-        return Promise.reject(new Error(result.message));
+        return Promise.reject(new Error(result.message))
       }
     },
     userLogout() {
-      localStorage.removeItem('TOKEN');
-      this.username = '';
-      this.email = '';
-      this.phone = '';
-      this.loginName = '';
-      this.avatar = '';
+      localStorage.removeItem('TOKEN')
+      this.username = ''
+      this.email = ''
+      this.phone = ''
+      this.loginName = ''
+      this.avatar = ''
     },
   },
   persist: true,
-});
+})
 
-export default useUserStore;
+export default useUserStore

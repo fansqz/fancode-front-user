@@ -1,18 +1,18 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
-type Status = 'init' | 'compiled' | 'running' | 'stopped' | 'terminated';
+type Status = 'init' | 'compiled' | 'running' | 'stopped' | 'terminated'
 
 // 扩展 state 以类型化各个属性，特别是breakpoints.
 type DebugState = {
-  id: string;
-  status: Status;
-  breakpoints: number[];
-  lineNum: number;
-  currentFrameID: number;
-  currentInput: string;
-  outputs: any[];
-  currentErrorLocation: number[];
-};
+  id: string
+  status: Status
+  breakpoints: number[]
+  lineNum: number
+  currentFrameID: number
+  currentInput: string
+  outputs: any[]
+  currentErrorLocation: number[]
+}
 
 // 使用 Pinia 创建一个状态存储
 const useDebugStore = defineStore('debug', {
@@ -36,10 +36,10 @@ const useDebugStore = defineStore('debug', {
   actions: {
     // 判断是否正在调试
     isDebugging() {
-      return this.status != 'init' && this.status != 'terminated';
+      return this.status != 'init' && this.status != 'terminated'
     },
   },
   getters: {},
-});
+})
 
-export default useDebugStore;
+export default useDebugStore

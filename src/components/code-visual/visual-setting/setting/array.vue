@@ -10,50 +10,50 @@
 </template>
 
 <script setup lang="ts">
-  import useVisualStore from '@/store/modules/visual.ts';
-  import { onMounted, ref, watch } from 'vue';
-  import { storeToRefs } from 'pinia';
-  const visualStore = useVisualStore();
+  import useVisualStore from '@/store/modules/visual.ts'
+  import { onMounted, ref, watch } from 'vue'
+  import { storeToRefs } from 'pinia'
+  const visualStore = useVisualStore()
 
-  const { arrayDescription } = storeToRefs(visualStore);
+  const { arrayDescription } = storeToRefs(visualStore)
 
-  const pointNamesStr = ref('');
+  const pointNamesStr = ref('')
 
   watch(
     () => pointNamesStr.value,
     (val) => {
       let arr: string[] = val.split(',').map((item) => {
-        return item.trim();
-      });
-      arrayDescription.value.pointNames = arr;
+        return item.trim()
+      })
+      arrayDescription.value.pointNames = arr
     },
-  );
+  )
 
   watch(
     () => arrayDescription.value.pointNames,
     (val) => {
       let arr: string[] = pointNamesStr.value.split(',').map((item) => {
-        return item.trim();
-      });
+        return item.trim()
+      })
       if (JSON.stringify(val) != JSON.stringify(arr)) {
-        pointNamesStr.value = val.join(',');
+        pointNamesStr.value = val.join(',')
       }
     },
     {
       deep: true,
     },
-  );
+  )
 
   onMounted(() => {
-    pointNamesStr.value = arrayDescription.value.pointNames.join(',');
-  });
+    pointNamesStr.value = arrayDescription.value.pointNames.join(',')
+  })
 </script>
 
 <style lang="scss" scoped>
   .arrayDescription {
-    height: 100%;
-    width: 100%;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     padding: 20px;
   }
 </style>

@@ -1,20 +1,20 @@
-import { SV, Group, SVNode, LayoutOptions } from 'structv2';
-import G6 from '@antv/g6';
+import G6 from '@antv/g6'
+import { SV, Group, SVNode, LayoutOptions } from 'structv2'
 
 // 链表
 SV.registerLayout('linkList', {
   sourcesPreprocess(sources) {
     if (sources.length == 0) {
-      return sources;
+      return sources
     }
-    let root = sources[0];
+    const root = sources[0]
 
     if (root.external) {
-      root.rootExternal = root.external;
-      delete root.external;
+      root.rootExternal = root.external
+      delete root.external
     }
 
-    return sources;
+    return sources
   },
 
   defineOptions() {
@@ -81,7 +81,7 @@ SV.registerLayout('linkList', {
         xInterval: 80,
         yInterval: 80,
       },
-    };
+    }
   },
 
   /**
@@ -89,51 +89,66 @@ SV.registerLayout('linkList', {
    * @param node
    * @param parent
    */
-  layoutItem(node, layoutOptions) {
+  layoutItem(level, node, layoutOptions): [Group, number] {
     if (!node) {
-      return null;
+      return null
     }
 
-    let bound = node.getBound(),
-      width = bound.width,
-      group = new Group(node),
-      nextGroup = null,
-      nextBound = null;
+    const bound = node.getBound()
+    const width = bound.width
+    const group = new Group(node)
+    let nextBound = null
 
     if (node.visited) {
-      return group;
+      return [group, node.level]
     }
 
-    node.visited = true;
-
+    node.visited = true
+    node.level = level
     if (node.next) {
-      nextGroup = this.layoutItem(node.next, layoutOptions);
-      nextBound = nextGroup.getBound();
-      node.set('x', nextBound.x - layoutOptions.xInterval - width);
-      group.add(nextGroup);
+      const nextNodeVisited = node.next.visited
+      const [nextGroup, nextNodeLevel] = this.layoutItem(level, node.next, layoutOptions)
+      nextBound = nextGroup.getBound()
+      node.set('x', nextBound.x - layoutOptions.xInterval - width)
+
+      // 如果next本身已经渲染过，就不加入当前group中
+      if (!nextNodeVisited) {
+        group.add(nextGroup)
+      }
+
+      // 如果当前节点有写一个节点，当前节点的level等于下一个节点的level
+      node.level = nextNodeLevel
     }
 
-    return group;
+    return [group, node.level]
   },
 
   layout(elements: SVNode[], layoutOptions: LayoutOptions) {
     if (elements.length == 0) {
-      return;
+      return
     }
-    let groups = [];
-    // 解决多棵树相交问题
-    for (let element of elements) {
+    const results = []
+    // 收集result
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i]
       if (element.root) {
-        let group = this.layoutItem(element, layoutOptions);
-        groups.push(group);
+        const result = this.layoutItem(i, element, layoutOptions)
+        results.push(result)
       }
     }
+
+    // 按照level排序
+    results.sort((a, b) => a[1] - b[1])
+
+    // 获取groups
+    const groups = results.map((result) => result[0])
+
     // 避免多个链表相交
-    for (let i = 0; i < groups.length - 1; i++) {
-      let bound1 = groups[i].getBound();
-      let bound2 = groups[i + 1].getBound();
-      let move = Math.abs(bound2.y - layoutOptions.yInterval - bound1.y - bound1.height);
-      groups[i + 1].translate(0, move + 20);
+    for (let i = groups.length - 1; i > 0; i--) {
+      const bound1 = groups[i].getBound()
+      const bound2 = groups[i - 1].getBound()
+      const move = Math.abs(bound1.y - layoutOptions.yInterval - bound2.y - bound2.height)
+      groups[i - 1].translate(0, -(move + 20))
     }
   },
-});
+})

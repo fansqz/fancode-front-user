@@ -1,5 +1,14 @@
 <template>
-  <router-view></router-view>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+  #app {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+</style>

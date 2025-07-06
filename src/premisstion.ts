@@ -1,67 +1,58 @@
 // 路由鉴权
-import router from '@/router';
-import setting from './setting';
+import nprogress from 'nprogress'
+
+import router from '@/router'
+
 // 进度条
-import nprogress from 'nprogress';
-import 'nprogress/nprogress.css';
-nprogress.configure({ showSpinner: false });
-import useUserStore from './store/modules/user';
-import pinia from './store';
-const userStore = useUserStore(pinia);
+import 'nprogress/nprogress.css'
+nprogress.configure({ showSpinner: false })
+import pinia from './store'
+import useUserStore from './store/modules/user'
+const userStore = useUserStore(pinia)
 
 // 允许不使用登陆态访问的路径
-const allowPaths = ['/register', '/login', '/coding', '/home', '/learn'];
+const allowPaths = ['/register', '/login', '/coding', '/home', '/learn']
 
 // 全局前置守卫
 router.beforeEach(async (to: any, _from: any, next: any) => {
-  setTitle(to);
   // 进度条
-  nprogress.start();
+  nprogress.start()
 
   // 校验token是否正确，如果正确则继续访问
-  const token = userStore.token;
+  const token = userStore.token
   if (token) {
     try {
-      await userStore.userInfo();
-      next();
-      return;
+      await userStore.userInfo()
+      next()
+      return
     } catch (error) {
-      userStore.userLogout();
+      userStore.userLogout()
     }
   }
 
   // 校验是否在允许路径
   if (checkIsAllow(to.path)) {
-    next();
-    return;
+    next()
+    return
   }
 
   // 其余路径没有登录态，路由到login页
   if (!token) {
-    next({ path: '/login', query: { redirect: to.path } });
-    return;
+    next({ path: '/login', query: { redirect: to.path } })
+    return
   }
-});
+})
 
 // 全局后置守卫
 router.afterEach(() => {
-  nprogress.done();
-});
-
-const setTitle = (to) => {
-  // 顶部标题
-  if (to.meta.title) {
-    document.title = setting.title + '-' + to.meta.title;
-  } else {
-    document.title = setting.title;
-  }
-};
+  nprogress.done()
+})
 
 const checkIsAllow = (path: string): boolean => {
-  for (let item of allowPaths) {
+  for (const item of allowPaths) {
     if (path.startsWith(item)) {
-      return true;
+      return true
     }
   }
-  return false;
-};
+  return false
+}

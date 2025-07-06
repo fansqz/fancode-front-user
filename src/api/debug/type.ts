@@ -1,67 +1,69 @@
-type CreateDebugSessionResponse = BaseResponse & {
+import { BaseResponse } from '../type'
+
+export type CreateDebugSessionResponse = BaseResponse & {
   // sessionid
-  data: string;
-};
+  data: string
+}
 
-type StartRequset = {
-  id: string;
-  code: string;
-  language: string;
-  breakpoints: number[];
-};
+export type StartRequset = {
+  id: string
+  code: string
+  language: string
+  breakpoints: number[]
+}
 
-type StartResponse = BaseResponse & {};
+export type StartResponse = BaseResponse & {}
 
-type SendToConsoleResponse = BaseResponse & {};
+export type SendToConsoleResponse = BaseResponse & {}
 
-type StepInResponse = BaseResponse & {};
+export type StepInResponse = BaseResponse & {}
 
-type StepOutResponse = BaseResponse & {};
+export type StepOutResponse = BaseResponse & {}
 
-type StepOverResponse = BaseResponse & {};
+export type StepOverResponse = BaseResponse & {}
 
-type ContinueResponse = BaseResponse & {};
+export type ContinueResponse = BaseResponse & {}
 
-type SetBreakpointResponse = BaseResponse & {
-  data: Breakpoint[];
-};
+export type SetBreakpointResponse = BaseResponse & {
+  data: Breakpoint[]
+}
 
-type RemoveBreakpointResponse = BaseResponse & {};
+export type RemoveBreakpointResponse = BaseResponse & {}
 
-type TerminatedResponse = BaseResponse & {};
+export type TerminatedResponse = BaseResponse & {}
 
 // 断点
-type Breakpoint = {
-  verified: boolean;
-  message: string;
-  line: number;
-};
+export type Breakpoint = {
+  verified: boolean
+  message: string
+  line: number
+}
 // 栈帧
-type StackFrame = {
-  id: number; // 栈帧id
-  name: string; // 函数名称
-  path: string; // 文件路径
-  line: number;
-};
+export type StackFrame = {
+  id: number // 栈帧id
+  name: string // 函数名称
+  path: string // 文件路径
+  line: number
+}
 
-type GetStackTraceResponse = BaseResponse & {
-  data: StackFrame[];
-};
+export type GetStackTraceResponse = BaseResponse & {
+  data: StackFrame[]
+}
 
 // 变量
-type Variable = {
-  name: string;
-  type: string;
-  value: string;
-  reference: number; //变量引用
-  namedVariables: number; // 元素数量（结构体）
-  indexedVariables: number; // 元素数量（数据结构）
-};
+export type Variable = {
+  name: string
+  type: string
+  value: string
+  reference: number //变量引用
+  namedVariables: number // 元素数量（结构体）
+  indexedVariables: number // 元素数量（数据结构）
+}
 
-type GetFrameVariablesResponse = BaseResponse & {
-  data: Variable[];
-};
+export type GetFrameVariablesResponse = BaseResponse & {
+  data: Variable[]
+}
 
-type GetVariablesResponse = BaseResponse & {
-  data: Variable[];
-};
+export type GetVariablesResponse = BaseResponse & {
+  data: Variable[]
+}

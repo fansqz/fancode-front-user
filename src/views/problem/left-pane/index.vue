@@ -20,50 +20,52 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import ProblemDescription from '@/components/code-visual/document/index.vue';
-  import StructVisual from './visual.vue';
-  import Submission from './submission.vue';
-  import useCodingStore from '@/store/modules/coding';
-  const codingStore = useCodingStore();
-  let { problemId, theme } = storeToRefs(codingStore);
+  import { ref, watchEffect } from 'vue'
+  import { storeToRefs } from 'pinia'
+  import ProblemDescription from '@/components/code-visual/document/index.vue'
+  import StructVisual from './visual.vue'
+  import Submission from './submission.vue'
+  import useCodingStore from '@/store/modules/coding'
+  const codingStore = useCodingStore()
+  let { problemId, theme } = storeToRefs(codingStore)
 
-  let props = defineProps(['content']);
-  let content = ref(props.content);
-  const structVisual = ref<InstanceType<typeof StructVisual> | null>();
-  const main = ref<HTMLElement>();
-  const activeIndex = ref('0');
+  let props = defineProps(['content'])
+  let content = ref(props.content)
+  const structVisual = ref<InstanceType<typeof StructVisual> | null>()
+  const main = ref<HTMLElement>()
+  const activeIndex = ref('0')
   const handleSelect = (key: string) => {
-    activeIndex.value = key;
-  };
+    activeIndex.value = key
+  }
 
   watchEffect(() => {
     if (props.content != undefined) {
-      content.value = props.content;
+      content.value = props.content
     }
-  });
+  })
 
   // 重新设置visual的大小
   const resizeVisualView = () => {
-    structVisual.value?.resizeVisualView(main.value.offsetWidth, main.value.offsetHeight);
-  };
+    structVisual.value?.resizeVisualView(main.value.offsetWidth, main.value.offsetHeight)
+  }
 
   defineExpose({
     resizeVisualView,
-  });
+  })
 </script>
 
 <style lang="scss" scoped>
   .visaul-pane {
     height: 100%;
+
     .main {
-      user-select: element;
       height: calc(100% - 35px);
+      user-select: element;
     }
+
     .menu {
-      user-select: none;
       height: 35px;
+      user-select: none;
     }
   }
 </style>

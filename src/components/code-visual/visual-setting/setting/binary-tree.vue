@@ -30,18 +30,18 @@
 </template>
 
 <script setup lang="ts">
-  import useVisualStore from '@/store/modules/visual.ts';
-  import { storeToRefs } from 'pinia';
+  import useVisualStore from '@/store/modules/visual.ts'
+  import { storeToRefs } from 'pinia'
 
-  const visualStore = useVisualStore();
-  const { binaryTreeDescription } = storeToRefs(visualStore);
+  const visualStore = useVisualStore()
+  const { binaryTreeDescription } = storeToRefs(visualStore)
 </script>
 
 <style lang="scss" scoped>
   .arrayDescription {
-    height: 100%;
-    width: 100%;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     padding: 20px;
   }
 </style>

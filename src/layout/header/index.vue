@@ -41,39 +41,39 @@
 </template>
 
 <script setup lang="ts">
-  import Logo from '@/components/logo/index.vue';
-  import Setting from './setting.vue';
-  import { useRouter, useRoute } from 'vue-router';
-  import useUserStore from '@/store/modules/user';
-  import { onMounted } from 'vue';
-  import { ref } from 'vue';
-  import { reqAllVisualDocumentBank } from '@/api/visual-document-bank/index.ts';
-  let userStore = useUserStore();
-  let $router = useRouter();
-  let $route = useRoute();
-  const visualDocumentBanks = ref([]);
+  import Logo from '@/components/logo/index.vue'
+  import Setting from './setting.vue'
+  import { useRouter, useRoute } from 'vue-router'
+  import useUserStore from '@/store/modules/user'
+  import { onMounted } from 'vue'
+  import { ref } from 'vue'
+  import { reqAllVisualDocumentBank } from '@/api/visual-document-bank/index.ts'
+  let userStore = useUserStore()
+  let $router = useRouter()
+  let $route = useRoute()
+  const visualDocumentBanks = ref([])
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
-      return;
+      return
     }
-    $router.push({ name: routeName, params });
-  };
+    $router.push({ name: routeName, params })
+  }
   const isActiveNavItem = (routeName: string) => {
-    return $route.name === routeName;
-  };
+    return $route.name === routeName
+  }
 
   const isLogged = (): boolean => {
-    return !!userStore.token;
-  };
+    return !!userStore.token
+  }
 
   const getoLogin = () => {
-    $router.push({ name: 'login' });
-  };
+    $router.push({ name: 'login' })
+  }
 
   const getoRegister = () => {
-    $router.push({ name: 'register' });
-  };
+    $router.push({ name: 'register' })
+  }
 
   const handleSelectBank = (bankID: number) => {
     $router.push({
@@ -81,81 +81,93 @@
       params: {
         bankID: bankID,
       },
-    });
-  };
+    })
+  }
 
   onMounted(async () => {
-    let result = await reqAllVisualDocumentBank();
+    let result = await reqAllVisualDocumentBank()
     if (result.code == 200) {
-      visualDocumentBanks.value = result.data;
+      visualDocumentBanks.value = result.data
     }
-  });
+  })
 </script>
 
 <style scoped lang="scss">
   .header {
     position: absolute;
-    top: 0px;
+    top: 0;
+    box-sizing: border-box;
     width: 100%;
     height: $base-header-height;
     background-color: $base-header-background;
-    box-sizing: border-box;
     border-bottom: 1px solid var(--el-border-color);
+
     .header_left {
       position: absolute;
-      height: 100%;
-      width: 50%;
       left: 0%;
       display: flex;
+      align-items: center;
+      width: 50%;
+      height: 100%;
+
       .logo {
-        margin: 0px 20px;
-        height: $base-header-height - 20px;
-        padding: 10px;
+        display: flex;
+        align-items: center;
+        height: $base-header-height - 15px;
+        margin: 0 20px;
       }
+
       .empty {
         width: 20px;
       }
+
       .nav_item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 60px;
         min-width: 60px;
         height: $base-header-height;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        margin: 0 10px;
         cursor: pointer;
-        margin: 0px 10px;
       }
+
       .active_item {
         box-sizing: border-box;
-        border-bottom: 3px solid #333333;
+        border-bottom: 3px solid #333;
       }
     }
+
     .header_right {
       position: absolute;
+      right: 0%;
       display: flex;
       flex-direction: row-reverse;
-      height: 100%;
       width: 50%;
-      right: 0%;
+      height: 100%;
+
       .login_button {
         position: relative;
-        height: 100%;
         width: 200px;
+        height: 100%;
+
         .login_content {
           position: absolute;
-          height: 100%;
-          width: 200px;
           display: flex;
-          justify-content: center;
           align-items: center;
+          justify-content: center;
+          width: 200px;
+          height: 100%;
+
           .button {
             margin: 10px;
           }
         }
       }
+
       .setting {
-        height: 100%;
         width: 120px;
+        height: 100%;
         margin-right: 30px;
       }
     }

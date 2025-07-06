@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 // 常量路由
 export const constantRoute: Readonly<RouteRecordRaw[]> = [
@@ -9,16 +9,15 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
   },
   {
     path: '/',
-    component: () => import('@/layout/index.vue'),
+    component: () => import('@/layout/layouts/main-layout.vue'),
     name: 'root',
-    redirect: '/coding',
+    redirect: '/home',
     children: [
-      // 取消题目读取
       {
-        // home
-        path: '/home',
-        name: 'home',
-        component: () => import('@/views/home/index.vue'),
+        // bank
+        path: '/bank',
+        name: 'bank',
+        component: () => import('@/views/bank/index.vue'),
       },
       {
         // coding
@@ -31,12 +30,6 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         path: '/learn/:bankID',
         name: 'learn',
         component: () => import('@/views/learn/index.vue'),
-      },
-      {
-        // 题库
-        path: '/bank/:bankID',
-        name: 'bank',
-        component: () => import('@/views/bank/index.vue'),
       },
       // 登录
       {
@@ -65,12 +58,25 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
     ],
   },
   {
+    // home page with its own layout
+    path: '/home',
+    name: 'home',
+    component: () => import('@/layout/layouts/home-layout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'home-content',
+        component: () => import('@/views/home/index.vue'),
+      },
+    ],
+  },
+  {
     // 题目
     path: '/problem/:problemNumber',
     name: 'problem',
     component: () => import('@/views/problem/index.vue'),
   },
-];
+]
 
 // 任意路由
 export const anyRoute = [
@@ -79,4 +85,4 @@ export const anyRoute = [
     redirect: '/404',
     name: 'Any',
   },
-];
+]

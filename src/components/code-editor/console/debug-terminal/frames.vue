@@ -20,92 +20,102 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, watch } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import { reqGetStackTrace } from '@/api/debug';
-  import useDebugStore from '@/store/modules/debug';
+  import { onMounted, ref, watch } from 'vue'
+  import { storeToRefs } from 'pinia'
+  import { reqGetStackTrace } from '@/api/debug'
+  import useDebugStore from '@/store/modules/debug'
 
-  const debugStore = useDebugStore();
-  let { id, status, currentFrameID, lineNum } = storeToRefs(debugStore);
-  const emit = defineEmits(['selectFrame']);
-  const defaultActive = ref('0');
+  const debugStore = useDebugStore()
+  let { id, status, currentFrameID, lineNum } = storeToRefs(debugStore)
+  const emit = defineEmits(['selectFrame'])
+  const defaultActive = ref('0')
   // 栈帧
-  const stackFrames = ref<any[]>([]);
+  const stackFrames = ref<any[]>([])
 
   const handleSelect = (key: string) => {
     // 点击某个栈帧，则回调selectFrame
-    defaultActive.value = key;
-    let frame = stackFrames.value[parseInt(key)];
-    currentFrameID.value = frame.id;
-    lineNum.value = frame.line;
-  };
+    defaultActive.value = key
+    let frame = stackFrames.value[parseInt(key)]
+    currentFrameID.value = frame.id
+    lineNum.value = frame.line
+  }
 
   onMounted(() => {
     watch(
       () => status.value,
       async (val) => {
         if (val == 'stopped') {
+          currentFrameID.value = -1
           // 程序暂停时需要更新栈帧
-          let result = await reqGetStackTrace(id.value);
+          let result = await reqGetStackTrace(id.value)
           if (result.code == 200) {
-            stackFrames.value = result.data;
-            handleSelect('0');
+            stackFrames.value = result.data
+            handleSelect('0')
           }
-        } else {
-          stackFrames.value = [];
+        }
+        if (val == 'terminated' || val == 'init' || val == 'compiled') {
+          stackFrames.value = []
           // 设置为-1，清空变量列表
-          currentFrameID.value = -1;
+          currentFrameID.value = -1
         }
       },
-    );
-  });
+    )
+  })
 </script>
 
 <style lang="scss" scoped>
   .container {
-    height: 100%;
-    width: 100%;
+    position: relative;
     display: flex;
     flex-flow: column;
-    position: relative;
-    margin: 0px;
-    padding: 0px;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
     .custom-menu {
-      height: 100%;
-      width: 100%;
       position: absolute;
+      width: 100%;
+      height: 100%;
+
       .scrollbar {
-        height: 100%;
         width: 100%;
+        height: 100%;
+
         .menu-item {
+          display: flex;
+          align-items: center;
           height: 25px;
           padding-left: 15px;
           cursor: pointer;
-          display: flex;
-          align-items: center;
+
           &:hover {
             background-color: #e8f0fe;
           }
+
           &.active {
-            background-color: #d2e3fc;
-            color: #1967d2;
             font-weight: 500;
+            color: #1967d2;
+            background-color: #d2e3fc;
           }
+
           .menu-item-text {
-            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
     }
+
     .no-data-show {
-      height: 100%;
-      width: 100%;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
       text-align: center;
+
       .text {
         margin: auto;
       }

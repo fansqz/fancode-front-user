@@ -42,8 +42,8 @@
 </template>
 
 <script setup lang="ts">
-  import { storeToRefs } from 'pinia';
-  import useCodingStore from '@/store/modules/coding';
-  const codingStore = useCodingStore();
-  const { output } = storeToRefs(codingStore);
+  import { storeToRefs } from 'pinia'
+  import useCodingStore from '@/store/modules/coding'
+  const codingStore = useCodingStore()
+  const { output } = storeToRefs(codingStore)
 </script>
