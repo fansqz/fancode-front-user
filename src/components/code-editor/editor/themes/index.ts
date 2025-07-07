@@ -1,7 +1,9 @@
 import * as monaco from 'monaco-editor'
 import { wireTmGrammars } from 'monaco-editor-textmate'
 import { Registry } from 'monaco-textmate'
+
 import { EditorInstance } from '../types'
+
 import { scopeNameMap, tmGrammarJsonMap, codeThemeList } from './config'
 
 let hasGetAllWorkUrl = false
