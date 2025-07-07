@@ -27,10 +27,10 @@
     activeIndex.value = key
   }
 
-    // 重新设置visual的大小
-    const resizeVisualView = () => {
-      structVisual.value?.resizeVisualView(main.value.offsetWidth, main.value.offsetHeight)
-    }
+  // 重新设置visual的大小
+  const resizeVisualView = () => {
+    structVisual.value?.resizeVisualView(main.value.offsetWidth, main.value.offsetHeight)
+  }
 
   watchEffect(() => {
     if (props.content != undefined) {

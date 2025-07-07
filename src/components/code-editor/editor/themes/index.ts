@@ -1,10 +1,7 @@
 import * as monaco from 'monaco-editor'
 import { wireTmGrammars } from 'monaco-editor-textmate'
 import { Registry } from 'monaco-textmate'
-import { loadWASM } from 'onigasm'
-
 import { EditorInstance } from '../types'
-
 import { scopeNameMap, tmGrammarJsonMap, codeThemeList } from './config'
 
 let hasGetAllWorkUrl = false
@@ -72,7 +69,7 @@ export const wire = async (languageId, editor) => {
   const registry = new Registry({
     getGrammarDefinition: async (scopeName: string, _dependentScope: string) => {
       const jsonMap = tmGrammarJsonMap[scopeName]
-      
+
       try {
         const content = await (await fetch(`/grammars/${jsonMap}`)).text()
         return {
@@ -120,7 +117,6 @@ export const changeTheme = async (theme: string, editorInstance: EditorInstance)
     console.warn(`Failed to load theme: ${theme}, keeping current theme`)
   }
 }
-
 
 /**
  * 获取所有的主题列表

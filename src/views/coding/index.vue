@@ -65,38 +65,38 @@
   languages.value = supportedLanguages
 
   const loadCode = async () => {
-  // 设置代码
-  let codeConfigJson = localStorage.getItem('code-' + language.value)
-  let parseSuccess = false
-  // 读取本地文件
-  if (codeConfigJson) {
-    try {
-      config = JSON.parse(codeConfigJson)
-      parseSuccess = true
-    } catch (error) {}
-  }
-  
-  // 读取配置
-  if (!parseSuccess) {
-    // 并发读取配置文件和代码文件
-    const [codeConfigsJson, codeText] = await Promise.all([
-      fetch(`/document/visual-learn-config.json`).then(res => res.text()),
-      fetch(`/document/visual-learn-code.${language.value}`).then(res => res.text())
-    ])
-    
-    let codeConfigs: configType[] = JSON.parse(codeConfigsJson)
-    for (let codeConfig of codeConfigs) {
-      if (codeConfig.language == language.value) {
-        config = codeConfig
-      }
+    // 设置代码
+    let codeConfigJson = localStorage.getItem('code-' + language.value)
+    let parseSuccess = false
+    // 读取本地文件
+    if (codeConfigJson) {
+      try {
+        config = JSON.parse(codeConfigJson)
+        parseSuccess = true
+      } catch (error) {}
     }
-    config.code = codeText
+
+    // 读取配置
+    if (!parseSuccess) {
+      // 并发读取配置文件和代码文件
+      const [codeConfigsJson, codeText] = await Promise.all([
+        fetch(`/document/visual-learn-config.json`).then((res) => res.text()),
+        fetch(`/document/visual-learn-code.${language.value}`).then((res) => res.text()),
+      ])
+
+      let codeConfigs: configType[] = JSON.parse(codeConfigsJson)
+      for (let codeConfig of codeConfigs) {
+        if (codeConfig.language == language.value) {
+          config = codeConfig
+        }
+      }
+      config.code = codeText
+    }
+
+    // 配置
+    code.value = config.code
+    breakpoints.value = config.breakpoints
   }
-  
-  // 配置
-  code.value = config.code
-  breakpoints.value = config.breakpoints
-}
 
   const saveCode = () => {
     localStorage.setItem('code-' + config.language, JSON.stringify(config))

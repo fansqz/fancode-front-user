@@ -84,7 +84,7 @@
     })
   }
 
-  onMounted (async () => {
+  onMounted(async () => {
     let result = await reqAllVisualDocumentBank()
     if (result.code == 200) {
       visualDocumentBanks.value = result.data
