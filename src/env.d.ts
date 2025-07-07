@@ -19,13 +19,6 @@ declare module 'element-plus'
 declare module 'element-plus/dist/locale/zh-cn.mjs'
 declare module '@element-plus/icons-vue'
 
-// Monaco Editor 类型声明
-declare module 'monaco-editor'
-
-declare module 'monaco-editor-textmate'
-declare module 'monaco-textmate'
-declare module 'onigasm'
-
 declare module 'ace-builds/src-noconflict/*'
 declare module 'ace-builds/src-noconflict/mode-*'
 declare module 'ace-builds/src-noconflict/theme-*'

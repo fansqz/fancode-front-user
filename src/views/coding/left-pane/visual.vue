@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-  import { Splitpanes, Pane } from 'splitpanes'
   import 'splitpanes/dist/splitpanes.css'
   import useDebugStore from '@/store/modules/debug'
   import useVisualStore from '@/store/modules/visual'
@@ -58,6 +57,15 @@
         }
       },
     )
+  })
+
+  // 重新设置visual的大小
+  const resizeVisualView = (width: number, height: number) => {
+    visual.value?.resizeVisualView(width, height)
+  }
+
+  defineExpose({
+    resizeVisualView,
   })
 </script>
 

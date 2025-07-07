@@ -31,7 +31,7 @@
 
   let props = defineProps(['content'])
   let content = ref(props.content)
-  const structVisual = ref<InstanceType<typeof StructVisual> | null>()
+  const structVisual = ref()
   const main = ref<HTMLElement>()
   const activeIndex = ref('0')
   const handleSelect = (key: string) => {

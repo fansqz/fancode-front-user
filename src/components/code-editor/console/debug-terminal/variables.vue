@@ -32,7 +32,7 @@
 
   // 监控栈帧变化，主动触发load
   const loadNode = (node: any, resolve: any) => {
-    if (props.frameId != '') {
+    if (props.frameId != '' && debugStore.isDebugging()) {
       if (node.level == 0) {
         getVariablesByFrameId(props['frameId'], resolve)
       } else {

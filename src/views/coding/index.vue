@@ -43,8 +43,6 @@
   import useDebugStore from '@/store/modules/debug'
   import useVisualStore from '@/store/modules/visual'
   import { languageConstants, supportedLanguages } from '@/constants/languages.ts'
-  import { descriptions } from '@/constants/description.ts'
-  import { VisualSetting } from '@/api/visual-document/type.ts'
 
   let document = ref('')
   let codingStore = useCodingStore()
@@ -67,32 +65,38 @@
   languages.value = supportedLanguages
 
   const loadCode = async () => {
-    // 设置代码
-    let codeConfigJson = localStorage.getItem('code-' + language.value)
-    let parseSuccess = false
-    // 读取本地文件
-    if (codeConfigJson) {
-      try {
-        config = JSON.parse(codeConfigJson)
-        parseSuccess = true
-      } catch (error) {}
-    }
-    // 读取配置
-    if (!parseSuccess) {
-      let codeConfigsJson = await (await fetch(`/document/visual-learn-config.json`)).text()
-      let codeConfigs: configType[] = JSON.parse(codeConfigsJson)
-      for (let codeConfig of codeConfigs) {
-        if (codeConfig.language == language.value) {
-          config = codeConfig
-        }
-      }
-      config.code = await (await fetch(`/document/visual-learn-code.${language.value}`)).text()
-    }
-    // 配置
-    code.value = config.code
-    breakpoints.value = config.breakpoints
-    document.value = await (await fetch(`/document/visual-learn-document_2.md`)).text()
+  // 设置代码
+  let codeConfigJson = localStorage.getItem('code-' + language.value)
+  let parseSuccess = false
+  // 读取本地文件
+  if (codeConfigJson) {
+    try {
+      config = JSON.parse(codeConfigJson)
+      parseSuccess = true
+    } catch (error) {}
   }
+  
+  // 读取配置
+  if (!parseSuccess) {
+    // 并发读取配置文件和代码文件
+    const [codeConfigsJson, codeText] = await Promise.all([
+      fetch(`/document/visual-learn-config.json`).then(res => res.text()),
+      fetch(`/document/visual-learn-code.${language.value}`).then(res => res.text())
+    ])
+    
+    let codeConfigs: configType[] = JSON.parse(codeConfigsJson)
+    for (let codeConfig of codeConfigs) {
+      if (codeConfig.language == language.value) {
+        config = codeConfig
+      }
+    }
+    config.code = codeText
+  }
+  
+  // 配置
+  code.value = config.code
+  breakpoints.value = config.breakpoints
+}
 
   const saveCode = () => {
     localStorage.setItem('code-' + config.language, JSON.stringify(config))
@@ -122,8 +126,8 @@
     },
   )
 
-  onMounted(async () => {
-    await loadCode()
+  onMounted(() => {
+    loadCode()
   })
 </script>
 

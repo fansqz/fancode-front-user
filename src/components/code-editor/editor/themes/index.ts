@@ -9,8 +9,10 @@ import { scopeNameMap, tmGrammarJsonMap, codeThemeList } from './config'
 
 let hasGetAllWorkUrl = false
 
+// 主题缓存，避免重复加载
+const themeCache = new Map<string, any>()
+
 export const initWorker = async () => {
-  await loadWASM(`/onigasm/onigasm.wasm`)
   const originalGetWorkerUrl = window.MonacoEnvironment.getWorkerUrl
   window.MonacoEnvironment.getWorkerUrl = new Proxy(originalGetWorkerUrl, {
     apply(target, thisArg, args) {
@@ -21,19 +23,42 @@ export const initWorker = async () => {
 }
 
 /**
- * https://www.cnblogs.com/wanglinmantan/p/15345204.html
- * https://github.com/brijeshb42/monaco-themes
+ * 按需加载单个主题
+ * @param theme 主题名称
+ * @returns Promise<boolean> 加载是否成功
  */
-export const initTheme = async () => {
-  // 加载主题
-  for (const theme of codeThemeList.values()) {
+export const loadTheme = async (theme: string): Promise<boolean> => {
+  // 如果主题已经加载过，直接返回成功
+  if (themeCache.has(theme)) {
+    console.log(`Theme ${theme} already loaded`)
+    return true
+  }
+
+  try {
+    console.log(`Loading theme: ${theme}`)
     const themeData = await (await fetch(`/themes/${theme}.json`)).json()
     monaco.editor.defineTheme(theme, themeData)
+    themeCache.set(theme, themeData)
+    console.log(`Theme ${theme} loaded successfully`)
+    return true
+  } catch (error) {
+    console.error(`Failed to load theme: ${theme}`, error)
+    return false
   }
 }
 
 /**
- * 创建语法关联
+ * 初始化默认主题（可选，用于预加载常用主题）
+ */
+export const initTheme = async () => {
+  // 只加载默认主题，其他主题按需加载
+  const defaultTheme = 'BlulocoLight'
+  await loadTheme(defaultTheme)
+}
+
+/**
+ * https://www.cnblogs.com/wanglinmantan/p/15345204.html
+ * https://github.com/brijeshb42/monaco-themes
  */
 export const wire = async (languageId, editor) => {
   if (!scopeNameMap[languageId]) {
@@ -47,9 +72,19 @@ export const wire = async (languageId, editor) => {
   const registry = new Registry({
     getGrammarDefinition: async (scopeName: string, _dependentScope: string) => {
       const jsonMap = tmGrammarJsonMap[scopeName]
-      return {
-        format: 'json',
-        content: await (await fetch(`/grammars/${jsonMap}`)).text(),
+      
+      try {
+        const content = await (await fetch(`/grammars/${jsonMap}`)).text()
+        return {
+          format: 'json',
+          content,
+        }
+      } catch (error) {
+        console.error(`Failed to load grammar: ${jsonMap}`, error)
+        return {
+          format: 'json',
+          content: '',
+        }
       }
     },
   })
@@ -57,7 +92,11 @@ export const wire = async (languageId, editor) => {
   const loop = () => {
     if (hasGetAllWorkUrl) {
       Promise.resolve().then(async () => {
-        await wireTmGrammars(monaco, registry, grammars, editor)
+        try {
+          await wireTmGrammars(monaco, registry, grammars, editor)
+        } catch (error) {
+          console.error('Failed to wire grammars:', error)
+        }
       })
     } else {
       setTimeout(() => {
@@ -73,8 +112,15 @@ export const wire = async (languageId, editor) => {
  * @param editorInstance 编辑器实例
  */
 export const changeTheme = async (theme: string, editorInstance: EditorInstance) => {
-  editorInstance.updateOptions({ theme })
+  // 先尝试加载主题
+  const success = await loadTheme(theme)
+  if (success) {
+    editorInstance.updateOptions({ theme })
+  } else {
+    console.warn(`Failed to load theme: ${theme}, keeping current theme`)
+  }
 }
+
 
 /**
  * 获取所有的主题列表

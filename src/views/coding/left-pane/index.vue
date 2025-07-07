@@ -17,21 +17,29 @@
 
 <script setup lang="ts">
   import { ref, watchEffect } from 'vue'
-  import Document from '@/components/code-visual/document/index.vue'
   import StructVisual from './visual.vue'
   let props = defineProps(['content'])
   let content = ref(props.content)
-  const structVisual = ref<InstanceType<typeof StructVisual> | null>()
+  const structVisual = ref()
   const main = ref<HTMLElement>()
   const activeIndex = ref('1')
   const handleSelect = (key: string) => {
     activeIndex.value = key
   }
 
+    // 重新设置visual的大小
+    const resizeVisualView = () => {
+      structVisual.value?.resizeVisualView(main.value.offsetWidth, main.value.offsetHeight)
+    }
+
   watchEffect(() => {
     if (props.content != undefined) {
       content.value = props.content
     }
+  })
+
+  defineExpose({
+    resizeVisualView,
   })
 </script>
 

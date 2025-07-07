@@ -30,6 +30,9 @@ import '@/styles/index.scss'
 import '@kangc/v-md-editor/lib/style/preview.css'
 import '@kangc/v-md-editor/lib/theme/style/vuepress.css'
 
+// 初始化编辑器
+import { loadWASM } from 'onigasm'
+
 const app = createApp(App)
 
 // 初始化markdown编辑器
@@ -49,6 +52,13 @@ const initMarkdowmEditor = (app) => {
   app.use(VMdPreview)
 }
 
+// 初始化编辑器
+const initCodeEditor = async (_app) => {
+  // 需要加载onigasm.wasm文件
+  await loadWASM(`/onigasm/onigasm.wasm`);
+};
+
+
 app.use(ElementPlus, {
   //element-plus国际化
   locale: zhCn,
@@ -60,3 +70,4 @@ app.config.globalProperties.$echarts = echarts
 app.mount('#app')
 
 initMarkdowmEditor(app)
+initCodeEditor(app)
