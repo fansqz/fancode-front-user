@@ -99,8 +99,7 @@
     box-sizing: border-box;
     width: 100%;
     height: $base-header-height;
-    background-color: $base-header-background;
-    border-bottom: 1px solid var(--el-border-color);
+    background-color: $deep-background-color;
 
     .header_left {
       position: absolute;

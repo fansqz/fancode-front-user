@@ -1,12 +1,10 @@
 <template>
-  <splitpanes
+  <el-splitter
     class="default-theme main"
-    @resized="resizeVisualPane"
-    :dbl-click-splitter="false"
-    :push-other-panes="false"
+    @update:size="resizeVisualPane"
   >
     <!--题目展示-->
-    <pane @resized="resizeVisualPane">
+    <el-splitter-panel @resized="resizeVisualPane">
       <div class="document">
         <el-menu
           :default-active="activeIndex"
@@ -23,37 +21,32 @@
           <StructVisual ref="structVisual" v-if="activeIndex == '1'" />
         </div>
       </div>
-    </pane>
+    </el-splitter-panel>
 
     <!--coding-->
-    <pane>
-      <splitpanes horizontal :dbl-click-splitter="false" :push-other-panes="false">
-        <pane size="70">
+    <el-splitter-panel>
+      <el-splitter layout="vertical">
+        <el-splitter-panel size="70">
           <!--选择语言或者主题区域-->
           <EditorSelector class="editor-switcher" />
           <!--代码编辑区域-->
           <Editor class="editor" />
-        </pane>
-        <pane size="30">
+        </el-splitter-panel>
+        <el-splitter-panel size="30">
           <!--控制台-->
           <Console class="console" :userInput="false" :userOutput="false" :terminal="true" />
-          <!--coding-button-bar-->
-          <CodeButtonBar :debug="true" :execute="true" :submit="false" class="code-button-bar" />
-        </pane>
-      </splitpanes>
-    </pane>
-  </splitpanes>
+        </el-splitter-panel>
+      </el-splitter>
+    </el-splitter-panel>
+  </el-splitter>
 </template>
 
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref, watch } from 'vue'
-  import { Splitpanes, Pane } from 'splitpanes'
-  import 'splitpanes/dist/splitpanes.css'
   import Editor from '@/components/code-editor/editor/index.vue'
   import EditorSelector from '@/components/code-editor/language-theme-switcher/index.vue'
   import Console from '@/components/code-editor/console/index.vue'
   import ProblemDescription from '@/components/code-visual/document/index.vue'
-  import CodeButtonBar from '@/components/code-editor/coding-button/index.vue'
   import StructVisual from './visual.vue'
   import { reqVisualDocument } from '@/api/visual-document/index.ts'
   import { storeToRefs } from 'pinia'
@@ -191,6 +184,17 @@
   .main {
     position: relative;
     height: calc(100vh - $base-header-height);
+
+    :deep(.el-splitter-panel) {
+      border-radius: 12px !important;
+      overflow: hidden;
+      
+      // 确保内部内容也有圆角
+      > * {
+        border-radius: 12px;
+        overflow: hidden;
+      }
+    }
 
     .document {
       width: 100%;

@@ -2,6 +2,20 @@ import { defineStore } from 'pinia'
 
 type Status = 'init' | 'compiled' | 'running' | 'stopped' | 'terminated'
 
+// 输出类型定义
+type OutputType = 'success' | 'error' | 'warning' | 'info'
+
+// 输出事件类型
+type OutputEventType = 'output'| 'terminated' | 'compile' | 'stopped' | 'continued' | 'connected'
+
+// 输出项接口
+interface OutputItem {
+  type: OutputType
+  event: OutputEventType
+  title: string
+  message: string
+}
+
 // 扩展 state 以类型化各个属性，特别是breakpoints.
 type DebugState = {
   id: string
@@ -10,7 +24,7 @@ type DebugState = {
   lineNum: number
   currentFrameID: number
   currentInput: string
-  outputs: any[]
+  outputs: OutputItem[]
   currentErrorLocation: number[]
 }
 

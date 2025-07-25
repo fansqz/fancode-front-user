@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- 自定义菜单 -->
-    <div v-show="stackFrames.length != 0" class="custom-menu">
+    <div class="custom-menu">
       <el-scrollbar class="scrollbar">
         <div
           v-for="(item, index) in stackFrames"
@@ -12,9 +12,6 @@
           <el-text class="menu-item-text">{{ item.name }}</el-text>
         </div>
       </el-scrollbar>
-    </div>
-    <div v-show="stackFrames.length == 0" class="no-data-show">
-      <el-text class="text">not data</el-text>
     </div>
   </div>
 </template>
@@ -74,7 +71,6 @@
     margin: 0;
 
     .custom-menu {
-      position: absolute;
       width: 100%;
       height: 100%;
 

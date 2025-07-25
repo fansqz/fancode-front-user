@@ -1,5 +1,5 @@
 <template>
-  <el-button class="button-submit" type="primary" :loading="loading" @click="startDebug"
+  <el-button class="button-submit" type="primary" :loading="loading" size="small" @click="startDebug"
     >执行</el-button
   >
 </template>

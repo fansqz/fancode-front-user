@@ -16,10 +16,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue'
+  import { ref } from 'vue'
   import StructVisual from './visual.vue'
-  let props = defineProps(['content'])
-  let content = ref(props.content)
   const structVisual = ref()
   const main = ref<HTMLElement>()
   const activeIndex = ref('1')
@@ -31,12 +29,6 @@
   const resizeVisualView = () => {
     structVisual.value?.resizeVisualView(main.value.offsetWidth, main.value.offsetHeight)
   }
-
-  watchEffect(() => {
-    if (props.content != undefined) {
-      content.value = props.content
-    }
-  })
 
   defineExpose({
     resizeVisualView,

@@ -125,6 +125,17 @@
     position: relative;
     height: calc(100vh - $base-header-height);
 
+    :deep(.splitpanes__pane) {
+      border-radius: 12px !important;
+      overflow: hidden;
+      
+      // 确保内部内容也有圆角
+      > * {
+        border-radius: 12px;
+        overflow: hidden;
+      }
+    }
+
     .left-pane {
       width: 100%;
       height: 100%;

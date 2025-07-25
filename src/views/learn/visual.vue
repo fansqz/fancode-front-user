@@ -8,8 +8,6 @@
 </template>
 
 <script setup lang="ts">
-  import { Splitpanes, Pane } from 'splitpanes'
-  import 'splitpanes/dist/splitpanes.css'
   import useDebugStore from '@/store/modules/debug'
   import useVisualStore from '@/store/modules/visual'
   import { onMounted, ref, watch } from 'vue'
