@@ -1,6 +1,6 @@
 <template>
   <div class="debug_terminal">
-    <el-splitter class="console-splitter"    >
+    <el-splitter class="console-splitter">
       <el-splitter-panel size="30" class="left-panel">
         <!--栈帧列表-->
         <div class="frames-card">
@@ -13,15 +13,15 @@
       <el-splitter-panel size="70" class="right-panel">
         <div class="variables-and-input-card">
           <div class="custom-tabs">
-            <el-text 
-              class="tab-item" 
+            <el-text
+              class="tab-item"
               :class="{ active: activeIndex === 'console' }"
               @click="handleSelect('console')"
             >
               控制台
             </el-text>
-            <el-text 
-              class="tab-item" 
+            <el-text
+              class="tab-item"
               :class="{ active: activeIndex === 'variables' }"
               @click="handleSelect('variables')"
             >
@@ -64,17 +64,17 @@
     background-color: $base-background-color;
 
     :deep(.left-panel) {
-      border-radius: $border-radius-large;
-      overflow: hidden;
       margin: 6px;
+      overflow: hidden;
       border: 1px solid $base-border-color;
+      border-radius: $border-radius-large;
     }
 
     :deep(.right-panel) {
-      border-radius: $border-radius-large;
-      overflow: hidden;
       margin: 6px;
+      overflow: hidden;
       border: 1px solid $base-border-color;
+      border-radius: $border-radius-large;
     }
 
     .frames-card {
@@ -94,9 +94,9 @@
       }
 
       .frames {
-        background-color: rgb(249, 249, 249);
         width: 100%;
         height: calc(100% - 25px);
+        background-color: rgb(249 249 249);
       }
     }
 
@@ -107,29 +107,29 @@
       background-color: $base-background-color;
 
       .custom-tabs {
+        display: flex;
+        align-items: center;
         width: 100%;
         height: 25px;
         background-color: $base-background-color;
-        display: flex;
-        align-items: center;
         border-bottom: 1px solid $base-border-color;
 
         .tab-item {
-          padding: 0 15px;
-          height: 100%;
           display: flex;
           align-items: center;
+          height: 100%;
+          padding: 0 15px;
           cursor: pointer;
 
           &:hover {
             color: #409eff;
-            background-color: rgba(64, 158, 255, 0.1);
+            background-color: rgb(64 158 255 / 10%);
           }
 
           &.active {
+            font-weight: 550;
             color: #409eff;
             background-color: $base-background-color;
-            font-weight: 550;
           }
         }
       }
@@ -137,13 +137,14 @@
       .console {
         width: 100%;
         height: calc(100% - 25px);
-        background-color: rgb(249, 249, 249);
+        background-color: rgb(249 249 249);
       }
 
       .variables {
         width: 100%;
         height: calc(100% - 25px);
-        background-color: rgb(249, 249, 249);
+        background-color: rgb(249 249 249);
+
         .scrollbar {
           width: 100%;
           height: 100%;

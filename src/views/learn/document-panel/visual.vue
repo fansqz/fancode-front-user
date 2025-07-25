@@ -3,7 +3,7 @@
     <div class="visual-container" ref="visualContainer">
       <Visaul ref="visual" class="visaul" :action="action" :sources="sources" />
     </div>
-    <VisaulTemplate />
+    <VisualSettings/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@
   import { onMounted, ref, watch } from 'vue'
   import { storeToRefs } from 'pinia'
   import Visaul from '@/components/code-visual/visual/index.vue'
-  import VisaulTemplate from '@/components/code-visual/visual-setting/index.vue'
+  import VisualSettings from '@/components/code-visual/visual-setting/index.vue'
   import { reqVisualData } from '@/components/code-visual/utils/index.ts'
   import { Sources } from 'structv2'
 
@@ -76,7 +76,8 @@
     margin: 0;
 
     .visual-container {
-      position: relative;
+      position: absolute;
+      flex: 1;
       width: 100%;
       height: 100%;
       background-color: #f9f9f9;

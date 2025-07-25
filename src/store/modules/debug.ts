@@ -6,7 +6,7 @@ type Status = 'init' | 'compiled' | 'running' | 'stopped' | 'terminated'
 type OutputType = 'success' | 'error' | 'warning' | 'info'
 
 // 输出事件类型
-type OutputEventType = 'output'| 'terminated' | 'compile' | 'stopped' | 'continued' | 'connected'
+type OutputEventType = 'output' | 'terminated' | 'compile' | 'stopped' | 'continued' | 'connected'
 
 // 输出项接口
 interface OutputItem {

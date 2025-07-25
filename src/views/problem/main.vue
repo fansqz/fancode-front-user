@@ -95,7 +95,6 @@
   const getUserCode = async () => {
     let result = await reqUserCode(problemId.value, language.value)
     if (result.code == 200) {
-      console.log('sdfe')
       code.value = result.data
     }
   }
@@ -126,13 +125,13 @@
     height: calc(100vh - $base-header-height);
 
     :deep(.splitpanes__pane) {
-      border-radius: 12px !important;
       overflow: hidden;
-      
+      border-radius: 12px !important;
+
       // 确保内部内容也有圆角
       > * {
-        border-radius: 12px;
         overflow: hidden;
+        border-radius: 12px;
       }
     }
 

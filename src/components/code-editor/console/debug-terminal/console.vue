@@ -4,8 +4,8 @@
       <div class="content" ref="innerRef">
         <!-- 输出区域 -->
         <div class="output-section" v-if="processedOutputs.length != 0">
-          <div 
-            v-for="(item, index) in processedOutputs" 
+          <div
+            v-for="(item, index) in processedOutputs"
             :key="index"
             class="output-item"
             :class="item.type"
@@ -13,7 +13,7 @@
             <div class="output-content">{{ item.message }}</div>
           </div>
         </div>
-        
+
         <!-- 输入区域 -->
         <div class="input-section">
           <div class="input-prompt">></div>
@@ -27,9 +27,9 @@
               placeholder="输入命令，回车发送，Ctrl+回车换行"
               resize="none"
             />
-            <el-button 
-              class="send-button" 
-              type="primary" 
+            <el-button
+              class="send-button"
+              type="primary"
               size="small"
               @click="sendCommand"
               :disabled="!currentInput.trim()"
@@ -93,7 +93,7 @@
   // 发送命令
   const sendCommand = async () => {
     if (!currentInput.value.trim()) return
-    
+
     if (!debugStore.isDebugging()) {
       ElMessage({
         showClose: true,
@@ -102,7 +102,7 @@
       })
       return
     }
-    
+
     let result = await reqSendToConsole(id.value, currentInput.value + '\n')
     if (result.code != 200) {
       ElMessage({
@@ -139,117 +139,117 @@
 <style lang="scss" scoped>
   .container {
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     padding-left: 8px;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: Monaco, Menlo, 'Ubuntu Mono', monospace;
     font-size: 13px;
     line-height: 1.4;
-    display: flex;
-    flex-direction: column;
 
     .scrollbar {
       position: relative;
-      width: 100%;
       flex: 1;
+      width: 100%;
       overflow: hidden;
 
       .content {
         position: relative;
-        height: 100%;
         display: flex;
         flex-direction: column;
+        height: 100%;
 
         .output-section {
-          margin-bottom: 8px;
           flex: 1;
+          margin-bottom: 8px;
           overflow-y: auto;
 
-                     .output-item {
-             padding: 4px 0;
-             border-radius: 4px;
-             margin-bottom: 2px;
-             
-             &.success {
-               color: #67c23a;
-             }
-             
-             &.error {
-               color: #f56c6c;
-             }
-             
-             &.warning {
-               color: #e6a23c;
-             }
-             
-             &.info {
-               color: #909399;
-             }
+          .output-item {
+            padding: 4px 0;
+            margin-bottom: 2px;
+            border-radius: 4px;
 
-             .output-content {
-               white-space: pre-wrap;
-               word-break: break-word;
-             }
-           }
+            &.success {
+              color: #67c23a;
+            }
+
+            &.error {
+              color: #f56c6c;
+            }
+
+            &.warning {
+              color: #e6a23c;
+            }
+
+            &.info {
+              color: #909399;
+            }
+
+            .output-content {
+              word-break: break-word;
+              white-space: pre-wrap;
+            }
+          }
         }
 
         .input-section {
           display: flex;
-          align-items: flex-start;
-          gap: 8px;
-          padding: 4px 8px 8px 8px;
           flex-shrink: 0;
+          gap: 8px;
+          align-items: flex-start;
+          padding: 4px 8px 8px;
 
           .input-prompt {
-            color: #409eff;
-            font-weight: bold;
-            margin-top: 4px;
             flex-shrink: 0;
+            margin-top: 4px;
+            font-weight: bold;
+            color: #409eff;
           }
 
-                     .input-container {
-             flex: 1;
-             display: flex;
-             align-items: center;
-             gap: 8px;
-             border-radius: 6px;
-             padding: 4px 8px;
-             background-color: $base-background-color;
-             border: 1px solid $base-border-color;
+          .input-container {
+            display: flex;
+            flex: 1;
+            gap: 8px;
+            align-items: center;
+            padding: 4px 8px;
+            background-color: $base-background-color;
+            border: 1px solid $base-border-color;
+            border-radius: 6px;
 
-             .input-field {
-               flex: 1;
-               
-               :deep(.el-textarea__inner) {
-                 border: none;
-                 background: transparent;
-                 padding: 0;
-                 font-family: inherit;
-                 font-size: inherit;
-                 line-height: inherit;
-                 resize: none;
-                 box-shadow: none;
-                 min-height: 20px;
-                 max-height: 60px;
-                 
-                 &:focus {
-                   box-shadow: none;
-                   border: none;
-                 }
-               }
-             }
+            .input-field {
+              flex: 1;
 
-             .send-button {
-               flex-shrink: 0;
-               height: 24px;
-               padding: 0 12px;
-               font-size: 12px;
-               border-radius: 4px;
-               display: flex;
-               align-items: center;
-               justify-content: center;
-             }
-           }
+              :deep(.el-textarea__inner) {
+                min-height: 20px;
+                max-height: 60px;
+                padding: 0;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                resize: none;
+                background: transparent;
+                border: none;
+                box-shadow: none;
+
+                &:focus {
+                  border: none;
+                  box-shadow: none;
+                }
+              }
+            }
+
+            .send-button {
+              display: flex;
+              flex-shrink: 0;
+              align-items: center;
+              justify-content: center;
+              height: 24px;
+              padding: 0 12px;
+              font-size: 12px;
+              border-radius: 4px;
+            }
+          }
         }
       }
     }
