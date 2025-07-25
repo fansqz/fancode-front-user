@@ -5,11 +5,7 @@
     </header>
     <main class="visual-panel__main" ref="mainContainer">
       <div class="visual-panel__canvas">
-        <VisualCanvas 
-          ref="visualCanvas" 
-          :action="action" 
-          :sources="sources" 
-        />
+        <VisualCanvas ref="visualCanvas" :action="action" :sources="sources" />
       </div>
       <VisualSettings />
     </main>
@@ -30,11 +26,11 @@
   // Store instances
   const debugStore = useDebugStore()
   const visualStore = useVisualStore()
-  
+
   // Store refs
   const { id, status } = storeToRefs(debugStore)
   const { action, descriptionType } = storeToRefs(visualStore)
-  
+
   // Component refs
   const sources = ref<Sources>()
   const visualCanvas = ref<InstanceType<typeof VisualCanvas> | null>()
@@ -47,7 +43,7 @@
     if (status.value !== 'stopped') {
       return
     }
-    
+
     if (action.value) {
       const visualData = await reqVisualData(
         id.value,
@@ -72,7 +68,7 @@
   // Lifecycle
   onMounted(() => {
     action.value = true
-    
+
     // 监听调试状态变化
     watch(
       () => status.value,
@@ -95,19 +91,19 @@
 
 <style lang="scss" scoped>
   .visual-panel {
-    height: 100%;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 
     &__header {
+      flex-shrink: 0;
       height: 35px;
-      line-height: 35px;
       padding: 0 16px;
+      line-height: 35px;
+      user-select: none;
       background-color: $base-background-color;
       border-bottom: 1px solid $base-border-color;
-      user-select: none;
-      flex-shrink: 0;
     }
 
     &__main {
@@ -115,22 +111,14 @@
       flex: 1;
       overflow: hidden;
       user-select: none;
-      
+
       .visual-panel__canvas {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         background-color: #f9f9f9;
-        background-image: radial-gradient(
-          circle, 
-          rgb(107 102 102 / 50%) 1px, 
-          transparent 1px
-        );
+        background-image: radial-gradient(circle, rgb(107 102 102 / 50%) 1px, transparent 1px);
         background-size: 25px 25px;
       }
     }
   }
 </style>
-

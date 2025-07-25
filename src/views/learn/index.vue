@@ -2,13 +2,18 @@
   <div class="container">
     <el-splitter class="default-theme main">
       <!--左侧面板：目录树和题目展示-->
-      <el-splitter-panel @resized="resizeVisualPane" class="left-panel" size="60" @update:size="resizeVisualPane">
+      <el-splitter-panel
+        @resized="resizeVisualPane"
+        class="left-panel"
+        size="60"
+        @update:size="resizeVisualPane"
+      >
         <div class="left-content">
           <!--目录树-->
           <div class="directory-section">
             <DirectoryTree />
           </div>
-          
+
           <!--题目展示-->
           <div class="document-section">
             <DocumentPanel ref="documentPanel" />
@@ -126,7 +131,7 @@
 
   onMounted(() => {
     load()
-    
+
     watch(
       () => id.value,
       () => {
@@ -156,8 +161,8 @@
     position: relative;
     width: 100%;
     height: calc(100vh - $base-header-height);
-    margin: 0;
     padding: 0 8px 8px;
+    margin: 0;
     background-color: $deep-background-color;
   }
 

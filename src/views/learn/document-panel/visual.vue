@@ -3,7 +3,7 @@
     <div class="visual-container" ref="visualContainer">
       <Visaul ref="visual" class="visaul" :action="action" :sources="sources" />
     </div>
-    <VisualSettings/>
+    <VisualSettings />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" :class="{ 'header--dark': isDarkHeader }">
     <div class="header_left">
       <Logo class="logo"></Logo>
       <div class="empty" />
@@ -45,13 +45,19 @@
   import Setting from './setting.vue'
   import { useRouter, useRoute } from 'vue-router'
   import useUserStore from '@/store/modules/user'
-  import { onMounted } from 'vue'
+  import { onMounted, computed } from 'vue'
   import { ref } from 'vue'
   import { reqAllVisualDocumentBank } from '@/api/visual-document-bank/index.ts'
   let userStore = useUserStore()
   let $router = useRouter()
   let $route = useRoute()
   const visualDocumentBanks = ref([])
+
+  // 判断是否为深色header（coding和learn页面）
+  const isDarkHeader = computed(() => {
+    const routeName = $route.name as string
+    return routeName === 'coding' || routeName === 'learn'
+  })
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
@@ -99,7 +105,13 @@
     box-sizing: border-box;
     width: 100%;
     height: $base-header-height;
-    background-color: $deep-background-color;
+    background-color: $base-background-color;
+    border-bottom: 1px solid $base-border-color;
+
+    &--dark {
+      background-color: $deep-background-color;
+      border-bottom: none;
+    }
 
     .header_left {
       position: absolute;

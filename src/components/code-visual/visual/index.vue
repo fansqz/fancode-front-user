@@ -38,7 +38,7 @@
     action: boolean
   }>()
   const { sources, action } = toRefs(props)
-  
+
   // Internal state
   let visualEngine: Engine | null = null
   let containerElement: HTMLElement | null = null
@@ -53,7 +53,7 @@
       disposeVisualView()
       return
     }
-    
+
     // 检查是否需要强制更新
     let isForceUpdate = false
     Object.keys(visualSources).forEach((key) => {
@@ -61,7 +61,7 @@
         isForceUpdate = true
       }
     })
-    
+
     // 初始化可视化引擎
     if (!visualEngine) {
       visualEngine = SV(
@@ -76,7 +76,7 @@
         isForceUpdate,
       )
     }
-    
+
     visualEngine.render(visualSources)
   }
 
@@ -116,7 +116,7 @@
    */
   const performZoom = (increment: number) => {
     if (!visualEngine) return
-    
+
     const currentZoom = visualEngine.getGraphInstance().getZoom()
     const newZoom = currentZoom + increment / 100
     visualEngine.getGraphInstance().zoomTo(newZoom)
@@ -148,7 +148,7 @@
   // Lifecycle
   onMounted(() => {
     containerElement = document.getElementById('visualContainer')
-    
+
     // 监听数据源变化
     watch(
       () => sources.value,
@@ -200,13 +200,13 @@
 
     &__controls {
       position: absolute;
-      right: 20px;
       top: 50%;
-      transform: translateY(-50%);
+      right: 20px;
       z-index: 1000;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      transform: translateY(-50%);
     }
 
     &__zoom-btn {
@@ -243,11 +243,7 @@
         inset: 0;
         padding: 1px;
         content: '';
-        background: linear-gradient(
-          135deg, 
-          rgb(255 255 255 / 40%), 
-          rgb(255 255 255 / 10%)
-        );
+        background: linear-gradient(135deg, rgb(255 255 255 / 40%), rgb(255 255 255 / 10%));
         border-radius: 8px;
         mask:
           linear-gradient(#fff 0 0) content-box,

@@ -14,12 +14,6 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
     redirect: '/home',
     children: [
       {
-        // bank
-        path: '/bank',
-        name: 'bank',
-        component: () => import('@/views/bank/index.vue'),
-      },
-      {
         // coding
         path: '/coding',
         name: 'coding',
@@ -69,12 +63,6 @@ export const constantRoute: Readonly<RouteRecordRaw[]> = [
         component: () => import('@/views/home/index.vue'),
       },
     ],
-  },
-  {
-    // 题目
-    path: '/problem/:problemNumber',
-    name: 'problem',
-    component: () => import('@/views/problem/index.vue'),
   },
 ]
 

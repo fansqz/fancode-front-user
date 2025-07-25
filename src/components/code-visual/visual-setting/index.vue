@@ -38,7 +38,7 @@
           </div>
         </div>
       </template>
-      <div class="visual-settings__content" :class="{ 'disabled': isAIEnabled }">
+      <div class="visual-settings__content" :class="{ disabled: isAIEnabled }">
         <VisualTemplate />
       </div>
     </el-collapse-item>
@@ -55,7 +55,7 @@
   // Store
   const visualStore = useVisualStore()
   const { action, descriptionType, isAIEnabled } = storeToRefs(visualStore)
-  
+
   // Local state
   const activeNames = ref<string[]>([])
 
@@ -79,12 +79,12 @@
 <style lang="scss" scoped>
   .visual-settings {
     position: absolute;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
+    z-index: 10;
     width: 100%;
     height: auto;
-    z-index: 10;
 
     &__header {
       display: flex;

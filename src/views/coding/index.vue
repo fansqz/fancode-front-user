@@ -1,7 +1,10 @@
 <template>
   <div class="coding-workspace">
     <el-splitter layout="horizontal">
-      <el-splitter-panel class="coding-workspace__visual-panel" @update:size="handleVisualPanelResize">
+      <el-splitter-panel
+        class="coding-workspace__visual-panel"
+        @update:size="handleVisualPanelResize"
+      >
         <VisualPanel ref="visualPanel" />
       </el-splitter-panel>
 
@@ -9,17 +12,14 @@
         <el-splitter layout="vertical">
           <el-splitter-panel size="70" class="coding-workspace__code-editor">
             <LanguageThemeSelector class="coding-workspace__language-selector" />
-            <CodeEditor 
-              class="coding-workspace__editor" 
-              @onChangeValue="handleCodeChange" 
-            />
+            <CodeEditor class="coding-workspace__editor" @onChangeValue="handleCodeChange" />
           </el-splitter-panel>
           <el-splitter-panel size="30" class="coding-workspace__console">
-            <Console 
-              :userInput="false" 
-              :userOutput="false" 
-              :terminal="true" 
-              class="coding-workspace__console-content" 
+            <Console
+              :userInput="false"
+              :userOutput="false"
+              :terminal="true"
+              class="coding-workspace__console-content"
             />
           </el-splitter-panel>
         </el-splitter>
@@ -43,28 +43,28 @@
   // Store instances
   const codingStore = useCodingStore()
   const debugStore = useDebugStore()
-  
+
   // Store refs
   const { code, language, languages } = storeToRefs(codingStore)
   const { breakpoints } = storeToRefs(debugStore)
-  
+
   // Component refs
   const visualPanel = ref<InstanceType<typeof VisualPanel> | null>()
-  
+
   // Types
   type CodeConfig = {
     code: string
     language: languageConstants
     breakpoints: number[]
   }
-  
+
   // State
   const codeConfig: CodeConfig = {
     code: '',
     language: languageConstants.C,
     breakpoints: [],
   }
-  
+
   // Initialize
   language.value = languageConstants.GO
   languages.value = supportedLanguages
@@ -76,7 +76,7 @@
     // 尝试从本地存储读取配置
     const localConfigJson = localStorage.getItem(`code-${language.value}`)
     let configLoaded = false
-    
+
     if (localConfigJson) {
       try {
         Object.assign(codeConfig, JSON.parse(localConfigJson))
@@ -90,17 +90,17 @@
     if (!configLoaded) {
       try {
         const [configsJson, codeText] = await Promise.all([
-          fetch('/document/visual-learn-config.json').then(res => res.text()),
-          fetch(`/document/visual-learn-code.${language.value}`).then(res => res.text()),
+          fetch('/document/visual-learn-config.json').then((res) => res.text()),
+          fetch(`/document/visual-learn-code.${language.value}`).then((res) => res.text()),
         ])
 
         const configs: CodeConfig[] = JSON.parse(configsJson)
-        const targetConfig = configs.find(config => config.language === language.value)
-        
+        const targetConfig = configs.find((config) => config.language === language.value)
+
         if (targetConfig) {
           Object.assign(codeConfig, targetConfig)
         }
-        
+
         codeConfig.code = codeText
       } catch (error) {
         console.error('Failed to load code config from server:', error)

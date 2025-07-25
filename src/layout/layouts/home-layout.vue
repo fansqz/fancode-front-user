@@ -26,7 +26,6 @@
     left: 0;
     z-index: 100;
     width: 100%;
-    background: transparent;
   }
 
   .home-content {
