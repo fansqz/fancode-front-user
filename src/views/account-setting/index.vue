@@ -195,6 +195,7 @@
     width: 100%;
     height: 100%;
     padding: 30px;
+
     .card {
       width: 70%;
       height: 90%;
