@@ -21,31 +21,31 @@ SV.registerLayout('linkList', {
     return {
       node: {
         default: {
-            type: 'link-list-node',
-            label: '[data]',
-            size: [60, 30],
-            labelOptions: {
-                style: { 
-                    fontSize: 14,
-                    fontWeight: 400,
-                    fill: '#2c3e50'
-                },
-            },
+          type: 'link-list-node',
+          label: '[data]',
+          size: [60, 30],
+          labelOptions: {
             style: {
-                stroke: '#8b5cf6',
-                strokeWidth: 1,
-                fill: '#f3e8ff',
-                cursor: 'pointer',
-                radius: 4,
-                // 悬停效果
-                hover: {
-                    stroke: '#7c3aed',
-                    strokeWidth: 2,
-                    fill: '#ede9fe',
-                }
-            }
-        }
-    },
+              fontSize: 14,
+              fontWeight: 400,
+              fill: '#2c3e50',
+            },
+          },
+          style: {
+            stroke: '#8b5cf6',
+            strokeWidth: 1,
+            fill: '#f3e8ff',
+            cursor: 'pointer',
+            radius: 4,
+            // 悬停效果
+            hover: {
+              stroke: '#7c3aed',
+              strokeWidth: 2,
+              fill: '#ede9fe',
+            },
+          },
+        },
+      },
       link: {
         next: {
           type: 'line',

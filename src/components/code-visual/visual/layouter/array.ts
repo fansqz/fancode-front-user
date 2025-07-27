@@ -14,10 +14,10 @@ SV.registerLayout('array', {
           label: '[data]',
           size: [60, 30],
           labelOptions: {
-            style: { 
+            style: {
               fontSize: 14,
               fontWeight: 400,
-              fill: '#2c3e50'
+              fill: '#2c3e50',
             },
           },
           style: {
@@ -31,7 +31,7 @@ SV.registerLayout('array', {
               stroke: '#3498db',
               strokeWidth: 2,
               fill: '#d6eaf8',
-            }
+            },
           },
         },
         virtual: {
@@ -39,10 +39,10 @@ SV.registerLayout('array', {
           label: '[data]',
           size: [60, 30],
           labelOptions: {
-            style: { 
+            style: {
               fontSize: 14,
               fontWeight: 400,
-              fill: '#95a5a6'
+              fill: '#95a5a6',
             },
           },
           style: {
@@ -75,21 +75,21 @@ SV.registerLayout('array', {
         },
       },
       indexLabel: {
-        index: { 
+        index: {
           position: 'bottom',
           style: {
             fontSize: 12,
             fill: '#7f8c8d',
-            fontWeight: 400
-          }
+            fontWeight: 400,
+          },
         },
-        indexRight: { 
+        indexRight: {
           position: 'right',
           style: {
             fontSize: 12,
             fill: '#7f8c8d',
-            fontWeight: 400
-          }
+            fontWeight: 400,
+          },
         },
       },
       behavior: {
@@ -100,7 +100,7 @@ SV.registerLayout('array', {
 
   layout(nodes: SVNode[], _layoutOptions: LayoutOptions) {
     const arr = nodes
-    
+
     for (let i = 0; i < arr.length; i++) {
       const width = arr[i].get('size')[0]
       if (i > 0) {

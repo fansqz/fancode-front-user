@@ -10,10 +10,10 @@ SV.registerLayout('binaryTree', {
           size: [60, 30],
           label: '[data]',
           labelOptions: {
-            style: { 
+            style: {
               fontSize: 14,
               fontWeight: 400,
-              fill: '#2c3e50'
+              fill: '#2c3e50',
             },
           },
           style: {
@@ -27,7 +27,7 @@ SV.registerLayout('binaryTree', {
               stroke: '#0891b2',
               strokeWidth: 2,
               fill: '#a5f3fc',
-            }
+            },
           },
         },
       },
