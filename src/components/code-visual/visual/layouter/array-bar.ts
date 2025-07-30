@@ -1,16 +1,6 @@
-import { SV, SourceNode, LayoutGroupOptions, SVNode, LayoutOptions } from 'structv2'
+import { SV } from 'structv2'
 
 SV.registerLayout('arrayBar', {
-  sourcesPreprocess(sources) {
-    const firstElement = sources[0]
-
-    if (firstElement.external) {
-      firstElement.headExternal = firstElement.external
-      delete firstElement.external
-    }
-
-    return sources
-  },
   defineOptions() {
     return {
       node: {
@@ -43,18 +33,29 @@ SV.registerLayout('arrayBar', {
       marker: {
         headExternal: {
           type: 'pointer',
-          offset: 50,
-          anchor: 2,
+          anchor: 4,
+          rotation: -Math.PI / 2, // 水平指向（0弧度 = 0度）
           style: {
-            fill: '#f08a5d',
+            fill: '#e74c3c',
+            stroke: '#c0392b',
+            strokeWidth: 2,
+          },
+          labelOptions: {
+            style: {
+              fontSize: 12,
+              fontWeight: 500,
+              fill: '#7f8c8d',
+            },
           },
         },
         external: {
           type: 'pointer',
-          offset: 50,
           anchor: 2,
+          offset: 30,
           style: {
-            fill: '#f08a5d',
+            fill: '#f39c12',
+            stroke: '#d68910',
+            strokeWidth: 1,
           },
         },
       },
@@ -72,48 +73,27 @@ SV.registerLayout('arrayBar', {
   },
 
   layout(elements) {
-    let arr = elements
-    const dataLength = arr.length
+    const arr = elements
 
     // 固定柱状图宽度和间距
     const barWidth = 40 // 固定柱状图宽度
     const spacing = 10 // 固定间距
 
-    // 计算所有数据的最大值，用于高度计算
-    let maxValue = 0
-    for (let i = 0; i < arr.length; i++) {
-      const value = Number(arr[i].get('data')) || 0
-      console.log(value)
-      maxValue = Math.max(maxValue, value)
-    }
+    // 智能高度计算逻辑 - 固定算法，不依赖最大值
+    function calculateIntelligentHeight(value, minHeight, maxHeight) {
+      // 使用对数函数实现前面变化快，后面变化慢的效果
+      // 使用 log(1 + value) 来确保从0开始，且增长速度逐渐变慢
+      const logValue = Math.log(1 + value)
 
-    // 智能高度计算逻辑 - 从节点定义中抽离出来
-    function calculateIntelligentHeight(value, maxValue, baseHeight) {
-      if (maxValue === 0) {
-        return baseHeight * 0.1 // 如果最大值为0，显示最小高度
-      }
+      // 设置一个合理的缩放因子，让高度变化在合理范围内
+      const scaleFactor = 30 // 控制整体缩放
 
-      const ratio = value / maxValue
-      let actualHeight
-
-      // 使用对数比例，让不同数值范围都有合理的视觉展示
-      if (ratio <= 0.01) {
-        // 极小值：使用对数比例，确保可见
-        actualHeight = baseHeight * (0.05 + Math.log10(ratio * 100) * 0.1)
-      } else if (ratio <= 0.1) {
-        // 小值：线性插值，从5%到15%
-        actualHeight = baseHeight * (0.05 + ratio * 1.0)
-      } else if (ratio <= 0.5) {
-        // 中等值：线性插值，从15%到60%
-        actualHeight = baseHeight * (0.15 + (ratio - 0.1) * 1.125)
-      } else {
-        // 大值：线性插值，从60%到100%
-        actualHeight = baseHeight * (0.6 + (ratio - 0.5) * 0.8)
-      }
+      // 计算高度：使用对数函数，前面增长快，后面增长慢
+      let actualHeight = logValue * scaleFactor
 
       // 确保最小和最大高度
-      actualHeight = Math.max(actualHeight, baseHeight * 0.05) // 最小5%
-      actualHeight = Math.min(actualHeight, baseHeight * 0.95) // 最大95%
+      actualHeight = Math.max(actualHeight, minHeight)
+      actualHeight = Math.min(actualHeight, maxHeight)
 
       return actualHeight
     }
@@ -121,13 +101,11 @@ SV.registerLayout('arrayBar', {
     // 更新每个元素的尺寸和位置
     for (let i = 0; i < arr.length; i++) {
       const value = Number(arr[i].get('data')) || 0
-      const baseHeight = 150 // 基础高度
+      const minHeight = 10 // 基础高度
+      const maxHeight = 300
 
       // 计算智能高度
-      const intelligentHeight = calculateIntelligentHeight(value, maxValue, baseHeight)
-
-      // 设置最大值，用于节点内部的高度计算
-      arr[i].set('maxValue', maxValue)
+      const intelligentHeight = calculateIntelligentHeight(value, minHeight, maxHeight)
 
       // 设置动态高度
       arr[i].set('size', [barWidth, intelligentHeight])
@@ -139,7 +117,7 @@ SV.registerLayout('arrayBar', {
         arr[i].set('x', 0)
       }
 
-      arr[i].set('y', baseHeight - intelligentHeight / 2)
+      arr[i].set('y', -intelligentHeight / 2)
     }
   },
 })

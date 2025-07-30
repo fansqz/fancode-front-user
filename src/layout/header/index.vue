@@ -4,15 +4,15 @@
       <Logo class="logo"></Logo>
       <div class="empty" />
       <div
-        :class="{ nav_item: true, active_item: isActiveNavItem('coding') }"
+        :class="{ nav_item: true }"
         @click="changeRoute('coding')"
       >
-        <el-text size="large">编程</el-text>
+        <el-text size="large" :class="{ 'active-text': isActiveNavItem('coding') }">编程</el-text>
       </div>
-      <div :class="{ learn: true, nav_item: true, active_item: isActiveNavItem('learn') }">
-        <el-dropdown @command="handleSelectBank">
-          <span>
-            <el-text size="large">学习</el-text>
+      <div :class="{ learn: true, nav_item: true }">
+        <el-text size="large" :class="{ 'active-text': isActiveNavItem('learn') }" @click="toggleDropdown">学习</el-text>
+        <el-dropdown ref="dropdownRef" @command="handleSelectBank">
+          <span class="dropdown-trigger">
             <el-icon class="el-icon--right">
               <arrow-down />
             </el-icon>
@@ -52,6 +52,7 @@
   let $router = useRouter()
   let $route = useRoute()
   const visualDocumentBanks = ref([])
+  const dropdownRef = ref()
 
   // 判断是否为深色header（coding和learn页面）
   const isDarkHeader = computed(() => {
@@ -88,6 +89,10 @@
         bankID: bankID,
       },
     })
+  }
+
+  const toggleDropdown = () => {
+    dropdownRef.value?.handleOpen()
   }
 
   onMounted(async () => {
@@ -143,9 +148,33 @@
         cursor: pointer;
       }
 
-      .active_item {
-        box-sizing: border-box;
-        border-bottom: 3px solid #333;
+      .active-text {
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 25px;
+          height: 3px !important;
+          background-color: $base-blue-color !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+      }
+
+      .learn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .dropdown-trigger {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
       }
     }
 
