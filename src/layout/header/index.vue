@@ -3,14 +3,16 @@
     <div class="header_left">
       <Logo class="logo"></Logo>
       <div class="empty" />
-      <div
-        :class="{ nav_item: true }"
-        @click="changeRoute('coding')"
-      >
+      <div :class="{ nav_item: true }" @click="changeRoute('coding')">
         <el-text size="large" :class="{ 'active-text': isActiveNavItem('coding') }">编程</el-text>
       </div>
       <div :class="{ learn: true, nav_item: true }">
-        <el-text size="large" :class="{ 'active-text': isActiveNavItem('learn') }" @click="toggleDropdown">学习</el-text>
+        <el-text
+          size="large"
+          :class="{ 'active-text': isActiveNavItem('learn') }"
+          @click="toggleDropdown"
+          >学习</el-text
+        >
         <el-dropdown ref="dropdownRef" @command="handleSelectBank">
           <span class="dropdown-trigger">
             <el-icon class="el-icon--right">
@@ -150,25 +152,25 @@
 
       .active-text {
         position: relative;
-        
+
         &::after {
-          content: '';
           position: absolute;
           bottom: -8px;
           left: 50%;
-          transform: translateX(-50%);
           width: 25px;
           height: 3px !important;
+          content: '';
           background-color: $base-blue-color !important;
           border: none !important;
           box-shadow: none !important;
+          transform: translateX(-50%);
         }
       }
 
       .learn {
         display: flex;
-        align-items: center;
         gap: 4px;
+        align-items: center;
       }
 
       .dropdown-trigger {
