@@ -26,12 +26,13 @@ const reqArrayVisualData = async (
 }
 
 const convertArrayVisualData = (
-  _description: ArrayDescription,
+  description: ArrayDescription,
   data: VariableVisualData,
 ): ArrayData => {
   // 将第一个struct[0]作为数组的数据
   const struct = data.structs[0]
   const nodes: ArrayNode[] = []
+  console.log(struct)
   for (let i = 0; i < struct.values.length; i++) {
     const node: ArrayNode = {
       id: struct.values[i].name,
@@ -96,9 +97,12 @@ const convertArrayVisualData = (
     }
   }
 
+  // 根据展示方式选择布局器
+  const layouter = description.displayType === 'array-bar' ? 'arrayBar' : 'array'
+
   return {
     data: nodes,
-    layouter: 'array',
+    layouter: layouter,
   }
 }
 

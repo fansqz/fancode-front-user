@@ -1,7 +1,7 @@
 // Array 传递的数据类型
 export type ArrayData = {
   data: ArrayNode[]
-  layouter: 'array'
+  layouter: 'array' | 'arrayBar'
 }
 
 export type ArrayNode = {

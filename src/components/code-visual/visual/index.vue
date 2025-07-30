@@ -28,6 +28,7 @@
   import './layouter/link-list.ts'
   import './layouter/graph.ts'
   import './layouter/array.ts'
+  import './layouter/array-bar.ts'
   import './layouter/binary-tree.ts'
   import { SV, Sources, Engine } from 'structv2'
   import { onMounted, watch, toRefs, onUnmounted } from 'vue'
