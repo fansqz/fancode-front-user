@@ -1,16 +1,25 @@
 <template>
   <div class="menu">
     <div class="left">
-      <!--语言选择-->
+      <!-- 语言选择 -->
       <el-select class="language-select" v-model="language" placeholder="Select" size="small">
-        <el-option v-for="item in languages" :key="item" :value="item"
-          ><div class="language-item">{{ item }}</div></el-option
-        >
+        <el-option v-for="item in languages" :key="item" :value="item">
+          <div class="language-item">{{ item }}</div>
+        </el-option>
       </el-select>
     </div>
+
     <div class="right">
-      <el-button type="info" icon="RefreshRight" @click="reloadCode" text />
-      <!--主题选择-->
+      <el-button type="info" icon="RefreshRight" @click="reloadCode" text class="action-button" />
+      <!-- 管理用户代码 -->
+      <el-button
+        type="primary"
+        icon="Document"
+        @click="showSavedCodeModal"
+        text
+        class="action-button"
+      />
+      <!-- 主题选择 -->
       <el-select class="theme-select" v-model="theme" placeholder="Select" size="small">
         <el-option v-for="item in themeList" :key="item" :label="item" :value="item" />
       </el-select>
@@ -21,22 +30,33 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { storeToRefs } from 'pinia'
-  import { getAllTheme } from '../editor/themes'
+  import { getAllTheme } from '@/components/code-editor/editor/themes'
   import { reqProblemTemplateCode } from '@/api/problem'
   import useCodingStore from '@/store/modules/coding'
-  let codingStore = useCodingStore()
+
+  const emit = defineEmits<{
+    (e: 'showSavedCode'): void
+    (e: 'saveCurrentCode'): void
+  }>()
+
+  const codingStore = useCodingStore()
 
   // 主题列表
-  let themeList = ref(getAllTheme())
-  let { theme, code, language, languages } = storeToRefs(codingStore)
+  const themeList = ref(getAllTheme())
+  const { theme, code, language, languages } = storeToRefs(codingStore)
   theme.value = themeList.value[0]
+
   // 重新加载代码
   const reloadCode = async () => {
-    let result = await reqProblemTemplateCode(language.value)
-    if (result.code == 200) {
-      console.log('sdf234e')
+    const result = await reqProblemTemplateCode(language.value)
+    if (result.code === 200) {
       code.value = result.data
     }
+  }
+
+  // 显示保存代码模态框
+  const showSavedCodeModal = () => {
+    emit('showSavedCode')
   }
 </script>
 
@@ -66,9 +86,17 @@
     .right {
       position: absolute;
       right: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .action-button {
+        margin: 0;
+      }
 
       .theme-select {
         width: 120px;
+        margin-left: 10px;
       }
     }
   }

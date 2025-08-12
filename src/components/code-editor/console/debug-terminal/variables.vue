@@ -7,6 +7,7 @@
       :props="defaultProps"
       node-key="id"
       :ref="treeRef"
+      class="variables-tree"
     />
   </div>
 </template>
@@ -32,7 +33,7 @@
 
   // 监控栈帧变化，主动触发load
   const loadNode = (node: any, resolve: any) => {
-    if (props.frameId != '') {
+    if (props.frameId != '' && debugStore.isDebugging()) {
       if (node.level == 0) {
         getVariablesByFrameId(props['frameId'], resolve)
       } else {
@@ -119,4 +120,26 @@
   })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .variables-tree {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(249 249 249);
+
+    :deep(.el-tree) {
+      background-color: rgb(249 249 249);
+    }
+
+    :deep(.el-tree-node) {
+      background-color: rgb(249 249 249);
+    }
+
+    :deep(.el-tree-node__content) {
+      background-color: rgb(249 249 249);
+
+      &:hover {
+        background-color: rgb(64 158 255 / 10%);
+      }
+    }
+  }
+</style>

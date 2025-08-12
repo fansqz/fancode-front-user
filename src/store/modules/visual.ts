@@ -33,6 +33,7 @@ const useVisualStore = defineStore('visual', {
     arrayDescription: {
       arrayName: 'Arr',
       pointNames: ['Point1', 'Point2'],
+      displayType: 'array-bar',
     },
     binaryTreeDescription: {
       treeNode: 'TreeNode',

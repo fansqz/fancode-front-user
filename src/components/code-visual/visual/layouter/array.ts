@@ -14,11 +14,24 @@ SV.registerLayout('array', {
           label: '[data]',
           size: [60, 30],
           labelOptions: {
-            style: { fontSize: 20 },
+            style: {
+              fontSize: 14,
+              fontWeight: 400,
+              fill: '#2c3e50',
+            },
           },
           style: {
-            stroke: '#333',
-            fill: '#95e1d3',
+            stroke: '#5dade2',
+            strokeWidth: 1,
+            fill: '#ebf3fd',
+            cursor: 'pointer',
+            radius: 4,
+            // 悬停效果
+            hover: {
+              stroke: '#3498db',
+              strokeWidth: 2,
+              fill: '#d6eaf8',
+            },
           },
         },
         virtual: {
@@ -26,12 +39,18 @@ SV.registerLayout('array', {
           label: '[data]',
           size: [60, 30],
           labelOptions: {
-            style: { fontSize: 20 },
+            style: {
+              fontSize: 14,
+              fontWeight: 400,
+              fill: '#95a5a6',
+            },
           },
           style: {
-            stroke: '#333',
-            lineDash: [3, 5], // 虚线
+            stroke: '#bdc3c7',
+            strokeWidth: 1,
+            lineDash: [3, 4],
             fill: 'transparent',
+            radius: 4,
           },
         },
       },
@@ -40,20 +59,38 @@ SV.registerLayout('array', {
           type: 'pointer',
           anchor: 3,
           style: {
-            fill: '#f08a5d',
+            fill: '#e74c3c',
+            stroke: '#c0392b',
+            strokeWidth: 1,
           },
         },
         external: {
           type: 'pointer',
           anchor: 0,
           style: {
-            fill: '#f08a5d',
+            fill: '#f39c12',
+            stroke: '#d68910',
+            strokeWidth: 1,
           },
         },
       },
       indexLabel: {
-        index: { position: 'bottom' },
-        indexRight: { position: 'right' },
+        index: {
+          position: 'bottom',
+          style: {
+            fontSize: 12,
+            fill: '#7f8c8d',
+            fontWeight: 400,
+          },
+        },
+        indexRight: {
+          position: 'right',
+          style: {
+            fontSize: 12,
+            fill: '#7f8c8d',
+            fontWeight: 400,
+          },
+        },
       },
       behavior: {
         dragNode: false,
@@ -63,6 +100,7 @@ SV.registerLayout('array', {
 
   layout(nodes: SVNode[], _layoutOptions: LayoutOptions) {
     const arr = nodes
+
     for (let i = 0; i < arr.length; i++) {
       const width = arr[i].get('size')[0]
       if (i > 0) {

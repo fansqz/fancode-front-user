@@ -24,37 +24,54 @@ SV.registerLayout('linkList', {
           type: 'link-list-node',
           label: '[data]',
           size: [60, 30],
+          labelOptions: {
+            style: {
+              fontSize: 14,
+              fontWeight: 400,
+              fill: '#2c3e50',
+            },
+          },
           style: {
-            stroke: '#333',
-            fill: '#cfddfe',
+            stroke: '#8b5cf6',
+            strokeWidth: 1,
+            fill: '#f3e8ff',
             cursor: 'pointer',
+            radius: 4,
+            // 悬停效果
+            hover: {
+              stroke: '#7c3aed',
+              strokeWidth: 2,
+              fill: '#ede9fe',
+            },
           },
         },
       },
       link: {
         next: {
           type: 'line',
+          strokeWidth: 1,
           sourceAnchor: 6,
           targetAnchor: 5,
           style: {
-            stroke: '#333',
+            stroke: '#7f8c8d',
             endArrow: 'default',
             startArrow: {
               path: G6.Arrow.circle(2, -1),
-              fill: '#333',
+              fill: '#7f8c8d',
             },
           },
         },
         prev: {
           type: 'line',
+          strokeWidth: 1,
           sourceAnchor: 7,
           targetAnchor: 2,
           style: {
-            stroke: '#333',
+            stroke: '#7f8c8d',
             endArrow: 'default',
             startArrow: {
               path: G6.Arrow.circle(2, -1),
-              fill: '#333',
+              fill: '#7f8c8d',
             },
           },
         },

@@ -73,6 +73,7 @@
       status.value = 'terminated'
       outputs.value.push({
         type: 'error',
+        event: 'compile',
         title: '编译错误',
         message: data.message,
       })
@@ -80,6 +81,7 @@
       status.value = 'compiled'
       outputs.value.push({
         type: 'success',
+        event: 'compile',
         title: '编译成功',
         message: data.message,
       })
@@ -87,7 +89,7 @@
   }
   const onOutput = (data: OutputEvent) => {
     outputs.value.push({
-      type: 'success',
+      type: 'info',
       event: 'output',
       title: '',
       message: data.output,
@@ -97,6 +99,8 @@
     status.value = 'terminated'
     debugStore.lineNum = 0
     outputs.value.push({
+      type: 'success',
+      event: 'terminated',
       message: '调试结束',
     })
   }

@@ -89,6 +89,7 @@ export type VisualDescription =
 export type ArrayDescription = {
   arrayName: string
   pointNames: string[]
+  displayType?: 'array' | 'array-bar'
 }
 
 // 二叉树可视化描述

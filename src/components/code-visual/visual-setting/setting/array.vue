@@ -6,6 +6,12 @@
     <el-form-item label="取值变量">
       <el-input v-model="pointNamesStr" />
     </el-form-item>
+    <el-form-item label="展示方式">
+      <el-radio-group v-model="arrayDescription.displayType">
+        <el-radio label="array">正常展示</el-radio>
+        <el-radio label="array-bar">柱状图</el-radio>
+      </el-radio-group>
+    </el-form-item>
   </el-form>
 </template>
 

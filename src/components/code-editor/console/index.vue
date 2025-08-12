@@ -1,135 +1,71 @@
 <template>
-  <div class="console">
-    <el-menu
-      :default-active="activeIndex"
-      class="select-menu"
-      mode="horizontal"
-      @select="handleSelect"
-    >
-      <el-menu-item v-if="userInput" index="input">输入用例</el-menu-item>
-      <el-menu-item v-if="userOutput" index="output">输出</el-menu-item>
-      <el-menu-item v-if="terminal" index="terminal">调试终端</el-menu-item>
-    </el-menu>
-    <div class="input-div" v-show="activeIndex == 'input'">
-      <Input />
+  <div class="console-container">
+    <div class="console-header">
+      <el-text>调试终端</el-text>
+      <div class="debug-buttons">
+        <StepOrContinueButton type="continue" class="debug-btn" />
+        <StepOrContinueButton type="step-over" class="debug-btn" />
+        <StepOrContinueButton type="step-in" class="debug-btn" />
+        <StepOrContinueButton type="step-out" class="debug-btn" />
+        <TerminateButton class="debug-btn" />
+      </div>
     </div>
-    <div class="output-div" v-show="activeIndex == 'output'">
-      <Output />
-    </div>
-    <div class="terminal-div" v-show="activeIndex == 'terminal'">
+    <div class="console-terminal">
       <DebugTerminal />
+    </div>
+    <div class="console-bottom">
+      <CodeButtonBar :debug="true" :execute="true" class="code-button-bar" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref, watch, toRefs } from 'vue'
-  import Output from './output.vue'
-  import Input from './input.vue'
   import DebugTerminal from './debug-terminal/index.vue'
-  import useCodingStore from '@/store/modules/coding'
-  import { storeToRefs } from 'pinia'
-  import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher'
-
-  let props = defineProps<{
-    userInput: boolean
-    userOutput: boolean
-    terminal: boolean
-  }>()
-
-  let { userInput, userOutput, terminal } = toRefs(props)
-
-  // 用于控制当前是输入界面还是输出界面
-  const activeIndex = ref()
-  if (terminal.value) {
-    activeIndex.value = 'terminal'
-  }
-  if (userOutput.value) {
-    activeIndex.value = 'output'
-  }
-  if (userInput.value) {
-    activeIndex.value = 'input'
-  }
-
-  const codingStore = useCodingStore()
-  const { output } = storeToRefs(codingStore)
-  const handleSelect = (key: string) => {
-    activeIndex.value = key
-  }
-  watch(
-    () => output,
-    () => {
-      activeIndex.value = 'output'
-    },
-    {
-      deep: true,
-    },
-  )
-  // 监控调试事件
-  onMounted(() => {
-    CompileEventDispatcher.on('compile', onCompile)
-  })
-  onUnmounted(() => {
-    CompileEventDispatcher.off('compile', onCompile)
-  })
-
-  const onCompile = () => {
-    // 监控调试开始事件，设置当前终端为“调试终端”
-    activeIndex.value = 'terminal'
-  }
+  import StepOrContinueButton from './debug-button/debug-button-step-continue.vue'
+  import TerminateButton from './debug-button/debug-button-terminate.vue'
+  import CodeButtonBar from './coding-button/index.vue'
 </script>
 
 <style scoped lang="scss">
-  .console {
-    position: absolute;
+  .console-container {
     display: flex;
-    flex-flow: column;
-    width: 100%;
-    min-width: 450px;
+    flex-direction: column;
     height: 100%;
 
-    .select-menu {
-      height: 30px;
-      user-select: none;
-    }
-
-    .input-div {
-      flex: 1;
-      padding: 15px;
-      background-color: rgb(255 255 255);
-    }
-
-    .output-div {
-      flex: 1;
-      padding: 15px;
-      background-color: rgb(255 255 255);
-    }
-
-    .terminal-div {
-      position: relative;
-      flex: 1;
-      height: calc(100% - 30%);
-      background-color: rgb(255 255 255);
-    }
-
-    .option-bottom {
-      box-sizing: border-box;
+    .console-header {
       display: flex;
-      flex-direction: row-reverse;
+      flex-shrink: 0; // 固定30px
       align-items: center;
-      width: 100%;
-      height: 50px;
-      background-color: rgb(255 255 255);
-      border-top: 1px solid $base-border-color;
+      justify-content: space-between;
+      height: 30px;
+      padding: 0 20px;
+      background-color: $base-background-color;
 
-      .button-execute {
-        margin-right: 10px;
-        margin-left: 30px;
+      .debug-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 140px;
+        height: 25px;
       }
+    }
 
-      .button-submit {
-        margin-right: 30px;
-        margin-left: 10px;
+    .console-terminal {
+      flex: 1; // 占据剩余空间
+      min-height: 0; // 允许收缩
+    }
+
+    .console-bottom {
+      flex-shrink: 0; // 固定40px
+      height: 36px;
+      padding: 2px 0;
+      background-color: $base-background-color;
+
+      .code-button-bar {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 0 10px;
       }
     }
   }

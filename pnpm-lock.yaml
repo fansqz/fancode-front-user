@@ -42,8 +42,8 @@ importers:
         specifier: ^5.4.3
         version: 5.6.0
       element-plus:
-        specifier: ^2.3.8
-        version: 2.10.3(vue@3.5.17(typescript@5.8.3))
+        specifier: ^2.10.4
+        version: 2.10.4(vue@3.5.17(typescript@5.8.3))
       highlight.js:
         specifier: ^11.10.0
         version: 11.11.1
@@ -109,7 +109,7 @@ importers:
         version: 3.2.0(vue@3.5.17(typescript@5.8.3))
       structv2:
         specifier: github:leaf-dawn/StructV2
-        version: git+https://git@github.com:leaf-dawn/StructV2.git#e942911845fea78c059400da36b548bb4dd74f13
+        version: git+https://git@github.com:leaf-dawn/StructV2.git#96e764e13c6263f351eccab2a43695e61d60f7ad
       stylelint:
         specifier: ^15.10.2
         version: 15.11.0(typescript@5.8.3)
@@ -775,42 +775,36 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@parcel/watcher-linux-arm-musl@2.5.1':
     resolution: {integrity: sha512-6E+m/Mm1t1yhB8X412stiKFG3XykmgdIOqhjWj+VL8oHkKABfu/gjFj8DvLrYVHSBNC+/u5PeNrujiSQ1zwd1Q==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm]
     os: [linux]
-    libc: [musl]
 
   '@parcel/watcher-linux-arm64-glibc@2.5.1':
     resolution: {integrity: sha512-LrGp+f02yU3BN9A+DGuY3v3bmnFUggAITBGriZHUREfNEzZh/GO06FF5u2kx8x+GBEUYfyTGamol4j3m9ANe8w==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@parcel/watcher-linux-arm64-musl@2.5.1':
     resolution: {integrity: sha512-cFOjABi92pMYRXS7AcQv9/M1YuKRw8SZniCDw0ssQb/noPkRzA+HBDkwmyOJYp5wXcsTrhxO0zq1U11cK9jsFg==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@parcel/watcher-linux-x64-glibc@2.5.1':
     resolution: {integrity: sha512-GcESn8NZySmfwlTsIur+49yDqSny2IhPeZfXunQi48DMugKeZ7uy1FX83pO0X22sHntJ4Ub+9k34XQCX+oHt2A==}
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@parcel/watcher-linux-x64-musl@2.5.1':
     resolution: {integrity: sha512-n0E2EQbatQ3bXhcH2D1XIAANAcTZkQICBPVaxMeaCVBtOpBZpWJuf7LwyWPSBDITb7In8mqQgJ7gH8CILCURXg==}
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@parcel/watcher-win32-arm64@2.5.1':
     resolution: {integrity: sha512-RFzklRvmc3PkjKjry3hLF9wD7ppR4AKcWNzH7kXR7GUe0Igb3Nz8fyPwtZCSquGrhU5HhUNDr/mKBqj7tqA2Vw==}
@@ -1936,8 +1930,8 @@ packages:
   electron-to-chromium@1.5.179:
     resolution: {integrity: sha512-UWKi/EbBopgfFsc5k61wFpV7WrnnSlSzW/e2XcBmS6qKYTivZlLtoll5/rdqRTxGglGHkmkW0j0pFNJG10EUIQ==}
 
-  element-plus@2.10.3:
-    resolution: {integrity: sha512-OLpf0iekuvWJrz1+H9ybvem6TYTKSNk6L1QDA3tYq2YWbogKXJnWpHG1UAGKR1B7gx+vUH7M15VIH3EijE9Kgw==}
+  element-plus@2.10.4:
+    resolution: {integrity: sha512-UD4elWHrCnp1xlPhbXmVcaKFLCRaRAY6WWRwemGfGW3ceIjXm9fSYc9RNH3AiOEA6Ds1p9ZvhCs76CR9J8Vd+A==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -4005,9 +3999,9 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#e942911845fea78c059400da36b548bb4dd74f13:
-    resolution: {commit: e942911845fea78c059400da36b548bb4dd74f13, repo: git@github.com:leaf-dawn/StructV2.git, type: git}
-    version: 0.0.12
+  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#96e764e13c6263f351eccab2a43695e61d60f7ad:
+    resolution: {commit: 96e764e13c6263f351eccab2a43695e61d60f7ad, repo: git@github.com:leaf-dawn/StructV2.git, type: git}
+    version: 0.0.15
 
   style-search@0.1.0:
     resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==}
@@ -6605,7 +6599,7 @@ snapshots:
 
   electron-to-chromium@1.5.179: {}
 
-  element-plus@2.10.3(vue@3.5.17(typescript@5.8.3)):
+  element-plus@2.10.4(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@ctrl/tinycolor': 3.6.1
       '@element-plus/icons-vue': 2.3.1(vue@3.5.17(typescript@5.8.3))
@@ -8930,7 +8924,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#e942911845fea78c059400da36b548bb4dd74f13:
+  structv2@git+https://git@github.com:leaf-dawn/StructV2.git#96e764e13c6263f351eccab2a43695e61d60f7ad:
     dependencies:
       '@antv/g6': 4.8.25
       merge: 2.1.1

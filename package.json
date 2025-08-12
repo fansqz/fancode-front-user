@@ -33,7 +33,7 @@
     "axios": "^1.4.0",
     "babel-plugin-prismjs": "^2.1.0",
     "echarts": "^5.4.3",
-    "element-plus": "^2.3.8",
+    "element-plus": "^2.10.4",
     "highlight.js": "^11.10.0",
     "json-editor-vue3": "^1.1.1",
     "jsoneditor": "^10.1.0",

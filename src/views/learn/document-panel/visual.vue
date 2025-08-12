@@ -1,25 +1,21 @@
 <template>
-  <div ref="container" class="container">
-    <div class="visual-container">
+  <div class="container">
+    <div class="visual-container" ref="visualContainer">
       <Visaul ref="visual" class="visaul" :action="action" :sources="sources" />
     </div>
-    <VisaulSetting />
+    <VisualSettings />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { Splitpanes, Pane } from 'splitpanes'
-  import 'splitpanes/dist/splitpanes.css'
   import useDebugStore from '@/store/modules/debug'
   import useVisualStore from '@/store/modules/visual'
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
   import { storeToRefs } from 'pinia'
   import Visaul from '@/components/code-visual/visual/index.vue'
-  import VisaulSetting from '@/components/code-visual/visual-setting/index.vue'
+  import VisualSettings from '@/components/code-visual/visual-setting/index.vue'
   import { reqVisualData } from '@/components/code-visual/utils/index.ts'
   import { Sources } from 'structv2'
-  import { watch } from 'vue'
-  import { Edit, Star } from '@element-plus/icons-vue'
 
   const debugStore = useDebugStore()
   const visualStore = useVisualStore()
@@ -33,27 +29,38 @@
     if (status.value != 'stopped') {
       return
     }
-    if (action.value) {
-      let visualData = await reqVisualData(
-        id.value,
-        descriptionType.value,
-        visualStore.getDescription(descriptionType.value),
-      )
-      sources.value = {
-        visaulData: visualData,
-      }
+    let visualData = await reqVisualData(
+      id.value,
+      descriptionType.value,
+      visualStore.getDescription(descriptionType.value),
+    )
+    // 设置可视化数据
+    sources.value = {
+      visaulData: visualData,
     }
   }
 
+  // 重新设置visual的大小
+  const resizeVisualView = () => {
+    visual.value?.resizeVisualView(
+      visualContainer.value?.offsetWidth,
+      visualContainer.value?.offsetHeight,
+    )
+  }
+
+  defineExpose({
+    resizeVisualView,
+  })
+
   onMounted(() => {
-    action.value = true
+    // 注册一些事件
     watch(
       () => status.value,
-      () => {
-        if (status.value == 'stopped') {
+      (val) => {
+        if (val == 'stopped') {
           getVisualData()
         }
-        if (status.value == 'terminated') {
+        if (val == 'terminated') {
           sources.value = null
         }
       },
@@ -66,7 +73,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    margin: 0%;
+    margin: 0;
 
     .visual-container {
       position: absolute;

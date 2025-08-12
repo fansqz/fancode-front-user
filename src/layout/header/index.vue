@@ -1,18 +1,20 @@
 <template>
-  <div class="header">
+  <div class="header" :class="{ 'header--dark': isDarkHeader }">
     <div class="header_left">
       <Logo class="logo"></Logo>
       <div class="empty" />
-      <div
-        :class="{ nav_item: true, active_item: isActiveNavItem('coding') }"
-        @click="changeRoute('coding')"
-      >
-        <el-text size="large">编程</el-text>
+      <div :class="{ nav_item: true }" @click="changeRoute('coding')">
+        <el-text size="large" :class="{ 'active-text': isActiveNavItem('coding') }">编程</el-text>
       </div>
-      <div :class="{ learn: true, nav_item: true, active_item: isActiveNavItem('learn') }">
-        <el-dropdown @command="handleSelectBank">
-          <span>
-            <el-text size="large">学习</el-text>
+      <div :class="{ learn: true, nav_item: true }">
+        <el-text
+          size="large"
+          :class="{ 'active-text': isActiveNavItem('learn') }"
+          @click="toggleDropdown"
+          >学习</el-text
+        >
+        <el-dropdown ref="dropdownRef" @command="handleSelectBank">
+          <span class="dropdown-trigger">
             <el-icon class="el-icon--right">
               <arrow-down />
             </el-icon>
@@ -45,13 +47,20 @@
   import Setting from './setting.vue'
   import { useRouter, useRoute } from 'vue-router'
   import useUserStore from '@/store/modules/user'
-  import { onMounted } from 'vue'
+  import { onMounted, computed } from 'vue'
   import { ref } from 'vue'
   import { reqAllVisualDocumentBank } from '@/api/visual-document-bank/index.ts'
   let userStore = useUserStore()
   let $router = useRouter()
   let $route = useRoute()
   const visualDocumentBanks = ref([])
+  const dropdownRef = ref()
+
+  // 判断是否为深色header（coding和learn页面）
+  const isDarkHeader = computed(() => {
+    const routeName = $route.name as string
+    return routeName === 'coding' || routeName === 'learn'
+  })
 
   const changeRoute = (routeName: string, params = {}) => {
     if ($route.name === routeName) {
@@ -84,6 +93,10 @@
     })
   }
 
+  const toggleDropdown = () => {
+    dropdownRef.value?.handleOpen()
+  }
+
   onMounted(async () => {
     let result = await reqAllVisualDocumentBank()
     if (result.code == 200) {
@@ -99,8 +112,13 @@
     box-sizing: border-box;
     width: 100%;
     height: $base-header-height;
-    background-color: $base-header-background;
-    border-bottom: 1px solid var(--el-border-color);
+    background-color: $base-background-color;
+    border-bottom: 1px solid $base-border-color;
+
+    &--dark {
+      background-color: $deep-background-color;
+      border-bottom: none;
+    }
 
     .header_left {
       position: absolute;
@@ -132,9 +150,33 @@
         cursor: pointer;
       }
 
-      .active_item {
-        box-sizing: border-box;
-        border-bottom: 3px solid #333;
+      .active-text {
+        position: relative;
+
+        &::after {
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          width: 25px;
+          height: 3px !important;
+          content: '';
+          background-color: $base-blue-color !important;
+          border: none !important;
+          box-shadow: none !important;
+          transform: translateX(-50%);
+        }
+      }
+
+      .learn {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+
+      .dropdown-trigger {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
       }
     }
 

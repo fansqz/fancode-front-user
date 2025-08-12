@@ -41,7 +41,7 @@ const useCodingStore = defineStore('coding', {
   state: (): CodingState => ({
     code: '',
     problemId: 0,
-    theme: 'monokai-light',
+    theme: 'BlulocoLight',
     language: languageConstants.GO,
     languages: supportedLanguages,
     input: '',
