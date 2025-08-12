@@ -91,14 +91,16 @@
       position: absolute;
       right: 10px;
       display: flex;
-      align-items: center;
       gap: 8px;
+      align-items: center;
+
       .action-button {
-        margin: 0px;
+        margin: 0;
       }
+
       .theme-select {
-        margin-left: 10px;
         width: 120px;
+        margin-left: 10px;
       }
     }
   }

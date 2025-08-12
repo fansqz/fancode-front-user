@@ -1,4 +1,4 @@
-import { BaseResponse, PageInfo, PageQuery } from '../type'
+import { BaseResponse, PageQuery } from '../type'
 
 // 用户保存的代码实体类型
 export interface SavedCode {

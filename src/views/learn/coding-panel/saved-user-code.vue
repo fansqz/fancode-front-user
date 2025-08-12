@@ -349,27 +349,24 @@
 <style scoped lang="scss">
   .saved-code-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2000;
+    background-color: rgb(0 0 0 / 50%);
   }
 
   .saved-code-card {
+    display: flex;
+    flex-direction: column;
     width: 800px;
     max-width: 90vw;
     max-height: 90vh;
+    overflow: hidden;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
   }
 
   .card-header {
@@ -382,9 +379,9 @@
 
     .card-title {
       margin: 0;
-      color: #333;
-      font-weight: 600;
       font-size: 16px;
+      font-weight: 600;
+      color: #333;
     }
 
     .close-btn {
@@ -392,26 +389,26 @@
       border-radius: 4px;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgb(0 0 0 / 10%);
       }
     }
   }
 
   .card-body {
-    padding: 24px;
     flex: 1;
+    padding: 24px;
     overflow: hidden;
   }
 
   .modal-description {
+    padding: 12px 16px;
     margin-bottom: 20px;
-    color: #666;
     font-size: 14px;
     line-height: 1.6;
-    padding: 12px 16px;
+    color: #666;
     background-color: #e3f2fd;
-    border-radius: 4px;
     border-left: 4px solid #2196f3;
+    border-radius: 4px;
   }
 
   .save-new-code {
@@ -419,16 +416,16 @@
     text-align: right;
 
     .el-button {
-      font-size: 13px;
       padding: 6px 12px;
+      font-size: 13px;
     }
   }
 
   .code-list {
     .no-remark {
-      color: #999;
-      font-style: italic;
       font-size: 13px;
+      font-style: italic;
+      color: #999;
     }
   }
 
@@ -439,10 +436,10 @@
   }
 
   .dialog-footer {
-    text-align: right;
     padding-top: 16px;
-    border-top: 1px solid #e9ecef;
     margin-top: 20px;
+    text-align: right;
+    border-top: 1px solid #e9ecef;
 
     .el-button {
       margin-left: 12px;
@@ -454,16 +451,16 @@
   }
 
   :deep(.el-table) {
-    border-radius: 6px;
     overflow: hidden;
+    border-radius: 6px;
 
     .el-table__header {
       background-color: #f8f9fa;
 
       th {
-        background-color: #f8f9fa;
-        color: #333;
         font-weight: 600;
+        color: #333;
+        background-color: #f8f9fa;
         border-bottom: 1px solid #e9ecef;
       }
     }
@@ -477,8 +474,8 @@
       }
 
       td {
-        border-bottom: 1px solid #f0f0f0;
         padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
       }
     }
 
@@ -487,32 +484,32 @@
     }
 
     .apply-btn {
-      font-size: 12px;
-      padding: 4px 12px;
       height: 28px;
+      padding: 4px 12px;
       margin-right: 8px;
+      font-size: 12px;
     }
 
     .delete-btn {
-      font-size: 12px;
-      padding: 4px 12px;
       height: 28px;
+      padding: 4px 12px;
+      font-size: 12px;
     }
   }
 
   :deep(.el-dialog) {
-    border-radius: 8px;
     overflow: hidden;
+    border-radius: 8px;
 
     .el-dialog__header {
+      padding: 20px 24px;
       background-color: #f8f9fa;
       border-bottom: 1px solid #e9ecef;
-      padding: 20px 24px;
 
       .el-dialog__title {
-        color: #333;
-        font-weight: 600;
         font-size: 16px;
+        font-weight: 600;
+        color: #333;
       }
     }
 
@@ -521,35 +518,35 @@
     }
 
     .el-dialog__footer {
+      padding: 16px 24px;
       background-color: #f8f9fa;
       border-top: 1px solid #e9ecef;
-      padding: 16px 24px;
     }
   }
 
   :deep(.delete-confirm-dialog) {
     .el-message-box__header {
+      padding: 20px 24px;
       background-color: #f8f9fa;
       border-bottom: 1px solid #e9ecef;
-      padding: 20px 24px;
 
       .el-message-box__title {
-        color: #333;
-        font-weight: 600;
         font-size: 16px;
+        font-weight: 600;
+        color: #333;
       }
     }
 
     .el-message-box__content {
       padding: 24px;
-      color: #666;
       line-height: 1.6;
+      color: #666;
     }
 
     .el-message-box__btns {
       padding: 16px 24px;
-      border-top: 1px solid #e9ecef;
       background-color: #f8f9fa;
+      border-top: 1px solid #e9ecef;
 
       .el-button {
         margin-left: 12px;

@@ -13,19 +13,13 @@ import {
 
 enum API {
   // 创建用户保存的代码
-  CreateSavedCode = '/user/savedCode',
-  // 更新用户保存的代码
-  UpdateSavedCode = '/user/savedCode',
+  SavedCodeBaseURL = '/user/savedCode',
   // 获取用户保存的代码列表
-  GetSavedCodeList = '/user/savedCode/list',
-  // 根据ID获取用户保存的代码详情
-  GetSavedCodeDetail = '/user/savedCode',
-  // 删除用户保存的代码
-  DeleteSavedCode = '/user/savedCode',
+  GetSavedCodeListURL = '/user/savedCode/list',
   // 更新单个代码的排序顺序
-  UpdateSort = '/user/savedCode/sort',
+  UpdateSortURL = '/user/savedCode/sort',
   // 批量更新排序顺序
-  BatchUpdateSort = '/user/savedCode/batch-sort',
+  BatchUpdateSortURL = '/user/savedCode/batch-sort',
 }
 
 /**
@@ -36,7 +30,7 @@ enum API {
 export const reqCreateSavedCode = (
   data: CreateSavedCodeRequest,
 ): Promise<CreateSavedCodeResponse> => {
-  return request.post(API.CreateSavedCode, data)
+  return request.post(API.SavedCodeBaseURL, data)
 }
 
 /**
@@ -47,7 +41,7 @@ export const reqCreateSavedCode = (
 export const reqUpdateSavedCode = (
   data: UpdateSavedCodeRequest,
 ): Promise<UpdateSavedCodeResponse> => {
-  return request.put(API.UpdateSavedCode, data)
+  return request.put(API.SavedCodeBaseURL, data)
 }
 
 /**
@@ -58,7 +52,7 @@ export const reqUpdateSavedCode = (
 export const reqGetSavedCodeList = (
   params: GetSavedCodeListQuery,
 ): Promise<GetSavedCodeListResponse> => {
-  return request.get(API.GetSavedCodeList, {
+  return request.get(API.GetSavedCodeListURL, {
     params,
   })
 }
@@ -69,7 +63,7 @@ export const reqGetSavedCodeList = (
  * @returns Promise<GetSavedCodeDetailResponse>
  */
 export const reqGetSavedCodeDetail = (id: number): Promise<GetSavedCodeDetailResponse> => {
-  return request.get(`${API.GetSavedCodeDetail}/${id}`)
+  return request.get(`${API.SavedCodeBaseURL}/${id}`)
 }
 
 /**
@@ -78,5 +72,5 @@ export const reqGetSavedCodeDetail = (id: number): Promise<GetSavedCodeDetailRes
  * @returns Promise<DeleteSavedCodeResponse>
  */
 export const reqDeleteSavedCode = (id: number): Promise<DeleteSavedCodeResponse> => {
-  return request.delete(`${API.DeleteSavedCode}/${id}`)
+  return request.delete(`${API.SavedCodeBaseURL}/${id}`)
 }
