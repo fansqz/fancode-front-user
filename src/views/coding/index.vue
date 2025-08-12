@@ -11,7 +11,10 @@
       <el-splitter-panel class="coding-workspace__editor-panel">
         <el-splitter layout="vertical">
           <el-splitter-panel size="70" class="coding-workspace__code-editor">
-            <LanguageThemeSelector class="coding-workspace__language-selector" />
+            <LanguageThemeSelector
+              class="coding-workspace__language-selector"
+              @showSavedCode="showSavedCodeModal"
+            />
             <CodeEditor class="coding-workspace__editor" @onChangeValue="handleCodeChange" />
           </el-splitter-panel>
           <el-splitter-panel size="30" class="coding-workspace__console">
@@ -26,6 +29,9 @@
       </el-splitter-panel>
     </el-splitter>
   </div>
+
+  <!-- 保存代码模态框 -->
+  <SavedCodeModal v-model="savedCodeModalVisible" :language="language" />
 </template>
 
 <script setup lang="ts">
@@ -33,8 +39,9 @@
   import 'splitpanes/dist/splitpanes.css'
   import VisualPanel from './visual.vue'
   import CodeEditor from '@/components/code-editor/editor/index.vue'
-  import LanguageThemeSelector from '@/components/code-editor/language-theme-switcher/index.vue'
+  import LanguageThemeSelector from './language-theme-switcher.vue'
   import Console from '@/components/code-editor/console/index.vue'
+  import SavedCodeModal from './saved-user-code.vue'
   import { storeToRefs } from 'pinia'
   import useCodingStore from '@/store/modules/coding.ts'
   import useDebugStore from '@/store/modules/debug'
@@ -50,6 +57,7 @@
 
   // Component refs
   const visualPanel = ref<InstanceType<typeof VisualPanel> | null>()
+  const savedCodeModalVisible = ref(false)
 
   // Types
   type CodeConfig = {
@@ -143,6 +151,13 @@
    */
   const handleVisualPanelResize = () => {
     visualPanel.value?.resizeVisualCanvas()
+  }
+
+  /**
+   * 显示保存代码模态框
+   */
+  const showSavedCodeModal = () => {
+    savedCodeModalVisible.value = true
   }
 
   // Watchers

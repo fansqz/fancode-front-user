@@ -9,7 +9,15 @@
       </el-select>
     </div>
     <div class="right">
-      <el-button type="info" icon="RefreshRight" @click="reloadCode" text />
+      <el-button type="info" icon="RefreshRight" class="action-button" @click="reloadCode" text />
+      <!--查看保存的代码按钮-->
+      <el-button
+        type="primary"
+        icon="Document"
+        class="action-button"
+        @click="showSavedCodeModal"
+        text
+      />
       <!--主题选择-->
       <el-select class="theme-select" v-model="theme" placeholder="Select" size="small">
         <el-option v-for="item in themeList" :key="item" :label="item" :value="item" />
@@ -21,21 +29,38 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { storeToRefs } from 'pinia'
-  import { getAllTheme } from '../editor/themes'
+  import { getAllTheme } from '@/components/code-editor/editor/themes'
   import { reqProblemTemplateCode } from '@/api/problem'
   import useCodingStore from '@/store/modules/coding'
+
+  const emit = defineEmits<{
+    (e: 'showSavedCode'): void
+    (e: 'saveCurrentCode'): void
+  }>()
+
   let codingStore = useCodingStore()
 
   // 主题列表
   let themeList = ref(getAllTheme())
   let { theme, code, language, languages } = storeToRefs(codingStore)
   theme.value = themeList.value[0]
+
   // 重新加载代码
   const reloadCode = async () => {
     let result = await reqProblemTemplateCode(language.value)
     if (result.code == 200) {
       code.value = result.data
     }
+  }
+
+  // 显示保存代码模态框
+  const showSavedCodeModal = () => {
+    emit('showSavedCode')
+  }
+
+  // 保存当前代码
+  const saveCurrentCode = () => {
+    emit('saveCurrentCode')
   }
 </script>
 
@@ -65,8 +90,14 @@
     .right {
       position: absolute;
       right: 10px;
-
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      .action-button {
+        margin: 0px;
+      }
       .theme-select {
+        margin-left: 10px;
         width: 120px;
       }
     }

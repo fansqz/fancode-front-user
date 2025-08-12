@@ -33,7 +33,7 @@
   import { onMounted, onUnmounted, ref, watch } from 'vue'
   import DirectoryTree from './directory-tree.vue'
   import DocumentPanel from './document-panel/index.vue'
-  import CodingPanel from './coding-panel.vue'
+  import CodingPanel from './coding-panel/index.vue'
   import { reqVisualDocument } from '@/api/visual-document/index.ts'
   import { storeToRefs } from 'pinia'
   import useCodingStore from '@/store/modules/coding.ts'
