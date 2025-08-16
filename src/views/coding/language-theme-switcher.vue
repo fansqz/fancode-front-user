@@ -31,7 +31,9 @@
   import { storeToRefs } from 'pinia'
   import { getAllTheme } from '@/components/code-editor/editor/themes'
   import { reqProblemTemplateCode } from '@/api/problem'
+  import { ElMessage } from 'element-plus'
   import useCodingStore from '@/store/modules/coding'
+  import useUserStore from '@/store/modules/user'
 
   const emit = defineEmits<{
     (e: 'showSavedCode'): void
@@ -39,6 +41,7 @@
   }>()
 
   const codingStore = useCodingStore()
+  const userStore = useUserStore()
 
   // 主题列表
   const themeList = ref(getAllTheme())
@@ -55,7 +58,13 @@
 
   // 显示保存代码模态框
   const showSavedCodeModal = () => {
-    emit('showSavedCode')
+    // 检查用户是否登录
+    if (userStore.isLoggedIn()) {
+      emit('showSavedCode')
+    } else {
+      // 未登录时显示提示
+      ElMessage.warning('请先登录以使用代码管理功能')
+    }
   }
 </script>
 
@@ -92,9 +101,8 @@
 
       .icon-button {
         font-size: 18px;
-        cursor: pointer;
         color: $base-text-color;
-
+        cursor: pointer;
         transition: color 0.2s;
 
         &:hover {
