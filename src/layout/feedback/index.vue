@@ -166,7 +166,7 @@
       width: 30px;
       height: 30px;
       font-size: 30px;
-      color: $base-blue-color;
+      color: $primary-color;
     }
   }
 </style>

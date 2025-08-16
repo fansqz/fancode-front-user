@@ -10,15 +10,14 @@
     </div>
 
     <div class="right">
-      <el-button type="info" icon="RefreshRight" @click="reloadCode" text class="action-button" />
+      <!-- 重新加载代码 -->
+      <el-tooltip content="获取实例代码" placement="bottom">
+        <el-icon @click="reloadCode" class="icon-button"><RefreshRight /></el-icon>
+      </el-tooltip>
       <!-- 管理用户代码 -->
-      <el-button
-        type="primary"
-        icon="Document"
-        @click="showSavedCodeModal"
-        text
-        class="action-button"
-      />
+      <el-tooltip content="保存/读取 代码记录" placement="bottom">
+        <el-icon @click="showSavedCodeModal" class="icon-button"><Document /></el-icon>
+      </el-tooltip>
       <!-- 主题选择 -->
       <el-select class="theme-select" v-model="theme" placeholder="Select" size="small">
         <el-option v-for="item in themeList" :key="item" :label="item" :value="item" />
@@ -87,11 +86,20 @@
       position: absolute;
       right: 10px;
       display: flex;
-      gap: 8px;
+      gap: 12px;
       align-items: center;
+      padding: 5px 0;
 
-      .action-button {
-        margin: 0;
+      .icon-button {
+        font-size: 18px;
+        cursor: pointer;
+        color: $base-text-color;
+
+        transition: color 0.2s;
+
+        &:hover {
+          color: $primary-color;
+        }
       }
 
       .theme-select {
