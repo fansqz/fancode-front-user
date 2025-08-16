@@ -4,15 +4,22 @@
     @mouseover="mouseover"
     @mouseout="mouseout"
   >
-    <el-button
-      :class="{
-        'iconfont icon-indeterminate': true,
-        able: able,
-        unable: !able,
-      }"
-      @click="terminateDebug"
-      link
-    ></el-button>
+    <el-tooltip
+      :content="'终止调试'"
+      placement="top"
+      :show-after="800"
+      :disabled="!able"
+    >
+      <el-button
+        :class="{
+          'iconfont icon-indeterminate': true,
+          able: able,
+          unable: !able,
+        }"
+        @click="terminateDebug"
+        link
+      ></el-button>
+    </el-tooltip>
   </div>
 </template>
 
@@ -63,6 +70,8 @@
     width: 20px;
     height: 20px;
     background-color: rgb(255 255 255);
+    border-radius: $border-radius-small;
+
 
     .able {
       color: rgb(210 57 37);
