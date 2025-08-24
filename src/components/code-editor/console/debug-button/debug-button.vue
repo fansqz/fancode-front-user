@@ -1,9 +1,5 @@
 <template>
-    <el-tooltip
-    :content="'可视化调试'"
-    placement="top"
-    :show-after="800"
-  >
+  <el-tooltip :content="'可视化调试'" placement="top" :show-after="800">
     <el-button
       tag="i"
       text
@@ -16,7 +12,6 @@
       @click="startDebug"
     ></el-button>
   </el-tooltip>
-
 </template>
 
 <script setup lang="ts">

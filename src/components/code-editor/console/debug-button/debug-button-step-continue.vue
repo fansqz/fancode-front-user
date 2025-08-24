@@ -4,12 +4,7 @@
     @mouseover="mouseover"
     @mouseout="mouseout"
   >
-    <el-tooltip
-      :content="tooltipContent"
-      placement="top"
-      :show-after="800"
-      :disabled="!able"
-    >
+    <el-tooltip :content="tooltipContent" placement="top" :show-after="800" :disabled="!able">
       <el-button
         :class="{
           iconfont: true,

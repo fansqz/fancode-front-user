@@ -4,12 +4,7 @@
     @mouseover="mouseover"
     @mouseout="mouseout"
   >
-    <el-tooltip
-      :content="'终止调试'"
-      placement="top"
-      :show-after="800"
-      :disabled="!able"
-    >
+    <el-tooltip :content="'终止调试'" placement="top" :show-after="800" :disabled="!able">
       <el-button
         :class="{
           'iconfont icon-indeterminate': true,
@@ -71,7 +66,6 @@
     height: 20px;
     background-color: rgb(255 255 255);
     border-radius: $border-radius-small;
-
 
     .able {
       color: rgb(210 57 37);
