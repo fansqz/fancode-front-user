@@ -152,36 +152,36 @@
   .feedback {
     position: absolute;
     z-index: 99999;
-    width: 24px;
-    height: 40px;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.9);
+    width: 24px;
+    height: 40px;
+    cursor: pointer;
+    background: rgb(255 255 255 / 90%);
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
 
     &:hover {
-      background: rgba(255, 255, 255, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      background: rgb(255 255 255 / 100%);
+      box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
       transform: scale(1.05);
     }
 
     .feedback-icon {
       width: 20px;
       height: 20px;
+      margin-bottom: 2px;
       font-size: 20px;
       color: $primary-color;
-      margin-bottom: 2px;
     }
 
     .feedback-text {
-      font-size: 10px;
-      color: $primary-color;
-      line-height: 1;
       margin: 0;
+      font-size: 10px;
+      line-height: 1;
+      color: $primary-color;
     }
   }
 </style>
