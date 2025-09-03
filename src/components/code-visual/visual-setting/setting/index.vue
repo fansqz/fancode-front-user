@@ -21,6 +21,7 @@
       </el-table>
       <div class="setting">
         <ArraySetting v-if="descriptionType == descriptions.Array" />
+        <Array2DSetting v-if="descriptionType == descriptions.Array2D"/>
         <BinaryTreeSetting v-if="descriptionType == descriptions.BinaryTree" />
         <LinkList v-if="descriptionType == descriptions.LinkList" />
         <Graph v-if="descriptionType == descriptions.Graph" />
@@ -38,10 +39,12 @@
   import { ElTable } from 'element-plus'
   import { descriptions } from '@/constants/description.ts'
   import ArraySetting from './array.vue'
+  import Array2DSetting from './array2d.vue'
   import BinaryTreeSetting from './binary-tree.vue'
   import LinkList from './link-list.vue'
   import Graph from './graph.vue'
   import { CompileEventDispatcher } from '@/api/debug/debug-event-dispatcher'
+  import { CompileEvent } from '@/api/debug/event'
 
   const visualStore = useVisualStore()
   const debugStore = useDebugStore()
@@ -53,6 +56,10 @@
     {
       name: '一维数组',
       type: descriptions.Array,
+    },
+    {
+      name: '二维数组',
+      type: descriptions.Array2D
     },
     {
       name: '二叉树',

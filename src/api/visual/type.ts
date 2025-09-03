@@ -25,27 +25,51 @@ export type StructVisualData = {
   points: VisualVariable[]
 }
 
-// 变量导向可视化请求
-export type VariableVisualRequest = {
+// 数组可视化请求
+export type ArrayVisualRequest = {
   debugID: string
-  query: VariableVisualQuery
+  query: ArrayVisualQuery
 }
 
-export type VariableVisualQuery = {
-  structVars: string[]
-  pointVars: string[]
+export type ArrayVisualQuery = {
+  arrayName: string
+  pointNames: string[]
 }
 
-export type VariableVisualResponse = BaseResponse & {
-  data: VariableVisualData
+export type ArrayVisualResponse = BaseResponse & {
+  data: ArrayVisualData
 }
 
 // 数组指针的可视化数据，比如数组
-export type VariableVisualData = {
+export type ArrayVisualData = {
   // 结构体列表
-  structs: VisualNode[]
+  array: VisualVariable[]
   // 指针列表
   points: VisualVariable[]
+}
+
+export type Array2DVisualRequest = {
+  debugID: string
+  query: Array2DVisualQuery
+}
+
+export type Array2DVisualQuery = {
+  arrayName: string
+  rowPointNames: string[]
+  colPointNames: string[]
+}
+
+export type Array2DVisualResponse = BaseResponse & {
+  data: Array2DVisualData
+}
+
+// 数组指针的可视化数据，比如数组
+export type Array2DVisualData = {
+  // 结构体列表
+  array: VisualVariable[][]
+  // 指针列表
+  rowPoints: VisualVariable[]
+  colPoints: VisualVariable[]
 }
 
 // 可视化节点
@@ -80,10 +104,18 @@ export type VisualDescriptionResponse = BaseResponse & {
 // 可视化描述类型
 export type VisualDescription =
   | ArrayDescription
+  | Array2DDescription
   | BinaryTreeDescription
   | LinkListDescription
   | GraphDescription
   | any
+
+  // 二维数组可视化描述
+export type Array2DDescription = {
+  arrayName: string
+  rowPointNames: string[]
+  colPointNames: string[]
+}
 
 // 数组可视化描述
 export type ArrayDescription = {

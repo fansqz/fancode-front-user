@@ -9,7 +9,7 @@ export type ArrayNode = {
   id: string
   headExternal?: string
   // 外部指针
-  external?: string | string[]
+  external?: string[]
   // 标题，可以理解为数组的索引
   index?: string
   // 数据

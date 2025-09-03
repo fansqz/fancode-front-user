@@ -1,20 +1,19 @@
-import { reqVariableVisual } from '@/api/visual'
-import { VariableVisualData, VisualVariable, ArrayDescription } from '@/api/visual/type'
+import { reqArrayVisual } from '@/api/visual'
+import { ArrayVisualData, VisualVariable, ArrayDescription, ArrayVisualRequest } from '@/api/visual/type'
 import { ArrayData, ArrayNode } from '@/components/code-visual/visual/type/array'
 
 const reqArrayVisualData = async (
   debugID: string,
   description: ArrayDescription,
 ): Promise<ArrayData> => {
-  // 请求可视化数据
-  const req = {
+  const req: ArrayVisualRequest = {
     debugID: debugID,
     query: {
-      structVars: [description.arrayName],
-      pointVars: description.pointNames,
+      arrayName: description.arrayName,
+      pointNames: description.pointNames,
     },
   }
-  const result = await reqVariableVisual(req)
+  const result = await reqArrayVisual(req)
   if (result.code != 200) {
     return {
       data: [],
@@ -27,20 +26,20 @@ const reqArrayVisualData = async (
 
 const convertArrayVisualData = (
   description: ArrayDescription,
-  data: VariableVisualData,
+  data: ArrayVisualData,
 ): ArrayData => {
   // 将第一个struct[0]作为数组的数据
-  const struct = data.structs[0]
+  const struct = data.array
   const nodes: ArrayNode[] = []
-  for (let i = 0; i < struct.values.length; i++) {
+  for (let i = 0; i < struct.length; i++) {
     const node: ArrayNode = {
-      id: struct.values[i].name,
-      index: struct.values[i].name,
-      data: struct.values[i].value,
+      id: struct[i].name,
+      index: struct[i].name,
+      data: struct[i].value,
     }
     if (i === 0) {
       // 头指针
-      node.headExternal = data.structs[0].name
+      node.headExternal = description.arrayName
     }
     nodes.push(node)
   }

@@ -33,7 +33,7 @@ SV.registerLayout('arrayBar', {
       marker: {
         headExternal: {
           type: 'pointer',
-          anchor: 4,
+          anchor: 7,
           rotation: -Math.PI / 2, // 水平指向（0弧度 = 0度）
           style: {
             fill: '#e74c3c',

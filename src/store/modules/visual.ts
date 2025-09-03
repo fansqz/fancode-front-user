@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 import {
+  Array2DDescription,
   ArrayDescription,
   BinaryTreeDescription,
   GraphDescription,
@@ -16,12 +17,24 @@ type VisualState = {
   isAIEnabled: boolean
   // 可视化描述类型
   descriptionType: descriptions
-  // 可视化
-  arrayDescription: ArrayDescription
-  binaryTreeDescription: BinaryTreeDescription
-  linkListDescription: LinkListDescription
-  graphDescription: GraphDescription
+  // 可视化描述映射
+  descriptions: {
+    [descriptions.Array]: ArrayDescription
+    [descriptions.Array2D]: Array2DDescription
+    [descriptions.BinaryTree]: BinaryTreeDescription
+    [descriptions.LinkList]: LinkListDescription
+    [descriptions.Graph]: GraphDescription
+  }
 }
+
+// 描述类型到属性的映射
+const DESCRIPTION_PROPERTY_MAP = {
+  [descriptions.Array]: 'arrayDescription',
+  [descriptions.Array2D]: 'array2DDescription', 
+  [descriptions.BinaryTree]: 'binaryTreeDescription',
+  [descriptions.LinkList]: 'linkListDescription',
+  [descriptions.Graph]: 'graphDescription',
+} as const
 
 const useVisualStore = defineStore('visual', {
   state: (): VisualState => ({
@@ -30,60 +43,46 @@ const useVisualStore = defineStore('visual', {
     // 是否ai自动识别可视化
     isAIEnabled: true,
     descriptionType: descriptions.Array,
-    arrayDescription: {
-      arrayName: 'Arr',
-      pointNames: ['Point1', 'Point2'],
-      displayType: 'array-bar',
-    },
-    binaryTreeDescription: {
-      treeNode: 'TreeNode',
-      data: 'Val',
-      left: 'Left',
-      right: 'Right',
-    },
-    linkListDescription: {
-      // 链表节点
-      linkNode: 'LinkNode',
-      // 数据域
-      data: 'Val',
-      next: 'Next',
-      prev: 'Prev',
-    },
-    graphDescription: {
-      graphNode: 'GraphNode',
-      // 数据域
-      data: 'Val',
-      nexts: ['Point1', 'Point2'],
+    descriptions: {
+      [descriptions.Array]: {
+        arrayName: 'Arr',
+        pointNames: ['Point1', 'Point2'],
+        displayType: 'array-bar',
+      },
+      [descriptions.Array2D]: {
+        arrayName: 'Arr',
+        rowPointNames: ['i'],
+        colPointNames: ['j'],
+      },
+
+      [descriptions.BinaryTree]: {
+        treeNode: 'TreeNode',
+        data: 'Val',
+        left: 'Left',
+        right: 'Right',
+      },
+      [descriptions.LinkList]: {
+        // 链表节点
+        linkNode: 'LinkNode',
+        // 数据域
+        data: 'Val',
+        next: 'Next',
+        prev: 'Prev',
+      },
+      [descriptions.Graph]: {
+        graphNode: 'GraphNode',
+        // 数据域
+        data: 'Val',
+        nexts: ['Point1', 'Point2'],
+      },
     },
   }),
   actions: {
-    setDescription(desciptionType: descriptions, description: VisualDescription) {
-      switch (desciptionType) {
-        case descriptions.Array:
-          this.arrayDescription = description
-          break
-        case descriptions.BinaryTree:
-          this.binaryTreeDescription = description
-          break
-        case descriptions.LinkList:
-          this.linkListDescription = description
-          break
-        case descriptions.Graph:
-          this.graphDescription = description
-          break
-      }
+    setDescription(descriptionType: descriptions, description: VisualDescription) {
+      this.descriptions[descriptionType] = description as any
     },
-    getDescription(desciptionType: descriptions) {
-      switch (desciptionType) {
-        case descriptions.Array:
-          return this.arrayDescription
-        case descriptions.BinaryTree:
-          return this.binaryTreeDescription
-        case descriptions.LinkList:
-          return this.linkListDescription
-        case descriptions.Graph:
-          return this.graphDescription
-      }
+    getDescription(descriptionType: descriptions) {
+      return this.descriptions[descriptionType]
     },
   },
 })

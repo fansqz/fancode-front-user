@@ -2,11 +2,13 @@ import request from '@/utils/request'
 
 import {
   StructVisualRequest,
-  VariableVisualRequest,
+  ArrayVisualRequest,
   StructVisualResponse,
-  VariableVisualResponse,
+  ArrayVisualResponse,
   VisaulDocumentResponse,
   VisualDescriptionResponse,
+  Array2DVisualRequest,
+  Array2DVisualResponse,
 } from './type'
 
 enum API {
@@ -22,8 +24,12 @@ export const reqStructVisual = (data: StructVisualRequest): Promise<StructVisual
   return request.post(`${API.VisaulURL}/struct`, data)
 }
 
-export const reqVariableVisual = (data: VariableVisualRequest): Promise<VariableVisualResponse> => {
-  return request.post(`${API.VisaulURL}/variable`, data)
+export const reqArrayVisual = (data: ArrayVisualRequest): Promise<ArrayVisualResponse> => {
+  return request.post(`${API.VisaulURL}/array`, data)
+}
+
+export const reqArray2DVisual = (data: Array2DVisualRequest): Promise<Array2DVisualResponse> => {
+  return request.post(`${API.VisaulURL}/array2d`, data)
 }
 
 export const reqVisaulDocument = (): Promise<VisaulDocumentResponse> => {
