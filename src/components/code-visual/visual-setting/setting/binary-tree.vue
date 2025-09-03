@@ -31,10 +31,20 @@
 
 <script setup lang="ts">
   import useVisualStore from '@/store/modules/visual.ts'
+  import { descriptions } from '@/constants/description.ts'
+  import { computed } from 'vue'
   import { storeToRefs } from 'pinia'
 
   const visualStore = useVisualStore()
-  const { binaryTreeDescription } = storeToRefs(visualStore)
+  const { descriptions: storeDescriptions } = storeToRefs(visualStore)
+
+  // 使用计算属性获取二叉树描述
+  const binaryTreeDescription = computed({
+    get: () => storeDescriptions.value[descriptions.BinaryTree],
+    set: (value) => {
+      visualStore.setDescription(descriptions.BinaryTree, value)
+    },
+  })
 </script>
 
 <style lang="scss" scoped>

@@ -160,7 +160,7 @@
           width: 25px;
           height: 3px !important;
           content: '';
-          background-color: $base-blue-color !important;
+          background-color: $primary-color !important;
           border: none !important;
           box-shadow: none !important;
           transform: translateX(-50%);

@@ -31,10 +31,20 @@
 
 <script setup lang="ts">
   import useVisualStore from '@/store/modules/visual.ts'
+  import { descriptions } from '@/constants/description.ts'
+  import { computed } from 'vue'
   import { storeToRefs } from 'pinia'
 
   const visualStore = useVisualStore()
-  const { linkListDescription } = storeToRefs(visualStore)
+  const { descriptions: storeDescriptions } = storeToRefs(visualStore)
+
+  // 使用计算属性获取链表描述
+  const linkListDescription = computed({
+    get: () => storeDescriptions.value[descriptions.LinkList],
+    set: (value) => {
+      visualStore.setDescription(descriptions.LinkList, value)
+    },
+  })
 </script>
 
 <style lang="scss" scoped>

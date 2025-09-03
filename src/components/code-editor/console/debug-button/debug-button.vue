@@ -1,15 +1,17 @@
 <template>
-  <el-button
-    tag="i"
-    text
-    :class="{
-      'iconfont icon-caozuo-tiaoshi ing': isDebugging,
-      'iconfont icon-caozuo-tiaoshi not-ing': debugStore.isDebugging() == false,
-      'debug-button': true,
-    }"
-    :loading="loading"
-    @click="startDebug"
-  ></el-button>
+  <el-tooltip :content="'可视化调试'" placement="top" :show-after="800">
+    <el-button
+      tag="i"
+      text
+      :class="{
+        'iconfont icon-caozuo-tiaoshi ing': isDebugging,
+        'iconfont icon-caozuo-tiaoshi not-ing': debugStore.isDebugging() == false,
+        'debug-button': true,
+      }"
+      :loading="loading"
+      @click="startDebug"
+    ></el-button>
+  </el-tooltip>
 </template>
 
 <script setup lang="ts">

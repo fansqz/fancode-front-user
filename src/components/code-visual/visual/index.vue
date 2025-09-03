@@ -30,6 +30,7 @@
   import './layouter/array.ts'
   import './layouter/array-bar.ts'
   import './layouter/binary-tree.ts'
+  import './layouter/array2d.ts'
   import { SV, Sources, Engine } from 'structv2'
   import { onMounted, watch, toRefs, onUnmounted } from 'vue'
 

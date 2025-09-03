@@ -54,6 +54,10 @@ const useUserStore = defineStore('User', {
       this.loginName = ''
       this.avatar = ''
     },
+    // 判断用户是否登录
+    isLoggedIn() {
+      return !!this.token
+    },
   },
   persist: true,
 })

@@ -4,27 +4,29 @@
     @mouseover="mouseover"
     @mouseout="mouseout"
   >
-    <el-button
-      :class="{
-        iconfont: true,
-        'icon-continue1': type == 'continue',
-        'icon-step-in': type == 'step-in',
-        'icon-step-out': type == 'step-out',
-        'icon-step': type == 'step-over',
-        able: able && type != 'continue',
-        cable: able && type == 'continue',
-        unable: !able,
-      }"
-      @click="handleStep"
-      link
-    ></el-button>
+    <el-tooltip :content="tooltipContent" placement="top" :show-after="800" :disabled="!able">
+      <el-button
+        :class="{
+          iconfont: true,
+          'icon-continue1': type == 'continue',
+          'icon-step-in': type == 'step-in',
+          'icon-step-out': type == 'step-out',
+          'icon-step': type == 'step-over',
+          able: able && type != 'continue',
+          cable: able && type == 'continue',
+          unable: !able,
+        }"
+        @click="handleStep"
+        link
+      ></el-button>
+    </el-tooltip>
   </div>
 </template>
 
 <script setup lang="ts">
   import { reqContinue, reqStepIn, reqStepOut, reqStepOver } from '@/api/debug/index.ts'
   import useDebugStore from '@/store/modules/debug'
-  import { ref, toRefs, watch } from 'vue'
+  import { ref, toRefs, watch, computed } from 'vue'
   import { storeToRefs } from 'pinia'
 
   let props = defineProps<{
@@ -33,6 +35,23 @@
   let { type } = toRefs(props)
   const debugStore = useDebugStore()
   let { status } = storeToRefs(debugStore)
+
+  // 按钮提示文本
+  const tooltipContent = computed(() => {
+    switch (type.value) {
+      case 'continue':
+        return '继续执行'
+      case 'step-in':
+        return '单步进入'
+      case 'step-out':
+        return '单步退出'
+      case 'step-over':
+        return '单步跳过'
+      default:
+        return ''
+    }
+  })
+
   // 添加点击间隔的状态和时间常量
   const clickInterval = 100
   let lastClicked = 0
@@ -81,6 +100,7 @@
     width: 20px;
     height: 20px;
     background-color: rgb(255 255 255);
+    border-radius: $border-radius-small;
 
     .cable {
       color: rgb(1 171 18);

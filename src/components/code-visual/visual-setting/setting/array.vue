@@ -17,11 +17,20 @@
 
 <script setup lang="ts">
   import useVisualStore from '@/store/modules/visual.ts'
-  import { onMounted, ref, watch } from 'vue'
+  import { descriptions } from '@/constants/description.ts'
+  import { onMounted, ref, watch, computed } from 'vue'
   import { storeToRefs } from 'pinia'
   const visualStore = useVisualStore()
 
-  const { arrayDescription } = storeToRefs(visualStore)
+  const { descriptions: storeDescriptions } = storeToRefs(visualStore)
+
+  // 使用计算属性获取数组描述
+  const arrayDescription = computed({
+    get: () => storeDescriptions.value[descriptions.Array],
+    set: (value) => {
+      visualStore.setDescription(descriptions.Array, value)
+    },
+  })
 
   const pointNamesStr = ref('')
 

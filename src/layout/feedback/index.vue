@@ -15,8 +15,8 @@
   import { ref, defineProps, onMounted, onBeforeUnmount } from 'vue'
 
   // 图标的高度和宽度
-  const width = 20
-  const height = 50
+  const width = 16
+  const height = 40
 
   // 屏幕高度和宽度
   let windowWidth = window.innerWidth
@@ -34,8 +34,8 @@
     let startX = event.clientX
     let startY = event.clientY
     // 根据悬浮球的当前位置重新计算 offsetX 和 offsetY
-    offsetX = window.innerWidth - right.value - 30 - startX
-    offsetY = window.innerHeight - bottom.value - 20 - startY
+    offsetX = window.innerWidth - right.value - 16 - startX
+    offsetY = window.innerHeight - bottom.value - 16 - startY
     moved = false
 
     window.addEventListener('mousemove', onMouseMove)
@@ -50,47 +50,41 @@
     let startX = touch.clientX
     let startY = touch.clientY
     // 同样重新计算 offsetX 和 offsetY
-    offsetX = window.innerWidth - right.value - 30 - startX
-    offsetY = window.innerHeight - bottom.value - 20 - startY
+    offsetX = window.innerWidth - right.value - 16 - startX
+    offsetY = window.innerHeight - bottom.value - 16 - startY
     moved = false
 
     window.addEventListener('touchmove', onTouchMove, { passive: false })
     window.addEventListener('touchend', stopTouchDrag)
   }
 
-  let animationFrameId = null
-
   const onMouseMove = (event) => {
     if (!isDragging.value) return
-    if (animationFrameId) cancelAnimationFrame(animationFrameId)
-
-    animationFrameId = requestAnimationFrame(() => {
-      updatePosition(event.clientX, event.clientY)
-    })
+    updatePosition(event.clientX, event.clientY)
   }
 
   const onTouchMove = (event) => {
     event.preventDefault()
     if (!isDragging.value) return
     const touch = event.touches[0]
-
-    if (animationFrameId) cancelAnimationFrame(animationFrameId)
-
-    animationFrameId = requestAnimationFrame(() => {
-      updatePosition(touch.clientX, touch.clientY)
-    })
+    updatePosition(touch.clientX, touch.clientY)
   }
 
   const updatePosition = (x, y) => {
     moved = true
-    right.value = Math.max(
+    let newRight = Math.max(
       0,
       Math.min(window.innerWidth - width, window.innerWidth - x - offsetX - width / 2),
     )
-    bottom.value = Math.max(
+    newRight = Math.min(newRight, window.innerWidth - width - 10)
+    const newBottom = Math.max(
       0,
       Math.min(window.innerHeight - height, window.innerHeight - y - offsetY - height / 2),
     )
+
+    // 直接更新值，避免重复计算
+    right.value = newRight
+    bottom.value = newBottom
   }
 
   const stopDrag = () => {
@@ -158,15 +152,36 @@
   .feedback {
     position: absolute;
     z-index: 99999;
-    width: 30px;
-    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 40px;
     cursor: pointer;
+    background: rgb(255 255 255 / 90%);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+
+    &:hover {
+      background: rgb(255 255 255 / 100%);
+      box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+      transform: scale(1.05);
+    }
 
     .feedback-icon {
-      width: 30px;
-      height: 30px;
-      font-size: 30px;
-      color: $base-blue-color;
+      width: 20px;
+      height: 20px;
+      margin-bottom: 2px;
+      font-size: 20px;
+      color: $primary-color;
+    }
+
+    .feedback-text {
+      margin: 0;
+      font-size: 10px;
+      line-height: 1;
+      color: $primary-color;
     }
   }
 </style>

@@ -10,21 +10,20 @@ $card-header-color: rgb(250 250 250);
 // 展示框颜色
 $show-background-color: rgb(242 243 244);
 
-// 基本颜色
-$base-blue-color: rgb(90 180 253);
+// 主色调$base-blue-color
+$primary-color: rgb(64 158 255);
 
-// 字体
-$base-title-font-color:  #3a3a3a;
-$base-small-font-color:  #4d4d4d;
+// 基本字体颜色
+$base-text-color: var(--el-text-color-regular);
 
 // layout相关设置
 $base-header-height: 45px;
 
 // 统一弧度设置
-$border-radius-small: 4px;    // 小弧度，用于按钮、输入框等
-$border-radius-medium: 8px;   // 中等弧度，用于卡片、面板等
-$border-radius-large: 12px;   // 大弧度，用于模态框、大卡片等
-$border-radius-xl: 16px;      // 超大弧度，用于特殊组件
+$border-radius-small: 4px; // 小弧度，用于按钮、输入框等
+$border-radius-medium: 8px; // 中等弧度，用于卡片、面板等
+$border-radius-large: 12px; // 大弧度，用于模态框、大卡片等
+$border-radius-xl: 16px; // 超大弧度，用于特殊组件
 
 // 状态颜色
 $sucess-color: rgb(5 181 93);

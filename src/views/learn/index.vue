@@ -192,7 +192,6 @@
   :deep(.coding-panel) {
     margin-left: 4px;
     overflow: hidden;
-    border: 1px solid $base-border-color;
     border-radius: $border-radius-large;
   }
 
