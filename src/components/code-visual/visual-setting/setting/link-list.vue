@@ -43,7 +43,7 @@
     get: () => storeDescriptions.value[descriptions.LinkList],
     set: (value) => {
       visualStore.setDescription(descriptions.LinkList, value)
-    }
+    },
   })
 </script>
 

@@ -1,5 +1,5 @@
 import { reqArray2DVisual } from '@/api/visual'
-import { Array2DVisualData, VisualVariable, Array2DDescription, Array2DVisualRequest } from '@/api/visual/type'
+import { Array2DVisualData, Array2DDescription, Array2DVisualRequest } from '@/api/visual/type'
 import { Array2DData, Array2DNode } from '@/components/code-visual/visual/type/array2d'
 
 const reqArray2DVisualData = async (
@@ -33,9 +33,9 @@ const convertArrayVisualData = (
   const struct = data.array
   const nodes: Array2DNode[] = []
   for (let i = 0; i < struct.length; i++) {
-    let array = struct[i]
+    const array = struct[i]
     for (let j = 0; j < array.length; j++) {
-      let arrayNode = array[j]
+      const arrayNode = array[j]
       const node: Array2DNode = {
         row: i,
         col: j,
@@ -56,7 +56,6 @@ const convertArrayVisualData = (
       nodes.push(node)
     }
   }
-
 
   // 设置指针
   for (let i = 0; i < data.rowPoints.length; i++) {
@@ -86,7 +85,6 @@ const convertArrayVisualData = (
       }
     }
   }
-  console.log(nodes)
   return {
     data: nodes,
     layouter: 'array2d',

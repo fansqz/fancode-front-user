@@ -27,15 +27,6 @@ type VisualState = {
   }
 }
 
-// 描述类型到属性的映射
-const DESCRIPTION_PROPERTY_MAP = {
-  [descriptions.Array]: 'arrayDescription',
-  [descriptions.Array2D]: 'array2DDescription', 
-  [descriptions.BinaryTree]: 'binaryTreeDescription',
-  [descriptions.LinkList]: 'linkListDescription',
-  [descriptions.Graph]: 'graphDescription',
-} as const
-
 const useVisualStore = defineStore('visual', {
   state: (): VisualState => ({
     // 可视化是否开启

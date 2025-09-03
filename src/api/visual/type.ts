@@ -110,7 +110,7 @@ export type VisualDescription =
   | GraphDescription
   | any
 
-  // 二维数组可视化描述
+// 二维数组可视化描述
 export type Array2DDescription = {
   arrayName: string
   rowPointNames: string[]

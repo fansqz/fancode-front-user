@@ -1,5 +1,10 @@
 import { reqArrayVisual } from '@/api/visual'
-import { ArrayVisualData, VisualVariable, ArrayDescription, ArrayVisualRequest } from '@/api/visual/type'
+import {
+  ArrayVisualData,
+  VisualVariable,
+  ArrayDescription,
+  ArrayVisualRequest,
+} from '@/api/visual/type'
 import { ArrayData, ArrayNode } from '@/components/code-visual/visual/type/array'
 
 const reqArrayVisualData = async (

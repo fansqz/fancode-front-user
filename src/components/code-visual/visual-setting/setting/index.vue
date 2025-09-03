@@ -21,7 +21,7 @@
       </el-table>
       <div class="setting">
         <ArraySetting v-if="descriptionType == descriptions.Array" />
-        <Array2DSetting v-if="descriptionType == descriptions.Array2D"/>
+        <Array2DSetting v-if="descriptionType == descriptions.Array2D" />
         <BinaryTreeSetting v-if="descriptionType == descriptions.BinaryTree" />
         <LinkList v-if="descriptionType == descriptions.LinkList" />
         <Graph v-if="descriptionType == descriptions.Graph" />
@@ -59,7 +59,7 @@
     },
     {
       name: '二维数组',
-      type: descriptions.Array2D
+      type: descriptions.Array2D,
     },
     {
       name: '二叉树',

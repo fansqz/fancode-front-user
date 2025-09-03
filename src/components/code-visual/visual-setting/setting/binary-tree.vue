@@ -43,7 +43,7 @@
     get: () => storeDescriptions.value[descriptions.BinaryTree],
     set: (value) => {
       visualStore.setDescription(descriptions.BinaryTree, value)
-    }
+    },
   })
 </script>
 

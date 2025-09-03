@@ -3,7 +3,6 @@ export type Array2DData = {
   data: Array2DNode[]
   layouter: 'array2d'
 }
-                                                                                                                                                                              v v 
 export type Array2DNode = {
   id: string
   col: number

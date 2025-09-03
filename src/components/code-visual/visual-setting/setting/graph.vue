@@ -26,7 +26,7 @@
     get: () => storeDescriptions.value[descriptions.Graph],
     set: (value) => {
       visualStore.setDescription(descriptions.Graph, value)
-    }
+    },
   })
 
   const pointNamesStr = ref('')
