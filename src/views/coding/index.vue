@@ -32,6 +32,9 @@
 
   <!-- 保存代码模态框 -->
   <SavedCodeModal v-model="savedCodeModalVisible" :language="language" />
+  
+  <!-- 调试指引 -->
+  <DebugGuide />
 </template>
 
 <script setup lang="ts">
@@ -42,6 +45,7 @@
   import LanguageThemeSelector from './language-theme-switcher.vue'
   import Console from '@/components/code-editor/console/index.vue'
   import SavedCodeModal from './saved-user-code.vue'
+  import DebugGuide from './guide.vue'
   import { storeToRefs } from 'pinia'
   import useCodingStore from '@/store/modules/coding.ts'
   import useDebugStore from '@/store/modules/debug'
