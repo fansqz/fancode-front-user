@@ -2,8 +2,8 @@
   <el-container class="visual-description">
     <el-main class="main">
       <div class="template-select">
-        <div 
-          v-for="item in descriptionTypeList" 
+        <div
+          v-for="item in descriptionTypeList"
           :key="item.type"
           class="template-item"
           :class="{ active: item.type === descriptionType }"
@@ -129,10 +129,9 @@
         height: 150px;
         margin-right: 10px;
         margin-left: 20px;
+        overflow: hidden auto;
         background-color: $base-background-color;
         border-right: 1px solid $border-color;
-        overflow-y: auto;
-        overflow-x: hidden;
 
         // 自定义滚动条样式
         &::-webkit-scrollbar {
@@ -147,7 +146,7 @@
         &::-webkit-scrollbar-thumb {
           background: $border-color;
           border-radius: 3px;
-          
+
           &:hover {
             background: $border-color-light;
           }
@@ -155,23 +154,23 @@
 
         .template-item {
           display: flex;
+          flex-shrink: 0;
           align-items: center;
+          height: 28px;
           padding: 6px 12px;
-          cursor: pointer;
           color: $text-color-primary;
+          cursor: pointer;
           background-color: $base-background-color;
           transition: all 0.2s ease;
-          height: 28px;
-          flex-shrink: 0;
 
           &:hover {
             background-color: $fill-color-light;
           }
 
           &.active {
-            background-color: $fill-color;
-            color: $primary-color;
             font-weight: 500;
+            color: $primary-color;
+            background-color: $fill-color;
           }
 
           .selected-icon {

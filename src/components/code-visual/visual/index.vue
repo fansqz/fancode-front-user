@@ -231,9 +231,9 @@
 
       &:hover {
         background: rgba($base-background-color, 1);
+        border-color: $border-color;
         box-shadow: $box-shadow;
         transform: translateY(-1px);
-        border-color: $border-color;
       }
 
       &:active {
@@ -246,7 +246,11 @@
         inset: 0;
         padding: 1px;
         content: '';
-        background: linear-gradient(135deg, rgba($base-background-color, 0.4), rgba($base-background-color, 0.1));
+        background: linear-gradient(
+          135deg,
+          rgba($base-background-color, 0.4),
+          rgba($base-background-color, 0.1)
+        );
         border-radius: $border-radius-medium;
         mask:
           linear-gradient(var(--el-color-white, #fff) 0 0) content-box,

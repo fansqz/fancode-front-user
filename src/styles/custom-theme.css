@@ -9,15 +9,15 @@ html {
   --project-border-radius-xl: 16px;
   
   /* 项目自定义背景色 - 与Element Plus亮色模式保持一致 */
-  --project-bg-color: #ffffff;
-  --project-header-bg: #ffffff;
+  --project-bg-color: #fff;
+  --project-header-bg: #fff;
   --project-bg-deep: rgb(240 240 240);
   --project-card-header: rgb(240 240 240);
   --project-show-background: #fafafa;
   --project-bg-secondary: #f5f7fa;
   
   /* 可视化背景点颜色 */
-  --project-dot-color: rgba(0, 0, 0, 0.1);
+  --project-dot-color: rgb(0 0 0 / 10%);
 }
 
 /* 暗黑模式自定义变量 */
@@ -31,5 +31,5 @@ html.dark {
   --project-bg-secondary: #262727;
   
   /* 可视化背景点颜色 - 暗黑模式下使用浅色 */
-  --project-dot-color: rgba(255, 255, 255, 0.1);
+  --project-dot-color: rgb(255 255 255 / 10%);
 }

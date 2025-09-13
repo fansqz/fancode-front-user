@@ -354,7 +354,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(0 0 0 / 50%);
   }
 
   .saved-code-card {
@@ -389,7 +389,7 @@
       border-radius: 4px;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgb(0 0 0 / 10%);
       }
     }
   }

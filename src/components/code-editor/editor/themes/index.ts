@@ -51,8 +51,8 @@ export const loadTheme = async (theme: string): Promise<boolean> => {
  */
 export const initTheme = async (editorTheme?: string) => {
   // 确定要加载的主题
-  let themeToLoad = editorTheme || 'BlulocoLight' // 使用传入的主题或默认主题
-  
+  const themeToLoad = editorTheme || 'BlulocoLight' // 使用传入的主题或默认主题
+
   console.log('Initializing theme:', themeToLoad)
   await loadTheme(themeToLoad)
 }

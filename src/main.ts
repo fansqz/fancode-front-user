@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 
-import VMdEditor from '@kangc/v-md-editor'
 import VMdPreview from '@kangc/v-md-editor/lib/preview'
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 import * as echarts from 'echarts'
