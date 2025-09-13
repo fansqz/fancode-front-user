@@ -7,8 +7,6 @@ type CodingState = {
   code: string
   // 题目id
   problemId: number
-  // 主题
-  theme: string
   // 判断当前标签页编程题目的语言类型
   language: languageConstants
   // 可选的语言
@@ -41,7 +39,6 @@ const useCodingStore = defineStore('coding', {
   state: (): CodingState => ({
     code: '',
     problemId: 0,
-    theme: 'BlulocoLight',
     language: languageConstants.GO,
     languages: supportedLanguages,
     input: '',

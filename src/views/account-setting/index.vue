@@ -187,7 +187,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .account-setting-container {
     display: flex;
     align-items: center;
@@ -207,7 +207,7 @@
           position: relative;
           overflow: hidden;
           cursor: pointer;
-          border: 1px dashed var(--el-border-color);
+          border: 1px dashed $border-color;
           border-radius: 6px;
           transition: var(--el-transition-duration-fast);
 
@@ -221,7 +221,7 @@
             width: 150px;
             height: 150px;
             font-size: 28px;
-            color: #8c939d;
+            color: $text-color-secondary;
             text-align: center;
           }
         }

@@ -354,7 +354,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(0 0 0 / 50%);
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .saved-code-card {
@@ -364,9 +364,9 @@
     max-width: 90vw;
     max-height: 90vh;
     overflow: hidden;
-    background-color: #fff;
+    background-color: $base-background-color;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+    box-shadow: $box-shadow;
   }
 
   .card-header {
@@ -374,14 +374,14 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 24px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
+    background-color: $base-header-background;
+    border-bottom: 1px solid $border-color;
 
     .card-title {
       margin: 0;
       font-size: 16px;
       font-weight: 600;
-      color: #333;
+      color: $text-color-primary;
     }
 
     .close-btn {
@@ -389,7 +389,7 @@
       border-radius: 4px;
 
       &:hover {
-        background-color: rgb(0 0 0 / 10%);
+        background-color: rgba(0, 0, 0, 0.1);
       }
     }
   }
@@ -455,13 +455,13 @@
     border-radius: 6px;
 
     .el-table__header {
-      background-color: #f8f9fa;
+      background-color: $base-header-background;
 
       th {
         font-weight: 600;
-        color: #333;
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #e9ecef;
+        color: $text-color-primary;
+        background-color: $base-header-background;
+        border-bottom: 1px solid $border-color;
       }
     }
 
@@ -470,7 +470,7 @@
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: #f8f9fa;
+        background-color: $base-header-background;
       }
 
       td {
@@ -503,13 +503,13 @@
 
     .el-dialog__header {
       padding: 20px 24px;
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #e9ecef;
+      background-color: $base-header-background;
+      border-bottom: 1px solid $border-color;
 
       .el-dialog__title {
         font-size: 16px;
         font-weight: 600;
-        color: #333;
+        color: $text-color-primary;
       }
     }
 
@@ -519,7 +519,7 @@
 
     .el-dialog__footer {
       padding: 16px 24px;
-      background-color: #f8f9fa;
+      background-color: $base-header-background;
       border-top: 1px solid #e9ecef;
     }
   }
@@ -527,13 +527,13 @@
   :deep(.delete-confirm-dialog) {
     .el-message-box__header {
       padding: 20px 24px;
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #e9ecef;
+      background-color: $base-header-background;
+      border-bottom: 1px solid $border-color;
 
       .el-message-box__title {
         font-size: 16px;
         font-weight: 600;
-        color: #333;
+        color: $text-color-primary;
       }
     }
 
@@ -545,7 +545,7 @@
 
     .el-message-box__btns {
       padding: 16px 24px;
-      background-color: #f8f9fa;
+      background-color: $base-header-background;
       border-top: 1px solid #e9ecef;
 
       .el-button {

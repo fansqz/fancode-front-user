@@ -181,7 +181,7 @@
 <style scoped lang="scss">
   .coding-workspace {
     position: relative;
-    height: calc(100vh - $base-header-height);
+    height: calc(100vh - $header-height);
     padding: 0 8px 8px;
     background-color: $deep-background-color;
 
@@ -189,7 +189,7 @@
     :deep(.coding-workspace__visual-panel) {
       margin-right: 4px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 
@@ -197,7 +197,7 @@
       margin-bottom: 4px;
       margin-left: 4px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 
@@ -205,7 +205,7 @@
       margin-top: 4px;
       margin-left: 4px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 

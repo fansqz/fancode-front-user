@@ -219,24 +219,25 @@
       height: 32px;
       font-size: 18px;
       font-weight: 500;
-      color: #333;
+      color: $text-color-primary;
       cursor: pointer;
       user-select: none;
-      background: rgb(255 255 255 / 90%);
+      background: rgba($base-background-color, 0.9);
       backdrop-filter: blur(8px);
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+      border: 1px solid $border-color-light;
+      border-radius: $border-radius-medium;
+      box-shadow: $box-shadow-light;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
-        background: rgb(255 255 255 / 100%);
-        box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
+        background: rgba($base-background-color, 1);
+        box-shadow: $box-shadow;
         transform: translateY(-1px);
+        border-color: $border-color;
       }
 
       &:active {
-        box-shadow: 0 2px 6px rgb(0 0 0 / 8%);
+        box-shadow: $box-shadow-light;
         transform: translateY(1px);
       }
 
@@ -245,11 +246,11 @@
         inset: 0;
         padding: 1px;
         content: '';
-        background: linear-gradient(135deg, rgb(255 255 255 / 40%), rgb(255 255 255 / 10%));
-        border-radius: 8px;
+        background: linear-gradient(135deg, rgba($base-background-color, 0.4), rgba($base-background-color, 0.1));
+        border-radius: $border-radius-medium;
         mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
+          linear-gradient(var(--el-color-white, #fff) 0 0) content-box,
+          linear-gradient(var(--el-color-white, #fff) 0 0);
         mask-composite: xor;
         mask-composite: exclude;
       }

@@ -159,13 +159,13 @@
     width: 24px;
     height: 40px;
     cursor: pointer;
-    background: rgb(255 255 255 / 90%);
+    background: rgba($base-background-color, 0.9);
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+    box-shadow: $box-shadow-light;
 
     &:hover {
-      background: rgb(255 255 255 / 100%);
-      box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+      background: $base-background-color;
+      box-shadow: $box-shadow;
       transform: scale(1.05);
     }
 

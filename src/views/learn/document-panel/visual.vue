@@ -80,8 +80,8 @@
       flex: 1;
       width: 100%;
       height: 100%;
-      background-color: #f9f9f9;
-      background-image: radial-gradient(circle, rgb(107 102 102 / 50%) 1px, transparent 1px);
+      background-color: $base-background-color;
+      background-image: radial-gradient(circle, var(--project-dot-color) 1px, transparent 1px);
       background-size: 25px 25px;
     }
   }

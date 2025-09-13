@@ -297,7 +297,7 @@
       margin: 0 0 8px;
       font-size: 14px;
       line-height: 1.6;
-      color: var(--el-text-color-regular);
+      color: $text-color-regular;
     }
 
     ul {
@@ -310,7 +310,7 @@
         margin: 6px 0;
         font-size: 14px;
         line-height: 1.5;
-        color: var(--el-text-color-regular);
+        color: $text-color-regular;
         list-style: none;
 
         .debug-icon {
@@ -327,25 +327,25 @@
           border-radius: 4px;
 
           &.icon-continue1 {
-            color: rgb(1 171 18); // 绿色，对应继续执行
+            color: $success-color; // 绿色，对应继续执行
           }
 
           &.icon-step,
           &.icon-step-in,
           &.icon-step-out {
-            color: rgb(37 149 210); // 蓝色，对应其他调试按钮
+            color: $info-color; // 蓝色，对应其他调试按钮
           }
 
           &.icon-indeterminate {
-            color: rgb(210 57 37); // 红色，对应终止调试按钮
+            color: $error-color; // 红色，对应终止调试按钮
           }
 
           &.icon-play {
-            color: rgb(1 171 18); // 绿色，对应启动调试按钮
+            color: $success-color; // 绿色，对应启动调试按钮
           }
 
           &.icon-caozuo-tiaoshi {
-            color: rgb(210 57 37);
+            color: $error-color;
           }
         }
       }
@@ -353,7 +353,7 @@
 
     ul li strong {
       margin-right: 4px;
-      color: var(--el-text-color-primary);
+      color: $text-color-primary;
     }
 
     // 断点演示样式
@@ -379,13 +379,13 @@
           text-align: center;
           background-color: var(--el-color-white);
           border-radius: 50%;
-          box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+          box-shadow: $box-shadow-light;
         }
 
         .breakpoint-text {
           font-size: 14px;
           font-weight: 500;
-          color: var(--el-text-color-regular);
+          color: $text-color-regular;
         }
       }
     }
@@ -404,13 +404,13 @@
       // 使用Element UI的蓝色主题色
       background-color: var(--el-color-primary);
       border-color: var(--el-color-primary);
-      box-shadow: 0 2px 8px rgb(64 158 255 / 30%);
+      box-shadow: 0 2px 8px rgba($primary-color, 0.3);
       transition: all 0.3s ease;
 
       &:hover {
         background-color: var(--el-color-primary-light-3);
         border-color: var(--el-color-primary-light-3);
-        box-shadow: 0 4px 12px rgb(64 158 255 / 40%);
+        box-shadow: 0 4px 12px rgba($primary-color, 0.4);
         transform: scale(1.05);
       }
 

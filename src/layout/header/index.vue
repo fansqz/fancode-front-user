@@ -30,6 +30,7 @@
       </div>
     </div>
     <div class="header_right">
+      <ThemeSwitcher class="theme-switcher" />
       <Setting class="setting" v-show="isLogged()"></Setting>
       <div class="login_button" v-show="!isLogged()">
         <div class="login_content">
@@ -45,6 +46,7 @@
 <script setup lang="ts">
   import Logo from '@/components/logo/index.vue'
   import Setting from './setting.vue'
+  import ThemeSwitcher from '@/components/theme-switcher/index.vue'
   import { useRouter, useRoute } from 'vue-router'
   import useUserStore from '@/store/modules/user'
   import { onMounted, computed } from 'vue'
@@ -111,9 +113,9 @@
     top: 0;
     box-sizing: border-box;
     width: 100%;
-    height: $base-header-height;
+    height: $header-height;
     background-color: $base-background-color;
-    border-bottom: 1px solid $base-border-color;
+    border-bottom: 1px solid $border-color;
 
     &--dark {
       background-color: $deep-background-color;
@@ -131,7 +133,7 @@
       .logo {
         display: flex;
         align-items: center;
-        height: $base-header-height - 15px;
+        height: calc($header-height - 15px);
         margin: 0 20px;
       }
 
@@ -145,7 +147,7 @@
         justify-content: center;
         width: 60px;
         min-width: 60px;
-        height: $base-header-height;
+        height: $header-height;
         margin: 0 10px;
         cursor: pointer;
       }
@@ -190,7 +192,7 @@
 
       .login_button {
         position: relative;
-        width: 200px;
+        width: 160px;
         height: 100%;
 
         .login_content {
@@ -198,13 +200,21 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 200px;
+          width: 160px;
           height: 100%;
 
           .button {
             margin: 10px;
           }
         }
+      }
+
+      .theme-switcher {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        margin-right: 20px;
       }
 
       .setting {

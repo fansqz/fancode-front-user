@@ -168,19 +168,19 @@
             border-radius: 4px;
 
             &.success {
-              color: #67c23a;
+              color: $success-color;
             }
 
             &.error {
-              color: #f56c6c;
+              color: $error-color;
             }
 
             &.warning {
-              color: #e6a23c;
+              color: $warning-color;
             }
 
             &.info {
-              color: #909399;
+              color: $info-color;
             }
 
             .output-content {
@@ -200,7 +200,7 @@
             flex-shrink: 0;
             margin-top: 4px;
             font-weight: bold;
-            color: #409eff;
+            color: $primary-color;
           }
 
           .input-container {
@@ -210,7 +210,7 @@
             align-items: center;
             padding: 4px 8px;
             background-color: $base-background-color;
-            border: 1px solid $base-border-color;
+            border: 1px solid $border-color;
             border-radius: 6px;
 
             .input-field {

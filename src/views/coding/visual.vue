@@ -103,7 +103,7 @@
       line-height: 35px;
       user-select: none;
       background-color: $base-background-color;
-      border-bottom: 1px solid $base-border-color;
+      border-bottom: 1px solid $border-color;
     }
 
     &__main {
@@ -115,8 +115,8 @@
       .visual-panel__canvas {
         position: absolute;
         inset: 0;
-        background-color: #f9f9f9;
-        background-image: radial-gradient(circle, rgb(107 102 102 / 50%) 1px, transparent 1px);
+        background-color: $base-background-color;
+        background-image: radial-gradient(circle, var(--project-dot-color) 1px, transparent 1px);
         background-size: 25px 25px;
       }
     }

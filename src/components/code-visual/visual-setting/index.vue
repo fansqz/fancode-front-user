@@ -10,8 +10,8 @@
               <el-switch
                 v-model="action"
                 size="small"
-                active-color="#409eff"
-                inactive-color="#dcdfe6"
+                active-color="var(--el-color-primary)"
+                inactive-color="var(--el-border-color)"
               />
             </div>
             <div class="control-divider"></div>
@@ -85,6 +85,23 @@
     z-index: 10;
     width: 100%;
     height: auto;
+    background-color: $base-background-color;
+    border-radius: 8px;
+
+    :deep(.el-collapse) {
+      background-color: $base-background-color;
+      border: 1px solid $border-color;
+      border-radius: 8px;
+    }
+
+    :deep(.el-collapse-item__header) {
+      background-color: $base-background-color;
+      border-bottom: 1px solid $border-color;
+    }
+
+    :deep(.el-collapse-item__content) {
+      background-color: $base-background-color;
+    }
 
     &__header {
       display: flex;
@@ -111,14 +128,14 @@
         .control-label {
           font-size: 12px;
           font-weight: 500;
-          color: #606266;
+          color: $text-color-secondary;
         }
       }
 
       .control-divider {
         width: 1px;
         height: 16px;
-        background-color: #e4e7ed;
+        background-color: $border-color-light;
       }
 
       .mode-switch {
@@ -126,7 +143,7 @@
         gap: 4px;
         align-items: center;
         padding: 2px;
-        background-color: #f5f7fa;
+        background-color: $bg-color-secondary;
         border-radius: 6px;
 
         .mode-btn {
@@ -138,7 +155,7 @@
           transition: all 0.2s ease;
 
           &:hover {
-            box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+            box-shadow: $box-shadow-light;
             transform: translateY(-1px);
           }
 
@@ -167,9 +184,9 @@
 
         :deep(.el-input__inner),
         :deep(.el-textarea__inner) {
-          color: #999;
+          color: $text-color-placeholder;
           cursor: not-allowed;
-          background-color: #f5f5f5;
+          background-color: $bg-color-secondary;
         }
       }
     }

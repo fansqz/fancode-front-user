@@ -79,7 +79,7 @@
         box-sizing: border-box;
         width: 110px;
         height: 110px;
-        border: 1px solid $base-border-color;
+        border: 1px solid $border-color;
       }
 
       .base-info {
@@ -106,7 +106,7 @@
         .login-name {
           margin-top: 6px;
           font-size: small;
-          color: rgb(104 101 101);
+          color: $text-color-secondary;
         }
       }
     }

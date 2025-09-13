@@ -160,7 +160,7 @@
   .container {
     position: relative;
     width: 100%;
-    height: calc(100vh - $base-header-height);
+    height: calc(100vh - $header-height);
     padding: 0 8px 8px;
     margin: 0;
     background-color: $deep-background-color;
@@ -169,7 +169,7 @@
   :deep(.left-panel) {
     margin-right: 4px;
     overflow: hidden;
-    border: 1px solid $base-border-color;
+    border: 1px solid $border-color;
     border-radius: $border-radius-large;
   }
 

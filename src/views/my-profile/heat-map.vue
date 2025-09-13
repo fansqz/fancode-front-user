@@ -168,14 +168,14 @@
             justify-content: center;
             width: 90px;
             height: 25px;
-            color: #9da19e;
+            color: $text-color-secondary;
             cursor: pointer;
-            background-color: rgb(212 241 221 / 20%);
+            background-color: rgba($success-color, 0.2);
             border-radius: 5px;
           }
 
           .scrollbar-item-active {
-            background-color: rgb(98 124 107 / 20%);
+            background-color: rgba($success-color, 0.3);
           }
         }
       }

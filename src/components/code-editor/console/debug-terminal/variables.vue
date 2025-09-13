@@ -124,21 +124,21 @@
   .variables-tree {
     width: 100%;
     height: 100%;
-    background-color: rgb(249 249 249);
+    background-color: $base-background-color;
 
     :deep(.el-tree) {
-      background-color: rgb(249 249 249);
+      background-color: $base-background-color;
     }
 
     :deep(.el-tree-node) {
-      background-color: rgb(249 249 249);
+      background-color: $base-background-color;
     }
 
     :deep(.el-tree-node__content) {
-      background-color: rgb(249 249 249);
+      background-color: $base-background-color;
 
       &:hover {
-        background-color: rgb(64 158 255 / 10%);
+        background-color: rgba($primary-color, 0.1);
       }
     }
   }

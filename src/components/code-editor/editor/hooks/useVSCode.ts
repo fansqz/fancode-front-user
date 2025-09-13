@@ -5,6 +5,7 @@ import { editor } from 'monaco-editor'
 
 import useCodingStore from '@/store/modules/coding'
 import useDebugStore from '@/store/modules/debug'
+import useThemeStore from '@/store/modules/theme'
 
 import { registerAllProvider, unregisterAllProvider } from '../provider/index.ts'
 import { initWorker, initTheme, changeTheme, wire } from '../themes'
@@ -21,6 +22,7 @@ import editUtils from '../utils/editUtils'
 export const useVsCode = (vscode: VsCode) => {
   const debugStore = useDebugStore()
   const codingStore = useCodingStore()
+  const themeStore = useThemeStore()
   initWorker()
   return new Promise((resolve) => {
     const { target, onContentChanged, onEditorBlur, onCtrlS, onUpdateBP } = vscode
@@ -39,7 +41,7 @@ export const useVsCode = (vscode: VsCode) => {
         throw new TypeError('target值必须是一个正确的vue ref')
       }
       // 必须先初始化主题再创建实例
-      await initTheme()
+      await initTheme(themeStore.editorTheme)
 
       const { getConfigs } = await import('../conf')
 
@@ -52,7 +54,7 @@ export const useVsCode = (vscode: VsCode) => {
         getConfigs({
           value: codingStore.code,
           readOnly: false,
-          theme: codingStore.theme,
+          theme: themeStore.editorTheme,
           language: codingStore.language,
         }),
       )
@@ -88,7 +90,7 @@ export const useVsCode = (vscode: VsCode) => {
 
       // 监控主题变化
       stopThemeWatch = watch(
-        () => codingStore.theme,
+        () => themeStore.editorTheme,
         async (val) => {
           changeTheme(val, editorInstance)
         },

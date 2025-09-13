@@ -145,7 +145,8 @@
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    background: linear-gradient(to bottom, #f8f9fa, #fff);
+    background: linear-gradient(to bottom, $bg-color-secondary, $base-background-color);
+    transition: all 0.3s ease;
   }
 
   .hero {
@@ -171,10 +172,11 @@
       font-size: 4em;
       font-weight: 800;
       line-height: 1.2;
-      color: #2c3e50;
+      color: $text-color-primary;
+      transition: color 0.3s ease;
 
       .gradient-text {
-        background: linear-gradient(45deg, #409eff, #36d1dc);
+        background: linear-gradient(45deg, $primary-color, #36d1dc);
         background-clip: text;
         -webkit-text-fill-color: transparent;
       }
@@ -184,7 +186,7 @@
       margin-bottom: 40px;
       font-size: 1.5em;
       line-height: 1.6;
-      color: #5d6778;
+      color: $text-color-regular;
     }
 
     .hero-buttons {
@@ -211,7 +213,7 @@
       transition: all 0.3s ease;
 
       &:hover {
-        background: #f0f7ff;
+        background: $fill-color-light;
         transform: translateY(-2px);
       }
     }
@@ -237,19 +239,20 @@
         gap: 10px;
         align-items: center;
         padding: 15px 25px;
-        background: white;
+        background: $base-background-color;
+        border: 1px solid $border-color-light;
         border-radius: 15px;
-        box-shadow: 0 10px 30px rgb(0 0 0 / 10%);
+        box-shadow: $box-shadow;
         animation: float 3s ease-in-out infinite;
 
         .el-icon {
           font-size: 20px;
-          color: #409eff;
+          color: $primary-color;
         }
 
         span {
           font-weight: 500;
-          color: #2c3e50;
+          color: $text-color-primary;
         }
       }
 
@@ -282,14 +285,14 @@
       margin-bottom: 20px;
       font-size: 2.5em;
       font-weight: 700;
-      color: #2c3e50;
+      color: $text-color-primary;
     }
 
     .section-subtitle {
       max-width: 600px;
       margin: 0 auto;
       font-size: 1.2em;
-      color: #5d6778;
+      color: $text-color-regular;
     }
   }
 
@@ -297,7 +300,7 @@
     box-sizing: border-box;
     width: 100%;
     padding: 100px 0;
-    background: #fff;
+    background: $base-background-color;
 
     .features-container {
       display: flex;
@@ -312,13 +315,14 @@
       flex: 1;
       padding: 40px 30px;
       text-align: center;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgb(0 0 0 / 5%);
+      background: $base-background-color;
+      border: 1px solid $border-color-light;
+      border-radius: $border-radius-xl;
+      box-shadow: $box-shadow-light;
       transition: all 0.3s ease;
 
       &:hover {
-        box-shadow: 0 8px 30px rgb(0 0 0 / 10%);
+        box-shadow: $box-shadow;
         transform: translateY(-5px);
       }
 
@@ -329,25 +333,25 @@
         width: 80px;
         height: 80px;
         margin: 0 auto 25px;
-        background: #f0f7ff;
+        background: $fill-color-light;
         border-radius: 50%;
       }
 
       .feature-icon {
-        color: #409eff;
+        color: $primary-color;
       }
 
       h3 {
         margin-bottom: 15px;
         font-size: 1.4em;
         font-weight: 600;
-        color: #2c3e50;
+        color: $text-color-primary;
       }
 
       p {
         font-size: 1.1em;
         line-height: 1.6;
-        color: #5d6778;
+        color: $text-color-regular;
       }
     }
   }
@@ -356,7 +360,7 @@
     box-sizing: border-box;
     width: 100%;
     padding: 100px 0;
-    background: #f8f9fa;
+    background: $bg-color-secondary;
 
     .showcase-container {
       max-width: 1200px;
@@ -369,13 +373,14 @@
       align-items: center;
       margin-bottom: 80px;
       overflow: hidden;
-      background: white;
+      background: $base-background-color;
+      border: 1px solid $border-color-light;
       border-radius: 20px;
-      box-shadow: 0 4px 20px rgb(0 0 0 / 5%);
+      box-shadow: $box-shadow-light;
       transition: all 0.3s ease;
 
       &:hover {
-        box-shadow: 0 8px 30px rgb(0 0 0 / 10%);
+        box-shadow: $box-shadow;
         transform: translateY(-5px);
       }
 
@@ -409,13 +414,13 @@
           margin-bottom: 20px;
           font-size: 1.8em;
           font-weight: 600;
-          color: #2c3e50;
+          color: $text-color-primary;
         }
 
         p {
           font-size: 1.1em;
           line-height: 1.6;
-          color: #5d6778;
+          color: $text-color-regular;
         }
       }
     }
@@ -425,7 +430,7 @@
     padding: 100px 0;
     color: white;
     text-align: center;
-    background: linear-gradient(45deg, #409eff, #36d1dc);
+    background: linear-gradient(45deg, $primary-color, #36d1dc);
 
     .cta-content {
       max-width: 800px;
@@ -447,8 +452,8 @@
       .cta-button {
         padding: 15px 40px;
         font-size: 1.2em;
-        color: #409eff;
-        background: white;
+        color: $primary-color;
+        background: $base-background-color;
         border: none;
         border-radius: 30px;
         transition: all 0.3s ease;

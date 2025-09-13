@@ -64,11 +64,11 @@
     justify-content: center;
     width: 20px;
     height: 20px;
-    background-color: rgb(255 255 255);
+    background-color: $base-background-color;
     border-radius: $border-radius-small;
 
     .able {
-      color: rgb(210 57 37);
+      color: $error-color;
       transition: color 0.2s;
     }
 
@@ -79,6 +79,6 @@
   }
 
   .button-show {
-    background-color: rgb(227 227 227);
+    background-color: $border-color-light;
   }
 </style>

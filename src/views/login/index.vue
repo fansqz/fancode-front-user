@@ -251,7 +251,8 @@
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    height: calc(100vh - $base-header-height);
+    height: calc(100vh - $header-height);
+    background-color: $base-background-color;
 
     .card {
       padding: 0%;
@@ -261,7 +262,6 @@
         height: 280px;
         margin: 10px;
         text-align: center;
-        background-color: #fff;
 
         .logo {
           height: 50px;
@@ -289,12 +289,12 @@
           height: 32px;
           margin-top: 10px;
           font-size: small;
-          color: #9aa0a6;
+          color: $text-color-secondary;
 
           .go-visitor {
             display: inline;
             font-size: small;
-            color: #9aa0a6;
+            color: $text-color-secondary;
             cursor: pointer;
           }
         }

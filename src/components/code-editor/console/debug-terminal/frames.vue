@@ -86,13 +86,13 @@
           cursor: pointer;
 
           &:hover {
-            background-color: #e8f0fe;
+            background-color: rgba($primary-color, 0.1);
           }
 
           &.active {
             font-weight: 500;
-            color: #1967d2;
-            background-color: #d2e3fc;
+            color: $primary-color;
+            background-color: rgba($primary-color, 0.2);
           }
 
           .menu-item-text {
