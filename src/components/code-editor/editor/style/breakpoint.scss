@@ -5,7 +5,7 @@
   height: 11px !important;
   margin-top: 3px !important;
   cursor: pointer;
-  background: #cf2f20;
+  background: $error-color;
   border-radius: 50%;
 
   &.active {

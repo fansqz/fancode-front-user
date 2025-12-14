@@ -196,7 +196,8 @@
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    height: calc(100vh - $base-header-height);
+    height: calc(100vh - $header-height);
+    background-color: $base-background-color;
 
     .card {
       margin-top: calc(50vh - 280px); /* 调整偏移量 */
@@ -205,7 +206,6 @@
         height: 360px;
         padding: 10px;
         text-align: center;
-        background-color: #fff;
 
         .logo {
           height: 50px;

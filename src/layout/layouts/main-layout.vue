@@ -26,7 +26,7 @@
 
     .layout-main {
       position: relative;
-      top: $base-header-height;
+      top: $header-height;
       box-sizing: border-box;
       width: 100%;
     }

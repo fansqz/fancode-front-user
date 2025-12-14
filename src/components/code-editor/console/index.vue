@@ -3,11 +3,11 @@
     <div class="console-header">
       <el-text>调试终端</el-text>
       <div class="debug-buttons">
-        <StepOrContinueButton type="continue" class="debug-btn" />
-        <StepOrContinueButton type="step-over" class="debug-btn" />
-        <StepOrContinueButton type="step-in" class="debug-btn" />
-        <StepOrContinueButton type="step-out" class="debug-btn" />
-        <TerminateButton class="debug-btn" />
+        <StepOrContinueButton type="continue" class="debug-btn continue-button" />
+        <StepOrContinueButton type="step-over" class="debug-btn step-over-button" />
+        <StepOrContinueButton type="step-in" class="debug-btn step-in-button" />
+        <StepOrContinueButton type="step-out" class="debug-btn step-out-button" />
+        <TerminateButton class="debug-btn terminal-button" />
       </div>
     </div>
     <div class="console-terminal">

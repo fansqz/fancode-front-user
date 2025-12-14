@@ -12,6 +12,10 @@ import Prism from 'prismjs'
 import App from '@/App.vue'
 // 引入element-plus插件
 import 'element-plus/dist/index.css'
+// 引入element-plus暗黑模式
+import 'element-plus/theme-chalk/dark/css-vars.css'
+// 引入自定义主题变量
+import '@/styles/custom-theme.css'
 // 配置element-plus国际化
 // svg配置
 import 'virtual:svg-icons-register'
@@ -21,6 +25,8 @@ import gloalComponent from '@/components'
 import router from '@/router'
 // 仓库
 import pinia from '@/store'
+// 主题store
+import useThemeStore from '@/store/modules/theme'
 
 // 引入路由鉴权文件
 import './premisstion'
@@ -65,6 +71,11 @@ app.use(ElementPlus, {
 app.use(gloalComponent)
 app.use(router)
 app.use(pinia)
+
+// 初始化主题 - 在pinia初始化后立即执行
+const themeStore = useThemeStore()
+themeStore.initTheme()
+
 app.config.globalProperties.$echarts = echarts
 app.mount('#app')
 

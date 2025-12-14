@@ -19,7 +19,7 @@
         <el-icon @click="showSavedCodeModal" class="icon-button"><Document /></el-icon>
       </el-tooltip>
       <!-- 主题选择 -->
-      <el-select class="theme-select" v-model="theme" placeholder="Select" size="small">
+      <el-select class="theme-select" v-model="editorTheme" placeholder="Select" size="small">
         <el-option v-for="item in themeList" :key="item" :label="item" :value="item" />
       </el-select>
     </div>
@@ -33,6 +33,7 @@
   import { reqProblemTemplateCode } from '@/api/problem'
   import { ElMessage } from 'element-plus'
   import useCodingStore from '@/store/modules/coding'
+  import useThemeStore from '@/store/modules/theme'
   import useUserStore from '@/store/modules/user'
 
   const emit = defineEmits<{
@@ -41,12 +42,13 @@
   }>()
 
   const codingStore = useCodingStore()
+  const themeStore = useThemeStore()
   const userStore = useUserStore()
 
   // 主题列表
   const themeList = ref(getAllTheme())
-  const { theme, code, language, languages } = storeToRefs(codingStore)
-  theme.value = themeList.value[0]
+  const { code, language, languages } = storeToRefs(codingStore)
+  const { editorTheme } = storeToRefs(themeStore)
 
   // 重新加载代码
   const reloadCode = async () => {
@@ -78,7 +80,7 @@
       width: 100%;
       height: 35px;
       background-color: $base-header-background;
-      border-bottom: 1px solid $base-border-color;
+      border-bottom: 1px solid $border-color;
 
       .language-select {
         width: 150px;
@@ -101,7 +103,7 @@
 
       .icon-button {
         font-size: 18px;
-        color: $base-text-color;
+        color: $text-color;
         cursor: pointer;
         transition: color 0.2s;
 

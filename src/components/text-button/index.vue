@@ -16,11 +16,11 @@
 
 <style scoped lang="scss">
   .button {
-    color: #333;
+    color: $text-color-primary;
     cursor: pointer;
   }
 
   .hovered {
-    color: #49e;
+    color: $primary-color;
   }
 </style>

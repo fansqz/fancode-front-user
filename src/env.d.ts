@@ -27,6 +27,7 @@ declare module 'ace-builds/src-noconflict/snippets/*'
 declare module 'ace-builds/src-noconflict/ext-*'
 
 // Markdown 编辑器
+declare module '@kangc/v-md-editor'
 declare module '@kangc/v-md-editor/lib/preview'
 declare module '@kangc/v-md-editor/lib/theme/vuepress.js'
 

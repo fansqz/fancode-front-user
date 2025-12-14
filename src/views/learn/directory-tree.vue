@@ -115,7 +115,7 @@
     width: 100%;
     height: 100%;
     background-color: $base-background-color;
-    border-right: 1px solid $base-border-color;
+    border-right: 1px solid $border-color;
 
     .bank-name {
       position: relative;

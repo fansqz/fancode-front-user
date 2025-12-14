@@ -102,7 +102,7 @@
 
 <style scoped lang="scss">
   .ing {
-    color: #f56c6c;
+    color: $error-color;
     transition: color 0.2s;
   }
 

@@ -53,6 +53,8 @@
     .menu {
       height: 35px;
       user-select: none;
+      background-color: $base-header-background;
+      border-bottom: 1px solid $border-color;
     }
 
     .main {

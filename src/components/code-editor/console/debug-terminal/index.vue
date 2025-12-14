@@ -66,14 +66,14 @@
     :deep(.left-panel) {
       margin: 6px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 
     :deep(.right-panel) {
       margin: 6px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 
@@ -90,13 +90,13 @@
         height: 25px;
         padding-left: 15px;
         background-color: $base-background-color;
-        border-bottom: 1px solid $base-border-color;
+        border-bottom: 1px solid $border-color;
       }
 
       .frames {
         width: 100%;
         height: calc(100% - 25px);
-        background-color: rgb(249 249 249);
+        background-color: $fill-color-lighter;
       }
     }
 
@@ -112,7 +112,7 @@
         width: 100%;
         height: 25px;
         background-color: $base-background-color;
-        border-bottom: 1px solid $base-border-color;
+        border-bottom: 1px solid $border-color;
 
         .tab-item {
           display: flex;
@@ -122,13 +122,13 @@
           cursor: pointer;
 
           &:hover {
-            color: #409eff;
-            background-color: rgb(64 158 255 / 10%);
+            color: $primary-color;
+            background-color: rgba($primary-color, 0.1);
           }
 
           &.active {
             font-weight: 550;
-            color: #409eff;
+            color: $primary-color;
             background-color: $base-background-color;
           }
         }
@@ -137,13 +137,13 @@
       .console {
         width: 100%;
         height: calc(100% - 25px);
-        background-color: rgb(249 249 249);
+        background-color: $fill-color-lighter;
       }
 
       .variables {
         width: 100%;
         height: calc(100% - 25px);
-        background-color: rgb(249 249 249);
+        background-color: $fill-color-lighter;
 
         .scrollbar {
           width: 100%;

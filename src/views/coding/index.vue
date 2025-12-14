@@ -32,6 +32,9 @@
 
   <!-- 保存代码模态框 -->
   <SavedCodeModal v-model="savedCodeModalVisible" :language="language" />
+
+  <!-- 调试指引 -->
+  <DebugGuide />
 </template>
 
 <script setup lang="ts">
@@ -42,6 +45,7 @@
   import LanguageThemeSelector from './language-theme-switcher.vue'
   import Console from '@/components/code-editor/console/index.vue'
   import SavedCodeModal from './saved-user-code.vue'
+  import DebugGuide from './guide.vue'
   import { storeToRefs } from 'pinia'
   import useCodingStore from '@/store/modules/coding.ts'
   import useDebugStore from '@/store/modules/debug'
@@ -177,7 +181,7 @@
 <style scoped lang="scss">
   .coding-workspace {
     position: relative;
-    height: calc(100vh - $base-header-height);
+    height: calc(100vh - $header-height);
     padding: 0 8px 8px;
     background-color: $deep-background-color;
 
@@ -185,7 +189,7 @@
     :deep(.coding-workspace__visual-panel) {
       margin-right: 4px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 
@@ -193,7 +197,7 @@
       margin-bottom: 4px;
       margin-left: 4px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 
@@ -201,7 +205,7 @@
       margin-top: 4px;
       margin-left: 4px;
       overflow: hidden;
-      border: 1px solid $base-border-color;
+      border: 1px solid $border-color;
       border-radius: $border-radius-large;
     }
 

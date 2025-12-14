@@ -1,24 +1,19 @@
 <template>
   <el-container class="visual-description">
     <el-main class="main">
-      <el-table
-        size="small"
-        ref="singleTableRef"
-        class="template-select"
-        :data="descriptionTypeList"
-        highlight-current-row
-        @current-change="handleCurrentChange"
-      >
-        <el-table-column>
-          <template v-slot="{ row }">
-            <div class="item">
-              <i v-if="row.type == descriptionType" class="selected-icon iconfont icon-Other-10" />
-              <i v-if="row.type != descriptionType" class="selected-icon iconfont icon-Other-11" />
-              {{ row.name }}
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+      <div class="template-select">
+        <div
+          v-for="item in descriptionTypeList"
+          :key="item.type"
+          class="template-item"
+          :class="{ active: item.type === descriptionType }"
+          @click="handleCurrentChange(item)"
+        >
+          <i v-if="item.type == descriptionType" class="selected-icon iconfont icon-Other-10" />
+          <i v-if="item.type != descriptionType" class="selected-icon iconfont icon-Other-11" />
+          {{ item.name }}
+        </div>
+      </div>
       <div class="setting">
         <ArraySetting v-if="descriptionType == descriptions.Array" />
         <Array2DSetting v-if="descriptionType == descriptions.Array2D" />
@@ -36,7 +31,6 @@
   import { reqGetVisualDescription } from '@/api/visual'
   import { onMounted, ref, watch } from 'vue'
   import { storeToRefs } from 'pinia'
-  import { ElTable } from 'element-plus'
   import { descriptions } from '@/constants/description.ts'
   import ArraySetting from './array.vue'
   import Array2DSetting from './array2d.vue'
@@ -51,7 +45,6 @@
 
   const { isAIEnabled, descriptionType } = storeToRefs(visualStore)
 
-  const singleTableRef = ref<InstanceType<typeof ElTable>>()
   const descriptionTypeList = ref([
     {
       name: '一维数组',
@@ -121,7 +114,7 @@
 
     .title {
       height: 30px;
-      border-bottom: 1px solid var(--el-border-color);
+      border-bottom: 1px solid $border-color;
     }
 
     .main {
@@ -130,22 +123,60 @@
       width: 100%;
       height: 100%;
       padding: 0;
-      border-top: 1px solid $base-border-color;
 
       .template-select {
         width: 20%;
         height: 150px;
         margin-right: 10px;
         margin-left: 20px;
+        overflow: hidden auto;
+        background-color: $base-background-color;
+        border-right: 1px solid $border-color;
 
-        .item {
+        // 自定义滚动条样式
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: $fill-color-extra-light;
+          border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: $border-color;
+          border-radius: 3px;
+
+          &:hover {
+            background: $border-color-light;
+          }
+        }
+
+        .template-item {
           display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          height: 28px;
+          padding: 6px 12px;
+          color: $text-color-primary;
+          cursor: pointer;
+          background-color: $base-background-color;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background-color: $fill-color-light;
+          }
+
+          &.active {
+            font-weight: 500;
+            color: $primary-color;
+            background-color: $fill-color;
+          }
 
           .selected-icon {
-            position: relative;
-            margin: auto 2px;
-            font-size: 15px !important;
-            color: rgb(90 180 253);
+            margin-right: 8px;
+            font-size: 14px;
+            color: $primary-color;
           }
         }
       }
@@ -153,7 +184,6 @@
       .setting {
         width: calc(80% - 100px);
         height: 150px;
-        border-left: 1px solid $base-border-color;
       }
 
       .option {

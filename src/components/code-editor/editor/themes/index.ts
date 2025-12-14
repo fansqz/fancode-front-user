@@ -49,10 +49,12 @@ export const loadTheme = async (theme: string): Promise<boolean> => {
 /**
  * 初始化默认主题（可选，用于预加载常用主题）
  */
-export const initTheme = async () => {
-  // 只加载默认主题，其他主题按需加载
-  const defaultTheme = 'BlulocoLight'
-  await loadTheme(defaultTheme)
+export const initTheme = async (editorTheme?: string) => {
+  // 确定要加载的主题
+  const themeToLoad = editorTheme || 'BlulocoLight' // 使用传入的主题或默认主题
+
+  console.log('Initializing theme:', themeToLoad)
+  await loadTheme(themeToLoad)
 }
 
 /**

@@ -99,26 +99,26 @@
     justify-content: center;
     width: 20px;
     height: 20px;
-    background-color: rgb(255 255 255);
+    background-color: $base-background-color;
     border-radius: $border-radius-small;
 
     .cable {
-      color: rgb(1 171 18);
+      color: $success-color;
       transition: color 0.2s;
     }
 
     .able {
-      color: rgb(37 149 210);
+      color: $success-color;
       transition: color 0.2s;
     }
 
     .unable {
-      color: grey;
+      color: $info-color;
       transition: color 0.2s;
     }
   }
 
   .button-show {
-    background-color: rgb(227 227 227);
+    background-color: $border-color-light;
   }
 </style>
